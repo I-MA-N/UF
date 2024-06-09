@@ -14,7 +14,7 @@ import managerRoutes from "./routes/managerRoutes"
 
 const router = createBrowserRouter([
     {
-        path: '/',
+        path: '/UF-Deploy',
         element: <Header />,
         errorElement: <NotFound />,
         children: [
