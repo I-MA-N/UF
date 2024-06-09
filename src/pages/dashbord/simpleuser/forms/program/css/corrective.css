@@ -1,0 +1,34 @@
+.program-section {
+   @apply w-[210mm] mx-auto pt-32 pb-12 print:pt-0 print:pb-0;
+}
+
+.program-section thead ::-moz-selection {
+   @apply bg-primary text-white;
+}
+
+.program-section thead ::selection {
+   @apply bg-primary text-white;
+}
+
+.program-section img {
+   -webkit-touch-callout: none;
+   -webkit-user-select: none;
+   -khtml-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   pointer-events: none;
+   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+@page {
+   margin: 0;
+   padding: 0;
+   size: 8.3in 11.7in;
+}
+
+/* .program-section tbody, 
+.program-section tr,
+.program-section td {
+   @apply border-secondary;
+} */

@@ -1,0 +1,219 @@
+.program_section {
+   --main-color: #E4F4FD;
+   --second-color: #083C5A;
+   --third-color: #4CB648;
+   --font-base: 14px;
+   --font-sm: 12px;
+   --font-xs: 10px;
+   --font-2xs: 8px;
+   --font-3xs: 6px;
+}
+
+.program_section * {
+   padding: 0;
+   margin: 0;
+   box-sizing: border-box;
+}
+
+.program_section {
+   font-size: 14px;
+   overflow-x: hidden;
+   margin: auto;
+   width: 210mm;
+   padding: 8px;
+   padding-top: 8rem;
+   padding-bottom: 3rem;
+}
+
+@media print {
+   @page {
+      margin: 0;
+      padding: 0;
+      size: 8.3in 11.7in;
+   }
+   
+   .program_section {
+      padding-block: 0;
+   }
+}
+
+.program_section thead {
+   display: table-row-group;
+}
+
+.program_section th {
+   color: var(--main-color);
+}
+
+.program_section img {
+   max-width: 100%;
+}
+
+.program_section .logo_container {
+   display: flex;
+   column-gap: 8px;
+   align-items: center;
+}
+
+.program_section .information {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   position: relative;
+   right: 50%;
+   transform: translateX(50%);
+   padding: 4px 54px;
+   background-color: var(--main-color);
+   color: var(--second-color);
+   font-size: 12px;
+}
+
+.program_section .information_contianer {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   column-gap: 32px;
+   font-size: 12px;
+}
+
+.program_section .information_texts {
+   text-align: center;
+}
+
+.program_section .information_texts *:first-child {
+   margin-bottom: 6px;
+}
+
+.program_section #table-header {
+   padding: 4px 0;
+   border: 2px solid var(--third-color);
+   background-color: var(--third-color);
+   color: var(--main-color);
+   text-align: center;
+   font-size: 12px;
+   font-weight: bold;
+}
+
+.program_section #table-body {
+   width: 100%;
+   display: flex;
+   flex-wrap: wrap;
+}
+
+.tbl-row {
+   width: 100%;
+   display: grid;
+   grid-template-columns: 120px 1fr;
+   grid-template-rows: 180px;
+   background-color: var(--main-color);
+   color: var(--second-color);
+}
+
+.program_section #one-col {
+   width: calc(50% - 2px);
+}
+
+.program_section .texts-container {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   border-left: 2px solid var(--third-color);
+}
+
+.program_section .texts-container>* {
+   border-top: 1px solid var(--third-color);
+}
+
+.program_section .texts-container>*:first-child {
+   border-top: 0;
+}
+
+.program_section .row-title {
+   display: flex;
+   align-items: center;
+   padding: 4px;
+}
+
+.program_section .row-title_two-col {
+   display: flex;
+}
+
+.program_section .row-title_two-col>*:first-child {
+   width: 40px;
+   flex-shrink: 0;
+   border-left: 1px solid var(--third-color);
+}
+
+.program_section .row-title span:first-child {
+   font-size: 6px;
+   padding-left: 2px;
+   border-left: 1px solid var(--third-color);
+}
+
+.program_section .row-title span:last-child {
+   font-size: 7px;
+   padding-right: 1px;
+}
+
+.program_section .texts-container>.row-title:first-child,
+.program_section .texts-container>.row-title:last-child {
+   flex-grow: 1;
+}
+
+.program_section .images-container {
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   column-gap: 2px;
+   padding: 4px;
+}
+
+.program_section #vertical-img {
+   height: 95%;
+}
+
+.program_section #vertical-img img {
+   height: 100%;
+}
+
+.program_section #horizental-img {
+   width: 128px;
+}
+
+.program_section #table-container-text {
+   margin-bottom: 20px;
+}
+
+.program_section table {
+   width: 100%;
+   text-align: center;
+   border-collapse: collapse;
+   color: var(--second-color);
+   margin-top: 15px;
+}
+
+.program_section table:first-child {
+   margin-top: 0;
+}
+
+.program_section thead {
+   background-color: var(--third-color);
+}
+
+.program_section tbody {
+   margin-top: 10px;
+   background-color: var(--main-color);
+}
+
+.program_section th {
+   padding: 4px;
+   font-size: var(--font-sm);
+   border: 1px solid var(--main-color);
+}
+
+.program_section td {
+   padding: 2px;
+   font-size: 9px;
+   border: 1px solid var(--third-color);
+}
