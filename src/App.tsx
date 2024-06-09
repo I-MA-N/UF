@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom"
+import { RouterProvider, createHashRouter } from "react-router-dom"
 import Header from "./pages/header/Header"
 import NotFound from "./pages/NotFound"
 import Home from "./pages/home/Home"
@@ -7,14 +7,13 @@ import Aboutus from "./pages/aboutus/Aboutus"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import ForgotPass from "./pages/login/components/ForgotPass"
 import ResetPass from "./pages/login/ResetPass"
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import simpleuserRoutes from "./routes/simpleuserRoutes"
 import mentorRoutes from "./routes/mentorRoutes"
 import managerRoutes from "./routes/managerRoutes"
 
-const router = createBrowserRouter([
+const router = createHashRouter([
     {
-        path: '/UF-Deploy',
+        path: '/',
         element: <Header />,
         errorElement: <NotFound />,
         children: [
