@@ -38,7 +38,7 @@ function PLogin() {
 const GNewToken = async () => {
     const rTkn = getCookie('refresh');
     
-    const req = await axios.post('http://127.0.0.1:8000/login/refresh/', { refresh: rTkn })
+    const req = await axios.post(`${import.meta.env.VITE_ENDPOINT}login/refresh/`, { refresh: rTkn })
 
     return req.data
 }
