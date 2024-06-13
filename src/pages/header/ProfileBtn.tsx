@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PLogout from "../../api/common/PLogout";
 
 type ProfileBtnProps = {
-   role: string
+   role: string | undefined
 }
 
 function ProfileBtn({ role }: ProfileBtnProps) {

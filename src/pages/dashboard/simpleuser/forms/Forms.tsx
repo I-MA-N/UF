@@ -36,12 +36,12 @@ function Forms() {
                               >
                                  ورود به پرسشنامه
                               </Link>
-                              <button
-                                 className="w-full text-xs text-primary py-3.5 text-center underline underline-offset-[5px] decoration-primary"
-                                 onClick={() => mutate({ formName: form.formName, action: "reports" })}
+                              <Link
+                                 to={`/simpleuser/dashboard/forms/reports?formName=${form.formName}`}
+                                 className="inline-block w-full text-xs text-primary py-3.5 text-center underline underline-offset-[5px] decoration-primary"
                               >
                                  گزارش پرسشنامه
-                              </button>
+                              </Link>
                            </>
                         }
                         {

@@ -1,10 +1,11 @@
 import { PropsWithChildren, createContext, useContext } from "react"
+import UserData from "../../types/UserData";
 
 type UserDataProviderProps = PropsWithChildren & {
-    userData: any
+    userData: UserData
 }
 
-const UserDataContext = createContext<any>(null);
+const UserDataContext = createContext<UserData | undefined>(undefined);
 
 function UserDataProvider({ children, userData }: UserDataProviderProps) {
     return (

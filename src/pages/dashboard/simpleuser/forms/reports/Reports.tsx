@@ -1,28 +1,21 @@
-import { useMemo, useState, useEffect } from "react"
-import { useUserTestsInfoContext } from "../context/UserTestsInfoProvider";
-import Container from "../../../../common/Container";
-import { Link, useNavigate } from "react-router-dom";
-import PrevBtn from "../../../../common/PrevBtn";
-import generateReportsArr from "./generateReportsArr";
+import { useState, useEffect } from "react"
+import { Link } from "react-router-dom";
 import ReportsMainInfo from "./ReportsMainInfo";
 import ReportsButtons from "./ReportsButtons";
-import { useUserDataContext } from "../../../../authentication/UserDataProvider";
+import UserData from "../../../../../types/UserData";
 
-function Reports() {
-   const { userTestsInfo } = useUserTestsInfoContext();
-   const userData = useUserDataContext();
-   const navigate = useNavigate();
+type ReportObj = {
+   reportName: string;
+   reportJsx: JSX.Element;
+}
 
-   if (!userTestsInfo.formName) return <Container>
-      <h1 className="mb-8">نام فرم انتخاب نشده است!</h1>
-      <PrevBtn type="button" onClick={() => navigate('/simpleuser/dashboard/forms')} />
-   </Container>
+type ReportsProps = {
+   userData: UserData,
+   reportsArr: ReportObj[],
+   formData: any
+}
 
-   if (!Object.keys(userTestsInfo.data).length) return <Container>
-      <h1 className="mb-8">این فرم هیچ اطلاعاتی برایش وجود ندارد!</h1>
-      <PrevBtn type="button" onClick={() => navigate('/simpleuser')} />
-   </Container>
-
+function Reports({ userData, reportsArr, formData }: ReportsProps) {
    useEffect(() => {
       const nav = document.getElementsByTagName("nav")[0];
       nav.style.position = "sticky";
@@ -35,16 +28,6 @@ function Reports() {
          nav.style.transform = "";
       }
    }, [])
-
-   const reportsArr = useMemo(() => generateReportsArr(userTestsInfo.data, userData.gender), [userTestsInfo, userData]);
-   if (!reportsArr) {
-      return <Container>
-         <h1 className="mb-8">شما ابتدا باید جنسیت خود را تعیین کنید!</h1>
-         <PrevBtn type="button" onClick={() => navigate('/simpleuser')} />
-      </Container>
-   }
-   console.log(reportsArr);
-
 
    const [page, setPage] = useState(reportsArr[0]);
 
@@ -61,7 +44,7 @@ function Reports() {
          </Link>
 
          <section className="container my-10 space-y-6">
-            <ReportsMainInfo userData={userData} statusBodyInfo={userTestsInfo?.data['وضعیت بدنی']} />
+            <ReportsMainInfo userData={userData} statusBodyInfo={formData['وضعیت بدنی']} />
             <ReportsButtons reportsArr={reportsArr} page={page} setPage={setPage} />
          </section>
 

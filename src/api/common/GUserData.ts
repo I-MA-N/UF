@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import getFormData from "../../utils/getFormData"
 import axios from "axios";
+import UserData from "../../types/UserData";
 
 function GUserData(username?: string) {
    const { data, isError, isPending } = useQuery({
@@ -9,7 +10,7 @@ function GUserData(username?: string) {
          const formData = getFormData({for: username});
          const req = await axios.post(import.meta.env.VITE_ENDPOINT + '/get-info/', username && formData);
 
-         return req?.data
+         return req.data as UserData
       },
 
    })

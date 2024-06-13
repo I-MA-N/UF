@@ -4,7 +4,7 @@ import Forms from "../pages/dashboard/simpleuser/forms/Forms";
 import UserTestsInfoProvider from "../pages/dashboard/simpleuser/forms/context/UserTestsInfoProvider";
 import CorrectiveProgram from "../pages/dashboard/simpleuser/forms/program/CorrectiveProgram";
 import FitnessProgram from "../pages/dashboard/simpleuser/forms/program/FitnessProgram";
-import Reports from "../pages/dashboard/simpleuser/forms/reports/Reports";
+import ReportsFirstLoad from "../pages/dashboard/simpleuser/forms/reports/ReportsFirstLoad";
 import TestsFirstLoad from "../pages/dashboard/simpleuser/forms/tests/TestsFirstLoad";
 import Home from "../pages/home/Home";
 
@@ -38,7 +38,7 @@ const simpleuserRoutes = [
    {
       path: '/simpleuser/dashboard/forms/reports',
       element: <UserTestsInfoProvider>
-            <Reports />
+            <ReportsFirstLoad />
          </UserTestsInfoProvider>
    },
    {

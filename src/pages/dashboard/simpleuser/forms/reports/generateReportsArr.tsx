@@ -21,29 +21,29 @@ import handsAwayJsx from "../../../common/reportsJsx/dynamic/handsAwayJsx";
 import swimJsx from "../../../common/reportsJsx/dynamic/swimJsx";
 import FMSJsx from "../../../common/reportsJsx/FMSJsx";
 
-function generateReportsArr(testsData: any, gender: string) {
+function generateReportsArr(formData: any, gender: string) {
    if (gender) {
       const reportsArr = [];
 
-      if (testsData['وضعیت بدنی'] && !Object.values(testsData['وضعیت بدنی']).filter(value => value === "").length) {
+      if (formData['وضعیت بدنی'] && !Object.values(formData['وضعیت بدنی']).filter(value => value === "").length) {
          const reportData = physicalIndexData({ 
-            data: testsData['وضعیت بدنی'], 
+            data: formData['وضعیت بدنی'], 
             gender: gender === 'male' ? 2 : 1 
          });
-         const reportJsx = physicalIndexJsx(reportData, testsData['وضعیت بدنی'])
+         const reportJsx = physicalIndexJsx(reportData, formData['وضعیت بدنی'])
          reportsArr.push({
             reportName: 'شاخص های بدنی',
             reportJsx,
          });
       }
 
-      if (testsData['وضعیت بدنی'] && testsData['مقدار تحرک']) {
+      if (formData['وضعیت بدنی'] && formData['مقدار تحرک']) {
          const reportData = calorieAmountData({ 
             data: {
-               'قد': testsData['وضعیت بدنی']['قد'],
-               'وزن': testsData['وضعیت بدنی']['وزن'],
-               'سن': testsData['وضعیت بدنی']['سن'],
-               'میزان فعالیت': testsData['مقدار تحرک']['مقدار تحرک'],
+               'قد': formData['وضعیت بدنی']['قد'],
+               'وزن': formData['وضعیت بدنی']['وزن'],
+               'سن': formData['وضعیت بدنی']['سن'],
+               'میزان فعالیت': formData['مقدار تحرک']['مقدار تحرک'],
             },
             gender: gender === 'male' ? 2 : 1
          });
@@ -54,8 +54,8 @@ function generateReportsArr(testsData: any, gender: string) {
          });
       }
 
-      if (testsData['سلامت عمومی'] && testsData['آمادگی فعالیت'] && testsData['آمادگی بدنی'] && testsData['کیفیت زندگی'] && testsData['شادکامی'] && testsData['رضایت شغلی'] && testsData['عملکرد شغلی']) {
-         const reportData = questionariesData({ data: testsData });
+      if (formData['سلامت عمومی'] && formData['آمادگی فعالیت'] && formData['آمادگی بدنی'] && formData['کیفیت زندگی'] && formData['شادکامی'] && formData['رضایت شغلی'] && formData['عملکرد شغلی']) {
+         const reportData = questionariesData({ data: formData });
          const reportJsx = questionariesJsx(reportData)
          reportsArr.push({
             reportName: 'تفسیر پرسشنامه ها',
@@ -63,8 +63,8 @@ function generateReportsArr(testsData: any, gender: string) {
          });
       }
 
-      if (testsData['ناهنجاری ها']) {
-         const reportData = Object.entries(testsData['ناهنجاری ها']).map((item: any) => {
+      if (formData['ناهنجاری ها']) {
+         const reportData = Object.entries(formData['ناهنجاری ها']).map((item: any) => {
             return {
                title: item[0],
                status: item[1] === 5 ? 'طبیعی' : item[1] === 3 ? 'خفیف' : 'شدید',
@@ -77,26 +77,26 @@ function generateReportsArr(testsData: any, gender: string) {
          });
       }
       
-      if (testsData['ارزیابی پویا']) {
-         const reportData1 = walkingData(testsData['ارزیابی پویا']);
+      if (formData['ارزیابی پویا']) {
+         const reportData1 = walkingData(formData['ارزیابی پویا']);
          const reportJsx1 = walkingJsx(reportData1)
 
-         const reportData2 = swimData(testsData['ارزیابی پویا']);
+         const reportData2 = swimData(formData['ارزیابی پویا']);
          const reportJsx2 = swimJsx(reportData2);
          
-         const reportData3 = squatOneData(testsData['ارزیابی پویا']);
+         const reportData3 = squatOneData(formData['ارزیابی پویا']);
          const reportJsx3 = squatOneJsx(reportData3);
 
-         const reportData4 = squatData(testsData['ارزیابی پویا']);
+         const reportData4 = squatData(formData['ارزیابی پویا']);
          const reportJsx4 = squatJsx(reportData4);
 
-         const reportData5 = handsRotationData(testsData['ارزیابی پویا']);
+         const reportData5 = handsRotationData(formData['ارزیابی پویا']);
          const reportJsx5 = handsRotationJsx(reportData5);
 
-         const reportData6 = handsBendingData(testsData['ارزیابی پویا']);
+         const reportData6 = handsBendingData(formData['ارزیابی پویا']);
          const reportJsx6 = handsBendingJsx(reportData6);
          
-         const reportData7 = handsAwayData(testsData['ارزیابی پویا']);
+         const reportData7 = handsAwayData(formData['ارزیابی پویا']);
          const reportJsx7 = handsAwayJsx(reportData7);
 
          const finalJsx = (
@@ -116,8 +116,8 @@ function generateReportsArr(testsData: any, gender: string) {
          });
       }
 
-      if (testsData['عملکردی وضعیت بدنی']) {
-         const reportJsx = FMSJsx(testsData['عملکردی وضعیت بدنی'])
+      if (formData['عملکردی وضعیت بدنی']) {
+         const reportJsx = FMSJsx(formData['عملکردی وضعیت بدنی'])
          reportsArr.push({
             reportName: 'عملکردی وضعیت بدنی',
             reportJsx,
