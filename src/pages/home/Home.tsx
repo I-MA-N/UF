@@ -1,10 +1,10 @@
 import { TypeAnimation } from "react-type-animation";
 import Link from "../common/Link";
-import GUserData from "../../api/common/GUserData";
+import { useQueryClient } from "@tanstack/react-query";
 
 function HomePage() {
-    const { data } = GUserData();
-    const userRole = data?.access && data.role;  
+    const queryClient = useQueryClient();
+    const userRole = queryClient.getQueryData<unknown, string[], any>(['get: user data', ''])?.role;
 
     return (
         <main className="container flex flex-col justify-center items-center pt-20 md:pt-32 min-h-screen">
@@ -32,7 +32,7 @@ function HomePage() {
                 </p>
                 <Link
                     text="پروفایل من"
-                    url={userRole ? `/${userRole}` : "/login"}
+                    url={userRole ? `/${userRole}/dashboard` : "/login"}
                 />
             </div>
         </main>

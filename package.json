@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://i-ma-n.github.io/UF-Deploy",
+  "homepage": "https://i-ma-n.github.io/UF-Front",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import API from "../axiosInstance"
 import getFormData from "../../utils/getFormData"
 import splitArr from "../../utils/splitArr";
+import axios from "axios";
 
 function PUserData() {
    const queryClient = useQueryClient();
@@ -10,7 +10,7 @@ function PUserData() {
       mutationKey: ['post: user data'],
       mutationFn: async (userData: any) => { 
          const formData = getFormData(userData);
-         const req = await API.post('/set-info/', formData)
+         const req = await axios.post(import.meta.env.VITE_ENDPOINT + '/set-info/', formData)
          return req.data
       },
       onSuccess: (data, variables) => {

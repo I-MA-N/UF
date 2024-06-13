@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import API from "../axiosInstance";
+import axios from "axios";
 
 function managerGSimpleuserActive(username: string) {
    const { data, isPending } = useQuery({
       queryKey: ['managerG: simpleuser active', username],
       queryFn: async () => {
-         const req = await API.get(`manager-manage-account/${username}`);
+         const req = await axios.get(import.meta.env.VITE_ENDPOINT + `/manager-manage-account/${username}`);
          return req.data;
       },
    })

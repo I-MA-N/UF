@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query"
 import getFormData from "../../utils/getFormData"
-import API from "../axiosInstance";
-import { useUserTestsInfoContext } from "../../pages/dashbord/simpleuser/forms/context/UserTestsInfoProvider";
+import { useUserTestsInfoContext } from "../../pages/dashboard/simpleuser/forms/context/UserTestsInfoProvider";
 import { useNavigate } from "react-router-dom";
-import { emptyTestsObj } from "../../pages/dashbord/simpleuser/forms/tests/testsData";
+import { emptyTestsObj } from "../../pages/dashboard/simpleuser/forms/tests/testsData";
+import axios from "axios";
 
 type formNameActionType = {
    formName: string,
@@ -17,8 +17,8 @@ function simpleuserGFormData() {
    const { mutate, isError } = useMutation({
       mutationKey: ['simpluserG: form data'],
       mutationFn: async (data: formNameActionType) => {
-         const formData = getFormData({formName: data.formName});
-         const req = await API.post('/simpleuser-form-info/', formData)
+         const formData = getFormData({ formName: data.formName });
+         const req = await axios.post(import.meta.env.VITE_ENDPOINT + '/simpleuser-form-info/', formData)
          return req.data;
       },
       onSuccess: (data: any, variables) => {
@@ -31,7 +31,7 @@ function simpleuserGFormData() {
             })
             throw new Error('Access false or no data available!');
          }
-         
+
          setUserTestsInfo(() => {
             return {
                formName: variables.formName,
@@ -39,13 +39,13 @@ function simpleuserGFormData() {
             }
          })
          if (variables.action === "tests") {
-            navigate(`/simpleuser/forms/tests`);
+            navigate(`/simpleuser/dashboard/forms/tests`);
          } else if (variables.action === "reports") {
-            navigate(`/simpleuser/forms/reports`);
+            navigate(`/simpleuser/dashboard/forms/reports`);
          } else if (variables.action === "correctiveProgram") {
-            navigate(`/simpleuser/forms/correctiveprogram`);
+            navigate(`/simpleuser/dashboard/forms/correctiveprogram`);
          } else if (variables.action === "fitnessProgram") {
-            navigate(`/simpleuser/forms/fitnessprogram`);
+            navigate(`/simpleuser/dashboard/forms/fitnessprogram`);
          } else {
             navigate(`/unknownroute`);
          }

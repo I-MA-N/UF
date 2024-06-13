@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import PResetPass from "../../api/common/password/PResetPass";
 import Container from "../common/Container";
-import Input from "./components/Input";
+import Input from "../common/Input";
 import { useForm } from "react-hook-form";
 import Btn from "../common/Btn";
 

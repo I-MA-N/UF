@@ -1,30 +1,22 @@
-import { useEffect } from "react";
 import { useForm } from "react-hook-form"
 import Container from "../common/Container"
-import Input from "./components/Input";
+import Input from "../common/Input";
 import LoginBtns from "./components/LoginBtns";
 import PLogin from "../../api/common/PLogin";
-import PLogout from "../../api/common/PLogout";
 
 
 function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { mutate: loginFn, error: loginError, isPending } = PLogin();
-    const { mutate: logoutFn } = PLogout();
-
-    useEffect(() => {
-        sessionStorage.removeItem('jwt');
-        logoutFn();
-    }, [])
+    const { mutate, error, isPending } = PLogin();
 
     function onSubmit(data: any) {
-        loginFn(data)
+        mutate(data)
     }
 
     return (
         <Container>
             <p className="text-xs text-yellow mb-8 md:mb-16">
-                {loginError && 'نام کاربری یا رمز عبور اشتباه است!'}
+                {error && 'نام کاربری یا رمز عبور اشتباه است!'}
             </p>
             <h2 className="text-2xl md:text-4xl text-center font-Estedad-Black mb-8">ورود</h2>
             <form onSubmit={handleSubmit(onSubmit)}>

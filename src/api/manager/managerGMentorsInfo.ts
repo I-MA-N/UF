@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import API from "../axiosInstance";
+import axios from "axios";
 
 function managerGMentorsInfo() {
    const { data, isError, isPending } = useQuery({
       queryKey: ['managerG: mentors data'],
       queryFn: async () => {
-         const req = await API.get('/manager-get-subusers-info/')
+         const req = await axios.get(import.meta.env.VITE_ENDPOINT + '/manager-get-subusers-info/')
          return req.data
       },
       select: (data: any) => {

@@ -1,18 +1,18 @@
 import { useMutation } from "@tanstack/react-query";
-import API from "../../axiosInstance";
 import getFormData from "../../../utils/getFormData";
+import axios from "axios";
 
 function PChangePass() {
-   const { mutate, data } = useMutation({
+   const { mutate, data, isPending } = useMutation({
       mutationKey: ['post: change pass'],
       mutationFn: async (data: any) => {
          const formData = getFormData(data);
-         const req = await API.post('/change-password/', formData);
+         const req = await axios.post(import.meta.env.VITE_ENDPOINT + '/change-password/', formData);
          return req.data
       },
    })
 
-   return { mutate, data }
+   return { mutate, data, isPending }
 }
 
 export default PChangePass;

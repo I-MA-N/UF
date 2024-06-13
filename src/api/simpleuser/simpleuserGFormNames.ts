@@ -1,23 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
-import API from "../axiosInstance";
+import axios from "axios";
+import { FormObj, TestObj } from "../../types/TestsTypes";
 
 function simpleuserGFormNames() {
    const { data, isPending } = useQuery({
       queryKey: ['simpluserG: form names'],
       queryFn: async () => {
-         const req = await API.get('/simpleuser-form-info/');
+         const req = await axios.get(import.meta.env.VITE_ENDPOINT + '/simpleuser-form-info/');
          return req.data;
       },
       select: (data) => {
-         const formsArr: any[] = [];
+         const formsArr: FormObj[] = [];
          Object.entries(data).forEach((formInfo, index) => {
-            const newFormObj = {
+            const newFormObj: FormObj = {
                id: index + 1,
                formName: formInfo[0],
-               formTests: [] as any
+               formTests: []
             }
             Object.entries(formInfo[1]!).forEach((testInfo, index) => {
-               const newTestObj = {
+               const newTestObj: TestObj = {
                   id: index + 1,
                   testName: testInfo[0],
                   testAccess: testInfo[1]

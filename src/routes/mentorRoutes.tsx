@@ -1,49 +1,48 @@
-import ProtectedRoute from "../pages/authentication/ProtectedRoute";
-import Mentor from "../pages/dashbord/mentor/Mentor";
-import MentoringContextProvider from "../pages/dashbord/mentor/context/MentoringContextProvider";
-import AddSimpleuser from "../pages/dashbord/mentor/mentoring/addSimpleuser/AddSimpleuser";
-import Forms from "../pages/dashbord/mentor/mentoring/forms/Forms";
-import Tests from "../pages/dashbord/mentor/mentoring/forms/tests/Tests";
-import MembersList from "../pages/dashbord/mentor/mentoring/memebersList/MembersList";
+import Aboutus from "../pages/aboutus/Aboutus";
+import Mentor from "../pages/dashboard/mentor/Mentor";
+import MentoringContextProvider from "../pages/dashboard/mentor/context/MentoringContextProvider";
+import AddSimpleuser from "../pages/dashboard/mentor/addSimpleuser/AddSimpleuser";
+import Forms from "../pages/dashboard/mentor/forms/Forms";
+import Tests from "../pages/dashboard/mentor/forms/tests/Tests";
+import MembersList from "../pages/dashboard/mentor/memebersList/MembersList";
+import Home from "../pages/home/Home";
 
 const mentorRoutes = [
    {
-      path: '/mentor',
-      element: <ProtectedRoute>
-         <Mentor />
-      </ProtectedRoute>,
+      path: '/mentor/home',
+      element: <Home />
    },
    {
-      path: '/mentor/mentoring/memberslist',
-      element: <ProtectedRoute>
-         <MentoringContextProvider>
-            <MembersList />
-         </MentoringContextProvider>
-      </ProtectedRoute>,
+      path: '/mentor/aboutus',
+      element: <Aboutus />
    },
    {
-      path: '/mentor/mentoring/addsimpleuser',
-      element: <ProtectedRoute>
-         <MentoringContextProvider>
-            <AddSimpleuser />
-         </MentoringContextProvider>
-      </ProtectedRoute>,
+      path: '/mentor/dashboard',
+      element: <Mentor />
    },
    {
-      path: '/mentor/mentoring/forms',
-      element: <ProtectedRoute>
-         <MentoringContextProvider>
-            <Forms />
-         </MentoringContextProvider>
-      </ProtectedRoute>,
+      path: '/mentor/dashboard/memberslist',
+      element: <MentoringContextProvider>
+         <MembersList />
+      </MentoringContextProvider>
    },
    {
-      path: '/mentor/mentoring/forms/tests',
-      element: <ProtectedRoute>
-         <MentoringContextProvider>
-            <Tests />
-         </MentoringContextProvider>
-      </ProtectedRoute>,
+      path: '/mentor/dashboard/addsimpleuser',
+      element: <MentoringContextProvider>
+         <AddSimpleuser />
+      </MentoringContextProvider>
+   },
+   {
+      path: '/mentor/dashboard/forms',
+      element: <MentoringContextProvider>
+         <Forms />
+      </MentoringContextProvider>
+   },
+   {
+      path: '/mentor/dashboard/forms/tests',
+      element: <MentoringContextProvider>
+         <Tests />
+      </MentoringContextProvider>
    },
 ]
 

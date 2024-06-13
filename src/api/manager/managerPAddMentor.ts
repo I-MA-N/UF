@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import getFormData from "../../utils/getFormData";
-import API from "../axiosInstance";
 import PUserData from "../common/PUserData";
+import axios from "axios";
 
 type newMentorType = {
    username: string,
@@ -30,7 +30,7 @@ function managerPAddMentor() {
             email: data.email,
             password: data.password,
          });
-         const req = await API.post('/manager-add-mentor/', formData);
+         const req = await axios.post(import.meta.env.VITE_ENDPOINT + '/manager-add-mentor/', formData);
          return req.data
       },
       onSuccess: (data, variables) => {

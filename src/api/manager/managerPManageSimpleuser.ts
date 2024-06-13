@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import API from "../axiosInstance";
 import getFormData from "../../utils/getFormData";
+import axios from "axios";
 
 function managerPManageSimpleuser(username: string) {
    const queryClient = useQueryClient();
@@ -9,7 +9,7 @@ function managerPManageSimpleuser(username: string) {
       mutationKey: ['managerP: manage simpleuser', username],
       mutationFn: async (action: string) => {
          const formData = getFormData({action});
-         const req = await API.post(`manager-manage-account/${username}`, formData);
+         const req = await axios.post(import.meta.env.VITE_ENDPOINT + `/manager-manage-account/${username}`, formData);
          return req.data
       },
       onSuccess: (data) => {

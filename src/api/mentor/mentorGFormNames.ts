@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import API from "../axiosInstance";
+import axios from "axios";
 
 function mentorGFormNames(username: string) {
    const { data, error, isPending } = useQuery({
       queryKey: ['mentorG: form names', username],
       queryFn: async () => {
-         const req = await API.get(`/mentor-form-info/${username}`);
+         const req = await axios.get(import.meta.env.VITE_ENDPOINT + `/mentor-form-info/${username}`);
          return req.data
       },
       select: (data) => {

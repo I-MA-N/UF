@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import API from "../axiosInstance";
 import getFormData from "../../utils/getFormData";
-import { useMentoringContext } from "../../pages/dashbord/mentor/context/MentoringContextProvider";
+import { useMentoringContext } from "../../pages/dashboard/mentor/context/MentoringContextProvider";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 
 function mentorPAddSimpleuser() {
@@ -13,7 +13,7 @@ function mentorPAddSimpleuser() {
       mutationKey: ['mentorP: add simpleuser'],
       mutationFn: async (data: any) => {
          const formData = getFormData(data)
-         const req = await API.post('/mentor-add-simpleuser/', formData)
+         const req = await axios.post(import.meta.env.VITE_ENDPOINT + '/mentor-add-simpleuser/', formData)
          return req.data
       },
       onSuccess: (data) => {
@@ -25,7 +25,7 @@ function mentorPAddSimpleuser() {
                username: data.username
             }
          })
-         navigate("/mentor/mentoring/forms")
+         navigate("/mentor/dashboard/forms")
       }
    })
 

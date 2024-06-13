@@ -1,13 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
-import API from "../axiosInstance";
 import getFormData from "../../utils/getFormData";
+import axios from "axios";
 
 function mentorPUserExist() {
    const { mutate, data, isError } = useMutation({
       mutationKey: ['mentorP: user exist'],
       mutationFn: async (data: { username: string, orgName: string }) => {
          const formData = getFormData(data);
-         const req = await API.post('/simpleuser-exists/', formData)
+         const req = await axios.post(import.meta.env.VITE_ENDPOINT + '/simpleuser-exists/', formData)
          
          return req.data
       }

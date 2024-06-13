@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import Container from "../../common/Container"
-import Input from "./Input";
+import Input from "../../common/Input";
 import Btn from "../../common/Btn";
 import validateUsername from "../../../utils/validateUsername";
 import PForgotPass from "../../../api/common/password/PForgotPass";

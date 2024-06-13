@@ -1,13 +1,20 @@
-import { NavLink, Outlet } from "react-router-dom"
-import ProfileBtn from "./ProfileBtn";
-import GUserData from "../../api/common/GUserData";
+import { NavLink, Outlet, useNavigate } from "react-router-dom"
+import checkAuthentication from "../authentication/checkAuthentication";
+import { useEffect } from "react";
 
 type SetStyleFuncProps = {
     isActive: boolean
 }
 
 function Header() {
-    const { data, isError } = GUserData();
+    const role = checkAuthentication();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (role) {
+            navigate(`/${role}/home`)
+        }
+    }, [role])
 
     return (
         <>
@@ -19,14 +26,9 @@ function Header() {
                     <NavLink to="/aboutus" className={({ isActive }: SetStyleFuncProps) => isActive ? 'font-Estedad-Black before:opacity-100 navlink' : ' navlink'}>
                         درباره ما
                     </NavLink>
-                    {
-                        data?.role && !isError ?
-                            <ProfileBtn role={data.role} />
-                            :
-                            <NavLink to="/login" className={({ isActive }: SetStyleFuncProps) => isActive ? 'font-Estedad-Black before:opacity-100 navlink' : ' navlink'}>
-                                ورود
-                            </NavLink>
-                    }
+                    <NavLink to="/login" className={({ isActive }: SetStyleFuncProps) => isActive ? 'font-Estedad-Black before:opacity-100 navlink' : ' navlink'}>
+                        ورود
+                    </NavLink>
                 </div>
             </nav>
             <Outlet />

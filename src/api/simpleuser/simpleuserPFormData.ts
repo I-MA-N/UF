@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
-import API from "../axiosInstance";
 import getFormData from "../../utils/getFormData";
+import axios from "axios";
 
 type dataType = {
    formName: string,
@@ -13,7 +13,7 @@ function simpleuserPFormData() {
       mutationKey: ['simpleuserP: form data'],
       mutationFn: async (data: dataType) => {
          const formData = getFormData(data);
-         const req = await API.post('/simpleuser-form-info/', formData);
+         const req = await axios.post(import.meta.env.VITE_ENDPOINT + '/simpleuser-form-info/', formData);
          return req.data;
       }
    })

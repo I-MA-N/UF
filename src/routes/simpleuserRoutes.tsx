@@ -1,56 +1,53 @@
-import ProtectedRoute from "../pages/authentication/ProtectedRoute";
-import Simpleuser from "../pages/dashbord/simpleuser/Simpleuser";
-import Forms from "../pages/dashbord/simpleuser/forms/Forms";
-import UserTestsInfoProvider from "../pages/dashbord/simpleuser/forms/context/UserTestsInfoProvider";
-import CorrectiveProgram from "../pages/dashbord/simpleuser/forms/program/CorrectiveProgram";
-import FitnessProgram from "../pages/dashbord/simpleuser/forms/program/FitnessProgram";
-import Reports from "../pages/dashbord/simpleuser/forms/reports/Reports";
-import Tests from "../pages/dashbord/simpleuser/forms/tests/Tests";
+import Aboutus from "../pages/aboutus/Aboutus";
+import Simpleuser from "../pages/dashboard/simpleuser/Simpleuser";
+import Forms from "../pages/dashboard/simpleuser/forms/Forms";
+import UserTestsInfoProvider from "../pages/dashboard/simpleuser/forms/context/UserTestsInfoProvider";
+import CorrectiveProgram from "../pages/dashboard/simpleuser/forms/program/CorrectiveProgram";
+import FitnessProgram from "../pages/dashboard/simpleuser/forms/program/FitnessProgram";
+import Reports from "../pages/dashboard/simpleuser/forms/reports/Reports";
+import TestsFirstLoad from "../pages/dashboard/simpleuser/forms/tests/TestsFirstLoad";
+import Home from "../pages/home/Home";
 
 const simpleuserRoutes = [
    {
-      path: '/simpleuser',
-      element: <ProtectedRoute>
-         <UserTestsInfoProvider>
-            <Simpleuser />
-         </UserTestsInfoProvider>
-      </ProtectedRoute>
+      path: '/simpleuser/home',
+      element: <Home />
    },
    {
-      path: '/simpleuser/forms',
-      element: <ProtectedRoute>
-         <UserTestsInfoProvider>
+      path: '/simpleuser/aboutus',
+      element: <Aboutus />
+   },
+   {
+      path: '/simpleuser/dashboard',
+      element: <UserTestsInfoProvider>
+         <Simpleuser />
+      </UserTestsInfoProvider>
+   },
+   {
+      path: '/simpleuser/dashboard/forms',
+      element: <UserTestsInfoProvider>
             <Forms />
          </UserTestsInfoProvider>
-      </ProtectedRoute>,
    },
    {
-      path: '/simpleuser/forms/tests',
-      element: <ProtectedRoute>
-         <UserTestsInfoProvider>
-            <Tests />
+      path: '/simpleuser/dashboard/forms/tests',
+      element: <UserTestsInfoProvider>
+            <TestsFirstLoad />
          </UserTestsInfoProvider>
-      </ProtectedRoute>,
    },
    {
-      path: '/simpleuser/forms/reports',
-      element: <ProtectedRoute>
-         <UserTestsInfoProvider>
+      path: '/simpleuser/dashboard/forms/reports',
+      element: <UserTestsInfoProvider>
             <Reports />
          </UserTestsInfoProvider>
-      </ProtectedRoute>,
    },
    {
-      path: '/simpleuser/forms/correctiveprogram',
-      element: <ProtectedRoute>
-         <CorrectiveProgram />
-      </ProtectedRoute>,
+      path: '/simpleuser/dashboard/forms/correctiveprogram',
+      element: <CorrectiveProgram />
    },
    {
-      path: '/simpleuser/forms/fitnessprogram',
-      element: <ProtectedRoute>
-         <FitnessProgram />
-      </ProtectedRoute>,
+      path: '/simpleuser/dashboard/forms/fitnessprogram',
+      element: <FitnessProgram />
    },
 ]
 
