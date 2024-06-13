@@ -17,8 +17,8 @@ function TestsFirstLoad() {
    if (isPending && formDataPending) return <h1>Loading...</h1>
 
    if (formData && data) {
-      if (formObj && formData.access !== 'false') {
-         const testsArr = formObj.formTests.filter(test => test.testAccess.includes('simpleuser'))
+      const testsArr = formObj?.formTests.filter(test => test.testAccess.includes('simpleuser'))
+      if (formObj && testsArr && formData.access !== 'false') {
          return <Tests testsArr={testsArr} initialFormData={formData} />
       } else {
          return <Container>

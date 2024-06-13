@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form";
 import Container from "../../../../common/Container";
-import FormsBtn from "./FormsBtn";
+import TestsBtns from "./TestsBtns";
 import Btn from "../../../../common/Btn";
 import generateTestInputs from "../../../common/tests/generateTestInputs";
 import testsData from "./testsData";
@@ -18,21 +18,23 @@ function Tests({ testsArr, initialFormData }: TestsProps) {
 
    const [formData, setFormData] = useState(initialFormData);
    console.log('formData in tests: ', formData)
-   const [page, setPage] = useState(testsArr && testsArr[0].testName);
-   let pageTxt = testsArr && testsArr[0].testName;
+   const [page, setPage] = useState(testsArr[0].testName);
+   let pageTxt = testsArr[0].testName;
 
    const submitHandler = (data: any) => {
-      setFormData((prevValue: any) => ({
-         ...data,
-         ...prevValue
-      }))
+      setFormData((prevValue: any) => {
+         const newData = { ...prevValue };
+         newData[page as keyof typeof newData] = data;
+         return newData
+      })
       reset();
       setPage(pageTxt);
    }
 
    return (
       <Container withTitle={false}>
-         <FormsBtn getValues={getValues} page={page} formData={formData} />
+         <TestsBtns getValues={getValues} page={page} formData={formData} />
+
          <form
             className="w-full"
             onSubmit={handleSubmit(submitHandler)}
@@ -45,7 +47,7 @@ function Tests({ testsArr, initialFormData }: TestsProps) {
                         text={test.testName}
                         type="submit"
                         className={`w-auto px-6 py-3 flex-shrink-0 text-white
-                                 ${page ? (page === test.testName ? 'bg-secondary' : 'bg-transparent border border-white') : (testsArr && testsArr[0].testName === test.testName ? 'bg-secondary' : 'bg-transparent border border-white')}`
+                                 ${page === test.testName ? 'bg-secondary' : 'bg-transparent border border-white'}`
                         }
                         onClick={() => pageTxt = test.testName}
                      />
@@ -54,13 +56,13 @@ function Tests({ testsArr, initialFormData }: TestsProps) {
             </div>
 
             {
-               page ? testsData[page as keyof typeof testsData].testSubTitle : testsArr && testsData[testsArr[0].testName as keyof typeof testsData].testSubTitle &&
+               testsData[page as keyof typeof testsData].testSubTitle &&
                   <p className="text-sm leading-6 mb-6 text-center">
-                     {page ? testsData[page as keyof typeof testsData].testSubTitle : testsArr && testsData[testsArr[0].testName as keyof typeof testsData].testSubTitle}
+                     {testsData[page as keyof typeof testsData].testSubTitle}
                   </p>
             }
 
-            <div className={page ? testsData[page as keyof typeof testsData].testClassName : testsArr && testsData[testsArr[0].testName as keyof typeof testsData].testClassName}>
+            <div className={testsData[page as keyof typeof testsData].testClassName}>
                {
                   generateTestInputs({
                      initialData: formData[page],

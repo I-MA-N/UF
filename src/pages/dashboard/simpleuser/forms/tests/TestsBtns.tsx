@@ -1,17 +1,16 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { FieldValues, UseFormGetValues } from "react-hook-form";
-import { useUserTestsInfoContext } from "../context/UserTestsInfoProvider";
 import simpleuserPFormData from "../../../../../api/simpleuser/simpleuserPFormData";
 import { useState } from "react";
 
-type FormsBtnPropsType = {
+type TestsBtnsPropsType = {
    getValues: UseFormGetValues<FieldValues>,
    page: string,
    formData: any
 }
 
-function FormsBtn({ getValues, page, formData }: FormsBtnPropsType) {
-   const { userTestsInfo } = useUserTestsInfoContext();
+function TestsBtns({ getValues, page, formData }: TestsBtnsPropsType) {
+   const [searchParams] = useSearchParams();
    const [showModal, setShowModal] = useState(false);
    const { mutate, data } = simpleuserPFormData();
    const navigate = useNavigate();
@@ -33,15 +32,13 @@ function FormsBtn({ getValues, page, formData }: FormsBtnPropsType) {
                type="button"
                className="flex items-center gap-2"
                onClick={() => {
-                  console.log(formData)
-                  // const newObj = { ...userTestsInfo.data };
-                  // newObj[page as keyof typeof newObj] = getValues();
-                  // mutate({
-                  //    formName: userTestsInfo.formName,
-                  //    setData: true,
-                  //    data: JSON.stringify(formData).toString()
-                  //    // data: JSON.stringify(newObj).toString()
-                  // })
+                  const newObj = { ...formData };
+                  newObj[page as keyof typeof newObj] = getValues();
+                  mutate({
+                     formName: searchParams.get('formName')!,
+                     setData: true,
+                     data: JSON.stringify(newObj).toString()
+                  })
                }}
             >
                ذخیره
@@ -85,4 +82,4 @@ function FormsBtn({ getValues, page, formData }: FormsBtnPropsType) {
    )
 }
 
-export default FormsBtn
+export default TestsBtns
