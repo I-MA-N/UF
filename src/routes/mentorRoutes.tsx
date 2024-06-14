@@ -1,11 +1,10 @@
 import Aboutus from "../pages/aboutus/Aboutus";
 import Mentor from "../pages/dashboard/mentor/Mentor";
-import MentoringContextProvider from "../pages/dashboard/mentor/context/MentoringContextProvider";
-import AddSimpleuser from "../pages/dashboard/mentor/addSimpleuser/AddSimpleuser";
 import Forms from "../pages/dashboard/mentor/forms/Forms";
 import Tests from "../pages/dashboard/mentor/forms/tests/Tests";
-import MembersList from "../pages/dashboard/mentor/memebersList/MembersList";
 import Home from "../pages/home/Home";
+import MembersFirstLoad from "../pages/dashboard/mentor/memebersList/MembersFirstLoad";
+import CheckUserNameFirstLoad from "../pages/dashboard/mentor/addSimpleuser/CheckUserNameFirstLoad";
 
 const mentorRoutes = [
    {
@@ -21,29 +20,45 @@ const mentorRoutes = [
       element: <Mentor />
    },
    {
-      path: '/mentor/dashboard/memberslist',
-      element: <MentoringContextProvider>
-         <MembersList />
-      </MentoringContextProvider>
+      path: '/mentor/dashboard/members',
+      element: <MembersFirstLoad />
    },
    {
-      path: '/mentor/dashboard/addsimpleuser',
-      element: <MentoringContextProvider>
-         <AddSimpleuser />
-      </MentoringContextProvider>
+      path: '/mentor/dashboard/members/:orgName',
+      element: <CheckUserNameFirstLoad />
    },
    {
-      path: '/mentor/dashboard/forms',
-      element: <MentoringContextProvider>
-         <Forms />
-      </MentoringContextProvider>
+      path: '/mentor/dashboard/members/:orgName/:username',
+      element: <Forms />
    },
    {
-      path: '/mentor/dashboard/forms/tests',
-      element: <MentoringContextProvider>
-         <Tests />
-      </MentoringContextProvider>
+      path: '/mentor/dashboard/members/:orgName/:username/:formName',
+      element: <Tests />
    },
+   // {
+   //    path: '/mentor/dashboard/memberslist',
+   //    element: <MentoringContextProvider>
+   //       <MembersList />
+   //    </MentoringContextProvider>
+   // },
+   // {
+   //    path: '/mentor/dashboard/addsimpleuser',
+   //    element: <MentoringContextProvider>
+   //       <AddSimpleuser />
+   //    </MentoringContextProvider>
+   // },
+   // {
+   //    path: '/mentor/dashboard/forms',
+   //    element: <MentoringContextProvider>
+   //       <Forms />
+   //    </MentoringContextProvider>
+   // },
+   // {
+   //    path: '/mentor/dashboard/forms/tests',
+   //    element: <MentoringContextProvider>
+   //       <Tests />
+   //    </MentoringContextProvider>
+   // },
 ]
 
 export default mentorRoutes;

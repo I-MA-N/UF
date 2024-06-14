@@ -1,31 +1,30 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import getFormData from "../../utils/getFormData";
-import { useMentoringContext } from "../../pages/dashboard/mentor/context/MentoringContextProvider";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import AddSimpleuserFormFields from "../../types/AddSimpleuserFormFields";
 
+type Variables = AddSimpleuserFormFields & {
+   orgName: string
+}
+
+type Response = {
+   [k: string]: string
+}
 
 function mentorPAddSimpleuser() {
-   const { setMentoringData } = useMentoringContext();
-   const navigate = useNavigate();
+   const queryClient = useQueryClient();
 
    const { mutateAsync, isError } = useMutation({
       mutationKey: ['mentorP: add simpleuser'],
-      mutationFn: async (data: any) => {
+      mutationFn: async (data: Variables) => {
          const formData = getFormData(data)
          const req = await axios.post(import.meta.env.VITE_ENDPOINT + '/mentor-add-simpleuser/', formData)
-         return req.data
+         return req.data as Response
       },
-      onSuccess: (data) => {
-         if (data.error && data.error !== "user already exists.")
-            throw new Error('Failed to add user to subusers!')
-         setMentoringData!(prevUser => {
-            return {
-               ...prevUser,
-               username: data.username
-            }
+      onSuccess: (data, variables) => {
+         queryClient.invalidateQueries({
+            queryKey: ["mentorG: users data", variables.orgName]
          })
-         navigate("/mentor/dashboard/forms")
       }
    })
 

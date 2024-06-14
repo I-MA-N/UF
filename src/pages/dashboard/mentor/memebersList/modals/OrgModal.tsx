@@ -4,10 +4,10 @@ type OrgModalProps = {
    orgSelected: string,
    setOrgSelected: React.Dispatch<React.SetStateAction<string>>,
    setOrgModal: React.Dispatch<React.SetStateAction<boolean>>,
-   orgsName: string[],
+   orgNames: string[],
 }
 
-function OrgModal({ orgSelected, setOrgSelected, setOrgModal, orgsName }: OrgModalProps) {
+function OrgModal({ orgSelected, setOrgSelected, setOrgModal, orgNames }: OrgModalProps) {
    const clickHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       setOrgSelected((e.target as HTMLButtonElement).textContent!);
       setOrgModal(false);
@@ -33,7 +33,7 @@ function OrgModal({ orgSelected, setOrgSelected, setOrgModal, orgsName }: OrgMod
             />
             <div className="mt-3.5">
                {
-                  orgsName.map(orgName => (
+                  orgNames.map(orgName => (
                      <button key={orgName} className="org-modal-item" onClick={clickHandler}>{orgName}</button>
                   ))
                }

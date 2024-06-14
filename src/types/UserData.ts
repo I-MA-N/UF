@@ -17,4 +17,6 @@ type UserData = {
    info: string
 }
 
+export type UserData2 = Omit<UserData, "access" | "subusers" | "lastlogin" | "info">;
+
 export default UserData;

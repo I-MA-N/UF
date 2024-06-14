@@ -1,34 +1,20 @@
 import profileImg from '../../../../../../assets/images/profile-img.png'
 import { useState } from "react"
 import UserChangeModal from "./UserChangeModal"
-import { useNavigate } from 'react-router-dom'
-import { useMentoringContext } from '../../../context/MentoringContextProvider'
 import GUserData from '../../../../../../api/common/GUserData'
 import Btn from '../../../../../common/Btn'
 import parseDate from '../../../../../../utils/parseDate'
+import Link from '../../../../../common/Link'
 
 type UserModalProps = {
    username: string,
-   setUsername: React.Dispatch<React.SetStateAction<string | null>>
+   setUsername: React.Dispatch<React.SetStateAction<string | null>>,
+   orgSelected: string
 }
 
-function UserModal({ username, setUsername }: UserModalProps) {
+function UserModal({ username, setUsername, orgSelected }: UserModalProps) {
    const [changeModalUsername, setChangeModalUsername] = useState<string | null>(null);
-   const { setMentoringData } = useMentoringContext();
    const { data } = GUserData(username);
-   const navigate = useNavigate();
-
-   const clickHandler = () => {
-      setMentoringData(prevValue => {
-         return {
-            ...prevValue,
-            username: data.username,
-            orgName: data.orgNames.split(';')[0],
-         }
-      })
-
-      navigate("/mentor/dashboard/forms");
-   }
 
    return (
       <>
@@ -55,11 +41,10 @@ function UserModal({ username, setUsername }: UserModalProps) {
                   {
                      data?.username &&
                      <>
-                        <Btn
+                        <Link
                            text='ارزیابی'
-                           type='button'
-                           className='bg-secondary text-white w-auto h-8 px-6'
-                           onClick={clickHandler}
+                           className='inline-blcok bg-secondary text-white w-auto h-8 px-6'
+                           url={`/mentor/dashboard/members/${orgSelected}/${data?.username}`}
                         />
                         <Btn
                            text='ویرایش'
@@ -109,7 +94,7 @@ function UserModal({ username, setUsername }: UserModalProps) {
             </div>
          </div>
          {
-            changeModalUsername &&
+            changeModalUsername && data &&
             <UserChangeModal userData={data} setUsername={setChangeModalUsername} />
          }
       </>

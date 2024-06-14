@@ -1,11 +1,11 @@
 import { ReactNode, useState } from "react"
-import { FieldValues, RegisterOptions, UseFormRegister } from "react-hook-form"
+import { RegisterOptions, UseFormRegister } from "react-hook-form"
 
 type LoginInputPropTypes = {
     name: string,
     text: string,
     placeholder: string,
-    register: UseFormRegister<FieldValues>
+    register: UseFormRegister<any>
     registerOptions?: RegisterOptions,
     direction: "ltr" | "rtl",
     isNumberType?: boolean,

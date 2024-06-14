@@ -24,7 +24,7 @@ function PUserData() {
          
          // When mentor changing specific user data then list should be updated -> (MembersList)
          queryClient.invalidateQueries({
-            queryKey: ['get: users data', splitArr(data.orgNames)[0]]
+            queryKey: ["mentorG: users data", splitArr(data.orgNames)[0]]
          })
       }
    })

@@ -1,33 +1,29 @@
-import { useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import UserModal from "./modals/user/UserModal";
 import OrgModal from "./modals/OrgModal";
 import SearchElement from "./components/SearchElement";
-import { useUserDataContext } from "../../../authentication/UserDataProvider";
-import splitArr from "../../../../utils/splitArr";
-import mentorGSimpleusersData from "../../../../api/mentor/mentorGSimpleusersData";
-import { useMentoringContext } from "../context/MentoringContextProvider";
 import Container from "../../../common/Container";
 import Btn from "../../../common/Btn";
-import ListElement from "./components/ListElement";
+import ListElement from "./components/MembersListElem";
+import { UserData2 } from "../../../../types/UserData";
 
-function MembersList() {
-   const userData = useUserDataContext();
-   const orgsName = useMemo(() => splitArr(userData.orgNames), []);
-   const [orgSelected, setOrgSelected] = useState(orgsName[0]);
+type MembersProps = {
+   orgSelected: string,
+   setOrgSelected: React.Dispatch<React.SetStateAction<string>>,
+   orgNames: string[],
+   users: UserData2[],
+}
+
+function Members({ orgSelected, setOrgSelected, orgNames, users }: MembersProps) {
    const [orgModal, setOrgModal] = useState(false);
-
-   const { data, isError, isPending } = mentorGSimpleusersData(orgSelected);
-   const [selectedUsers, setSelectedUsers] = useState<any>(data);
-
-   // Forms Context
-   const { setMentoringData } = useMentoringContext();
-
-   // Data for User Modal
+   const [selectedUsers, setSelectedUsers] = useState(users);
    const [username, setUsername] = useState<string | null>(null);
    const navigate = useNavigate();
 
-   if (isPending) return <h1>Loading...</h1>
+   useEffect(() => {
+      setSelectedUsers(users);
+   }, [users])
 
    return (
       <Container>
@@ -37,11 +33,6 @@ function MembersList() {
             کاربر" یک نفر را در سازمان مد نظرتان ثبت نام کنید.
             <br />
          </h2>
-
-         {
-            isError &&
-            <p className="text-yellow text-xs mb-4">مشکلی در دریافت اطلاعات کاربران این سازمان بوجود آمده!</p>
-         }
 
          <Btn
             text={orgSelected}
@@ -54,8 +45,8 @@ function MembersList() {
          />
 
          <ul className="w-64 max-h-[304px] divide-y divide-primary mt-0.5 rounded-b-[18px] overflow-y-auto">
-            <SearchElement setSelectedUsers={setSelectedUsers} data={data} />
-            <ListElement selectedUsers={selectedUsers} data={data} setUsername={setUsername} />
+            <SearchElement setSelectedUsers={setSelectedUsers} users={users} />
+            <ListElement selectedUsers={selectedUsers} setUsername={setUsername} />
          </ul>
 
          <Btn
@@ -68,13 +59,7 @@ function MembersList() {
             </svg>}
             className="mt-0.5"
             onClick={() => {
-               setMentoringData!(prevValue => {
-                  return {
-                     ...prevValue,
-                     orgName: orgSelected
-                  }
-               })
-               navigate('/mentor/dashboard/addsimpleuser')
+               navigate(`/mentor/dashboard/members/${orgSelected}`)
             }}
          />
          <h3 className="text-center text-xs font-Estedad-ExtraLight mt-4">
@@ -85,14 +70,14 @@ function MembersList() {
 
          {
             orgModal &&
-            <OrgModal orgSelected={orgSelected} setOrgSelected={setOrgSelected} setOrgModal={setOrgModal} orgsName={orgsName} />
+            <OrgModal orgSelected={orgSelected} setOrgSelected={setOrgSelected} setOrgModal={setOrgModal} orgNames={orgNames} />
          }
          {
             username &&
-            <UserModal username={username} setUsername={setUsername} />
+            <UserModal username={username} setUsername={setUsername} orgSelected={orgSelected} />
          }
       </Container>
    )
 }
 
-export default MembersList
+export default Members

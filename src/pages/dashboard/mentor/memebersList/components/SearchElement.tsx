@@ -1,9 +1,11 @@
+import { UserData2 } from "../../../../../types/UserData"
+
 type SearchElementPropsType = {
    setSelectedUsers: React.Dispatch<any>,
-   data: any
+   users: UserData2[]
 }
 
-function SearchElement({ setSelectedUsers, data }: SearchElementPropsType) {
+function SearchElement({ setSelectedUsers, users }: SearchElementPropsType) {
    return (
       <li className="flex items-center gap-4 px-3 h-10 text-xs bg-white text-primary">
          <label htmlFor="search">
@@ -20,7 +22,7 @@ function SearchElement({ setSelectedUsers, data }: SearchElementPropsType) {
             className="w-full bg-transparent outline-none border-l border-white focus:border-primary placeholder:text-[10px] transition-colors duration-300"
             placeholder="جستجو بر اساس نام کاربری یا نام و نام خانوادگی"
             onChange={(e) => setSelectedUsers(
-               data.filter((user: any) => user.username.startsWith(e.target.value) || user.name.startsWith(e.target.value))
+               users.filter((user: any) => user.username.startsWith(e.target.value) || user.name.startsWith(e.target.value))
             )}
          />
       </li>
