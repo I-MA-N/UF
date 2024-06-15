@@ -1,13 +1,13 @@
 import { useState } from "react";
 import Container from "../../common/Container";
-import ShowInfo from "../common/ShowInfo";
+import ShowInfo from "../common/components/ShowInfo";
 import Link from "../../common/Link";
 import Btn from "../../common/Btn";
-import ProfileModal from "../common/ProfileModal";
+import ProfileModal from "../common/components/ProfileModal";
 import { useUserDataContext } from "../../authentication/UserDataProvider";
 
 function Manager() {
-   const [profileModal, setProfileModal] = useState<any>(null);
+   const [profileModal, setProfileModal] = useState(false);
    const userData = useUserDataContext();
 
    return (
@@ -15,7 +15,7 @@ function Manager() {
          <div className="mb-6">
             <h2 className="mb-2 text-center">{userData?.name || 'کاربر بدون نام!'}</h2>
             <p className="font-Estedad-ExtraLight text-sm leading-7 text-center">
-               <ShowInfo age={userData?.age} phone={userData?.phone} program={true} />
+               <ShowInfo age={userData?.age} phone={userData?.phone} />
             </p>
          </div>
 
@@ -46,7 +46,7 @@ function Manager() {
                   <path d="M6.54984 5.39058C6.54984 6.19137 7.19901 6.84054 7.9998 6.84054C8.80059 6.84054 9.44976 6.19137 9.44976 5.39058C9.44976 4.58979 8.80059 3.94063 7.9998 3.94063C7.19901 3.94063 6.54984 4.58979 6.54984 5.39058Z" stroke="#E4F4FD" strokeWidth="1.1" />
                </svg>}
                type="button"
-               onClick={() => setProfileModal(userData)}
+               onClick={() => setProfileModal(true)}
             />
          </div>
          {

@@ -1,8 +1,8 @@
-import PUserData from '../../../../../../api/common/PUserData';
-import profileImg from '../../../../../../assets/images/profile-img.png'
+import profileImg from '../../../../../../../assets/images/profile-img.png'
 import { useForm } from "react-hook-form"
-import ModalItem from '../../../../../common/ModalItem';
-import UserData from '../../../../../../types/UserData';
+import UserData from '../../../../../../../types/UserData';
+import PUserData from '../../../../../../../api/common/PUserData';
+import ModalItem from '../../../../../../common/ModalItem';
 
 type UserChangeModalProps = {
    userData: UserData,

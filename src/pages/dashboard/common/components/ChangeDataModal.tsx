@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form"
-import profileImg from '../../../assets/images/profile-img.png'
-import ModalItem from "../../common/ModalItem"
-import PUserData from "../../../api/common/PUserData"
-import { useUserDataContext } from "../../authentication/UserDataProvider"
+import profileImg from '../../../../assets/images/profile-img.png'
+import { useUserDataContext } from "../../../authentication/UserDataProvider";
+import PUserData from "../../../../api/common/PUserData";
+import ModalItem from "../../../common/ModalItem";
 
 type ChangeDataModalProps = {
    setChangeModal: React.Dispatch<React.SetStateAction<boolean>>
@@ -33,8 +33,8 @@ function ChangeDataModal({ setChangeModal }: ChangeDataModalProps) {
             <div className="flex gap-3.5 items-center border-b border-primary pb-4">
                <img src={profileImg} alt="profile-image" />
                <div>
-                  <p className="text-sm mb-1">{userData?.name || 'بدون نام!'}</p>
-                  <p className="font-Estedad-ExtraLight text-xs">{userData?.username}</p>
+                  <p className="text-sm mb-1">{userData.name || 'بدون نام!'}</p>
+                  <p className="font-Estedad-ExtraLight text-xs">{userData.username}</p>
                </div>
             </div>
             <div className="flex flex-col gap-3 pt-6 p-4">
@@ -49,7 +49,7 @@ function ChangeDataModal({ setChangeModal }: ChangeDataModalProps) {
                      <input
                         type="text"
                         id="firstname"
-                        defaultValue={userData?.firstname}
+                        defaultValue={userData.firstname}
                         className="bg-transparent outline-none border-b border-b-primary/50 text-xs my-1 w-full"
                         {...register('firstname')}
                      />
@@ -66,7 +66,7 @@ function ChangeDataModal({ setChangeModal }: ChangeDataModalProps) {
                      <input
                         type="text"
                         id="lastname"
-                        defaultValue={userData?.lastname}
+                        defaultValue={userData.lastname}
                         className="bg-transparent outline-none border-b border-b-primary/50 text-xs my-1 w-full"
                         {...register('lastname')}
                      />
@@ -86,7 +86,7 @@ function ChangeDataModal({ setChangeModal }: ChangeDataModalProps) {
                            type="text"
                            id="email"
                            dir="ltr"
-                           defaultValue={userData?.email}
+                           defaultValue={userData.email}
                            className="bg-transparent outline-none border-b border-b-primary/50 text-xs my-1 w-full"
                            {...register('email', { required: true, pattern: /\w+[@]\w+[.]\w+/ })}
                         />
@@ -110,7 +110,7 @@ function ChangeDataModal({ setChangeModal }: ChangeDataModalProps) {
                            type="number"
                            id="phone"
                            dir="ltr"
-                           defaultValue={userData?.phone}
+                           defaultValue={userData.phone}
                            className="bg-transparent outline-none border-b border-b-primary/50 text-xs my-1 w-full"
                            {...register('phone', { pattern: /^.{10}$/ })}
                         />
@@ -131,7 +131,7 @@ function ChangeDataModal({ setChangeModal }: ChangeDataModalProps) {
                         type="number"
                         id="age"
                         dir="ltr"
-                        defaultValue={userData?.age}
+                        defaultValue={userData.age}
                         className="bg-transparent outline-none border-b border-b-primary/50 text-xs my-1 w-full"
                         {...register('age')}
                      />
@@ -149,7 +149,7 @@ function ChangeDataModal({ setChangeModal }: ChangeDataModalProps) {
                   elem={
                      <select
                         className="bg-transparent w-full border-b border-primary/50 mt-1 outline-none"
-                        defaultValue={userData?.gender || "male"}
+                        defaultValue={userData.gender || "male"}
                         {...register('gender')}
                      >
                         <option value="male">مرد</option>

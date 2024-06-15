@@ -2,18 +2,18 @@ import { useMutation } from "@tanstack/react-query";
 import getFormData from "../../utils/getFormData";
 import axios from "axios";
 
-type dataType = {
+type Variables = {
    formName: string,
-   setData: boolean,
    data: any
 }
 
-function mentorPSimpleuserFormData(username: string) {
+function mentorPFormData(username: string) {
    const { mutate, data } = useMutation({
       mutationKey: ['mentorP: form data', username],
-      mutationFn: async (data: dataType) => {
-         const formData = getFormData(data);
+      mutationFn: async (data: Variables) => {
+         const formData = getFormData({ ...data, setData: true });
          const req = await axios.post(import.meta.env.VITE_ENDPOINT + `/mentor-form-info/${username}`, formData);
+
          return req.data
       },
    })
@@ -21,4 +21,4 @@ function mentorPSimpleuserFormData(username: string) {
    return { mutate, data }
 }
 
-export default mentorPSimpleuserFormData
+export default mentorPFormData

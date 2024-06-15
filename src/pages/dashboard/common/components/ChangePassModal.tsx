@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import PChangePass from "../../../api/common/password/PChangePass";
-import Btn from "../../common/Btn";
-import { useUserDataContext } from "../../authentication/UserDataProvider";
+import PChangePass from "../../../../api/common/password/PChangePass";
+import Btn from "../../../common/Btn";
+import { useUserDataContext } from "../../../authentication/UserDataProvider";
 
 type ChangePassModalProps = {
    setPassModal: React.Dispatch<React.SetStateAction<boolean>>

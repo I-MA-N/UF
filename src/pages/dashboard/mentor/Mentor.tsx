@@ -2,12 +2,12 @@ import { useState } from "react";
 import Btn from "../../common/Btn";
 import Container from "../../common/Container";
 import Link from "../../common/Link";
-import ProfileModal from "../common/ProfileModal";
-import ShowInfo from "../common/ShowInfo";
+import ProfileModal from "../common/components/ProfileModal";
+import ShowInfo from "../common/components/ShowInfo";
 import { useUserDataContext } from "../../authentication/UserDataProvider";
 
 function Mentor() {
-   const [profileModal, setProfileModal] = useState<any>(null);
+   const [profileModal, setProfileModal] = useState(false);
    const userData = useUserDataContext();
 
    return (
@@ -15,14 +15,14 @@ function Mentor() {
          <div className="mb-6">
             <h2 className="mb-2 text-center">{userData?.name || 'مربی بدون نام!'}</h2>
             <p className="font-Estedad-ExtraLight text-sm leading-7 text-center">
-               <ShowInfo age={userData?.age} phone={userData?.phone} program={true} />
+               <ShowInfo age={userData?.age} phone={userData?.phone} />
             </p>
          </div>
 
          <div className="flex flex-col gap-8 justify-center">
             <Link
                text="ارزیابی"
-               url="/mentor/dashboard/memberslist"
+               url="/mentor/dashboard/members"
                icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 16" fill="none" className="w-4.5">
                   <mask id="path-1-inside-1_314_996" fill="white">
                      <path d="M0 8.61538C0 14.6966 1.30338 16 7.38462 16C13.4658 16 14.7692 14.6966 14.7692 8.61538C14.7692 7.94319 14.7533 7.32937 14.7168 6.76923C14.4227 2.26194 12.7936 1.23077 7.38462 1.23077C1.97558 1.23077 0.34652 2.26194 0.052468 6.76923C0.0159252 7.32937 0 7.94319 0 8.61538Z" />
@@ -39,7 +39,7 @@ function Mentor() {
                   <path d="M6.54984 5.39058C6.54984 6.19137 7.19901 6.84054 7.9998 6.84054C8.80059 6.84054 9.44976 6.19137 9.44976 5.39058C9.44976 4.58979 8.80059 3.94063 7.9998 3.94063C7.19901 3.94063 6.54984 4.58979 6.54984 5.39058Z" stroke="#E4F4FD" strokeWidth="1.1" />
                </svg>}
                type="button"
-               onClick={() => setProfileModal(userData)}
+               onClick={() => setProfileModal(true)}
             />
          </div>
 

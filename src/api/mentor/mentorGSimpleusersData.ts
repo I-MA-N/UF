@@ -3,7 +3,7 @@ import axios from "axios";
 import { UserData2 } from "../../types/UserData";
 
 function mentorGSimpleusersData(orgName: string) {
-   const { data, isError, isPending, error } = useQuery({
+   const { data, isError, isPending } = useQuery({
       queryKey: ['mentorG: users data', orgName],
       queryFn: async () => {
          const req = await axios.get(import.meta.env.VITE_ENDPOINT + `/mentor-get-info/${orgName}`)
@@ -14,7 +14,7 @@ function mentorGSimpleusersData(orgName: string) {
       }
    })
 
-   return { data, isError, isPending, error }
+   return { data, isError, isPending }
 }
 
 export default mentorGSimpleusersData;

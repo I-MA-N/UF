@@ -1,62 +1,50 @@
-import { Link } from "react-router-dom";
-import mentorGFormNames from "../../../../api/mentor/mentorGFormNames";
-import mentorGSimpleuserFormData from "../../../../api/mentor/mentorGSimpleuserFormData";
+import { Link as RouterLink, useLocation } from "react-router-dom";
+import Link from "../../../common/Link";
 import Container from "../../../common/Container";
-import Btn from "../../../common/Btn";
-import { useMentoringContext } from "../context/MentoringContextProvider";
-import ErrorElem from "../components/ErrorElem";
+import { FormObj } from "../../../../types/TestsTypes";
+import { useMemo } from "react";
 
+type FormsProps = {
+   username: string,
+   formNames: FormObj[]
+}
 
-function Forms() {
-   const { mentoringData } = useMentoringContext();
-
-   if (!mentoringData.orgName || !mentoringData.username) return <ErrorElem />
-
-   const { data, error, isPending } = mentorGFormNames(mentoringData.username);
-   const { mutate, isError } = mentorGSimpleuserFormData(mentoringData.username);
-   console.log(data, error, isError);
-   
-
-   if (isPending) return <h1>Loading...</h1>
+function Forms({ username, formNames }: FormsProps) {
+   const { pathname } = useLocation();
+   const prevPathname = useMemo(() => {
+      const lastSlash = pathname.lastIndexOf('/');
+      return pathname.slice(0, lastSlash);
+   }, [pathname])
 
    return (
-      <Container withTitle={false} sectionClassName="w-64 mx-auto">
+      <Container withTitle={false} sectionClassName="w-64 xs:w-[300px] mx-auto">
          <h2 className="text-center font-Estedad-Black">فرم های ارزیابی</h2>
          <h3 className="text-sm font-Estedad-ExtraLight mt-2 mb-6">
-            کاربر: {mentoringData.username}
+            کاربر: {username}
          </h3>
-         {
-            (isError || error) &&
-            <span className="text-sm text-yellow mb-4">مشکلی در دریافت اطلاعات بوجود آمده!</span>
-         }
 
          <div className="flex flex-col gap-4 items-center justify-center">
             {
-               data?.map(form => {
-                  const testsLength = form.formTests.filter((test: any) => test.testAccess.includes('mentor')).length;
-                  return <Btn
-                     key={form.formName}
+               formNames?.map(form => {
+                  const testsLength = form.formTests.length;
+                  return <Link
                      text={`${form.formName} | ${testsLength} تست`}
-                     onClick={() => {
-                        mutate({
-                           formName: form.formName,
-                        })
-                     }}
-                     type="button"
+                     url={form.formName}
+                     key={form.id}
                   />
                })
             }
          </div>
 
-         <Link
-            to="/mentor/dashboard/memberslist"
+         <RouterLink
+            to={prevPathname}
             className="btn w-auto px-4 py-3.5 gap-3 mt-8 mr-auto"
          >
             برگشت
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="11" viewBox="0 0 16 11" fill="none">
                <path d="M5.375 9.75L1 5.375M1 5.375L15 5.375M1 5.375L5.375 1" stroke="#083C5A" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-         </Link>
+         </RouterLink>
       </Container>
    )
 }

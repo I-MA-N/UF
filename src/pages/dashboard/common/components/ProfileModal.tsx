@@ -1,10 +1,10 @@
-import profileImg from '../../../assets/images/profile-img.png'
+import profileImg from '../../../../assets/images/profile-img.png'
 import ChangePassModal from "./ChangePassModal";
 import { useState } from "react";
 import ChangeDataModal from "./ChangeDataModal";
-import ModalItem from "../../common/ModalItem";
-import splitArr from '../../../utils/splitArr';
-import { useUserDataContext } from '../../authentication/UserDataProvider';
+import ModalItem from "../../../common/ModalItem";
+import splitArr from '../../../../utils/splitArr';
+import { useUserDataContext } from '../../../authentication/UserDataProvider';
 
 type ProfileModalProps = {
    setProfileModal: React.Dispatch<React.SetStateAction<boolean>>,
@@ -16,8 +16,6 @@ function ProfileModal({ setProfileModal, isManager }: ProfileModalProps) {
    const [changeModal, setChangeModal] = useState(false);
    const userData = useUserDataContext();
    const orgName = splitArr(userData.orgNames);
-
-
 
    return (
       <>

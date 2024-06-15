@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
-import UserModal from "./modals/user/UserModal";
-import OrgModal from "./modals/OrgModal";
 import SearchElement from "./components/SearchElement";
 import Container from "../../../common/Container";
 import Btn from "../../../common/Btn";
 import ListElement from "./components/MembersListElem";
 import { UserData2 } from "../../../../types/UserData";
+import OrgModal from "./components/modals/OrgModal";
+import UserModal from "./components/modals/user/UserModal";
 
 type MembersProps = {
    orgSelected: string,

@@ -1,9 +1,10 @@
 import { PropsWithChildren, useEffect, useLayoutEffect, useState } from "react";
 import PNewToken from "../../api/common/PNewToken";
 import axios from "axios";
+import NotAllowedElem from "./NotAllowedElem";
 
 function ProtectedRoute({ children }: PropsWithChildren) {
-    const [token, setToken] = useState<string | null>(null);
+    const [token, setToken] = useState<string | undefined | null>(undefined);
     const { mutateAsync } = PNewToken();
 
     // Get new token on reload of page
@@ -11,7 +12,6 @@ function ProtectedRoute({ children }: PropsWithChildren) {
         mutateAsync()
             .then(res => {
                 if (res.access) {
-                    console.log(res.access)
                     setToken(res.access)
                 }
             })
@@ -22,9 +22,7 @@ function ProtectedRoute({ children }: PropsWithChildren) {
     useLayoutEffect(() => {
         const axiosInterceptor = axios.interceptors.request.use(
             (config: any) => {
-                console.log(config._requested)
                 if (token && !config._requested) {
-                    console.log('changing headers')
                     config.headers.Authorization = `Bearer ${token}`;
                 }
                 return config;
@@ -51,7 +49,6 @@ function ProtectedRoute({ children }: PropsWithChildren) {
                 ) {
                     try {
                         const res = await mutateAsync();
-                        console.log('in response interceptor', res.access)
                         setToken(res.access)
 
                         originalConfig.headers.Authorization = `Bearer ${res.access}`;
@@ -76,7 +73,9 @@ function ProtectedRoute({ children }: PropsWithChildren) {
         return children;
     }
 
-    return <h1>You are not allowed!</h1>
+    if (token === null) {
+        return <NotAllowedElem />
+    }
 }
 
 export default ProtectedRoute

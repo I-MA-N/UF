@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { FormObj, TestObj } from "../../types/TestsTypes";
 
-function mentorGFormNames(username: string) {
-   const { data, error, isPending } = useQuery({
+function mentorGFormNames(username: string | undefined) {
+   const { data, isError, isPending } = useQuery({
       queryKey: ['mentorG: form names', username],
       queryFn: async () => {
          const req = await axios.get(import.meta.env.VITE_ENDPOINT + `/mentor-form-info/${username}`);
@@ -13,15 +14,15 @@ function mentorGFormNames(username: string) {
             throw new Error('Failed to get form names!')
          }
          
-         const formsArr: any[] = [];
+         const formsArr: FormObj[] = [];
          Object.entries(data).forEach((formInfo, index) => {
-            const newFormObj = {
+            const newFormObj: FormObj = {
                id: index + 1,
                formName: formInfo[0],
-               formTests: [] as any
+               formTests: []
             }
             Object.entries(formInfo[1]!).forEach((testInfo, index) => {
-               const newTestObj = {
+               const newTestObj: TestObj = {
                   id: index + 1,
                   testName: testInfo[0],
                   testAccess: testInfo[1]
@@ -36,7 +37,7 @@ function mentorGFormNames(username: string) {
       }
    })
 
-   return { data, error, isPending };
+   return { data, isError, isPending };
 }
 
 export default mentorGFormNames;

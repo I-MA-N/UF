@@ -1,20 +1,18 @@
-import { useNavigate } from "react-router-dom";
-import { useMentoringContext } from "../../context/MentoringContextProvider";
+import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues, UseFormGetValues } from "react-hook-form";
-import mentorPSimpleuserFormData from "../../../../../api/mentor/mentorPSimpleuserFormData";
+import simpleuserPFormData from "../../../../../api/simpleuser/simpleuserPFormData";
 import { useState } from "react";
 
-type FormsBtnPropsType = {
+type TestsBtnsPropsType = {
    getValues: UseFormGetValues<FieldValues>,
-   page: string
+   page: string,
+   formData: any
 }
 
-function FormsBtn({ getValues, page }: FormsBtnPropsType) {
-   const { mentoringData } = useMentoringContext();
-
+function TestsBtns({ getValues, page, formData }: TestsBtnsPropsType) {
+   const params = useParams();
    const [showModal, setShowModal] = useState(false);
-   const { mutate, data } = mentorPSimpleuserFormData(mentoringData.username);
-
+   const { mutate, data } = simpleuserPFormData();
    const navigate = useNavigate();
 
    return (
@@ -34,10 +32,10 @@ function FormsBtn({ getValues, page }: FormsBtnPropsType) {
                type="button"
                className="flex items-center gap-2"
                onClick={() => {
-                  const newObj = { ...mentoringData.data };
+                  const newObj = { ...formData };
                   newObj[page as keyof typeof newObj] = getValues();
                   mutate({
-                     formName: mentoringData.formName,
+                     formName: params.formName!,
                      setData: true,
                      data: JSON.stringify(newObj).toString()
                   })
@@ -67,7 +65,7 @@ function FormsBtn({ getValues, page }: FormsBtnPropsType) {
                <div className="flex items-center justify-center gap-16 mt-4">
                   <button
                      className="text-secondary"
-                     onClick={() => navigate('/mentor/dashboard/forms')}
+                     onClick={() => navigate(-1)}
                   >
                      بله
                   </button>
@@ -84,4 +82,4 @@ function FormsBtn({ getValues, page }: FormsBtnPropsType) {
    )
 }
 
-export default FormsBtn
+export default TestsBtns

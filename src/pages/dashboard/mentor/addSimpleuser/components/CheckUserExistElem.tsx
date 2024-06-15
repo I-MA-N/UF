@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import mentorPUserExist, { UserExistRes } from "../../../../../api/mentor/mentorPUserExist";
 import validateUsername from "../../../../../utils/validateUsername";
+import { Link } from "react-router-dom";
 
 type CheckUserExistElemProps = {
    orgName: string,
@@ -20,7 +21,19 @@ function CheckUserExistElem({ orgName, setUserStatus }: CheckUserExistElemProps)
 
    return (
       <div>
-         <p className="text-xs font-Estedad-ExtraLight text-center mx-auto mb-4 w-64">با نوشتن نام کاربری و کلیک روی دکمه زیر وضعیت نام کاربری وارد شده را مشاهده کنید</p>
+         <div className="flex items-center gap-2">
+            <p className="text-xs font-Estedad-ExtraLight text-center mx-auto">با نوشتن نام کاربری و کلیک روی دکمه زیر وضعیت نام کاربری وارد شده را مشاهده کنید</p>
+            <Link
+               to="/mentor/dashboard/members"
+               className="px-1.5 py-3 flex-shrink-0 flex gap-1 items-center justify-center bg-white text-primary text-sm rounded-full"
+            >
+               برگشت
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="11" viewBox="0 0 16 11" fill="none">
+                  <path d="M5.375 9.75L1 5.375M1 5.375L15 5.375M1 5.375L5.375 1" stroke="#083C5A" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+               </svg>
+            </Link>
+         </div>
+         <p className="text-sm font-Estedad-ExtraLight text-center mx-auto mb-4 mt-2">نام سازمان: {orgName}</p>
          <form onSubmit={handleSubmit(submitHandler)} className="flex items-end gap-1">
             <input
                id="username"

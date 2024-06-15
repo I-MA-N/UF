@@ -3,7 +3,7 @@ import axios from "axios";
 import { FormObj, TestObj } from "../../types/TestsTypes";
 
 function simpleuserGFormNames() {
-   const { data, isPending } = useQuery({
+   const { data, isError, isPending } = useQuery({
       queryKey: ['simpluserG: form names'],
       queryFn: async () => {
          const req = await axios.get(import.meta.env.VITE_ENDPOINT + '/simpleuser-form-info/');
@@ -33,7 +33,7 @@ function simpleuserGFormNames() {
       }
    })
 
-   return { data, isPending };
+   return { data, isError, isPending };
 }
 
 export default simpleuserGFormNames;
