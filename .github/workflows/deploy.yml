@@ -22,8 +22,8 @@ jobs:
 
       - name: Build project
         run: |
-          echo "App is using endpoint: ${{ env.ENDPOINT }}"
-          VITE_ENDPOINT=${{ env.ENDPOINT }} npm run build
+          echo "App is using endpoint: ${{ vars.ENDPOINT }}"
+          VITE_ENDPOINT=${{ vars.ENDPOINT }} npm run build
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v3
