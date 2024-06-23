@@ -1,20 +1,19 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import Container from "../../../common/Container"
-import splitArr from "../../../../utils/splitArr";
 import Link from "../../../common/Link";
-import UserModal from "./modals/UserModal";
-import MentorModal from "./modals/MentorModal";
+import UserModal from "./components/modals/UserModal";
+import MentorModal from "./components/modals/MentorModal";
 import managerGMentorUsers from "../../../../api/manager/managerGMentorUsers";
-import { useUserDataContext } from "../../../authentication/UserDataProvider";
-import TopInfo from "./components/TopInfo";
-import BtnOrMessage from "./components/BtnOrMessage";
 import ListElement from "./components/ListElement";
 import SearchElement from "../../common/components/SearchElement";
+import Btn from "../../../common/Btn";
+import TopInfo from "./components/TopInfo";
 
-function MembersList() {
-   const userData = useUserDataContext();
-   const mentorNames = useMemo(() => splitArr(userData.subusers), []);
+type MembersProps = {
+   mentorNames: string[]
+}
 
+function Members({ mentorNames }: MembersProps) {
    const [mentorSelected, setMentorSelected] = useState(mentorNames[0]);
    const [mentorModal, setMentorModal] = useState(false);
 
@@ -32,13 +31,21 @@ function MembersList() {
 
    return (
       <Container>
-         <TopInfo mentorNames={mentorNames} isError={isError} />
+         <TopInfo isError={isError} />
 
-         <BtnOrMessage mentorNames={mentorNames} mentorSelected={mentorSelected} setMentorModal={setMentorModal} />
+         <Btn
+            text={mentorSelected}
+            type="button"
+            icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 8" fill="none" className="w-4">
+               <path d="M13 1L7 7L1 1" stroke="#E4F4FD" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>}
+            className="w-[300px]"
+            onClick={() => setMentorModal(true)}
+         />
 
          <ul className="w-64 max-h-[304px] divide-y divide-primary mt-0.5 rounded-b-[18px] overflow-y-auto">
             {
-               data.length > 0 ?
+               data?.length > 0 ?
                   <>
                      <SearchElement setSelectedUsers={setSelectedUsers} users={data} />
                      <ListElement users={selectedUsers} setSimpleUserData={setSimpleUserData} />
@@ -78,4 +85,4 @@ function MembersList() {
    )
 }
 
-export default MembersList
+export default Members

@@ -1,19 +1,22 @@
-import { useNavigate, useParams } from "react-router-dom";
 import { FieldValues, UseFormGetValues } from "react-hook-form";
-import simpleuserPFormData from "../../../../../api/simpleuser/simpleuserPFormData";
 import { useState } from "react";
+import simpleuserPFormData from "../../../../api/simpleuser/simpleuserPFormData";
+import FormExitBtnModal from "./FormExitBtnModal";
+import mentorPFormData from "../../../../api/mentor/mentorPFormData";
 
-type TestsBtnsPropsType = {
+type FormBtnsPropsType = {
    getValues: UseFormGetValues<FieldValues>,
    page: string,
-   formData: any
+   formData: any,
+   formName: string,
+   username?: string,
+   exitBtnHref: string
 }
 
-function TestsBtns({ getValues, page, formData }: TestsBtnsPropsType) {
-   const params = useParams();
+function FormBtns({ getValues, page, formData, formName, username, exitBtnHref }: FormBtnsPropsType) {
    const [showModal, setShowModal] = useState(false);
-   const { mutate, data } = simpleuserPFormData();
-   const navigate = useNavigate();
+   const { mutate: simpleuserP, data: simpleuserPData } = simpleuserPFormData();
+   const { mutate: mentorP, data: mentorPData } = mentorPFormData(username || "");
 
    return (
       <>
@@ -34,11 +37,17 @@ function TestsBtns({ getValues, page, formData }: TestsBtnsPropsType) {
                onClick={() => {
                   const newObj = { ...formData };
                   newObj[page as keyof typeof newObj] = getValues();
-                  mutate({
-                     formName: params.formName!,
-                     setData: true,
-                     data: JSON.stringify(newObj).toString()
-                  })
+                  if (username) {
+                     mentorP({
+                        formName: formName,
+                        data: JSON.stringify(newObj).toString()
+                     })
+                  } else {
+                     simpleuserP({
+                        formName: formName,
+                        data: JSON.stringify(newObj).toString()
+                     })
+                  }
                }}
             >
                ذخیره
@@ -49,37 +58,28 @@ function TestsBtns({ getValues, page, formData }: TestsBtnsPropsType) {
             </button>
          </div>
          {
-            data &&
-            <span className="text-[10px] text-yellow mt-4">
-               {
-                  data.access === 'true' ?
-                     'تغییرات با موفقیت اعمال شد!' :
-                     'مشکلی در اعمال تغییرات بوجود آمده!'
-               }
-            </span>
+            simpleuserPData ?
+               <span className="text-[10px] text-yellow mt-4">
+                  {
+                     simpleuserPData.access === 'true' ?
+                        'تغییرات با موفقیت اعمال شد!' :
+                        'مشکلی در اعمال تغییرات بوجود آمده!'
+                  }
+               </span>
+               : mentorPData &&
+               <span className="text-[10px] text-yellow mt-4">
+                  {
+                     mentorPData.access === 'true' ?
+                        'تغییرات با موفقیت اعمال شد!' :
+                        'مشکلی در اعمال تغییرات بوجود آمده!'
+                  }
+               </span>
          }
          {
-            showModal &&
-            <div className="fixed z-20 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-72 bg-white rounded-[32px] px-6 py-10 text-sm/7 shadow-sm shadow-[#000]">
-               <span className="inline-block mx-auto text-primary text-center">آیا از خروج مطمئنید؟ (اگر ذخیره نکرده باشید، تغییرات شما اعمال نمی شود)</span>
-               <div className="flex items-center justify-center gap-16 mt-4">
-                  <button
-                     className="text-secondary"
-                     onClick={() => navigate(-1)}
-                  >
-                     بله
-                  </button>
-                  <button
-                     className="text-yellow"
-                     onClick={() => setShowModal(false)}
-                  >
-                     خیر
-                  </button>
-               </div>
-            </div>
+            showModal && <FormExitBtnModal setShowModal={setShowModal} linkTo={exitBtnHref} />
          }
       </>
    )
 }
 
-export default TestsBtns
+export default FormBtns

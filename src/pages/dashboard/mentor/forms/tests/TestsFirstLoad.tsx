@@ -40,7 +40,6 @@ function TestsFirstLoad() {
    }
 
    if (formData && formObj) {
-      console.log('rendering Tests component...')
       const testsArr = formObj.formTests;
       return <Tests initialFormData={formData} testsArr={testsArr} />
    }

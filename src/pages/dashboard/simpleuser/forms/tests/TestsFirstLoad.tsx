@@ -10,7 +10,6 @@ function TestsFirstLoad() {
    const [searchParams] = useSearchParams();
 
    const { data: formData, isPending: formDataPending } = simpleuserGFormData2(searchParams.get('formName') || '');
-   console.log('formData in first load: ', formData)
    const { data, isPending } = simpleuserGFormNames();
    const formObj = data?.find(form => form.formName === searchParams.get('formName'));
 

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import managerGSimpleuserActive from "../../../../../api/manager/managerGSimpleuserActive";
-import profileImg from "../../../../../assets/images/profile-img.png";
+import managerGSimpleuserActive from "../../../../../../api/manager/managerGSimpleuserActive";
+import profileImg from "../../../../../../assets/images/profile-img.png";
 import ConfirmModal from "./ConfirmModal";
-import parseDate from "../../../../../utils/parseDate";
+import parseDate from "../../../../../../utils/parseDate";
 import { useQueryClient } from "@tanstack/react-query";
 
 type UserModalPropsType = {

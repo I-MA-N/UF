@@ -107,6 +107,9 @@
     .org-modal-item {
         @apply relative w-full py-3.5 hover:bg-secondary hover:text-white;
     }
+    .org-modal-item:last-child {
+        @apply rounded-b-[32px];
+    }
 
     .org-modal-item::before {
         content: '';
@@ -118,7 +121,7 @@
     }
 
     .modal {
-        @apply absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-transparent backdrop-blur-md z-10;
+        @apply fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-transparent backdrop-blur-md z-10;
     }
 }
 

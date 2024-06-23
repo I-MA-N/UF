@@ -1,4 +1,4 @@
-import Btn from "../../../../common/Btn";
+import Btn from "../../../../../common/Btn";
 
 type MentorModalPropsType = {
    mentorSelected: string,

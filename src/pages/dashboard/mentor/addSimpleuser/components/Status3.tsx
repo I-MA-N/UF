@@ -13,7 +13,6 @@ function Status3({ username, orgName, status }: Status3Props) {
    const { mutateAsync, isError } = mentorPAddSimpleuser();
    const { pathname } = useLocation();
    const navigate = useNavigate();
-   console.log(status)
 
    const clickHandler = () => {
       mutateAsync({

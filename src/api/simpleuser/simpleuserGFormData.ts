@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query"
 import getFormData from "../../utils/getFormData"
 import { useUserTestsInfoContext } from "../../pages/dashboard/simpleuser/forms/context/UserTestsInfoProvider";
 import { useNavigate } from "react-router-dom";
-import { emptyTestsObj } from "../../pages/dashboard/simpleuser/forms/tests/testsData";
+import { emptyTestsObj } from "../../pages/dashboard/simpleuser/forms/tests/data/testsData";
 import axios from "axios";
 
 type formNameActionType = {

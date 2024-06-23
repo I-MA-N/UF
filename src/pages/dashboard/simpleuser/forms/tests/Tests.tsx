@@ -1,11 +1,12 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form";
 import Container from "../../../../common/Container";
-import TestsBtns from "./TestsBtns";
 import Btn from "../../../../common/Btn";
 import generateTestInputs from "../../../common/tests/generateTestInputs";
-import testsData from "./testsData";
+import testsData from "./data/testsData";
 import { TestObj } from "../../../../../types/TestsTypes";
+import FormBtns from "../../../common/components/FormBtns";
+import { useSearchParams } from "react-router-dom";
 
 type TestsProps = {
    testsArr: TestObj[],
@@ -13,6 +14,8 @@ type TestsProps = {
 }
 
 function Tests({ testsArr, initialFormData }: TestsProps) {
+   const [searchParams] = useSearchParams();
+
    const { handleSubmit, register, setValue, reset, getValues } = useForm();
    const [formData, setFormData] = useState(initialFormData);
 
@@ -31,7 +34,12 @@ function Tests({ testsArr, initialFormData }: TestsProps) {
 
    return (
       <Container withTitle={false}>
-         <TestsBtns getValues={getValues} page={page} formData={formData} />
+         <FormBtns 
+            getValues={getValues} 
+            page={page} formData={formData} 
+            formName={searchParams.get('formName')!} 
+            exitBtnHref="/simpleuser/dashboard/forms" 
+         />
 
          <form
             className="w-full"

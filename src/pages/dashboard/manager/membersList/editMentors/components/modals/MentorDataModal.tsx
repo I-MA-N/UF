@@ -1,6 +1,6 @@
 import { useState } from "react";
-import profileImg from "../../../../../assets/images/profile-img.png"
-import ModalItem from "../../../../common/ModalItem"
+import profileImg from "../../../../../../../assets/images/profile-img.png"
+import ModalItem from "../../../../../../common/ModalItem"
 import DeleteMentorModal from "./DeleteMentorModal";
 
 type MentorDataModalPropsType = {

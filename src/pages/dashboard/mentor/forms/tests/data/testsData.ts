@@ -1,9 +1,9 @@
-import { testPatternTypes } from "../../../common/tests/generateTestInputs";
-import FMS from "../../../common/tests/testsData/FMS";
-import bodyStatus from "../../../common/tests/testsData/bodyStatus";
-import dynamic from "../../../common/tests/testsData/dynamic";
-import problems from "../../../common/tests/testsData/problems";
-import simpleuserTestsData from "../../../../dashboard/simpleuser/forms/tests/testsData";
+import { testPatternTypes } from "../../../../common/tests/generateTestInputs";
+import FMS from "../../../../common/tests/testsData/FMS";
+import bodyStatus from "../../../../common/tests/testsData/bodyStatus";
+import dynamic from "../../../../common/tests/testsData/dynamic";
+import problems from "../../../../common/tests/testsData/problems";
+import simpleuserTestsData from "../../../../simpleuser/forms/tests/data/testsData";
 
 const testsData = {
    ...simpleuserTestsData,

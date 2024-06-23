@@ -4,7 +4,7 @@ import { useNewMentorContext } from "./context/NewMentorContextProvider";
 import Container from "../../../../../common/Container";
 import PrevBtn from "../../../../../common/PrevBtn";
 import Input from "../../../../../common/Input";
-import GenderInput from "./GenderInput";
+import GenderInput from "./components/GenderInput";
 import Btn from "../../../../../common/Btn";
 import managerPAddMentor from "../../../../../../api/manager/managerPAddMentor";
 
@@ -13,8 +13,6 @@ function AddMentor2() {
    const { mentorData, setMentorData } = useNewMentorContext();
    const { mutate, data } = managerPAddMentor();
    const navigate = useNavigate();
-   console.log(mentorData);
-
 
    if (!mentorData.username) return <Container>
       <h1>اطلاعات کاربری ناقص است!</h1>

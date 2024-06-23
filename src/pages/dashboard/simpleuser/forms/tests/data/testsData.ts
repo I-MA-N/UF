@@ -1,14 +1,14 @@
-import { testPatternTypes } from "../../../common/tests/generateTestInputs";
-import activityRate from "../../../common/tests/testsData/activityRate";
-import activityReadinessData from "../../../common/tests/testsData/activityReadinessData";
-import diseaseBackgroundData from "../../../common/tests/testsData/diseaseBackgroundData";
-import generalHealthData from "../../../common/tests/testsData/generalHealthData";
-import lifeQuality from "../../../common/tests/testsData/lifeQuality";
-import happinessData from "../../../common/tests/testsData/happinessData";
-import hasPainData from "../../../common/tests/testsData/hasPainData";
-import jobPerformance from "../../../common/tests/testsData/jobPerformance";
-import jobSatisfactionData from "../../../common/tests/testsData/jobSatisfactionData";
-import physicalPreparationData from "../../../common/tests/testsData/physicalPreparationData";
+import { testPatternTypes } from "../../../../common/tests/generateTestInputs";
+import activityRate from "../../../../common/tests/testsData/activityRate";
+import activityReadinessData from "../../../../common/tests/testsData/activityReadinessData";
+import diseaseBackgroundData from "../../../../common/tests/testsData/diseaseBackgroundData";
+import generalHealthData from "../../../../common/tests/testsData/generalHealthData";
+import lifeQuality from "../../../../common/tests/testsData/lifeQuality";
+import happinessData from "../../../../common/tests/testsData/happinessData";
+import hasPainData from "../../../../common/tests/testsData/hasPainData";
+import jobPerformance from "../../../../common/tests/testsData/jobPerformance";
+import jobSatisfactionData from "../../../../common/tests/testsData/jobSatisfactionData";
+import physicalPreparationData from "../../../../common/tests/testsData/physicalPreparationData";
 
 const testsData = {
    'مقدار تحرک': {

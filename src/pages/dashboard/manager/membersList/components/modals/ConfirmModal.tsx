@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import managerPManageSimpleuser from "../../../../../api/manager/managerPManageSimpleuser"
+import managerPManageSimpleuser from "../../../../../../api/manager/managerPManageSimpleuser"
 
 type ConfirmModalPropsType = {
    action: string,

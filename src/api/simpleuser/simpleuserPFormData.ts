@@ -4,7 +4,6 @@ import axios from "axios";
 
 type dataType = {
    formName: string,
-   setData: boolean,
    data: any
 }
 
@@ -12,7 +11,7 @@ function simpleuserPFormData() {
    const { mutate, data } = useMutation({
       mutationKey: ['simpleuserP: form data'],
       mutationFn: async (data: dataType) => {
-         const formData = getFormData(data);
+         const formData = getFormData({ ...data, setData: true });
          const req = await axios.post(import.meta.env.VITE_ENDPOINT + '/simpleuser-form-info/', formData);
          return req.data;
       }

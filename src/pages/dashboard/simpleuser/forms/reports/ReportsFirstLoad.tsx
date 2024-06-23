@@ -17,7 +17,6 @@ function ReportsFirstLoad() {
    
    if (formData) {
       const reportsArr = generateReportsArr(formData, userData.gender);
-      console.log(reportsArr);
       if (!reportsArr) {
          return <Container>
             <h1 className="mb-8">شما ابتدا باید جنسیت خود را تعیین کنید!</h1>

@@ -1,5 +1,5 @@
 import { PropsWithChildren, createContext, useContext, useState } from "react";
-import { emptyTestsObj } from "../tests/testsData";
+import { emptyTestsObj } from "../tests/data/testsData";
 
 const INITIAL_DATA = {
    formName: '',

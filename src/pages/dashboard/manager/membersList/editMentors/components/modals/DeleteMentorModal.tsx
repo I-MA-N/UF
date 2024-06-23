@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import managerPDeleteMentor from "../../../../../api/manager/managerPDeleteMentor";
+import managerPDeleteMentor from "../../../../../../../api/manager/managerPDeleteMentor";
 import { useQueryClient } from "@tanstack/react-query";
 
 type DeleteMentorModalPropsType = {

@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 
 type TopInfoProps = {
-   mentorNames: string[],
    isError: boolean
 }
 
-function TopInfo({ mentorNames, isError }: TopInfoProps) {
+function TopInfo({ isError }: TopInfoProps) {
    return (
       <>
          <Link
@@ -17,19 +16,17 @@ function TopInfo({ mentorNames, isError }: TopInfoProps) {
                <path d="M5.375 9.75L1 5.375M1 5.375L15 5.375M1 5.375L5.375 1" stroke="#083C5A" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
          </Link>
-         {
-            mentorNames.length > 0 &&
-            <h2 className="text-center text-sm mb-4">
-               مربی مورد نظر خود را انتخاب کرده و کاربران مربوط به آن
-               <br />
-               را در لیست زیر میتوانید مشاهده کنید.
-            </h2>
-         }
 
          {
             isError &&
             <p className="text-yellow text-xs mb-4">مشکلی در دریافت اطلاعات کاربران این سازمان بوجود آمده است!</p>
          }
+
+         <h2 className="text-center text-sm mb-4">
+            مربی مورد نظر خود را انتخاب کرده و کاربران مربوط به آن
+            <br />
+            را در لیست زیر میتوانید مشاهده کنید.
+         </h2>
       </>
    );
 };
