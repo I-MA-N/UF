@@ -1,4 +1,4 @@
-import { UserData2 } from "../../../../../types/UserData"
+import { UserData2 } from "../../../../types/UserData"
 
 type SearchElementPropsType = {
    setSelectedUsers: React.Dispatch<any>,
@@ -22,7 +22,9 @@ function SearchElement({ setSelectedUsers, users }: SearchElementPropsType) {
             className="w-full bg-transparent outline-none border-l border-white focus:border-primary placeholder:text-[10px] transition-colors duration-300"
             placeholder="جستجو بر اساس نام کاربری یا نام و نام خانوادگی"
             onChange={(e) => setSelectedUsers(
-               users.filter((user: any) => user.username.startsWith(e.target.value) || user.name.startsWith(e.target.value))
+               users.filter(user => 
+                  user.username.toLowerCase().startsWith(e.target.value.toLowerCase()) ||
+                  user.name.toLowerCase().startsWith(e.target.value.toLowerCase()))
             )}
          />
       </li>

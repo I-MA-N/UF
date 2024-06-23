@@ -14,7 +14,7 @@ function PLogout() {
          const req = await axios.post(import.meta.env.VITE_ENDPOINT + '/logout/', { refresh: rTkn })
          return req.data
       },
-      onSuccess: () => {
+      onSettled: () => {
          deleteAllCookies();
          queryClient.clear();
          navigate('/')

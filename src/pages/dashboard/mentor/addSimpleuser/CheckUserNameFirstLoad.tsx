@@ -4,6 +4,7 @@ import PrevBtn from "../../../common/PrevBtn";
 import { useUserDataContext } from "../../../authentication/UserDataProvider";
 import { useMemo } from "react";
 import splitArr from "../../../../utils/splitArr";
+import Container from "../../../common/Container";
 
 function CheckUserNameFirstLoad() {
    const params = useParams();
@@ -15,10 +16,10 @@ function CheckUserNameFirstLoad() {
       return <AddSimpleuser orgName={params.orgName} />
    }
 
-   return <div>
-      <p className="text-yellow text-xs mb-4">نام سازمان اشتباه است!</p>
+   return <Container>
+      <p className="text-lg text-yellow mb-4">نام سازمان اشتباه است!</p>
       <PrevBtn type="button" onClick={() => navigate('/mentor/dashboard/members')} />
-   </div>
+   </Container>
 }
 
 export default CheckUserNameFirstLoad

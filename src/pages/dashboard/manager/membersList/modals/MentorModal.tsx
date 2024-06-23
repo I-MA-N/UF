@@ -21,7 +21,7 @@ function MentorModal({ mentorSelected, setMentorSelected, setMentorModal, mentor
             </svg>
             خروج
          </button>
-         <div className="w-[300px] bg-white text-primary text-xs rounded-[32px] overflow-hidden">
+         <div className="w-[300px] bg-white text-primary text-xs rounded-[32px]">
             <Btn
                text={mentorSelected}
                type="button"

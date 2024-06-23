@@ -10,7 +10,7 @@ function mentorGSimpleusersData(orgName: string) {
          return req.data
       },
       select: (data: any) => {
-         return data.result as UserData2[];
+         return data.result as UserData2[]
       }
    })
 
