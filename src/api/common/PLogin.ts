@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import getFormData from "../../utils/getFormData";
-import { getCookie, setCookie } from "../../utils/cookies";
+import Cookies from "js-cookie";
 import axios from "axios";
 
 function PLogin() {
@@ -20,11 +20,7 @@ function PLogin() {
                 throw new Error('Denied')
             }
 
-            const timestamp = 1000 * 60 * 60 * 24;
-
-            setCookie('refresh', data.refresh, timestamp);
-            console.log('setting cookie');
-
+            Cookies.set('refresh', data.refresh, { expires: 1 })
 
             navigate(`/${data.role}/dashboard`)
         },
@@ -33,13 +29,4 @@ function PLogin() {
     return { mutate, error, isPending }
 }
 
-const GNewToken = async () => {
-    const rTkn = getCookie('refresh');
-
-    const req = await axios.post(`${import.meta.env.VITE_ENDPOINT}login/refresh/`, { refresh: rTkn })
-
-    return req.data
-}
-
 export default PLogin
-export { GNewToken }

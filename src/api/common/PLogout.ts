@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteAllCookies, getCookie } from "../../utils/cookies";
+import Cookies from "js-cookie";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -10,12 +10,12 @@ function PLogout() {
    const { mutate, data, error } = useMutation({
       mutationKey: ['post: logout'],
       mutationFn: async () => {
-         const rTkn = getCookie('refresh');
+         const rTkn = Cookies.get('refresh');
          const req = await axios.post(import.meta.env.VITE_ENDPOINT + '/logout/', { refresh: rTkn })
          return req.data
       },
       onSettled: () => {
-         deleteAllCookies();
+         Cookies.remove('refresh');
          queryClient.clear();
          navigate('/')
       }
