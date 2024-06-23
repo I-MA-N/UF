@@ -17,6 +17,7 @@ function ReportsFirstLoad() {
    
    if (formData) {
       const reportsArr = generateReportsArr(formData, userData.gender);
+      console.log(reportsArr);
       if (!reportsArr) {
          return <Container>
             <h1 className="mb-8">شما ابتدا باید جنسیت خود را تعیین کنید!</h1>
@@ -24,7 +25,7 @@ function ReportsFirstLoad() {
          </Container>
       }
 
-      if (formData.access !== 'false' && Object.keys(formData).length > 0) {
+      if (formData.access !== 'false' && Object.keys(formData).length > 0 && reportsArr.length > 0) {
          return <Reports userData={userData} reportsArr={reportsArr} formData={formData} />
       } else {
          return <Container>

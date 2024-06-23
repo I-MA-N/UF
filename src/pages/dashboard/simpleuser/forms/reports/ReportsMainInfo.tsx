@@ -3,10 +3,15 @@ function ReportsMainInfo({ userData, statusBodyInfo }: { userData: any, statusBo
       <table className="text-[10px] sm:text-xs mx-auto border-separate border-spacing-2 text-center" cellPadding="8px">
          <tbody>
             <tr>
-               <td rowSpan={2}>
-                  {userData.gender === 'male' ? 'جناب آقای ' : 'سرکار خانم '}
-                  {userData.name}
-               </td>
+               {
+                  userData.name ?
+                  <td rowSpan={2}>
+                     {userData.gender === 'male' ? 'جناب آقای ' : 'سرکار خانم '}
+                     {userData.name}
+                  </td> : <td rowSpan={2}>
+                     اطلاعات پروفایل شما ناقص است.
+                  </td>
+               }
                {
                   statusBodyInfo &&
                   <>

@@ -28,6 +28,7 @@ function Reports({ userData, reportsArr, formData }: ReportsProps) {
          nav.style.transform = "";
       }
    }, [])
+   console.log(formData);
 
    const [page, setPage] = useState(reportsArr[0]);
 
