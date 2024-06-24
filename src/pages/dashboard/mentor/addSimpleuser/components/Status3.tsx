@@ -19,7 +19,7 @@ function Status3({ username, orgName, status }: Status3Props) {
          email: 'test1234@example.com',
          password: 'examplePass1234',
          orgName,
-         username
+         username,
       }).then(res => res?.success && navigate(`${pathname}/${username}`))
    }
 
@@ -47,6 +47,7 @@ function Status3({ username, orgName, status }: Status3Props) {
                      </svg>
                   }
                   onClick={clickHandler}
+                  className="mx-auto"
                /> :
                <Link
                   text="ارزیابی کاربر"
@@ -58,6 +59,7 @@ function Status3({ username, orgName, status }: Status3Props) {
                         <path d="M19 10.5L20.5 12L24.5 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                      </svg>
                   }
+                  className="mx-auto"
                />
          }
       </>

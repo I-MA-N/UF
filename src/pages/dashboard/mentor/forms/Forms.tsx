@@ -1,8 +1,7 @@
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import Link from "../../../common/Link";
 import Container from "../../../common/Container";
 import { FormObj } from "../../../../types/TestsTypes";
-import { useMemo } from "react";
 
 type FormsProps = {
    username: string,
@@ -10,12 +9,6 @@ type FormsProps = {
 }
 
 function Forms({ username, formNames }: FormsProps) {
-   const { pathname } = useLocation();
-   const prevPathname = useMemo(() => {
-      const lastSlash = pathname.lastIndexOf('/');
-      return pathname.slice(0, lastSlash);
-   }, [pathname])
-
    return (
       <Container withTitle={false} sectionClassName="w-64 xs:w-[300px] mx-auto">
          <h2 className="text-center font-Estedad-Black">فرم های ارزیابی</h2>
@@ -37,7 +30,7 @@ function Forms({ username, formNames }: FormsProps) {
          </div>
 
          <RouterLink
-            to={prevPathname}
+            to="/mentor/dashboard/members/"
             className="btn w-auto px-4 py-3.5 gap-3 mt-8 mr-auto"
          >
             برگشت

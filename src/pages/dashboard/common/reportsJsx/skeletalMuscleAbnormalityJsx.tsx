@@ -21,10 +21,10 @@ function skeletalMuscleAbnormalityJsx(data: any) {
                         <td>{problem.title}</td>
                         <td>{problem.status}</td>
                         <td className="w-[60px] lg:w-[80px] bg-[#fff]">
-                           <img src={`/UF-Front/images/reportsImages/problems/${problem.title}1.png`} className="w-full" alt="report-img" />
+                           <img src={`/images/reportsImages/problems/${problem.title}1.png`} className="w-full" alt="report-img" />
                         </td>
                         <td className="w-[60px] lg:w-[80px] bg-[#fff]">
-                           <img src={`/UF-Front/images/reportsImages/problems/${problem.title}2.png`} className="w-full" alt="report-img" />
+                           <img src={`/images/reportsImages/problems/${problem.title}2.png`} className="w-full" alt="report-img" />
                         </td>
                      </tr>
                   ))

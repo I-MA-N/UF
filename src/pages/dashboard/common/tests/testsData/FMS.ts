@@ -1,7 +1,7 @@
 const FMS = [
    {
       id: 1,
-      imgAddress: '/UF-Front/images/FMS/squatting.png',
+      imgAddress: '/images/FMS/squatting.png',
       title: 'اسکات کامل',
       imgSize: 'sm',
       keys: [0, 1, 2, 3],
@@ -9,7 +9,7 @@ const FMS = [
    },
    {
       id: 2,
-      imgAddress: '/UF-Front/images/FMS/stepping.png',
+      imgAddress: '/images/FMS/stepping.png',
       title: 'عبور از مانع راست',
       imgSize: 'sm',
       keys: [0, 1, 2, 3],
@@ -17,7 +17,7 @@ const FMS = [
    },
    {
       id: 3,
-      imgAddress: '/UF-Front/images/FMS/stepping.png',
+      imgAddress: '/images/FMS/stepping.png',
       title: 'عبور از مانع چپ',
       imgSize: 'sm',
       keys: [0, 1, 2, 3],
@@ -25,7 +25,7 @@ const FMS = [
    },
    {
       id: 4,
-      imgAddress: '/UF-Front/images/FMS/lunging.png',
+      imgAddress: '/images/FMS/lunging.png',
       title: 'لانچ خطی راست',
       imgSize: 'sm',
       keys: [0, 1, 2, 3],
@@ -33,7 +33,7 @@ const FMS = [
    },
    {
       id: 5,
-      imgAddress: '/UF-Front/images/FMS/lunging.png',
+      imgAddress: '/images/FMS/lunging.png',
       title: 'لانچ خطی چپ',
       imgSize: 'sm',
       keys: [0, 1, 2, 3],
@@ -41,7 +41,7 @@ const FMS = [
    },
    {
       id: 6,
-      imgAddress: '/UF-Front/images/FMS/reaching.png',
+      imgAddress: '/images/FMS/reaching.png',
       title: 'تحرک پذیری شانه ها راست',
       imgSize: 'sm',
       keys: [0, 1, 2, 3],
@@ -49,7 +49,7 @@ const FMS = [
    },
    {
       id: 7,
-      imgAddress: '/UF-Front/images/FMS/reaching.png',
+      imgAddress: '/images/FMS/reaching.png',
       title: 'تحرک پذیری شانه ها چپ',
       imgSize: 'sm',
       keys: [0, 1, 2, 3],
@@ -57,7 +57,7 @@ const FMS = [
    },
    {
       id: 8,
-      imgAddress: '/UF-Front/images/FMS/leg-raising.png',
+      imgAddress: '/images/FMS/leg-raising.png',
       title: 'بالا آوردن فعال پا راست',
       imgSize: 'lg',
       keys: [0, 1, 2, 3],
@@ -65,7 +65,7 @@ const FMS = [
    },
    {
       id: 9,
-      imgAddress: '/UF-Front/images/FMS/leg-raising.png',
+      imgAddress: '/images/FMS/leg-raising.png',
       title: 'بالا آوردن فعال پا چپ',
       imgSize: 'lg',
       keys: [0, 1, 2, 3],
@@ -73,7 +73,7 @@ const FMS = [
    },
    {
       id: 10,
-      imgAddress: '/UF-Front/images/FMS/push-up.png',
+      imgAddress: '/images/FMS/push-up.png',
       title: 'شنای سوئدی',
       imgSize: 'lg',
       keys: [0, 1, 2, 3],
@@ -81,7 +81,7 @@ const FMS = [
    },
    {
       id: 11,
-      imgAddress: '/UF-Front/images/FMS/rotary-stability.png',
+      imgAddress: '/images/FMS/rotary-stability.png',
       title: 'ثبات چرخشی راست',
       imgSize: 'lg',
       keys: [0, 1, 2, 3],
@@ -89,7 +89,7 @@ const FMS = [
    },
    {
       id: 12,
-      imgAddress: '/UF-Front/images/FMS/rotary-stability.png',
+      imgAddress: '/images/FMS/rotary-stability.png',
       title: 'ثبات چرخشی چپ',
       imgSize: 'lg',
       keys: [0, 1, 2, 3],
