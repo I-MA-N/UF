@@ -15,10 +15,10 @@ function Login() {
 
     return (
         <Container>
-            <p className="text-xs text-yellow mb-8 md:mb-16">
+            <p className="text-xs text-yellow mb-8 lg:mb-10">
                 {error && 'نام کاربری یا رمز عبور اشتباه است!'}
             </p>
-            <h2 className="text-2xl md:text-4xl text-center font-Estedad-Black mb-8">ورود</h2>
+            <h2 className="text-2xl lg:text-3xl text-center font-Estedad-Black mb-8">ورود</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col gap-y-3.5 w-64 md:w-80">
                     <Input
@@ -49,7 +49,7 @@ function Login() {
                         )}
                     />
 
-                    <p className="text-xs font-Estedad-ExtraLight text-center opacity-70">لطفا بعد از اولین ورود رمز خود را تغییر دهید.</p>
+                    <p className="text-xs lg:text-sm font-Estedad-ExtraLight text-center opacity-70">لطفا بعد از اولین ورود رمز خود را تغییر دهید.</p>
                 </div>
 
                 <LoginBtns isPending={isPending} />

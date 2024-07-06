@@ -23,7 +23,7 @@ function FormsFirstLoad() {
    }
 
    return <Container>
-      <p className="text-lg text-yellow mb-4">اطلاعات کاربری اشتباه است. دریافت نام فرم ها با خطا مواجه شد!</p>
+      <h1 className="mb-6 lg:text-lg text-center">اطلاعات کاربری اشتباه است. دریافت نام فرم ها با خطا مواجه شد!</h1>
       <PrevBtn type="button" onClick={() => navigate('/mentor/dashboard/members')} />
    </Container>
 }

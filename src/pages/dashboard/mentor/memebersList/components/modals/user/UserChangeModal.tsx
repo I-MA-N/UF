@@ -1,8 +1,10 @@
-import profileImg from '../../../../../../../assets/images/profile-img.png'
+import profileImg from '/images/profile-img.png';
+import profileImgDesktop from '/images/profile-img-desktop.png';
 import { useForm } from "react-hook-form"
 import UserData from '../../../../../../../types/UserData';
 import PUserData from '../../../../../../../api/common/PUserData';
 import ModalItem from '../../../../../../common/ModalItem';
+import Btn from '../../../../../../common/Btn';
 
 type UserChangeModalProps = {
    userData: UserData,
@@ -15,7 +17,7 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
       handleSubmit,
       formState: { errors }
    } = useForm();
-   const { mutate, isError, isSuccess } = PUserData();
+   const { mutate, isError, isSuccess, isPending } = PUserData();
 
    const submitHandler = (data: any) => {
       mutate({ ...data, for: userData?.username });
@@ -23,25 +25,26 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
 
    return (
       <div className="modal">
-         <button onClick={() => setUsername(null)} className="flex gap-0.5 items-center mb-4.5 bg-primary text-yellow py-2 px-4 rounded-[32px]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+         <button onClick={() => setUsername(null)} className="flex gap-0.5 items-center mb-4.5 bg-primary text-yellow lg:text-lg py-2 px-4 lg:px-5 rounded-[32px]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" className="w-4 lg:w-5">
                <path d="M13 3L8 8M8 8L3 13M8 8L13 13M8 8L3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             خروج
          </button>
 
-         <form onSubmit={(handleSubmit(submitHandler))} className="w-[298px] xs:w-80 p-12 bg-white text-primary rounded-[32px]">
+         <form onSubmit={(handleSubmit(submitHandler))} className="w-[298px] xs:w-80 lg:w-[424px] p-12 bg-white text-primary rounded-[32px]">
             <div className="flex gap-3.5 items-center border-b border-primary pb-4 relative">
-               <img src={profileImg} alt="profile-image" />
+                  <img src={profileImg} alt="profile-image" className='lg:hidden' />
+                  <img src={profileImgDesktop} alt="profile-image" className='hidden lg:block' />
                <div>
-                  <p className="text-sm">{userData?.username}</p>
-                  <p className="font-Estedad-ExtraLight text-xs">{userData?.email}</p>
+                  <p className="text-sm lg:text-lg">{userData?.username}</p>
+                  <p className="font-Estedad-ExtraLight text-xs lg:text-base">{userData?.email}</p>
                </div>
             </div>
 
-            <div className="flex flex-col gap-3 pt-6 p-4">
+            <div className="flex flex-col gap-3 lg:gap-5 pt-6 p-4">
                <ModalItem
-                  icon={<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" className="flex-shrink-0">
+                  icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="none" className="flex-shrink-0 w-4.5 lg:w-6">
                      <path d="M0.55 9C0.55 10.8403 0.649326 12.2816 0.900908 13.4137C1.1511 14.5394 1.5445 15.3253 2.1096 15.8904C2.67469 16.4555 3.46057 16.8489 4.58635 17.0991C5.71836 17.3507 7.15968 17.45 9 17.45C10.8403 17.45 12.2816 17.3507 13.4137 17.0991C14.5394 16.8489 15.3253 16.4555 15.8904 15.8904C16.4555 15.3253 16.8489 14.5394 17.0991 13.4137C17.3507 12.2816 17.45 10.8403 17.45 9C17.45 7.15968 17.3507 5.71836 17.0991 4.58635C16.8489 3.46057 16.4555 2.67469 15.8904 2.1096C15.3253 1.5445 14.5394 1.1511 13.4137 0.900909C12.2816 0.649326 10.8403 0.549999 9 0.549999C7.15968 0.549999 5.71836 0.649326 4.58635 0.900909C3.46057 1.1511 2.67469 1.5445 2.1096 2.1096C1.5445 2.67469 1.1511 3.46057 0.900908 4.58635C0.649326 5.71836 0.55 7.15968 0.55 9Z" stroke="#083C5A" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
                      <circle cx="3" cy="3" r="2.45" transform="matrix(-1 0 0 1 15 6)" stroke="#083C5A" strokeWidth="1.1" />
                      <path d="M3.75 7.5H6.75M3.75 10.5H6.75" stroke="#083C5A" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
@@ -52,13 +55,13 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                         type="text"
                         id="firstname"
                         defaultValue={userData?.firstname}
-                        className="bg-transparent outline-none border-b border-b-primary/50 text-xs my-1 w-full"
+                        className="bg-transparent outline-none border-b border-b-primary/50 my-1 w-full"
                         {...register('firstname')}
                      />
                   }
                />
                <ModalItem
-                  icon={<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" className="flex-shrink-0">
+                  icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="none" className="flex-shrink-0 w-4.5 lg:w-6">
                      <path d="M0.55 9C0.55 10.8403 0.649326 12.2816 0.900908 13.4137C1.1511 14.5394 1.5445 15.3253 2.1096 15.8904C2.67469 16.4555 3.46057 16.8489 4.58635 17.0991C5.71836 17.3507 7.15968 17.45 9 17.45C10.8403 17.45 12.2816 17.3507 13.4137 17.0991C14.5394 16.8489 15.3253 16.4555 15.8904 15.8904C16.4555 15.3253 16.8489 14.5394 17.0991 13.4137C17.3507 12.2816 17.45 10.8403 17.45 9C17.45 7.15968 17.3507 5.71836 17.0991 4.58635C16.8489 3.46057 16.4555 2.67469 15.8904 2.1096C15.3253 1.5445 14.5394 1.1511 13.4137 0.900909C12.2816 0.649326 10.8403 0.549999 9 0.549999C7.15968 0.549999 5.71836 0.649326 4.58635 0.900909C3.46057 1.1511 2.67469 1.5445 2.1096 2.1096C1.5445 2.67469 1.1511 3.46057 0.900908 4.58635C0.649326 5.71836 0.55 7.15968 0.55 9Z" stroke="#083C5A" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
                      <circle cx="3" cy="3" r="2.45" transform="matrix(-1 0 0 1 15 6)" stroke="#083C5A" strokeWidth="1.1" />
                      <path d="M3.75 7.5H6.75M3.75 10.5H6.75" stroke="#083C5A" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
@@ -69,13 +72,13 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                         type="text"
                         id="lastname"
                         defaultValue={userData?.lastname}
-                        className="bg-transparent outline-none border-b border-b-primary/50 text-xs my-1 w-full"
+                        className="bg-transparent outline-none border-b border-b-primary/50 my-1 w-full"
                         {...register('lastname')}
                      />
                   }
                />
                <ModalItem
-                  icon={<svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none" className="flex-shrink-0">
+                  icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 17" fill="none" className="flex-shrink-0 w-4.5 lg:w-6">
                      <mask id="path-1-inside-1_370_1853" fill="white">
                         <path d="M0 8.25C0 15.0439 1.5885 16.5 9 16.5C16.4115 16.5 18 15.0439 18 8.25C18 1.45613 16.4115 0 9 0C4.1213 0 1.76575 0.630949 0.725543 3C0.185514 4.2299 0 5.92827 0 8.25Z" />
                      </mask>
@@ -89,7 +92,7 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                            id="email"
                            dir="ltr"
                            defaultValue={userData?.email}
-                           className="bg-transparent outline-none border-b border-b-primary/50 text-xs my-1 w-full"
+                           className="bg-transparent outline-none border-b border-b-primary/50 my-1 w-full"
                            {...register('email', { required: true, pattern: /\w+[@]\w+[.]\w+/ })}
                         />
                         <span className="text-[10px] text-red inline-block">
@@ -100,7 +103,7 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                   }
                />
                <ModalItem
-                  icon={<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" className="flex-shrink-0">
+                  icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="none" className="flex-shrink-0 w-4.5 lg:w-6">
                      <path d="M0.55 9C0.55 10.8403 0.649326 12.2816 0.900908 13.4137C1.1511 14.5394 1.5445 15.3253 2.1096 15.8904C2.67469 16.4555 3.46057 16.8489 4.58635 17.0991C5.71836 17.3507 7.15968 17.45 9 17.45C10.8403 17.45 12.2816 17.3507 13.4137 17.0991C14.5394 16.8489 15.3253 16.4555 15.8904 15.8904C16.4555 15.3253 16.8489 14.5394 17.0991 13.4137C17.3507 12.2816 17.45 10.8403 17.45 9C17.45 7.15968 17.3507 5.71836 17.0991 4.58635C16.8489 3.46057 16.4555 2.67469 15.8904 2.1096C15.3253 1.5445 14.5394 1.1511 13.4137 0.900909C12.2816 0.649326 10.8403 0.549999 9 0.549999C7.15968 0.549999 5.71836 0.649326 4.58635 0.900909C3.46057 1.1511 2.67469 1.5445 2.1096 2.1096C1.5445 2.67469 1.1511 3.46057 0.900908 4.58635C0.649326 5.71836 0.55 7.15968 0.55 9Z" stroke="#083C5A" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
                      <path d="M6.75 14.25H11.25" stroke="#083C5A" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
                      <path d="M5.25 0.5H12.75C12.75 1.74264 11.7426 2.75 10.5 2.75H7.5C6.25736 2.75 5.25 1.74264 5.25 0.5Z" fill="#083C5A" />
@@ -113,7 +116,7 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                            id="phone"
                            dir="ltr"
                            defaultValue={userData?.phone}
-                           className="bg-transparent outline-none border-b border-b-primary/50 text-xs my-1 w-full"
+                           className="bg-transparent outline-none border-b border-b-primary/50 my-1 w-full"
                            {...register('phone', { pattern: /^.{10}$/ })}
                         />
                         <span className="text-[10px] text-red inline-block">
@@ -123,7 +126,7 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                   }
                />
                <ModalItem
-                  icon={<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="none" className="flex-shrink-0 w-4.5 lg:w-6">
                      <path d="M13.2445 3.50157L12.7313 3.69922C12.8112 3.90663 13.008 4.04559 13.2302 4.05139L13.2445 3.50157ZM14.9925 10.6537L14.7601 10.1553C14.5634 10.2469 14.4391 10.4456 14.4425 10.6625L14.9925 10.6537ZM14.3145 16.501L14.7091 16.8841H14.7091L14.3145 16.501ZM3.68554 16.501L4.08015 16.1179L3.68554 16.501ZM3.00754 10.6537L3.55747 10.6625C3.56093 10.4456 3.43656 10.2469 3.23994 10.1553L3.00754 10.6537ZM4.75545 3.50157L4.7698 4.05139C4.99198 4.04559 5.18884 3.90663 5.26871 3.69922L4.75545 3.50157ZM13.7578 3.30393C13.053 1.47358 11.1709 0.2 9 0.2V1.3C10.7491 1.3 12.2016 2.32365 12.7313 3.69922L13.7578 3.30393ZM17.8 7.28127C17.8 4.88825 15.7347 3.01635 13.2589 2.95176L13.2302 4.05139C15.2001 4.10278 16.7 5.57093 16.7 7.28127H17.8ZM15.2249 11.1522C16.7324 10.4494 17.8 8.99438 17.8 7.28127H16.7C16.7 8.51253 15.9319 9.6089 14.7601 10.1553L15.2249 11.1522ZM15.55 11.7585C15.55 11.3609 15.5479 10.9902 15.5424 10.645L14.4425 10.6625C14.4479 11 14.45 11.3644 14.45 11.7585H15.55ZM14.7091 16.8841C15.1819 16.3971 15.3712 15.7251 15.4609 14.9255C15.5508 14.1233 15.55 13.0776 15.55 11.7585H14.45C14.45 13.1041 14.4492 14.0766 14.3677 14.8029C14.286 15.5319 14.1326 15.8987 13.9199 16.1179L14.7091 16.8841ZM9 17.8C10.5307 17.8 11.7139 17.8008 12.6028 17.7031C13.486 17.606 14.2068 17.4014 14.7091 16.8841L13.9199 16.1179C13.6949 16.3496 13.3027 16.5195 12.4826 16.6097C11.6683 16.6992 10.5578 16.7 9 16.7V17.8ZM3.29094 16.8841C3.79321 17.4014 4.51403 17.606 5.39718 17.7031C6.28612 17.8008 7.46931 17.8 9 17.8V16.7C7.44216 16.7 6.33174 16.6992 5.51739 16.6097C4.69726 16.5195 4.30511 16.3496 4.08015 16.1179L3.29094 16.8841ZM2.45 11.7585C2.45 13.0776 2.44918 14.1233 2.53912 14.9255C2.62877 15.7251 2.81813 16.3971 3.29094 16.8841L4.08015 16.1179C3.86742 15.8987 3.714 15.5319 3.63227 14.8029C3.55082 14.0766 3.55 13.1041 3.55 11.7585H2.45ZM2.45761 10.645C2.45211 10.9902 2.45 11.3609 2.45 11.7585H3.55C3.55 11.3644 3.5521 11 3.55747 10.6625L2.45761 10.645ZM3.23994 10.1553C2.06807 9.6089 1.3 8.51253 1.3 7.28127H0.2C0.2 8.99438 1.26756 10.4494 2.77514 11.1522L3.23994 10.1553ZM1.3 7.28127C1.3 5.57093 2.79987 4.10278 4.7698 4.05139L4.74111 2.95176C2.26527 3.01635 0.2 4.88825 0.2 7.28127H1.3ZM9 0.2C6.82915 0.2 4.94703 1.47358 4.24219 3.30393L5.26871 3.69922C5.79842 2.32365 7.25091 1.3 9 1.3V0.2Z" fill="#083C5A" />
                      <path d="M14.8847 13.5L3.06787 13.5" stroke="#083C5A" strokeWidth="1.1" strokeLinecap="square" strokeLinejoin="round" />
                   </svg>}
@@ -134,13 +137,13 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                         id="age"
                         dir="ltr"
                         defaultValue={userData?.age}
-                        className="bg-transparent outline-none border-b border-b-primary/50 text-xs my-1 w-full"
+                        className="bg-transparent outline-none border-b border-b-primary/50 my-1 w-full"
                         {...register('age')}
                      />
                   }
                />
                <ModalItem
-                  icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className="w-4.5">
+                  icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className="flex-shrink-0 w-4.5 lg:w-6">
                      <path d="M16 16.0861C15.0866 16.7642 13.7991 17.5861 12 17.5861C10.2009 17.5861 8.91341 16.7642 8 16.0861" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                      <path fillRule="evenodd" clipRule="evenodd" d="M2.00129 15.0114C1.96476 14.4752 1.52548 14.0504 0.988034 14.0504C0.420441 14.0504 -0.0354561 14.5258 0.00217362 15.0921C0.427057 21.4868 2.51371 23.5735 8.90838 23.9984C9.47472 24.036 9.9501 23.5801 9.9501 23.0125C9.9501 22.475 9.52533 22.0358 8.98913 21.9992C7.95281 21.9286 7.07422 21.8134 6.32548 21.647C4.96932 21.3456 4.16478 20.9037 3.63082 20.3697C3.09686 19.8357 2.65495 19.0312 2.35355 17.6751C2.18715 16.9263 2.07189 16.0477 2.00129 15.0114ZM21.9133 15.0114C21.9499 14.4752 22.3891 14.0504 22.9266 14.0504C23.4942 14.0504 23.9501 14.5258 23.9125 15.0921C23.4876 21.4868 21.4009 23.5735 15.0062 23.9984C14.4399 24.036 13.9645 23.5801 13.9645 23.0125C13.9645 22.475 14.3893 22.0358 14.9255 21.9992C15.9618 21.9286 16.8404 21.8134 17.5892 21.647C18.9453 21.3456 19.7498 20.9037 20.2838 20.3697C20.8178 19.8357 21.2597 19.0312 21.5611 17.6751C21.7275 16.9263 21.8427 16.0477 21.9133 15.0114ZM24.0005 12.0892C24.0005 12.0739 24.0005 12.0585 24.0005 12.0432C24.0005 12.0279 24.0005 12.0126 24.0005 11.9973V12.0892ZM23.9125 8.9943C23.9501 9.56065 23.4942 10.036 22.9266 10.036C22.3891 10.036 21.9499 9.61125 21.9133 9.07505C21.8427 8.03872 21.7275 7.16013 21.5611 6.41138C21.2597 5.05522 20.8178 4.25068 20.2838 3.71672C19.7498 3.18277 18.9453 2.74085 17.5892 2.43946C16.8404 2.27305 15.9618 2.15779 14.9255 2.08719C14.3893 2.05066 13.9645 1.61138 13.9645 1.07394C13.9645 0.506343 14.4399 0.0504463 15.0062 0.0880757C21.4009 0.512957 23.4876 2.59961 23.9125 8.9943ZM2.00129 9.07505C1.96476 9.61125 1.52548 10.036 0.988034 10.036C0.420441 10.036 -0.0354562 9.56065 0.00217351 8.9943C0.427057 2.59962 2.51371 0.512964 8.90838 0.0880779C9.47472 0.0504479 9.9501 0.506345 9.9501 1.07394C9.9501 1.61138 9.52533 2.05066 8.98913 2.08719C7.95281 2.15779 7.07422 2.27305 6.32548 2.43946C4.96932 2.74085 4.16478 3.18277 3.63082 3.71672C3.09686 4.25068 2.65495 5.05522 2.35355 6.41138C2.18715 7.16013 2.07189 8.03872 2.00129 9.07505ZM11.9573 0L11.9762 2.58535e-06H11.9384L11.9573 0Z" fill="currentColor" />
                      <path d="M12 10.9141V13.9141" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -169,12 +172,12 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                <span className="block text-xs text-center text-secondary mt-3">تغییرات با موفقیت انجام شد!</span>
             }
 
-            <button
+            <Btn
+               text="تایید"
                type="submit"
-               className="w-24 block bg-secondary text-white rounded-3xl text-sm py-2 mt-6 mx-auto"
-            >
-               تایید
-            </button>
+               className="w-20 lg:w-24 h-9 lg:h-11 bg-secondary text-white text-sm lg:text-base mx-auto mt-6"
+               isDisabled={isPending}
+            />
          </form>
       </div>
    )

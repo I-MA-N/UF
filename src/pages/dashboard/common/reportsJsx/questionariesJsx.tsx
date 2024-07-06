@@ -4,7 +4,7 @@ function questionariesJsx(data: dataQuestionariesType) {
    return (
       <>
          <h2 className="mb-2 text-center">تفسیر پرسشنامه ها</h2>
-         <table className="w-full text-xs/6 text-center border border-white" cellPadding="6px">
+         <table className="w-full text-center border border-white" cellPadding="6px">
             <thead>
                <tr>
                   <th>

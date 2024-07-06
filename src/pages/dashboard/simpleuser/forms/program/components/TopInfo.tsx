@@ -8,7 +8,7 @@ function TopInfo() {
             <span className='font-Estedad-Black mx-1'>save as pdf</span>
             را انتخاب و همچنین گزینه
             <span className='font-Estedad-Black mx-1'>background graphics</span>
-            را تیک بزنید تا بهترین حالت پی دی اف را بتوانید دانلود کنید
+            را تیک بزنید تا بهترین حالت پی دی اف را بتوانید دانلود کنید.
          </span>
          <Btn
             text='دانلود PDF'

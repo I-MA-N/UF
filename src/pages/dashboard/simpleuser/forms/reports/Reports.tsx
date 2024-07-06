@@ -48,7 +48,7 @@ function Reports({ userData, reportsArr, formData }: ReportsProps) {
             <ReportsButtons reportsArr={reportsArr} page={page} setPage={setPage} />
          </section>
 
-         <section className="container mx-auto min-w-[600px] max-w-[1200px] pl-4 pb-12">
+         <section className="container mx-auto min-w-[600px] text-xs/6 lg:text-base pl-4 pb-12">
             {page?.reportJsx}
          </section>
       </>

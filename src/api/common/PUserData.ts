@@ -6,7 +6,7 @@ import axios from "axios";
 function PUserData() {
    const queryClient = useQueryClient();
 
-   const { mutate, isError, isSuccess } = useMutation({
+   const { mutate, isError, isSuccess, isPending } = useMutation({
       mutationKey: ['post: user data'],
       mutationFn: async (userData: any) => { 
          const formData = getFormData(userData);
@@ -29,7 +29,7 @@ function PUserData() {
       }
    })
 
-   return { mutate, isError, isSuccess }
+   return { mutate, isError, isSuccess, isPending }
 }
 
 export default PUserData

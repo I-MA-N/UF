@@ -19,4 +19,6 @@ type UserData = {
 
 export type UserData2 = Omit<UserData, "access" | "subusers" | "lastlogin" | "info">;
 
+export type MentorData = Omit<UserData, "access" | "subusers" | "lastlogin">;
+
 export default UserData;

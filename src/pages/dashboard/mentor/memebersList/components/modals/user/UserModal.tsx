@@ -1,4 +1,5 @@
-import profileImg from '../../../../../../../assets/images/profile-img.png'
+import profileImg from '/images/profile-img.png'
+import profileImgDesktop from '/images/profile-img-desktop.png'
 import { useState } from "react"
 import UserChangeModal from "./UserChangeModal"
 import GUserData from '../../../../../../../api/common/GUserData'
@@ -19,21 +20,22 @@ function UserModal({ username, setUsername, orgSelected }: UserModalProps) {
    return (
       <>
          <div className="modal">
-            <button onClick={() => setUsername(null)} className="flex gap-0.5 items-center mb-4.5 bg-primary text-yellow py-2 px-4 rounded-[32px]">
-               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <button onClick={() => setUsername(null)} className="flex gap-0.5 items-center mb-4.5 bg-primary text-yellow lg:text-lg py-2 px-4 lg:px-5 rounded-[32px]">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" className="w-4 lg:w-5">
                   <path d="M13 3L8 8M8 8L3 13M8 8L13 13M8 8L3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                </svg>
                خروج
             </button>
 
-            <div className="w-[298px] xs:w-80 p-12 bg-white text-primary rounded-[32px]">
+            <div className="w-[298px] xs:w-80 lg:w-[424px] p-12 bg-white text-primary rounded-[32px]">
                <div className="flex gap-3.5 items-center border-b border-primary pb-4 relative">
-                  <img src={profileImg} alt="profile-image" />
+                  <img src={profileImg} alt="profile-image" className='lg:hidden' />
+                  <img src={profileImgDesktop} alt="profile-image" className='hidden lg:block' />
                   <div>
-                     <p className={`text-sm mb-1 ${data?.username ? 'w-32' : ''}`}>
+                     <p className="text-sm lg:text-lg mb-1">
                         {data?.name || data?.username || 'مشکلی در دریافت اطلاعات این کاربر رخ داده است!'}
                      </p>
-                     <p className="font-Estedad-ExtraLight text-xs">{data?.email}</p>
+                     <p className="font-Estedad-ExtraLight text-xs lg:text-base">{data?.email}</p>
                   </div>
                </div>
 
@@ -43,20 +45,20 @@ function UserModal({ username, setUsername, orgSelected }: UserModalProps) {
                      <>
                         <Link
                            text='ارزیابی'
-                           className='inline-blcok bg-secondary text-white w-auto h-8 px-6'
+                           className='inline-blcok bg-secondary text-white w-auto h-8 lg:h-10 px-6'
                            url={`/mentor/dashboard/members/${orgSelected}/${data?.username}`}
                         />
                         <Btn
                            text='ویرایش'
                            type='button'
-                           className='bg-secondary text-white w-auto h-8 px-6'
+                           className='bg-secondary text-white w-auto h-8 lg:h-10 px-6'
                            onClick={() => setChangeModalUsername(data?.username)}
                         />
                      </>
                   }
                </div>
 
-               <p className="text-[10px] font-Estedad-ExtraLight text-center">
+               <p className="text-[10px] lg:text-sm font-Estedad-ExtraLight text-center">
                   تاریخ ایجاد کاربر:
                   {data?.datejoined && parseDate(data.datejoined)}
                </p>

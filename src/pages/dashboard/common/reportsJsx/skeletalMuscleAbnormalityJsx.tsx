@@ -2,7 +2,7 @@ function skeletalMuscleAbnormalityJsx(data: any) {
    return (
       <>
          <h2 className="mb-2 text-center">ناهنجاری اسکلتی -عضلانی</h2>
-         <table className="w-full text-xs/6 text-center border border-white" cellPadding="6px">
+         <table className="w-full text-center border border-white" cellPadding="6px">
             <thead>
                <tr>
                   <th rowSpan={2}>ناهنجاری</th>

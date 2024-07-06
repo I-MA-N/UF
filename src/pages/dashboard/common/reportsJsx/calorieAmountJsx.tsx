@@ -7,7 +7,7 @@ function calorieAmountJsx(data: dataCalorieAmountType) {
    return (
       <>
          <h2 className="mb-2 text-center">میزان کالری روزانه</h2>
-         <table className="w-full text-xs/6 text-center border border-white" cellPadding="6px">
+         <table className="w-full text-center border border-white" cellPadding="6px">
             <tr>
                <th>
                   سوخت و ساز پایه
@@ -55,7 +55,7 @@ function calorieAmountJsx(data: dataCalorieAmountType) {
          </div>
 
          <h2 className="mb-2 mt-6 text-center">میزان کالری و درشت مغذی پیشنهادی</h2>
-         <table className="w-full text-xs/6 text-center border border-white" cellPadding="6px">
+         <table className="w-full text-center border border-white" cellPadding="6px">
             <thead>
                <tr>
                   <th>وعده ها</th>

@@ -21,8 +21,8 @@ function UserHeader() {
 
    return (
       <>
-         <nav className="container fixed left-1/2 -translate-x-1/2 mt-5 text-green text-xs md:text-sm lg:text-xl z-[5] print:hidden">
-            <div className="flex justify-between gap-0 items-center h-11 lg:h-16 rounded-full bg-secondary px-9 md:px-14">
+         <nav className="container fixed left-1/2 -translate-x-1/2 mt-5 text-green z-[5] print:hidden">
+            <div className="flex justify-between lg:justify-end lg:flex-row-reverse items-center lg:gap-10 h-11 lg:h-14 rounded-full bg-secondary px-9 lg:px-16">
                <NavLink to={`/${data?.role}/home`} className={({ isActive }: SetStyleFuncProps) => isActive ? 'font-Estedad-Black before:opacity-100 navlink' : ' navlink'}>
                   یوفیت
                </NavLink>

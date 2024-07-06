@@ -62,12 +62,12 @@
 
 @layer components {
     .navlink {
-        @apply relative;
+        @apply relative h-full leading-[44px] lg:leading-[56px] text-sm lg:text-lg;
     }
 
     .navlink::before {
         content: '';
-        @apply absolute -bottom-4 sm:-bottom-[22px] md:-bottom-[26px] w-full h-1 bg-primary opacity-0 transition-opacity duration-200;
+        @apply absolute w-full h-1 bottom-0 bg-primary opacity-0 transition-opacity duration-200;
     }
 
     .navlink:hover::before {
@@ -75,13 +75,13 @@
     }
 
     .profile-box {
-        @apply bg-white text-primary lg:text-lg rounded-[32px] p-4 lg:px-6 space-y-4 absolute top-8 left-1/2 -translate-x-1/2;
+        @apply bg-white text-primary text-sm lg:text-base rounded-[32px] p-4 lg:px-6 space-y-4 absolute top-9 lg:top-11 left-1/2 -translate-x-1/2;
     }
 
     .profile-box::before {
         content: '';
         clip-path: polygon(52% 39%, 0% 100%, 100% 100%);
-        @apply w-7 h-7 bg-white absolute -top-6 left-1/2 -translate-x-1/2;
+        @apply w-12 h-7 lg:w-16 lg:h-9 bg-white absolute -top-6 lg:-top-8 left-1/2 -translate-x-1/2;
     }
 
     .login-header-underline {
@@ -89,11 +89,11 @@
     }
 
     .custom-input {
-        @apply w-full border border-white rounded-full bg-transparent p-3.5 mt-3 outline-none placeholder:text-xs;
+        @apply w-full h-12 lg:h-14 border border-white rounded-full bg-transparent p-3.5 mt-3 outline-none placeholder:text-xs lg:placeholder:text-sm;
     }
 
     .btn {
-        @apply flex justify-center items-center bg-white text-primary w-64 lg:w-[300px] h-12 lg:h-[52px] rounded-full text-sm lg:text-base relative outline-none;
+        @apply flex justify-center items-center bg-white text-primary w-64 lg:w-[320px] h-12 lg:h-14 rounded-full text-sm lg:text-lg relative outline-none transition-colors duration-200;
     }
 
     .btn-disabled {

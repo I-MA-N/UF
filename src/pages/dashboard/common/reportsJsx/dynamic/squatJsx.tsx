@@ -6,7 +6,7 @@ function squatJsx(data: { [k: string]: string }) {
    return (
       <div>
          <h2 className="mb-2 text-center">ارزیابی عملکردی در نشستن و بلند شدن (اسکات)</h2>
-         <table className="w-full text-xs/6 text-center border border-white" cellPadding="6px">
+         <table className="w-full text-center border border-white" cellPadding="6px">
             <tr>
                <th>حرکت جبرانی</th>
                <th>نتیجه</th>

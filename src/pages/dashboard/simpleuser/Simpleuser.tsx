@@ -2,7 +2,7 @@ import { useState } from "react";
 import Container from "../../common/Container";
 import Link from "../../common/Link";
 import Btn from "../../common/Btn";
-import ProfileModal from "../common/components/ProfileModal";
+import ProfileModal from "../common/components/modals/ProfileModal";
 import ShowInfo from "../common/components/ShowInfo";
 import simpleuserGFormNames from "../../../api/simpleuser/simpleuserGFormNames";
 import { useUserDataContext } from "../../authentication/UserDataProvider";
@@ -17,17 +17,17 @@ function Simpleuser() {
    return (
       <Container>
          <div className="mb-6">
-            <h2 className="mb-2 text-center md:textLg">{userData?.name || 'کاربر بدون نام!'}</h2>
-            <p className="font-Estedad-ExtraLight text-sm md:text-base leading-7 text-center">
+            <h2 className="mb-2 text-center lg:text-lg">{userData?.name || 'کاربر بدون نام!'}</h2>
+            <p className="font-Estedad-ExtraLight text-sm leading-7 lg:text-base lg:leading-9 text-center">
                <ShowInfo age={userData?.age} phone={userData?.phone} />
             </p>
             {
                isError &&
-               <span className="text-sm text-yellow mb-4">مشکلی در دریافت اطلاعات آخرین گزارش به وجود آمده است!</span>
+               <span className="text-xs lg:text-sm text-yellow">مشکلی در دریافت اطلاعات آخرین گزارش به وجود آمده است!</span>
             }
          </div>
 
-         <div className="flex flex-col gap-8 justify-center">
+         <div className="flex flex-col gap-8 justify-center mt-4">
             <Link
                text="پرسشنامه های من"
                url="/simpleuser/dashboard/forms"

@@ -5,7 +5,7 @@ import Btn from "../../../../common/Btn";
 import generateTestInputs from "../../../common/tests/generateTestInputs";
 import testsData from "./data/testsData";
 import { TestObj } from "../../../../../types/TestsTypes";
-import FormBtns from "../../../common/components/FormBtns";
+import FormBtns from "../../../common/components/form/FormBtns";
 import { useSearchParams } from "react-router-dom";
 
 type TestsProps = {
@@ -34,18 +34,18 @@ function Tests({ testsArr, initialFormData }: TestsProps) {
 
    return (
       <Container withTitle={false}>
-         <FormBtns 
-            getValues={getValues} 
-            page={page} formData={formData} 
-            formName={searchParams.get('formName')!} 
-            exitBtnHref="/simpleuser/dashboard/forms" 
+         <FormBtns
+            getValues={getValues}
+            page={page} formData={formData}
+            formName={searchParams.get('formName')!}
+            exitBtnHref="/simpleuser/dashboard/forms"
          />
 
          <form
             className="w-full"
             onSubmit={handleSubmit(submitHandler)}
          >
-            <div className="flex items-center gap-4 w-full mt-8 mb-14 overflow-x-auto">
+            <div className="flex lg:flex-wrap items-center gap-4 w-full mt-8 mb-14 overflow-x-auto">
                {
                   testsArr.map(test => (
                      <Btn
@@ -63,9 +63,12 @@ function Tests({ testsArr, initialFormData }: TestsProps) {
 
             {
                testsData[page as keyof typeof testsData].testSubTitle &&
-                  <p className="text-sm leading-6 mb-6 text-center">
+               <div className="relative">
+                  <p className="text-base lg:text-lg leading-6 mb-6 mr-6">
                      {testsData[page as keyof typeof testsData].testSubTitle}
                   </p>
+                  <div className="absolute w-2.5 lg:w-3 h-2.5 lg:h-3 bg-white rounded-full right-0 top-1/2 -translate-y-1/2" />
+               </div>
             }
 
             <div className={testsData[page as keyof typeof testsData].testClassName}>

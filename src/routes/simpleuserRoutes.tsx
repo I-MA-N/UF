@@ -26,20 +26,20 @@ const simpleuserRoutes = [
    {
       path: '/simpleuser/dashboard/forms',
       element: <UserTestsInfoProvider>
-            <Forms />
-         </UserTestsInfoProvider>
+         <Forms />
+      </UserTestsInfoProvider>
    },
    {
       path: '/simpleuser/dashboard/forms/tests',
       element: <UserTestsInfoProvider>
-            <TestsFirstLoad />
-         </UserTestsInfoProvider>
+         <TestsFirstLoad />
+      </UserTestsInfoProvider>
    },
    {
       path: '/simpleuser/dashboard/forms/reports',
       element: <UserTestsInfoProvider>
-            <ReportsFirstLoad />
-         </UserTestsInfoProvider>
+         <ReportsFirstLoad />
+      </UserTestsInfoProvider>
    },
    {
       path: '/simpleuser/dashboard/forms/correctiveprogram',

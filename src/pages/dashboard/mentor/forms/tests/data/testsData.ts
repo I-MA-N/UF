@@ -11,25 +11,25 @@ const testsData = {
       testSubTitle: '',
       testPattern: "Text" as testPatternTypes,
       testData: bodyStatus,
-      testClassName: 'flex gap-4 items-center justify-center flex-wrap'
+      testClassName: 'flex gap-4 lg:gap-8 items-center justify-center flex-wrap'
    },
    'ناهنجاری ها': {
       testSubTitle: '',
       testPattern: "Choice" as testPatternTypes,
       testData: problems,
-      testClassName: 'flex gap-x-8 gap-y-4 items-center justify-center flex-wrap'
+      testClassName: 'flex gap-x-8 gap-y-4 lg:gap-y-8 items-center justify-center flex-wrap'
    },
    'ارزیابی پویا': {
       testSubTitle: '',
       testPattern: "ImageWithDivide" as testPatternTypes,
       testData: dynamic,
-      testClassName: 'flex gap-x-4 justify-center flex-wrap divide-y divide-y-white'
+      testClassName: 'grid grid-cols-1 justify-center divide-y divide-y-white'
    },
    'عملکردی وضعیت بدنی': {
       testSubTitle: '',
       testPattern: "ChoiceImage" as testPatternTypes,
       testData: FMS,
-      testClassName: 'flex gap-x-8 gap-y-4 items-center justify-center flex-wrap'
+      testClassName: 'flex gap-x-8 gap-y-4 lg:gap-y-8 items-center justify-center flex-wrap'
    },
 }
 

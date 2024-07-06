@@ -6,7 +6,7 @@ function physicalIndexJsx(data: dataPhysicalIndexType, statusBody: any) {
       <>
          <h2 className="text-center">شاخص های بدنی</h2>
          <div className="w-full flex gap-6 my-2">
-            <table className="w-full text-xs/6 text-center border border-white" cellPadding="6px">
+            <table className="w-full text-center border border-white" cellPadding="6px">
                <tbody>
                   <tr>
                      <td>دور گردن</td>

@@ -14,7 +14,7 @@ type ChoiceInputProps = {
 function ChoiceInput({ register, setValue: setInputValue, title, keys, values, index, defaultValue }: ChoiceInputProps) {
    const btnWidth = useMemo(() => {  
       const screenWidth = document.body.clientWidth;
-      return (screenWidth < 380 ? 284 : 326) / keys.length
+      return (screenWidth < 380 ? 284 : screenWidth < 1024 ? 326 : 396) / keys.length
    }, [keys]);
    const [value, setValue] = useState(defaultValue);
 
@@ -23,11 +23,12 @@ function ChoiceInput({ register, setValue: setInputValue, title, keys, values, i
    }, [value, title, keys])
 
    return (
-      <div className="bg-white text-primary rounded-[18px] w-72 xs:w-[330px]">
-         <p className="pt-4 pb-6 px-4 text-sm text-center leading-7">
+      <div className="flex flex-col justify-between bg-white text-primary rounded-[18px] w-72 xs:w-[330px] lg:w-[400px] h-40">
+         <p className="h-full flex justify-center items-center px-4 text-sm text-center leading-7">
             {index}- {title}
          </p>
-         <div className="rounded-3xl relative h-9 z-0 inner-shadow p-0.5">
+
+         <div className="rounded-3xl relative h-9 z-0 inner-shadow p-0.5 flex-shrink-0">
             <div
                className="absolute top-0 z-10 bg-secondary rounded-3xl h-8 mt-0.5 transition-all duration-200 outer-shadow"
                style={{ width: btnWidth, right: value * btnWidth + 2 + 'px' }}
@@ -38,7 +39,7 @@ function ChoiceInput({ register, setValue: setInputValue, title, keys, values, i
                      <button
                         key={key}
                         type="button"
-                        className={`text-[8px] transition-colors duration-200 whitespace-nowrap overflow-x-auto ${value === index ? 'text-white' : ''}`}
+                        className={`text-[8px] lg:text-[10px]/[17px] lg:text-balance transition-colors duration-200 whitespace-nowrap overflow-x-auto ${value === index ? 'text-white' : ''}`}
                         style={{ width: btnWidth }}
                         onClick={() => setValue(index)}
                      >

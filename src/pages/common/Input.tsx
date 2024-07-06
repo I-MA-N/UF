@@ -24,14 +24,15 @@ function Input({
 
     return (
         <div className={`flex flex-col ${divClassName || ''}`}>
-            <label htmlFor={name} className={`mr-5 text-sm ${isDisabled && 'text-white/50'}`}>{text}</label>
+            <label htmlFor={name} className={`mr-5 text-sm lg:text-base ${isDisabled ? 'text-white/50' : ''}`}>{text}</label>
+
             {
                 name === 'password' || name === 'confirmpass' || name === 'oldpassword' || name === 'newpassword'
                     ?
                     <div className="relative">
                         <input
                             dir="ltr"
-                            className={`custom-input placeholder:text-start ${isDisabled && 'border-white/50 text-white/50'}`}
+                            className={`custom-input placeholder:text-start ${isDisabled ? 'border-white/50 text-white/50' : ''}`}
                             type={showPassword ? 'text' : 'password'}
                             id={name}
                             placeholder={placeholder}

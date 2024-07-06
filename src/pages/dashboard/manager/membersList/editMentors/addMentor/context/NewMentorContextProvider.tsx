@@ -15,18 +15,18 @@ const INITIAL_MENTOR = {
    }
 }
 
-type MentorData = typeof INITIAL_MENTOR
+export type NewMentorData = typeof INITIAL_MENTOR
 
 type NewMentorContextType = {
-   mentorData: MentorData,
-   setMentorData?: React.Dispatch<React.SetStateAction<MentorData>>
+   mentorData: NewMentorData,
+   setMentorData?: React.Dispatch<React.SetStateAction<NewMentorData>>
 }
 
 
 const NewMentorContext = createContext<NewMentorContextType>({ mentorData: INITIAL_MENTOR });
 
 function NewMentorContextProvider({ children }: PropsWithChildren) {
-   const [mentorData, setMentorData] = useState<MentorData>(INITIAL_MENTOR);
+   const [mentorData, setMentorData] = useState<NewMentorData>(INITIAL_MENTOR);
 
    return (
       <NewMentorContext.Provider value={{ mentorData, setMentorData }}>

@@ -30,13 +30,13 @@ function ResetPass() {
 
    return (
       <Container>
-         <p className="text-xs text-yellow mb-8 md:mb-16">
+         <p className="text-xs text-yellow mb-8 lg:mb-10">
             {res?.success && 'رمز عبور با موفقیت تغییر یافت!'}
             {res?.error && 'اطلاعات وارد شده صحیح نمی باشد!'}
             {error && 'تغییر رمز با مشکل مواجه شد.'}
          </p>
 
-         <h2 className="text-2xl md:text-4xl text-center font-Estedad-Black mb-8">تغییر رمز عبور</h2>
+         <h2 className="text-2xl lg:text-3xl text-center font-Estedad-Black mb-8">تغییر رمز عبور</h2>
 
          <form onSubmit={handleSubmit(submitHandler)}>
             <div className="flex flex-col gap-y-3.5 w-64 md:w-80">

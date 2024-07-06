@@ -19,7 +19,7 @@ function ReportsFirstLoad() {
       const reportsArr = generateReportsArr(formData, userData.gender);
       if (!reportsArr) {
          return <Container>
-            <h1 className="mb-8">شما ابتدا باید جنسیت خود را تعیین کنید!</h1>
+            <h1 className="mb-6 lg:text-lg text-center">شما ابتدا باید جنسیت خود را تعیین کنید!</h1>
             <PrevBtn type="button" onClick={() => navigate('/simpleuser/dashboard')} />
          </Container>
       }
@@ -28,7 +28,7 @@ function ReportsFirstLoad() {
          return <Reports userData={userData} reportsArr={reportsArr} formData={formData} />
       } else {
          return <Container>
-            <h1 className="mb-8">اطلاعاتی برای این فرم پیدا نشد!</h1>
+            <h1 className="mb-6 lg:text-lg text-center">اطلاعاتی برای این فرم پیدا نشد!</h1>
             <PrevBtn type="button" onClick={() => navigate('/simpleuser/dashboard/forms')} />
          </Container>
       }

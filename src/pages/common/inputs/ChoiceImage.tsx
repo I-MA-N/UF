@@ -16,7 +16,7 @@ type ChoiceInputProps = {
 function ChoiceImage({ register, setValue: setInputValue, title, imgAddress, imgSize, keys, values, index, defaultValue }: ChoiceInputProps) {
    const btnWidth = useMemo(() => {
       const screenWidth = document.body.clientWidth;
-      return (screenWidth < 380 ? 284 : 326) / keys.length
+      return (screenWidth < 380 ? 284 : screenWidth < 1024 ? 326 : 396) / keys.length
    }, [keys]);
    const [value, setValue] = useState(defaultValue);
 
@@ -25,20 +25,20 @@ function ChoiceImage({ register, setValue: setInputValue, title, imgAddress, img
    }, [value, title, keys])
 
    return (
-      <div className="bg-white text-primary rounded-[18px] w-72 xs:w-[330px]">
+      <div className="flex flex-col justify-between bg-white text-primary rounded-[18px] w-72 xs:w-[330px] lg:w-[400px] min-h-72">
          <div className="pt-4 pb-2.5 px-4 text-sm text-center leading-7">
             <p className="mb-2">
                {index}- {title}
             </p>
             <img 
                src={imgAddress} 
-               className={`${imgSize === "percentage" ? 'w-4/5' : imgSize === "sm" ? 'w-[150px]' : 'w-[170px]'} mx-auto`}
+               className={`${imgSize === "sm" ? 'w-[150px]' : 'w-[170px]'} mx-auto`}
                alt="test-img" 
             />
          </div>
-         <div className="rounded-3xl relative h-9 z-0 inner-shadow p-0.5">
+         <div className="rounded-3xl relative h-9 lg:h-10 z-0 inner-shadow p-0.5">
             <div
-               className="absolute top-0 z-10 bg-secondary rounded-3xl h-8 mt-0.5 transition-all duration-200 outer-shadow"
+               className="absolute top-0 z-10 bg-secondary rounded-3xl h-8 lg:h-9 mt-0.5 transition-all duration-200 outer-shadow"
                style={{ width: btnWidth, right: value * btnWidth + 2 + 'px' }}
             ></div>
             <div className="flex items-center h-full relative z-20 p-0.5">
@@ -47,7 +47,7 @@ function ChoiceImage({ register, setValue: setInputValue, title, imgAddress, img
                      <button
                         key={key}
                         type="button"
-                        className={`text-xs/5 transition-colors duration-200 whitespace-nowrap overflow-x-auto ${value === index ? 'text-white' : ''}`}
+                        className={`h-full text-xs lg:text-base transition-colors duration-200 whitespace-nowrap overflow-x-auto ${value === index ? 'text-white' : ''}`}
                         style={{ width: btnWidth }}
                         onClick={() => setValue(index)}
                      >

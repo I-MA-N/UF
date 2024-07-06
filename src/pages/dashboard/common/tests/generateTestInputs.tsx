@@ -49,8 +49,8 @@ function generateTestInputs({ initialData, testPattern, testData, register, setV
       case "ChoiceWithDivide":
          return testData.map((section: any) => (
             <div>
-               <h3 className="mb-3 text-center">{section.sectionTitle}</h3>
-               <div className="flex gap-x-8 gap-y-4 items-center justify-center flex-wrap">
+               <h3 className="mb-3 text-center text-sm lg:text-base">{section.sectionTitle}</h3>
+               <div className="flex gap-x-8 gap-y-4 lg:gap-y-8 items-center justify-center flex-wrap">
                   {
                      section.sectionQuestions.map((input: any) => {
                         const defaultValue = initialData?.[input.title as keyof typeof initialData];
@@ -81,7 +81,7 @@ function generateTestInputs({ initialData, testPattern, testData, register, setV
             }
          }
          return testData.map((choice: any) => (
-            <label key={choice.text1} htmlFor={choice.text1} className="flex items-center gap-1 text-sm/6">
+            <label key={choice.text1} htmlFor={choice.text1} className="flex items-center gap-1 text-sm/6 lg:text-base/8">
                <p>
                   <span className="font-Estedad-Black">{choice.text1}: </span>
                   <span>{choice.text2}</span>
@@ -92,11 +92,11 @@ function generateTestInputs({ initialData, testPattern, testData, register, setV
 
       case "Text":
          return Object.entries(testData).map(txt => (
-            <div key={txt[0]} className="flex flex-col items-center w-[125px]">
-               <label htmlFor={txt[0]} className="text-sm">{txt[0]}</label>
+            <div key={txt[0]} className="flex flex-col items-center w-[125px] lg:w-40">
+               <label htmlFor={txt[0]} className="text-sm lg:text-base">{txt[0]}</label>
                <input
                   dir="ltr"
-                  className="custom-input text-center placeholder:text-center w-full"
+                  className="custom-input text-center placeholder:text-center w-full h-16"
                   type="number"
                   defaultValue={initialData?.[txt[0] as keyof typeof initialData] || ''}
                   id={txt[0]}
@@ -108,9 +108,9 @@ function generateTestInputs({ initialData, testPattern, testData, register, setV
 
       case "ImageWithDivide":
          return testData.map((section: any) => (
-            <div className="py-4">
-               <h3 className="mb-6 text-center">{section.sectionTitle}</h3>
-               <div className="flex gap-x-8 gap-y-4 justify-center flex-wrap">
+            <div className="py-10">
+               <h3 className="mb-4 lg:text-lg text-center">{section.sectionTitle}</h3>
+               <div className="flex gap-x-8 gap-y-4 lg:gap-y-8 justify-center flex-wrap">
                   {
                      section.sectionQuestions.map((image: any) => (
                         <ImageInput

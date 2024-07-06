@@ -1,6 +1,6 @@
 function ReportsMainInfo({ userData, statusBodyInfo }: { userData: any, statusBodyInfo: any }) {
    return (
-      <table className="text-[10px] sm:text-xs mx-auto border-separate border-spacing-2 text-center" cellPadding="8px">
+      <table className="text-[10px] sm:text-xs lg:text-sm mx-auto border-separate border-spacing-2 text-center" cellPadding="8px">
          <tbody>
             <tr>
                {

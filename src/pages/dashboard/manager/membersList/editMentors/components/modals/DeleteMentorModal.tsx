@@ -25,10 +25,10 @@ function DeleteMentorModal({ deleteUsername, setDeleteUsername, setMentorData }:
    }, [data])
 
    return (
-      <div className="w-72 absolute top-1/2 left-1/2 -translate-x-1/2 px-10 py-8 rounded-[32px] bg-primary text-white text-xs z-20">
+      <div className="w-72 lg:w-96 absolute top-1/2 left-1/2 -translate-x-1/2 px-10 py-8 rounded-[32px] bg-primary text-white text-center text-xs lg:text-base z-20">
          {
             data?.error &&
-            <p className="text-yellow text-[10px] text-center mb-4">در انجام عملیات مشکلی پیش آمده!</p>
+            <p className="text-yellow text-[10px] lg:text-xs mb-4">در انجام عملیات مشکلی پیش آمده است!</p>
          }
          <p>
             آیا از حذف کردن این مربی اطمینان دارید؟

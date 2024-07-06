@@ -17,7 +17,7 @@ function CheckUserNameFirstLoad() {
    }
 
    return <Container>
-      <p className="text-lg text-yellow mb-4">نام سازمان اشتباه است!</p>
+      <h1 className="mb-8 lg:text-lg">نام سازمان اشتباه است!</h1>
       <PrevBtn type="button" onClick={() => navigate('/mentor/dashboard/members')} />
    </Container>
 }

@@ -19,7 +19,7 @@ function Btn({ text, type, onClick, icon, isDisabled, className }: BtnProps) {
          {text}
          {
             icon &&
-            <div className="absolute right-0 h-full w-12 lg:w-[52px] flex justify-center items-center bg-secondary text-white rounded-full">
+            <div className="absolute right-0 h-full w-12 lg:w-14 flex justify-center items-center bg-secondary text-white rounded-full">
                {icon}
             </div>
          }

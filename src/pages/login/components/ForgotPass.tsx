@@ -21,12 +21,12 @@ function ForgotPass() {
 
    return (
       <Container>
-         <p className="text-xs text-yellow mb-8 md:mb-16">
+         <p className="text-xs text-yellow mb-8 lg:mb-10">
             {res?.success && 'ایمیل با موفقیت ارسال شد!'}
             {res?.error && 'اطلاعات وارد شده صحیح نمی باشد!'}
             {error && 'مشکلی رخ داده است!'}
          </p>
-         <h2 className="text-2xl md:text-4xl text-center font-Estedad-Black mb-8">فراموشی رمز عبور</h2>
+         <h2 className="text-2xl lg:text-3xl text-center font-Estedad-Black mb-8">فراموشی رمز عبور</h2>
          <form onSubmit={handleSubmit(submitHandler)}>
             <div className="flex flex-col gap-y-3.5 w-64 md:w-80">
                <Input
@@ -59,19 +59,23 @@ function ForgotPass() {
                   )}
                />
 
-               <p className="text-xs font-Estedad-ExtraLight text-center opacity-70">لینکی به ایمیل شما برای تغییر رمز فرستاده خواهد شد.</p>
+               <p className="text-xs lg:text-sm font-Estedad-ExtraLight text-center opacity-70">لینکی به ایمیل شما برای تغییر رمز فرستاده خواهد شد.</p>
+
+               <Btn
+                  text={isPending ? 'در حال ارسال ایمیل' : 'ارسال ایمیل'}
+                  type="submit"
+                  className="w-full mt-16"
+               />
+               <button className="w-full h-12 lg:h-14 mx-auto mt-4 relative border-2 border-white rounded-[48px]" onClick={() => navigate("/login", { replace: true })}>
+                  <span className="text-yellow text-sm lg:text-lg">برگشت</span>
+                  <span className="absolute top-1/2 -translate-y-1/2 left-6">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 12" fill="none" className="w-4 lg:w-4.5">
+                        <path d="M6 1L1 6M1 6H17M1 6L6 11" stroke="#E4F4FD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                     </svg>
+                  </span>
+               </button>
             </div>
 
-            <Btn
-               text={isPending ? 'در حال ارسال ایمیل' : 'ارسال ایمیل'}
-               type="submit"
-               className="w-full mt-16"
-            />
-            <button className="btn w-12 h-12 mx-auto mt-4" onClick={() => navigate("/login", { replace: true })}>
-               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 11" fill="none" className="w-4.5">
-                  <path d="M5.375 9.75L1 5.375M1 5.375L15 5.375M1 5.375L5.375 1" stroke="#083C5A" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-               </svg>
-            </button>
          </form>
       </Container>
    )

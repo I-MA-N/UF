@@ -25,7 +25,7 @@ function AddMentor() {
 
    return (
       <Container>
-         <form onSubmit={handleSubmit(submitHandler)} className="w-64">
+         <form onSubmit={handleSubmit(submitHandler)} className="w-64 lg:w-80">
             <div className="space-y-4 ">
                <Input
                   direction="ltr"
@@ -34,7 +34,7 @@ function AddMentor() {
                   placeholder="کد ملی"
                   register={register}
                   registerOptions={{ required: true, validate: validateUsername }}
-                  render={() => <span className="text-[10px] text-yellow mr-5 mt-2">
+                  render={() => <span className="text-[10px] lg:text-xs text-yellow mr-5 mt-2">
                      {errors.username?.type === "required" && "پر کردن این فیلد الزامی است!"}
                      {errors.username?.type === "validate" && 'باید فقط شامل حروف انگلیسی، اعداد یا "_" باشد!'}
                   </span>}
@@ -47,7 +47,7 @@ function AddMentor() {
                   placeholder="فرمت صحیح: ufit@example.com"
                   register={register}
                   registerOptions={{ required: true, pattern: /\w+[@]\w+[.]\w+/ }}
-                  render={() => <span className="text-[10px] text-yellow mr-5 mt-2">
+                  render={() => <span className="text-[10px] lg:text-xs text-yellow mr-5 mt-2">
                      {errors.email?.type === "required" && "پر کردن این فیلد الزامی است!"}
                      {errors.email?.type === "pattern" && "فرمت صحیح ایمیل رعایت نشده است!"}
                   </span>}
@@ -61,7 +61,7 @@ function AddMentor() {
                   register={register}
                   registerOptions={{ required: true, minLength: 6 }}
                   render={() => (
-                     <span className="text-[10px] text-yellow mr-5 mt-2">
+                     <span className="text-[10px] lg:text-xs text-yellow mr-5 mt-2">
                         {errors.password?.type === "required" && "پر کردن این فیلد الزامی است!"}
                         {errors.password?.type === "minLength" && 'رمز عبور حداقل باید حاوی 6 کاراکتر باشد!'}
                      </span>
@@ -74,7 +74,7 @@ function AddMentor() {
                <Btn
                   text="مرحله بعد"
                   type="submit"
-                  icon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="11" viewBox="0 0 16 11" fill="none">
+                  icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 11" fill="none" className="w-4.5 lg:w-5">
                      <path d="M10.625 1L15 5.375M15 5.375H1M15 5.375L10.625 9.75" stroke="#E4F4FD" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>}
                   className="pr-3"

@@ -4,9 +4,10 @@ import { useNewMentorContext } from "./context/NewMentorContextProvider";
 import Container from "../../../../../common/Container";
 import PrevBtn from "../../../../../common/PrevBtn";
 import Input from "../../../../../common/Input";
-import GenderInput from "./components/GenderInput";
 import Btn from "../../../../../common/Btn";
 import managerPAddMentor from "../../../../../../api/manager/managerPAddMentor";
+import NameInputs from "./components/NameInputs";
+import AgeGenderInputs from "./components/AgeGenderInputs";
 
 function AddMentor2() {
    const { handleSubmit, register, setValue, getValues, formState: { errors } } = useForm();
@@ -28,33 +29,15 @@ function AddMentor2() {
 
    return (
       <Container>
-         <p className="text-xs text-center text-yellow mb-6 min-h-4">
+         <p className="text-xs lg:text-sm text-center text-yellow mb-6 min-h-4">
             {data?.error === 'some datas are empty or invalid.' && 'اطلاعات وارد شده کامل نیست!'}
             {data?.error === 'user already exists.' && 'نام کاربری از قبل وجود داشته است!'}
             {data?.success && 'مربی با موفقیت اضافه شد!'}
          </p>
-         <form onSubmit={handleSubmit(submitHandler)} className="w-64">
+         <form onSubmit={handleSubmit(submitHandler)} className="w-64 lg:w-80">
             <div className="space-y-4 text-sm">
-               <div className="flex items-center gap-x-5">
-                  <Input
-                     direction="rtl"
-                     name="firstName"
-                     text="نام"
-                     placeholder=""
-                     register={register}
-                     divClassName="w-[115px]"
-                     defaultValue={mentorData.data.firstName}
-                  />
-                  <Input
-                     direction="rtl"
-                     name="lastName"
-                     text="نام خانوادگی"
-                     placeholder=""
-                     register={register}
-                     divClassName="w-[115px]"
-                     defaultValue={mentorData.data.lastName}
-                  />
-               </div>
+               <NameInputs register={register} mentorData={mentorData} />
+
                <Input
                   direction="rtl"
                   name="city"
@@ -79,38 +62,22 @@ function AddMentor2() {
                   register={register}
                   registerOptions={{ pattern: /^.{10}$/ }}
                   render={() => (
-                     <span className="text-[10px] text-yellow mr-5 mt-2">
+                     <span className="text-[10px] lg:text-xs text-yellow mr-5 mt-2">
                         {errors.phone?.type === "pattern" && "شماره موبایل باید شامل 10 کاراکتر باشد!"}
                      </span>
                   )}
                   isNumberType={true}
                   defaultValue={mentorData.data.phone}
                />
-               <div className="flex items-center gap-x-5">
-                  <Input
-                     direction="ltr"
-                     name="age"
-                     text="سن"
-                     placeholder=""
-                     register={register}
-                     divClassName="w-[115px]"
-                     isNumberType={true}
-                     defaultValue={mentorData.data.age}
-                  />
-                  <GenderInput
-                     register={register}
-                     setValue={setValue}
-                     errors={errors}
-                     defaultValue={mentorData.data.gender}
-                  />
-               </div>
+
+               <AgeGenderInputs register={register} mentorData={mentorData} setValue={setValue} errors={errors} />
             </div>
 
             <div className="flex gap-4 items-center mt-12">
                <Btn
                   text="ثبت نام مربی"
                   type="submit"
-                  icon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="11" viewBox="0 0 16 11" fill="none">
+                  icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 11" fill="none" className="w-4.5 lg:w-5">
                      <path d="M10.625 1L15 5.375M15 5.375H1M15 5.375L10.625 9.75" stroke="#E4F4FD" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>}
                   className="pr-3"

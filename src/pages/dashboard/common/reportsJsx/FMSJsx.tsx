@@ -30,7 +30,7 @@ function FMSJsx(data: { [k: string]: number }) {
       <>
          <h2 className="text-center">وضعیت عملکرد بدن در شرایط مختلف</h2>
          <div className="w-full flex gap-6 my-2">
-            <table className="w-full text-xs/6 text-center border border-white" cellPadding="6px">
+            <table className="w-full text-center border border-white" cellPadding="6px">
                <tr>
                   <th rowSpan={8} className="w-[250px] p-0.5 bg-[#fff]">
                      <img src={img} className="w-full" alt="report-img" />
@@ -81,7 +81,7 @@ function FMSJsx(data: { [k: string]: number }) {
 
          <h2 className="text-center mt-8">ارزیابی انعطاف بالا تنه و پایین تنه</h2>
          <div className="w-full flex gap-6 my-2">
-            <table className="w-full text-xs/6 text-center border border-white" cellPadding="6px">
+            <table className="w-full text-center border border-white" cellPadding="6px">
                <thead>
                   <tr>
                      <th rowSpan={2}>محدودیت یا کوتاهی</th>
