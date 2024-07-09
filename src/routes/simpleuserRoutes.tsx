@@ -2,8 +2,6 @@ import Aboutus from "../pages/aboutus/Aboutus";
 import Simpleuser from "../pages/dashboard/simpleuser/Simpleuser";
 import Forms from "../pages/dashboard/simpleuser/forms/Forms";
 import UserTestsInfoProvider from "../pages/dashboard/simpleuser/forms/context/UserTestsInfoProvider";
-import CorrectiveProgram from "../pages/dashboard/simpleuser/forms/program/CorrectiveProgram";
-import FitnessProgram from "../pages/dashboard/simpleuser/forms/program/FitnessProgram";
 import ReportsFirstLoad from "../pages/dashboard/simpleuser/forms/reports/ReportsFirstLoad";
 import TestsFirstLoad from "../pages/dashboard/simpleuser/forms/tests/TestsFirstLoad";
 import Home from "../pages/home/Home";
@@ -40,14 +38,6 @@ const simpleuserRoutes = [
       element: <UserTestsInfoProvider>
          <ReportsFirstLoad />
       </UserTestsInfoProvider>
-   },
-   {
-      path: '/simpleuser/dashboard/forms/correctiveprogram',
-      element: <CorrectiveProgram />
-   },
-   {
-      path: '/simpleuser/dashboard/forms/fitnessprogram',
-      element: <FitnessProgram />
    },
 ]
 

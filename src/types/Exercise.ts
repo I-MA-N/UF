@@ -1,5 +1,4 @@
 type Exercise = {
-   id: number,
    name: string,
    repeat: string,
    set: string,

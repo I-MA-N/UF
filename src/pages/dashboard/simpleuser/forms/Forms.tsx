@@ -1,21 +1,17 @@
 import { Link } from 'react-router-dom';
 import simpleuserGFormNames from "../../../../api/simpleuser/simpleuserGFormNames";
-import simpleuserGFormData from "../../../../api/simpleuser/simpleuserGFormData";
 import Container from "../../../common/Container";
+import { useUserDataContext } from '../../../authentication/UserDataProvider';
 
 function Forms() {
    const { data, isPending } = simpleuserGFormNames();
-   const { mutate, isError } = simpleuserGFormData();
+   const userData = useUserDataContext();
 
    if (isPending) return <h1>Loading...</h1>
 
    return (
       <Container withTitle={false} sectionClassName="w-64 lg:w-80 mx-auto">
          <h2 className="text-center lg:text-lg font-Estedad-Black mb-6">پرسشنامه ها</h2>
-         {
-            isError &&
-            <span className="text-sm text-yellow mb-4">مشکلی در دریافت اطلاعات بوجود آمده!</span>
-         }
 
          <div className="flex flex-col gap-4 lg:gap-8 items-center justify-center">
             {
@@ -45,24 +41,24 @@ function Forms() {
                            </>
                         }
                         {
-                           form.formTests.find((test: any) => test.testName === 'وضعیت بدنی') &&
-                           form.formTests.find((test: any) => test.testName === 'مقدار تحرک') &&
-                           <button
-                              className="w-full text-xs lg:text-base text-primary py-3.5 text-center underline underline-offset-[5px] decoration-primary"
-                              onClick={() => mutate({ formName: form.formName, action: "fitnessProgram" })}
+                           form.formTests.find(test => test.testName === 'وضعیت بدنی') &&
+                           form.formTests.find(test => test.testName === 'مقدار تحرک') &&
+                           <Link
+                              to={`/simpleuser/fitness/${form.formName}/${userData.username}`}
+                              className="block w-full text-xs lg:text-base text-primary py-3.5 text-center underline underline-offset-[5px] decoration-primary"
                            >
                               برنامه ورزشی
-                           </button>
+                           </Link>
                         }
                         {
-                           form.formTests.find((test: any) => test.testName === 'ناهنجاری ها') &&
-                           form.formTests.find((test: any) => test.testName === 'ارزیابی پویا') &&
-                           <button
-                              className="w-full text-xs lg:text-base text-primary py-3.5 text-center underline underline-offset-[5px] decoration-primary"
-                              onClick={() => mutate({ formName: form.formName, action: "correctiveProgram" })}
+                           form.formTests.find(test => test.testName === 'ناهنجاری ها') &&
+                           form.formTests.find(test => test.testName === 'ارزیابی پویا') &&
+                           <Link
+                              to={`/simpleuser/corrective/${form.formName}/${userData.username}`}
+                              className="block w-full text-xs lg:text-base text-primary py-3.5 text-center underline underline-offset-[5px] decoration-primary"
                            >
                               حرکات اصلاحی
-                           </button>
+                           </Link>
                         }
                      </div>
                   )

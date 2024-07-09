@@ -1,16 +1,16 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
-import simpleuserGFormData2 from "../../../../../api/simpleuser/simpleuserGFormData2";
 import Reports from "./Reports";
 import Container from "../../../../common/Container";
 import PrevBtn from "../../../../common/PrevBtn";
 import generateReportsArr from "./generateReportsArr";
 import { useUserDataContext } from "../../../../authentication/UserDataProvider";
+import simpleuserGFormData from "../../../../../api/simpleuser/simpleuserGFormData";
 
 function ReportsFirstLoad() {
    const navigate = useNavigate();
    const [searchParams] = useSearchParams();
 
-   const { data: formData, isPending } = simpleuserGFormData2(searchParams.get('formName') || '');
+   const { data: formData, isPending } = simpleuserGFormData(searchParams.get('formName') || '');
    const userData = useUserDataContext();
    
    if (isPending) return <h1>Loading...</h1>

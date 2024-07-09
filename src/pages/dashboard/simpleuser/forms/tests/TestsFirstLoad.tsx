@@ -1,5 +1,5 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
-import simpleuserGFormData2 from "../../../../../api/simpleuser/simpleuserGFormData2";
+import simpleuserGFormData from "../../../../../api/simpleuser/simpleuserGFormData";
 import simpleuserGFormNames from "../../../../../api/simpleuser/simpleuserGFormNames";
 import Container from "../../../../common/Container";
 import PrevBtn from "../../../../common/PrevBtn";
@@ -9,7 +9,7 @@ function TestsFirstLoad() {
    const navigate = useNavigate();
    const [searchParams] = useSearchParams();
 
-   const { data: formData, isPending: formDataPending } = simpleuserGFormData2(searchParams.get('formName') || '');
+   const { data: formData, isPending: formDataPending } = simpleuserGFormData(searchParams.get('formName') || '');
    const { data, isPending } = simpleuserGFormNames();
    const formObj = data?.find(form => form.formName === searchParams.get('formName'));
 

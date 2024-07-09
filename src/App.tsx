@@ -1,4 +1,4 @@
-import { RouterProvider, createHashRouter } from "react-router-dom"
+import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import Header from "./pages/header/Header"
 import NotFound from "./pages/NotFound"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
@@ -9,6 +9,7 @@ import UserHeader from "./pages/header/UserHeader"
 import ProtectedRoute from "./pages/authentication/ProtectedRoute"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import generalRoutes from "./routes/generalRoutes"
+import commonRoutes from "./routes/commonRoutes"
 
 // ProtectedRoute -> Handle access token proccess,
 // UserDataProvider -> Provide user data as context,
@@ -16,7 +17,7 @@ import generalRoutes from "./routes/generalRoutes"
 // use UserDataProvider to provide user data as context     &
 // handle logic for accessing only related routes for role
 
-const router = createHashRouter([
+const router = createBrowserRouter([
     {
         path: '/',
         element: <Header />,
@@ -46,6 +47,14 @@ const router = createHashRouter([
         </ProtectedRoute>,
         errorElement: <NotFound />,
         children: managerRoutes
+    },
+    {
+        path: '/:role',
+        element: <ProtectedRoute>
+            <UserHeader />
+        </ProtectedRoute>,
+        errorElement: <NotFound />,
+        children: commonRoutes
     },
 ])
 

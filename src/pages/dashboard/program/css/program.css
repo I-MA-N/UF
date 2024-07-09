@@ -2,12 +2,19 @@
    @apply w-[210mm] mx-auto pt-32 pb-12 print:pt-0 print:pb-0;
 }
 
-.program-section thead ::-moz-selection {
+.program-section .table-header ::-moz-selection {
    @apply bg-primary text-white;
 }
 
-.program-section thead ::selection {
+.program-section .table-header ::selection {
    @apply bg-primary text-white;
+}
+
+.program-section .table-header {
+   @apply bg-secondary text-white text-sm;
+}
+.program-section tbody {
+   @apply text-xs;
 }
 
 .program-section img {
@@ -26,9 +33,3 @@
    padding: 0;
    size: 8.3in 11.7in;
 }
-
-/* .program-section tbody, 
-.program-section tr,
-.program-section td {
-   @apply border-secondary;
-} */
