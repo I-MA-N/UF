@@ -6,13 +6,14 @@ import ProfileModal from "../common/components/modals/ProfileModal";
 import ShowInfo from "../common/components/ShowInfo";
 import simpleuserGFormNames from "../../../api/simpleuser/simpleuserGFormNames";
 import { useUserDataContext } from "../../authentication/UserDataProvider";
+import Loading from "../../common/Loading";
 
 function Simpleuser() {
    const [profileModal, setProfileModal] = useState(false);
    const userData = useUserDataContext();
    const { data, isError, isPending } = simpleuserGFormNames();
 
-   if (isPending) return <h1>Loading...</h1>
+   if (isPending) return <Loading />
 
    return (
       <Container>
@@ -40,7 +41,7 @@ function Simpleuser() {
                </svg>}
             />
             {
-               data &&
+               data && Object.keys(data).length ?
                <Link
                   text="آخرین گزارش من"
                   url={`forms/reports?formName=${data[data.length - 1].formName}`}
@@ -50,7 +51,7 @@ function Simpleuser() {
                      <path d="M7 12H17" stroke="#E4F4FD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                      <path d="M10 17L14 17" stroke="#E4F4FD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>}
-               />
+               /> : ""
             }
             <Btn
                text="پروفایل من"

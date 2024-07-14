@@ -3,9 +3,7 @@ import getFormData from "../../utils/getFormData";
 import axios from "axios";
 import AddSimpleuserFormFields from "../../types/AddSimpleuserFormFields";
 
-type Variables = AddSimpleuserFormFields & {
-   orgName: string
-}
+type Variables = Omit<AddSimpleuserFormFields, "gender">
 
 type Response = {
    [k: string]: string
@@ -14,7 +12,7 @@ type Response = {
 function mentorPAddSimpleuser() {
    const queryClient = useQueryClient();
 
-   const { mutateAsync, isError } = useMutation({
+   const { mutateAsync, isError, isPending } = useMutation({
       mutationKey: ['mentorP: add simpleuser'],
       mutationFn: async (data: Variables) => {
          const formData = getFormData(data)
@@ -28,7 +26,7 @@ function mentorPAddSimpleuser() {
       }
    })
 
-   return { mutateAsync, isError }
+   return { mutateAsync, isError, isPending }
 }
 
 export default mentorPAddSimpleuser

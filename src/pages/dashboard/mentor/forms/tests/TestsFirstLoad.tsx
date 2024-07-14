@@ -7,6 +7,7 @@ import Container from "../../../../common/Container";
 import PrevBtn from "../../../../common/PrevBtn";
 import Tests from "./Tests";
 import mentorGFormNames from "../../../../../api/mentor/mentorGFormNames";
+import Loading from "../../../../common/Loading";
 
 function TestsFirstLoad() {
    const navigate = useNavigate();
@@ -30,7 +31,7 @@ function TestsFirstLoad() {
       return formsObj?.find(form => form.formName === params.formName);
    }, [formsObj])
 
-   if (formDataPending || formsObjPending) return <h1>Loading...</h1>;
+   if (formDataPending || formsObjPending) return <Loading />;
 
    if (formDataErr || formsObjErr || !params?.orgName || !orgNames.includes(params.orgName)) {
       return <Container>

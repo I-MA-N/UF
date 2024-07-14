@@ -59,7 +59,7 @@ function FormBtns({ getValues, page, formData, formName, username, exitBtnHref }
          </div>
          {
             simpleuserPData ?
-               <span className="text-[10px] sm:text-xs lg:text-sm text-yellow mt-4 lg:ml-auto lg:pr-16">
+               <span className="text-xs lg:text-sm text-yellow mt-4 lg:ml-auto lg:pr-16">
                   {
                      simpleuserPData.access === 'true' ?
                         'تغییرات با موفقیت اعمال شد!' :
@@ -67,7 +67,7 @@ function FormBtns({ getValues, page, formData, formName, username, exitBtnHref }
                   }
                </span>
                : mentorPData &&
-               <span className="text-[10px] sm:text-xs lg:text-sm text-yellow mt-4 lg:ml-auto lg:pr-16">
+               <span className="text-xs lg:text-sm text-yellow mt-4 lg:ml-auto lg:pr-16">
                   {
                      mentorPData.access === 'true' ?
                         'تغییرات با موفقیت اعمال شد!' :

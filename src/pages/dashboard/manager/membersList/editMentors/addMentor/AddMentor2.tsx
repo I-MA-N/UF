@@ -12,7 +12,7 @@ import AgeGenderInputs from "./components/AgeGenderInputs";
 function AddMentor2() {
    const { handleSubmit, register, setValue, getValues, formState: { errors } } = useForm();
    const { mentorData, setMentorData } = useNewMentorContext();
-   const { mutate, data } = managerPAddMentor();
+   const { mutate, data, isPending } = managerPAddMentor();
    const navigate = useNavigate();
 
    if (!mentorData.username) return <Container>
@@ -81,6 +81,7 @@ function AddMentor2() {
                      <path d="M10.625 1L15 5.375M15 5.375H1M15 5.375L10.625 9.75" stroke="#E4F4FD" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>}
                   className="pr-3"
+                  isDisabled={isPending}
                />
                <PrevBtn type="button" onClick={() => {
                   setMentorData(prevValue => {
@@ -91,7 +92,7 @@ function AddMentor2() {
                         email: prevValue.email,
                      }
                   })
-                  navigate("/manager/dashboard/memberslist/editmentors/addmentor")
+                  navigate(data?.success ? "/manager/dashboard/memberslist/editmentors" : "/manager/dashboard/memberslist/editmentors/addmentor")
                }} />
             </div>
          </form>

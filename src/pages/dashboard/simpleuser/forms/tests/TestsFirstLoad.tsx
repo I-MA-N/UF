@@ -4,6 +4,7 @@ import simpleuserGFormNames from "../../../../../api/simpleuser/simpleuserGFormN
 import Container from "../../../../common/Container";
 import PrevBtn from "../../../../common/PrevBtn";
 import Tests from "./Tests";
+import Loading from "../../../../common/Loading";
 
 function TestsFirstLoad() {
    const navigate = useNavigate();
@@ -13,7 +14,7 @@ function TestsFirstLoad() {
    const { data, isPending } = simpleuserGFormNames();
    const formObj = data?.find(form => form.formName === searchParams.get('formName'));
 
-   if (isPending && formDataPending) return <h1>Loading...</h1>
+   if (isPending && formDataPending) return <Loading />
 
    if (formData && data) {
       const testsArr = formObj?.formTests.filter(test => test.testAccess.includes('simpleuser'))

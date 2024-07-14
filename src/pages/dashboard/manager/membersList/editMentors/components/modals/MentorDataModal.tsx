@@ -92,7 +92,7 @@ function MentorDataModal({ mentorData, setMentorData }: MentorDataModalPropsType
                         <path d="M9 7.91406V8.91406" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                      </svg>}
                      text="جنسیت:"
-                     elem={<p className="mt-1">{!mentorData.gender ? 'انتخاب نشده!' : mentorData.gender === 'male' ? 'مرد' : 'زن'}</p>}
+                     elem={<p className="mt-1">{!mentorData.gender ? 'انتخاب نشده!' : mentorData.gender === 'male' ? 'آقا' : 'خانم'}</p>}
                   />
                </div>
                <button

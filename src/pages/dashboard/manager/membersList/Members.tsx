@@ -9,6 +9,7 @@ import ListElement from "./components/ListElement";
 import SearchElement from "../../common/components/members/SearchElement";
 import Btn from "../../../common/Btn";
 import TopInfo from "./components/TopInfo";
+import Loading from "../../../common/Loading";
 
 type MembersProps = {
    mentorNames: string[]
@@ -28,7 +29,7 @@ function Members({ mentorNames }: MembersProps) {
       setSelectedUsers(data);
    }, [data])
 
-   if (isPending) return <h1>Loading...</h1>
+   if (isPending) return <Loading />
 
    return (
       <Container>

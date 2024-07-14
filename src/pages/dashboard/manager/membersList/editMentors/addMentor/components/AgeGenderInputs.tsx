@@ -1,7 +1,7 @@
 import { FieldErrors, FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import Input from "../../../../../../common/Input";
 import { NewMentorData } from "../context/NewMentorContextProvider";
-import GenderInput from "./GenderInput";
+import GenderInput from "../../../../../common/components/GenderInput";
 
 type AgeGenderInputsProps = {
    register: UseFormRegister<FieldValues>,
@@ -23,7 +23,7 @@ function AgeGenderInputs({ register, mentorData, setValue, errors }: AgeGenderIn
             isNumberType={true}
             defaultValue={mentorData.data.age}
          />
-         <GenderInput
+         <GenderInput<FieldValues>
             register={register}
             setValue={setValue}
             errors={errors}

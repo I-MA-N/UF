@@ -97,7 +97,7 @@ function ProfileModal({ setProfileModal, isManager }: ProfileModalProps) {
                         <path d="M9 7.91406V8.91406" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                      </svg>}
                      text="جنسیت:"
-                     elem={<p className="mt-1">{!userData.gender ? 'انتخاب نشده!' : userData.gender === 'male' ? 'مرد' : 'زن'}</p>}
+                     elem={<p className="mt-1">{!userData.gender ? 'انتخاب نشده!' : userData.gender === 'male' ? 'آقا' : 'خانم'}</p>}
                   />
                   {
                      !isManager &&

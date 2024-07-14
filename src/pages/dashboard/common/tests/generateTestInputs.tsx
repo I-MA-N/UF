@@ -96,7 +96,7 @@ function generateTestInputs({ initialData, testPattern, testData, register, setV
                <label htmlFor={txt[0]} className="text-sm lg:text-base">{txt[0]}</label>
                <input
                   dir="ltr"
-                  className="custom-input text-center placeholder:text-center w-full h-16"
+                  className="custom-input text-center placeholder:text-center w-full"
                   type="number"
                   defaultValue={initialData?.[txt[0] as keyof typeof initialData] || ''}
                   id={txt[0]}

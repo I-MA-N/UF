@@ -107,6 +107,7 @@
     .org-modal-item {
         @apply relative w-full py-3.5 hover:bg-secondary hover:text-white;
     }
+
     .org-modal-item:last-child {
         @apply rounded-b-[32px];
     }
@@ -138,5 +139,10 @@
         white-space: nowrap;
         overflow: scroll;
         text-overflow: clip;
+    }
+
+    /* For MUI Gauge chart */
+    svg text {
+        @apply !fill-white;
     }
 }

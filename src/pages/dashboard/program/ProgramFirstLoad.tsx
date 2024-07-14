@@ -3,13 +3,14 @@ import PProgram from "../../../api/common/PProgram";
 import Container from "../../common/Container";
 import PrevBtn from "../../common/PrevBtn";
 import Program from "./Program";
+import Loading from "../../common/Loading";
 
 function ProgramFirstLoad() {
    const { program, formname, username } = useParams();
    const { data, isError, isPending } = PProgram(program, username, formname);
    const navigate = useNavigate();
 
-   if (isPending) return <h1>Loading...</h1>;
+   if (isPending) return <Loading />;
 
    if (isError || !data ) {
       return <Container>

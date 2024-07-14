@@ -2,7 +2,7 @@ import { testPatternTypes } from "../../../../common/tests/generateTestInputs";
 import FMS from "../../../../common/tests/testsData/FMS";
 import bodyStatus from "../../../../common/tests/testsData/bodyStatus";
 import dynamic from "../../../../common/tests/testsData/dynamic";
-import problems from "../../../../common/tests/testsData/problems";
+import nahanjariHa from "../../../../common/tests/testsData/nahanjariHa";
 import simpleuserTestsData from "../../../../simpleuser/forms/tests/data/testsData";
 
 const testsData = {
@@ -16,7 +16,7 @@ const testsData = {
    'ناهنجاری ها': {
       testSubTitle: '',
       testPattern: "Choice" as testPatternTypes,
-      testData: problems,
+      testData: nahanjariHa,
       testClassName: 'flex gap-x-8 gap-y-4 lg:gap-y-8 items-center justify-center flex-wrap'
    },
    'ارزیابی پویا': {

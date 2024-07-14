@@ -4,6 +4,9 @@ import AddSimpleuserFormFields from "../../../../../types/AddSimpleuserFormField
 import Input from "../../../../common/Input";
 import Btn from "../../../../common/Btn";
 import { useLocation, useNavigate } from "react-router-dom";
+import PUserData from "../../../../../api/common/PUserData";
+import { useEffect } from "react";
+import GenderInput from "../../../common/components/GenderInput";
 
 type FormFields = Omit<AddSimpleuserFormFields, "username">
 
@@ -16,25 +19,38 @@ function Status2({ username, orgName }: Status2Props) {
    const {
       register,
       handleSubmit,
+      setValue,
       formState: { errors }
-   } = useForm<Omit<FormFields, "username">>();
-   const { mutateAsync, isError } = mentorPAddSimpleuser();
+   } = useForm<FormFields>();
+   const { mutateAsync, isError, isPending } = mentorPAddSimpleuser();
+   const { mutate, isError: userDataErr, isPending: userDataPending, isSuccess } = PUserData();
    const { pathname } = useLocation();
    const navigate = useNavigate();
+
+   useEffect(() => {
+      if (isSuccess) {
+         navigate(`${pathname}/${username}`);
+      }
+   }, [isSuccess])
 
    const submitHandler = (data: FormFields) => {
       if (!data.email || !data.password) {
          data.email = 'email@example.com';
          data.password = '1234example'
       }
+
       mutateAsync({
-         username: username,
+         username,
+         orgName,
          password: data.password,
          email: data.email,
-         orgName
       })
-         .then(res => res?.success && navigate(`${pathname}/${username}`))
+         .then(res => res?.success && mutate({
+            for: username,
+            gender: data.gender
+         }) )
    }
+
 
    return (
       <>
@@ -45,6 +61,12 @@ function Status2({ username, orgName }: Status2Props) {
             isError &&
             <p className="text-xs lg:text-sm text-center text-red min-h-4 my-4">
                مشکلی در اضافه کردن کاربر به وجود آمده است!
+            </p>
+         }
+         {
+            userDataErr &&
+            <p className="text-xs lg:text-sm text-center text-red min-h-4 my-4">
+               در اعمال اطلاعات کاربر مشکلی پیش آمده است.
             </p>
          }
          <form onSubmit={handleSubmit(submitHandler)} className="mt-4">
@@ -77,6 +99,16 @@ function Status2({ username, orgName }: Status2Props) {
                      </span>
                   )}
                />
+
+               <div className="mt-7">
+                  <label htmlFor="gender" className="mr-5 text-sm lg:text-base">جنسیت</label>
+                  <GenderInput<FormFields>
+                     register={register}
+                     errors={errors}
+                     defaultValue="male"
+                     setValue={setValue}
+                  />
+               </div>
             </div>
 
             <div className="flex gap-4 items-center mt-12">
@@ -89,6 +121,7 @@ function Status2({ username, orgName }: Status2Props) {
                      <path d="M13.5384 4.08325V5.83325M13.5384 7.58325V5.83325M13.5384 5.83325H15.3846H11.6923" stroke="#E4F4FD" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>}
                   className="w-full pr-3"
+                  isDisabled={isPending || userDataPending}
                />
             </div>
             <p className="text-xs lg:text-sm text-center mt-4 font-Estedad-ExtraLight">

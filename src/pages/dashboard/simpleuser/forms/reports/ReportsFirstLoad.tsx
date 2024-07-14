@@ -2,9 +2,10 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Reports from "./Reports";
 import Container from "../../../../common/Container";
 import PrevBtn from "../../../../common/PrevBtn";
-import generateReportsArr from "./generateReportsArr";
+import generateReportsArr from "./analysis/generateReportsArr";
 import { useUserDataContext } from "../../../../authentication/UserDataProvider";
 import simpleuserGFormData from "../../../../../api/simpleuser/simpleuserGFormData";
+import Loading from "../../../../common/Loading";
 
 function ReportsFirstLoad() {
    const navigate = useNavigate();
@@ -13,7 +14,7 @@ function ReportsFirstLoad() {
    const { data: formData, isPending } = simpleuserGFormData(searchParams.get('formName') || '');
    const userData = useUserDataContext();
    
-   if (isPending) return <h1>Loading...</h1>
+   if (isPending) return <Loading />
    
    if (formData) {
       const reportsArr = generateReportsArr(formData, userData.gender);

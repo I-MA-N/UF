@@ -157,8 +157,8 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                         defaultValue={userData?.gender || "male"}
                         {...register('gender')}
                      >
-                        <option value="male">مرد</option>
-                        <option value="female">زن</option>
+                        <option value="male">آقا</option>
+                        <option value="female">خانم</option>
                      </select>
                   }
                />

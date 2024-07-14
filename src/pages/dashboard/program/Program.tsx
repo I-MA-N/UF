@@ -7,6 +7,7 @@ import Exercise from '../../../types/Exercise';
 import TextsHeader from './components/TextsHeader';
 import ImagesHeader from './components/ImagesHeader';
 import GUserData from '../../../api/common/GUserData';
+import Loading from '../../common/Loading';
 
 type ProgramProps = {
    programData: Exercise[][],
@@ -16,7 +17,7 @@ type ProgramProps = {
 function Program({ programData, username }: ProgramProps) {
    const { data, isError, isPending } = GUserData(username);
 
-   if (isPending) return <h1>Loading...</h1>;
+   if (isPending) return <Loading />;
 
    let textsCounter = 0;
    let imagesCounter = 0;

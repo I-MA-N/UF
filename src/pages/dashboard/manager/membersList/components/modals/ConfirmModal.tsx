@@ -18,7 +18,7 @@ function ConfirmModal({ action, setAction, username }: ConfirmModalPropsType) {
 
    return (
       <div className="w-72 absolute top-1/2 left-1/2 -translate-x-1/2 px-10 py-4 rounded-[32px] bg-primary text-white text-xs z-20">
-         <p>
+         <p className="text-center">
             آیا از 
             <span>
                {

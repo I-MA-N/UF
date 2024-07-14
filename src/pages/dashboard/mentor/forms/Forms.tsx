@@ -18,6 +18,7 @@ function Forms({ username, formNames }: FormsProps) {
 
          <div className="flex flex-col gap-4 items-center justify-center w-full">
             {
+               formNames.length ?
                formNames?.map(form => {
                   const testsLength = form.formTests.length;
                   return <Link
@@ -26,7 +27,8 @@ function Forms({ username, formNames }: FormsProps) {
                      key={form.id}
                      className="w-full"
                   />
-               })
+               }) :
+               <p className="lg:text-lg text-center text-yellow">هیچ فرمی برای این سازمان وجود ندارد.</p>
             }
          </div>
 

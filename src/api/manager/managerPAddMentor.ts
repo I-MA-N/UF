@@ -22,7 +22,7 @@ function managerPAddMentor() {
    const { mutate: setInfo } = PUserData();
    const queryClient = useQueryClient();
 
-   const { mutate, data } = useMutation({
+   const { mutate, data, isPending } = useMutation({
       mutationKey: ['managerP: add mentor'],
       mutationFn: async (data: newMentorType) => {
          const formData = getFormData({
@@ -54,7 +54,7 @@ function managerPAddMentor() {
       }
    })
 
-   return { mutate, data }
+   return { mutate, data, isPending }
 }
 
 export default managerPAddMentor;

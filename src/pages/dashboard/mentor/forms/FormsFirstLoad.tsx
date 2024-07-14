@@ -6,6 +6,7 @@ import mentorGFormNames from "../../../../api/mentor/mentorGFormNames";
 import Forms from "./Forms";
 import PrevBtn from "../../../common/PrevBtn";
 import Container from "../../../common/Container";
+import Loading from "../../../common/Loading";
 
 function FormsFirstLoad() {
    const params = useParams();
@@ -16,7 +17,7 @@ function FormsFirstLoad() {
    const userData = useUserDataContext();
    const orgNames = useMemo(() => splitArr(userData.orgNames), []);
 
-   if (isPending) return <h1>Loading...</h1>
+   if (isPending) return <Loading />
 
    if (params?.orgName && params?.username && orgNames.includes(params.orgName) && data && !isError) {
       return <Forms username={params.username} formNames={data} />

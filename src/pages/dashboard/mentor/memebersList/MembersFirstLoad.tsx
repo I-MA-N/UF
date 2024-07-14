@@ -6,6 +6,7 @@ import mentorGSimpleusersData from "../../../../api/mentor/mentorGSimpleusersDat
 import PrevBtn from "../../../common/PrevBtn";
 import Members from "./Members";
 import Container from "../../../common/Container";
+import Loading from "../../../common/Loading";
 
 function MembersFirstLoad() {
    const userData = useUserDataContext();
@@ -16,7 +17,7 @@ function MembersFirstLoad() {
 
    const navigate = useNavigate();
 
-   if (isPending) return <h1>Loading...</h1>
+   if (isPending) return <Loading />
    
    if (data && !isError) {
       return <Members orgSelected={orgSelected} setOrgSelected={setOrgSelected} orgNames={orgNames} users={data} />

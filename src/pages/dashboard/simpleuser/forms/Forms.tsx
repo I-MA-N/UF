@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 import simpleuserGFormNames from "../../../../api/simpleuser/simpleuserGFormNames";
 import Container from "../../../common/Container";
 import { useUserDataContext } from '../../../authentication/UserDataProvider';
+import Loading from '../../../common/Loading';
 
 function Forms() {
    const { data, isPending } = simpleuserGFormNames();
    const userData = useUserDataContext();
 
-   if (isPending) return <h1>Loading...</h1>
+   if (isPending) return <Loading />
 
    return (
       <Container withTitle={false} sectionClassName="w-64 lg:w-80 mx-auto">
@@ -15,6 +16,7 @@ function Forms() {
 
          <div className="flex flex-col gap-4 lg:gap-8 items-center justify-center">
             {
+               data?.length ? 
                data?.map(form => {
                   const testsLength = form.formTests.filter((test: any) => test.testAccess.includes('simpleuser')).length;
 
@@ -62,7 +64,7 @@ function Forms() {
                         }
                      </div>
                   )
-               })
+               }) : <p className="lg:text-lg text-center text-yellow">هیچ فرمی برای این سازمان وجود ندارد.</p>
             }
          </div>
 

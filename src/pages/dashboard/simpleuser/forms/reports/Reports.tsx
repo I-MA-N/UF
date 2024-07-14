@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
-import ReportsMainInfo from "./ReportsMainInfo";
-import ReportsButtons from "./ReportsButtons";
+import ReportsMainInfo from "./components/ReportsMainInfo";
+import ReportsButtons from "./components/ReportsButtons";
 import UserData from "../../../../../types/UserData";
 
 type ReportObj = {
