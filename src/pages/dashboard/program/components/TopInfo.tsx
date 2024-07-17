@@ -14,7 +14,7 @@ function TopInfo() {
 
          <div className='flex items-center justify-between mt-2'>
             <Link
-               to="/manager/dashboard/memberslist"
+               to="/simpleuser/dashboard/forms"
                className="relative w-64 lg:w-80 h-14 flex items-center justify-center bg-transparent text-white text-sm lg:text-base rounded-[48px] border-2 border-white"
             >
                <span className="text-yellow">برگشت</span>
