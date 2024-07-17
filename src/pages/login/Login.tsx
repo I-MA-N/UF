@@ -25,7 +25,7 @@ function Login() {
                         direction="ltr"
                         name="username"
                         text="نام کاربری"
-                        placeholder="مثال: 123456789"
+                        placeholder="مثال: 1234567890"
                         register={register}
                         registerOptions={{ required: true }}
                         render={() => (
@@ -39,7 +39,7 @@ function Login() {
                         direction="ltr"
                         name="password"
                         text="رمز عبور"
-                        placeholder="مثال: ufit.1234"
+                        placeholder="مثال: 1234567890"
                         register={register}
                         registerOptions={{ required: true }}
                         render={() => (
