@@ -71,7 +71,7 @@ function questionariesJsx(data: dataQuestionariesType) {
                   <td>{data.jobPerformanceResult}</td>
                </tr>
                <tr>
-                  <td>تذکز:</td>
+                  <td>تذکر:</td>
                   <td colSpan={7}>{data.activityReadinessResult}</td>
                </tr>
             </tbody>
