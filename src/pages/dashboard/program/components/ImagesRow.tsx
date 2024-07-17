@@ -17,8 +17,9 @@ function ImagesRow({ row, rowId }: ImagesRowProps) {
 
             <div className='flex flex-wrap items-center justify-center gap-1'>
                {
-                  row.images.map(src => (
-                     <img 
+                  row.images.map((src, index) => (
+                     <img
+                        key={index}
                         src={`${baseUrl}${src}`} 
                         className='w-[120px]' 
                         alt={`${row.name} Image`} 

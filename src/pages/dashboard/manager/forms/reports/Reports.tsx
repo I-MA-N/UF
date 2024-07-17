@@ -16,7 +16,6 @@ function Reports({ data }: ReportsProps) {
    const [gender, setGender] = useState<GenderStrings>("whole");
 
    const usersData = useMemo(() => {
-      console.log('in filtering');
       if (gender === "whole") return filterUsersData(data)
       return filterUsersData(data, gender)
    }, [gender])

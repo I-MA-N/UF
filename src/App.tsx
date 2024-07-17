@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom"
+import { RouterProvider, createHashRouter } from "react-router-dom"
 import Header from "./pages/header/Header"
 import NotFound from "./pages/NotFound"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
@@ -17,7 +17,7 @@ import commonRoutes from "./routes/commonRoutes"
 // use UserDataProvider to provide user data as context     &
 // handle logic for accessing only related routes for role
 
-const router = createBrowserRouter([
+const router = createHashRouter([
     {
         path: '/',
         element: <Header />,

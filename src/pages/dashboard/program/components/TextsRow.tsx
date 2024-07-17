@@ -12,10 +12,10 @@ function TextsRow({ row, rowId }: TextsRowProps) {
          <td>{row.name}</td>
          <td>{row.repeat}</td>
          <td>{row.set}</td>
-         <td></td>
+         <td>70-80%</td>
          <td>{row.beat}</td>
          <td>{row.rest}</td>
-         <td></td>
+         <td>سوپرست</td>
       </tr>
    )
 };

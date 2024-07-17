@@ -16,8 +16,9 @@ type TestsProps = {
 function Tests({ testsArr, initialFormData }: TestsProps) {
    const params = useParams();
 
-   const { handleSubmit, register, setValue, reset, getValues } = useForm();
+   const { handleSubmit, register, setValue, reset, getValues, formState: {errors} } = useForm();
    const [formData, setFormData] = useState(initialFormData);
+   console.log(errors);
 
    const [page, setPage] = useState(testsArr[0].testName);
    let pageTxt = testsArr[0].testName;
