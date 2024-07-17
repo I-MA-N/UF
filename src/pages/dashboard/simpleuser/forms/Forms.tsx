@@ -64,7 +64,7 @@ function Forms() {
                         }
                      </div>
                   )
-               }) : <p className="lg:text-lg text-center text-yellow">هیچ فرمی برای این سازمان وجود ندارد.</p>
+               }) : <p className="lg:text-lg text-center text-yellow">هیچ فرمی برای شما وجود ندارد.</p>
             }
          </div>
 

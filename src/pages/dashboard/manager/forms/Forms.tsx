@@ -21,14 +21,15 @@ function Forms({ formNames }: FormsProps) {
 
          <div className="flex flex-col gap-8 items-center justify-center w-full">
             {
-               formNames?.map(form => (
-                  <Link
-                     text={`گزارش ${form}`}
-                     url={`reports?formName=${form}`}
-                     key={form}
-                     className="w-full"
-                  />
-               ))
+               formNames.length ?
+                  formNames?.map(form => (
+                     <Link
+                        text={`گزارش ${form}`}
+                        url={`reports?formName=${form}`}
+                        key={form}
+                        className="w-full"
+                     />
+                  )) : <p className="lg:text-lg text-center text-yellow">هیچ فرمی برای این سازمان وجود ندارد.</p>
             }
          </div>
 
