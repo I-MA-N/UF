@@ -60,10 +60,10 @@ function AddMentor2() {
                   text="شماره موبایل"
                   placeholder="مثال: 09123456789"
                   register={register}
-                  registerOptions={{ pattern: /^.{10}$/ }}
+                  registerOptions={{ pattern: /^.{11}$/ }}
                   render={() => (
                      <span className="text-[10px] lg:text-xs text-yellow mr-5 mt-2">
-                        {errors.phone?.type === "pattern" && "شماره موبایل باید شامل 10 کاراکتر باشد!"}
+                        {errors.phone?.type === "pattern" && "شماره موبایل باید شامل 11 کاراکتر باشد!"}
                      </span>
                   )}
                   isNumberType={true}
