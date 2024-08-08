@@ -1,30 +1,26 @@
 import { FieldValues, UseFormGetValues } from "react-hook-form";
-import { useState } from "react";
-import FormExitBtnModal from "./FormExitBtnModal";
-import simpleuserPFormData from "../../../../../api/simpleuser/simpleuserPFormData";
-import mentorPFormData from "../../../../../api/mentor/mentorPFormData";
+import { UseMutateFunction } from "@tanstack/react-query";
 
-type FormBtnsPropsType = {
+type TopBtnsPropsType = {
    getValues: UseFormGetValues<FieldValues>,
    page: string,
    formData: any,
-   formName: string,
-   username?: string,
-   exitBtnHref: string
+   formname: string,
+   mutate: UseMutateFunction<any, Error, {
+      formname: string,
+      data: any
+   }, unknown>,
+   setShowExitModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function FormBtns({ getValues, page, formData, formName, username, exitBtnHref }: FormBtnsPropsType) {
-   const [showModal, setShowModal] = useState(false);
-   const { mutate: simpleuserP, data: simpleuserPData } = simpleuserPFormData();
-   const { mutate: mentorP, data: mentorPData } = mentorPFormData(username || "");
-
+function TopBtns({ getValues, page, formData, formname, mutate, setShowExitModal }: TopBtnsPropsType) {
    return (
       <>
          <div className="w-64 flex items-center justify-between lg:justify-start lg:gap-14 lg:ml-auto lg:pr-16">
             <button
                type="button"
                className="flex items-center gap-2 text-yellow lg:text-lg"
-               onClick={() => setShowModal(true)}
+               onClick={() => setShowExitModal(true)}
             >
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" className="w-4 lg:w-5">
                   <path d="M13 3L8 8M8 8L3 13M8 8L13 13M8 8L3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -37,17 +33,10 @@ function FormBtns({ getValues, page, formData, formName, username, exitBtnHref }
                onClick={() => {
                   const newObj = { ...formData };
                   newObj[page as keyof typeof newObj] = getValues();
-                  if (username) {
-                     mentorP({
-                        formName: formName,
-                        data: JSON.stringify(newObj).toString()
-                     })
-                  } else {
-                     simpleuserP({
-                        formName: formName,
-                        data: JSON.stringify(newObj).toString()
-                     })
-                  }
+                  mutate({
+                     formname,
+                     data: JSON.stringify(newObj).toString()
+                  })
                }}
             >
                ذخیره
@@ -57,29 +46,8 @@ function FormBtns({ getValues, page, formData, formName, username, exitBtnHref }
                </svg>
             </button>
          </div>
-         {
-            simpleuserPData ?
-               <span className="text-xs lg:text-sm text-yellow mt-4 lg:ml-auto lg:pr-16">
-                  {
-                     simpleuserPData.access === 'true' ?
-                        'تغییرات با موفقیت اعمال شد!' :
-                        'مشکلی در اعمال تغییرات بوجود آمده!'
-                  }
-               </span>
-               : mentorPData &&
-               <span className="text-xs lg:text-sm text-yellow mt-4 lg:ml-auto lg:pr-16">
-                  {
-                     mentorPData.access === 'true' ?
-                        'تغییرات با موفقیت اعمال شد!' :
-                        'مشکلی در اعمال تغییرات بوجود آمده!'
-                  }
-               </span>
-         }
-         {
-            showModal && <FormExitBtnModal setShowModal={setShowModal} linkTo={exitBtnHref} />
-         }
       </>
    )
 }
 
-export default FormBtns
+export default TopBtns

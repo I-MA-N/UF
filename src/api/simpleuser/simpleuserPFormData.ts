@@ -8,7 +8,7 @@ type dataType = {
 }
 
 function simpleuserPFormData() {
-   const { mutate, data } = useMutation({
+   const { mutate, data, isPending } = useMutation({
       mutationKey: ['simpleuserP: form data'],
       mutationFn: async (data: dataType) => {
          const formData = getFormData({ ...data, setData: true });
@@ -17,7 +17,7 @@ function simpleuserPFormData() {
       }
    })
 
-   return { mutate, data };
+   return { mutate, data, isPending };
 }
 
 export default simpleuserPFormData

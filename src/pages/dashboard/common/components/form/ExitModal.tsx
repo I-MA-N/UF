@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
-type FormExitBtnModalProps = {
+type ExitModalProps = {
    setShowModal: React.Dispatch<React.SetStateAction<boolean>>,
    linkTo: string
 }
 
-function FormExitBtnModal({ setShowModal, linkTo }: FormExitBtnModalProps) {
+function ExitModal({ setShowModal, linkTo }: ExitModalProps) {
    return (
       <div className="modal">
          <div className="w-[298px] xs:w-80 bg-white text-primary rounded-[32px] p-12 text-sm/7">
@@ -29,4 +29,4 @@ function FormExitBtnModal({ setShowModal, linkTo }: FormExitBtnModalProps) {
    );
 };
 
-export default FormExitBtnModal;
+export default ExitModal;

@@ -11,9 +11,9 @@ function mentorGFormData(variables: VariablesType) {
    const { data, isError, isPending } = useQuery({
       queryKey: ['mentorG: form data', variables.username, variables.formName],
       queryFn: async () => {
-         const formData = getFormData({formName: variables.formName});
+         const formData = getFormData({ formName: variables.formName });
          const req = await axios.post(import.meta.env.VITE_ENDPOINT + `/mentor-form-info/${variables.username}`, formData);
-         
+
          return req.data
       }
    })
