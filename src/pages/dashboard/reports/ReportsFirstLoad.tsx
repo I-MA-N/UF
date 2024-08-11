@@ -1,11 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
-import GFormData from "../../../api/common/GFormNames";
 import Loading from "../../common/Loading";
-import { Container } from "@mui/material";
 import PrevBtn from "../../common/PrevBtn";
 import Reports from "./Reports";
 import GUserData from "../../../api/common/GUserData";
 import generateReportsArr from "./analysis/generateReportsArr";
+import GFormData from "../../../api/common/form/GFormData";
+import Container from "../../common/Container";
 
 function ReportsFirstLoad() {
    const { formname, username } = useParams();

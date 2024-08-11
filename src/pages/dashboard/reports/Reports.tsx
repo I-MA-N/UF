@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ReportsMainInfo from "./components/ReportsMainInfo";
 import ReportsButtons from "./components/ReportsButtons";
 import UserData from "../../../types/UserData";
@@ -29,19 +29,21 @@ function Reports({ userData, reportsArr, formData }: ReportsProps) {
       }
    }, [])
 
+   const navigate = useNavigate()
+
    const [page, setPage] = useState(reportsArr[0]);
 
    return (
       <>
-         <Link
-            to="/simpleuser/dashboard/forms"
+         <button
             className="btn w-fit h-auto p-3 gap-3 mt-8 mx-auto"
+            onClick={() => navigate(-1)}
          >
             برگشت
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="11" viewBox="0 0 16 11" fill="none">
                <path d="M5.375 9.75L1 5.375M1 5.375L15 5.375M1 5.375L5.375 1" stroke="#083C5A" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-         </Link>
+         </button>
 
          <section className="container my-10 space-y-6">
             <ReportsMainInfo userData={userData} statusBodyInfo={formData['وضعیت بدنی']} />

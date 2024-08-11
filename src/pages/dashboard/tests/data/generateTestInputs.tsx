@@ -1,8 +1,8 @@
 import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
-import MultipleChoiceInput from "../../tests/components/inputs/MultipleChoiceInput";
-import ChoiceInput from "../../tests/components/inputs/ChoiceInput";
-import ImageInput from "../../tests/components/inputs/ImageInput";
-import ChoiceImage from "../../tests/components/inputs/ChoiceImage";
+import MultipleChoiceInput from "../components/inputs/MultipleChoiceInput";
+import ChoiceInput from "../components/inputs/ChoiceInput";
+import ImageInput from "../components/inputs/ImageInput";
+import ChoiceImage from "../components/inputs/ChoiceImage";
 
 export type testPatternTypes = "MultipleChoice" | "Choice" | "ChoiceWithDivide" | "Radio" | "Text" | "ImageWithDivide" | "ChoiceImage";
 

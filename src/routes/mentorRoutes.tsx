@@ -4,7 +4,6 @@ import Home from "../pages/home/Home";
 import MembersFirstLoad from "../pages/dashboard/mentor/memebersList/MembersFirstLoad";
 import CheckUserNameFirstLoad from "../pages/dashboard/mentor/addSimpleuser/CheckUserNameFirstLoad";
 import FormsFirstLoad from "../pages/dashboard/mentor/forms/FormsFirstLoad";
-import TestsFirstLoad from "../pages/dashboard/mentor/forms/tests/TestsFirstLoad";
 
 const mentorRoutes = [
    {
@@ -30,10 +29,6 @@ const mentorRoutes = [
    {
       path: '/mentor/dashboard/members/:orgName/:username',
       element: <FormsFirstLoad />
-   },
-   {
-      path: '/mentor/dashboard/members/:orgName/:username/:formName',
-      element: <TestsFirstLoad />
    },
 ]
 
