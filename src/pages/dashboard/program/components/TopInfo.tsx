@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Btn from "../../../common/Btn";
 
 function TopInfo() {
+   const navigate = useNavigate();
+
    return (
       <div className="print:hidden mb-10">
          <p className='text-sm lg:text-base text-yellow text-center'>
@@ -12,16 +14,16 @@ function TopInfo() {
             را تیک بزنید تا بهترین حالت پی دی اف را بتوانید دانلود کنید.
          </p>
 
-         <div className='flex items-center justify-between mt-2'>
-            <Link
-               to="/simpleuser/dashboard/forms"
+         <div className='flex items-center justify-between mt-4'>
+            <button
                className="relative w-64 lg:w-80 h-14 flex items-center justify-center bg-transparent text-white text-sm lg:text-base rounded-[48px] border-2 border-white"
+               onClick={() => navigate(-1)}
             >
                <span className="text-yellow">برگشت</span>
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 11" fill="none" className="w-4.5 lg:w-5 absolute left-6 top-1/2 -translate-y-1/2">
                   <path d="M5.375 9.75L1 5.375M1 5.375L15 5.375M1 5.375L5.375 1" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                </svg>
-            </Link>
+            </button>
             <Btn
                text='دانلود PDF'
                type='button'

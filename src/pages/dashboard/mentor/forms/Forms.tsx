@@ -1,7 +1,7 @@
 import { Link as RouterLink } from "react-router-dom";
-import Link from "../../../common/Link";
 import Container from "../../../common/Container";
 import { FormObj } from "../../../../types/TestsTypes";
+import FormNamesList from "../../common/components/form/FormNamesList";
 
 type FormsProps = {
    username: string,
@@ -17,19 +17,11 @@ function Forms({ username, formNames }: FormsProps) {
          </h3>
 
          <div className="flex flex-col gap-4 items-center justify-center w-full">
-            {
-               formNames.length ?
-               formNames?.map(form => {
-                  const testsLength = form.formTests.length;
-                  return <Link
-                     text={`${form.formName} | ${testsLength} تست`}
-                     url={form.formName}
-                     key={form.id}
-                     className="w-full"
-                  />
-               }) :
-               <p className="lg:text-lg text-center text-yellow">هیچ فرمی برای این سازمان وجود ندارد.</p>
-            }
+            <FormNamesList
+               role="mentor"
+               username={username}
+               formNames={formNames}
+            />
          </div>
 
          <RouterLink
