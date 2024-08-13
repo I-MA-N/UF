@@ -7,7 +7,7 @@ type ImagesRowProps = {
 }
 
 function ImagesRow({ row, rowId }: ImagesRowProps) {
-   const baseUrl = `${import.meta.env.VITE_ENDPOINT}static`;
+   const baseUrl = `${import.meta.env.VITE_ENDPOINT}/static`;
 
    return (
       <tr>
