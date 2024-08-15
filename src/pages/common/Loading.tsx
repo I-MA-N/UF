@@ -1,8 +1,12 @@
 import { CircularProgress } from "@mui/material";
 
-function Loading() {
+type LoadingProps = {
+   fullHeight?: boolean
+}
+
+function Loading({ fullHeight = true }: LoadingProps) {
    return (
-      <div className="flex flex-col gap-6 items-center justify-center min-h-[calc(100vh-150px)]">
+      <div className={`flex flex-col gap-6 items-center justify-center ${fullHeight ? "min-h-[calc(100vh-150px)]" : "mt-8"}`}>
          <CircularProgress
             sx={{
                color: "#4CB648"
