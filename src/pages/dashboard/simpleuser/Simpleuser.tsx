@@ -7,6 +7,7 @@ import ShowInfo from "../common/components/ShowInfo";
 import { useUserDataContext } from "../../authentication/UserDataProvider";
 import Loading from "../../common/Loading";
 import GFormNames from "../../../api/common/form/GFormNames";
+import Landmarks from "./LandMarks";
 
 function Simpleuser() {
    const [profileModal, setProfileModal] = useState(false);
@@ -64,6 +65,7 @@ function Simpleuser() {
                onClick={() => setProfileModal(true)}
             />
          </div>
+         <Landmarks />
          {
             profileModal &&
             <ProfileModal setProfileModal={setProfileModal} />
