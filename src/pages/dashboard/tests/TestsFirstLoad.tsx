@@ -24,7 +24,7 @@ function TestsFirstLoad() {
       const formObj = data?.find(form => form.formName === formname);
       const testsArr = formObj?.formTests.filter(test => test.testAccess.includes(role));
 
-      if (formObj && testsArr && formData.access !== 'false') {
+      if (formObj && testsArr && formData?.access !== 'false') {
          return <Tests username={username} formname={formname} testsArr={testsArr} initialFormData={formData} />
       } else {
          return <Container>
