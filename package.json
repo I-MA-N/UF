@@ -26,7 +26,8 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.1",
     "react-router-dom": "^6.22.3",
-    "react-type-animation": "^3.2.0"
+    "react-type-animation": "^3.2.0",
+    "vite-plugin-mediapipe": "^0.1.0"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
