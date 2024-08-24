@@ -1,5 +1,5 @@
 import DynamicReportObj from "../../../../../../../types/DynamicReportObj";
-import dynamic from "../../../../../common/tests/testsData/dynamic";
+import dynamic from "../../../../../tests/data/testsData/dynamic";
 
 function dynamicAvg(usersData: any) {
    const resultArr: DynamicReportObj[] = [];

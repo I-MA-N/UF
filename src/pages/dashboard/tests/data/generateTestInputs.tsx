@@ -34,16 +34,26 @@ function generateTestInputs({ initialData, testPattern, testData, register, setV
 
             const defaultValueIndex = input.keys.indexOf(defaultValue);
 
-            return <ChoiceInput
-               key={input.title}
-               register={register}
-               setValue={setValue}
-               title={input.title}
-               keys={input.keys}
-               values={input.values}
-               index={index + 1}
-               defaultValue={defaultValueIndex === -1 ? 0 : defaultValueIndex}
-            />
+            return <>
+               <input
+                  type="text"
+                  hidden
+                  defaultValue={defaultValue}
+                  {...register(input.title, {
+                     validate: value => input.keys.indexOf(Number(value)) === -1 ? false : true
+                  })}
+               />
+               <ChoiceInput
+                  key={input.title}
+                  register={register}
+                  title={input.title}
+                  keys={input.keys}
+                  values={input.values}
+                  index={index + 1}
+                  defaultValue={defaultValueIndex}
+                  setValue={setValue}
+               />
+            </>
          })
 
       case "ChoiceWithDivide":
@@ -59,12 +69,12 @@ function generateTestInputs({ initialData, testPattern, testData, register, setV
                         return <ChoiceInput
                            key={input.title}
                            register={register}
-                           setValue={setValue}
                            title={input.title}
                            keys={input.keys}
                            values={input.values}
                            index={input.id}
                            defaultValue={defaultValueIndex === -1 ? 0 : defaultValueIndex}
+                           setValue={setValue}
                         />
                      })
                   }

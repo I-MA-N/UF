@@ -1,18 +1,18 @@
-import { testPatternTypes } from "../../common/tests/generateTestInputs";
-import activityRate from "../../common/tests/testsData/activityRate";
-import activityReadinessData from "../../common/tests/testsData/activityReadinessData";
-import bodyStatus from "../../common/tests/testsData/bodyStatus";
-import diseaseBackgroundData from "../../common/tests/testsData/diseaseBackgroundData";
-import dynamic from "../../common/tests/testsData/dynamic";
-import FMS from "../../common/tests/testsData/FMS";
-import generalHealthData from "../../common/tests/testsData/generalHealthData";
-import happinessData from "../../common/tests/testsData/happinessData";
-import hasPainData from "../../common/tests/testsData/hasPainData";
-import jobPerformance from "../../common/tests/testsData/jobPerformance";
-import jobSatisfactionData from "../../common/tests/testsData/jobSatisfactionData";
-import lifeQuality from "../../common/tests/testsData/lifeQuality";
-import nahanjariHa from "../../common/tests/testsData/nahanjariHa";
-import physicalPreparationData from "../../common/tests/testsData/physicalPreparationData";
+import { testPatternTypes } from "./generateTestInputs";
+import activityRate from "./testsData/activityRate";
+import activityReadinessData from "./testsData/activityReadinessData";
+import bodyStatus from "./testsData/bodyStatus";
+import diseaseBackgroundData from "./testsData/diseaseBackgroundData";
+import dynamic from "./testsData/dynamic";
+import FMS from "./testsData/FMS";
+import generalHealthData from "./testsData/generalHealthData";
+import happinessData from "./testsData/happinessData";
+import hasPainData from "./testsData/hasPainData";
+import jobPerformance from "./testsData/jobPerformance";
+import jobSatisfactionData from "./testsData/jobSatisfactionData";
+import lifeQuality from "./testsData/lifeQuality";
+import nahanjariHa from "./testsData/nahanjariHa";
+import physicalPreparationData from "./testsData/physicalPreparationData";
 
 const testsData = {
    'مقدار تحرک': {
@@ -85,7 +85,7 @@ const testsData = {
       testSubTitle: '',
       testPattern: "Choice" as testPatternTypes,
       testData: nahanjariHa,
-      testClassName: 'flex gap-x-8 gap-y-4 lg:gap-y-8 items-center justify-center flex-wrap'
+      testClassName: 'grid grid-cols-1 justify-center divide-y divide-y-white'
    },
    'ارزیابی پویا': {
       testSubTitle: '',

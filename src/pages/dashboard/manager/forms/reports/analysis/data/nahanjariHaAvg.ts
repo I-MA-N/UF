@@ -1,15 +1,17 @@
 import NahanjariReportObj from "../../../../../../../types/NahanjariReportObj";
-import nahanjariHaData from "../../../../../common/tests/testsData/nahanjariHa";
+import nahanjariHa from "../../../../../tests/data/testsData/nahanjariHa";
 
 function nahanjariHaAvg(usersData: any) {
    const resultArr: NahanjariReportObj[] = [];
 
-   nahanjariHaData.forEach(nahanjari => {
-      resultArr.push({
-         name: nahanjari.title,
-         five: 0,
-         three: 0,
-         one: 0,
+   nahanjariHa.forEach(nahanjariSection => {
+      nahanjariSection.sectionQuestions.forEach(nahanjari => {
+         resultArr.push({
+            name: nahanjari.title,
+            five: 0,
+            three: 0,
+            one: 0,
+         })
       });
    })
 
@@ -29,9 +31,9 @@ function nahanjariHaAvg(usersData: any) {
    return resultArr.map(obj => (
       {
          ...obj,
-         five: Number(( obj.five / usersData.length * 100 ).toFixed(2)),
-         three: Number(( obj.three / usersData.length * 100 ).toFixed(2)),
-         one: Number(( obj.one / usersData.length * 100 ).toFixed(2)),
+         five: Number((obj.five / usersData.length * 100).toFixed(2)),
+         three: Number((obj.three / usersData.length * 100).toFixed(2)),
+         one: Number((obj.one / usersData.length * 100).toFixed(2)),
       }
    ))
 }

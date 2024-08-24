@@ -1,22 +1,15 @@
-import { FieldValues, UseFormGetValues } from "react-hook-form";
-import { UseMutateFunction } from "@tanstack/react-query";
+import { FieldErrors, FieldValues, UseFormSetValue } from "react-hook-form";
 
 type TopBtnsPropsType = {
-   getValues: UseFormGetValues<FieldValues>,
-   page: string,
-   formData: any,
-   formname: string,
-   mutate: UseMutateFunction<any, Error, {
-      formname: string,
-      data: any
-   }, unknown>,
-   setShowExitModal: React.Dispatch<React.SetStateAction<boolean>>
+   setValue: UseFormSetValue<FieldValues>,
+   setShowExitModal: React.Dispatch<React.SetStateAction<boolean>>,
+   errors: FieldErrors<FieldValues>
 }
 
-function TopBtns({ getValues, page, formData, formname, mutate, setShowExitModal }: TopBtnsPropsType) {
+function TopBtns({ setValue, setShowExitModal, errors }: TopBtnsPropsType) {
    return (
       <>
-         <div className="w-64 flex items-center justify-between lg:justify-start lg:gap-14 lg:ml-auto lg:pr-16">
+         <div className="flex flex-wrap items-center gap-7 lg:gap-14 md:ml-auto">
             <button
                type="button"
                className="flex items-center gap-2 text-yellow lg:text-lg"
@@ -28,18 +21,9 @@ function TopBtns({ getValues, page, formData, formname, mutate, setShowExitModal
                خروج
             </button>
             <button
-               type="button"
+               type="submit"
                className="flex items-center gap-2 lg:flex-row-reverse lg:text-lg"
-               onClick={() => {
-                  const newObj = { ...formData };
-                  const data = getValues();
-                  delete data["nextPage"]; 
-                  newObj[page as keyof typeof newObj] = data;
-                  mutate({
-                     formname,
-                     data: JSON.stringify(newObj).toString()
-                  })
-               }}
+               onClick={() => setValue("shouldSave", true)}
             >
                ذخیره
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 18" fill="none" className="w-4 lg:w-4.5">
@@ -47,6 +31,10 @@ function TopBtns({ getValues, page, formData, formname, mutate, setShowExitModal
                   <path d="M8.3999 3.74976C9.0999 3.74976 9.4499 3.7469 9.9749 4.30836C10.4999 4.86982 10.4999 6.74903 10.4999 7.49957" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
                </svg>
             </button>
+            {
+               Object.keys(errors).length ?
+                  <p className="text-yellow text-sm">لطفا تمامی فیلد ها را به درستی پر نمایید!</p> : ""
+            }
          </div>
       </>
    )

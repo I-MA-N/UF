@@ -1,4 +1,4 @@
-import bodyStatus from "../../../../../common/tests/testsData/bodyStatus";
+import bodyStatus from "../../../../../tests/data/testsData/bodyStatus";
 
 type ResultObj = {
    [key: string]: number

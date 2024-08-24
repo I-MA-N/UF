@@ -10,6 +10,8 @@ import generateTestInputs from "./data/generateTestInputs";
 import BottomBtns from "./components/BottomBtns";
 import ExitModal from "./components/ExitModal";
 import ResultModal from "./components/ResultModal";
+import AIElems from "./nahanjariHa/AIElems";
+import SampleImages from "./components/SampleImages";
 
 type TestsProps = {
    username: string,
@@ -21,40 +23,49 @@ type TestsProps = {
 function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
    const { mutate, data, isPending } = PFormData(username);
 
-   const { handleSubmit, register, setValue, reset, getValues, formState: { errors } } = useForm();
+   const { handleSubmit, register, setValue, getValues, reset, formState: { errors } } = useForm();
    const [formData, setFormData] = useState(initialFormData);
-   console.log("errors", errors)
+   console.log("errors", errors);
 
    const [showExitModal, setShowExitModal] = useState(false);
    const [page, setPage] = useState(testsArr[0].testName);
 
    const submitHandler = (data: any) => {
-      setPage(data["nextPage"]);
-      delete data["nextPage"];
-      setFormData((prevValue: any) => {
-         const newData = { ...prevValue };
-         newData[page as keyof typeof newData] = data;
-         return newData
+      console.log('in submit', data);
+      const nextPage = data["nextPage"];
+      const shouldSave = data["shouldSave"];
+      const newData = { ...formData };
+      newData[page as keyof typeof newData] = data;
+
+      if (nextPage) setPage(nextPage);
+      if (shouldSave) mutate({
+         formname,
+         data: JSON.stringify(newData).toString()
       })
+
+      setFormData(newData);
       reset();
-      window.scrollTo(0, 0)
+      window.scrollTo(0, 0);
+
+      delete data["nextPage"];
+      delete data["shouldSave"];
    }
 
    return (
       <>
          <Container withTitle={false}>
-            <TopBtns
-               getValues={getValues}
-               page={page} formData={formData}
-               formname={formname}
-               mutate={mutate}
-               setShowExitModal={setShowExitModal}
-            />
+            <SampleImages />
 
             <form
                className="w-full"
                onSubmit={handleSubmit(submitHandler)}
             >
+               <TopBtns
+                  setValue={setValue}
+                  setShowExitModal={setShowExitModal}
+                  errors={errors}
+               />
+
                <input hidden {...register("nextPage")} />
                <div className="flex lg:flex-wrap items-center gap-4 w-full mt-8 mb-14 overflow-x-auto">
                   {
@@ -82,28 +93,37 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
                   </div>
                }
 
-               <div className={testsData[page as keyof typeof testsData].testClassName}>
-                  {
-                     generateTestInputs({
-                        initialData: formData[page],
-                        testPattern: testsData[page as keyof typeof testsData].testPattern,
-                        testData: testsData[page as keyof typeof testsData].testData,
-                        register: register,
-                        setValue: setValue
-                     }).map((input: any) => input)
-                  }
-               </div>
+               {
+                  (page === 'ناهنجاری ها'||  page === 'ارزیابی پویا') ?
+                     <AIElems
+                        testName={page}
+                        initialData={formData[page]}
+                        register={register}
+                        setValue={setValue}
+                        getValues={getValues}
+                     /> :
+                     <>
+                        <div className={testsData[page as keyof typeof testsData].testClassName}>
+                           {
+                              generateTestInputs({
+                                 initialData: formData[page],
+                                 testPattern: testsData[page as keyof typeof testsData].testPattern,
+                                 testData: testsData[page as keyof typeof testsData].testData,
+                                 register: register,
+                                 setValue: setValue
+                              }).map((input: any) => input)
+                           }
+                        </div>
 
-               <BottomBtns
-                  getValues={getValues}
-                  page={page}
-                  formData={formData} formname={formname}
-                  mutate={mutate}
-                  testsArr={testsArr}
-                  setValue={setValue}
-                  setShowExitModal={setShowExitModal}
-                  submitFn={handleSubmit(submitHandler)}
-               />
+                        <BottomBtns
+                           page={page}
+                           testsArr={testsArr}
+                           setValue={setValue}
+                           setShowExitModal={setShowExitModal}
+                        />
+                     </>
+               }
+
             </form>
          </Container>
 

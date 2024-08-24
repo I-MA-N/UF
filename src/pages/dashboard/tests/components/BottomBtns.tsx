@@ -1,25 +1,15 @@
-import { FieldValues, UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import { FieldValues, UseFormSetValue } from "react-hook-form";
 import { useMemo } from "react";
 import { TestObj } from "../../../../types/TestsTypes";
-import { UseMutateFunction } from "@tanstack/react-query";
 
 type BottomBtnsProps = {
-   getValues: UseFormGetValues<FieldValues>,
    page: string,
-   formData: any,
-   formname: string,
-   mutate: UseMutateFunction<any, Error, {
-      formname: string,
-      data: any
-   }, unknown>,
-   username?: string,
    testsArr: TestObj[],
    setValue: UseFormSetValue<FieldValues>,
    setShowExitModal: React.Dispatch<React.SetStateAction<boolean>>,
-   submitFn: () => void
 }
 
-function BottomBtns({ getValues, page, formData, formname, mutate, testsArr, setValue, setShowExitModal, submitFn }: BottomBtnsProps) {
+function BottomBtns({ page, testsArr, setValue, setShowExitModal }: BottomBtnsProps) {
    const [nextPage, prevPage] = useMemo(() => {
       const currentIndex = testsArr.findIndex(testObj => testObj.testName === page);
       const nextTest = testsArr[currentIndex + 1];
@@ -57,21 +47,11 @@ function BottomBtns({ getValues, page, formData, formname, mutate, testsArr, set
          <div className="flex flex-col gap-2">
             <button
                className="relative w-48 lg:w-64 h-12 lg:h-14 flex items-center justify-center bg-transparent text-white text-sm lg:text-base rounded-[48px] border lg:border-2 border-white"
+               type="submit"
                onClick={() => {
-                  const newObj = { ...formData };
-                  const data = getValues();
-                  delete data["nextPage"]; 
-                  newObj[page as keyof typeof newObj] = data;
-                  mutate({
-                     formname,
-                     data: JSON.stringify(newObj).toString()
-                  })
-                  if (nextPage) {
-                     setValue("nextPage", nextPage);
-                     submitFn();
-                  }
+                  setValue("nextPage", nextPage);
+                  setValue("shouldSave", true);
                }}
-               type="button"
             >
                <span>
                   {
