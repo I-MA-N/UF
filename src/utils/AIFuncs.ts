@@ -1,14 +1,14 @@
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { GpuBuffer, NormalizedLandmarkList, POSE_CONNECTIONS } from "@mediapipe/holistic";
 import AIContextType from "../types/AIContextType";
-import { Pose, Results } from "@mediapipe/pose";
+import { Holistic, Results } from "@mediapipe/holistic";
 
 export const initHolistic = async (setAIData: React.Dispatch<React.SetStateAction<AIContextType | null>>) => {
-   const pose = new Pose({
-      locateFile: (file: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
+   const holistic = new Holistic({
+      locateFile: (file: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/holistic/${file}`
    });
 
-   pose.setOptions({
+   holistic.setOptions({
       modelComplexity: 1,
       smoothLandmarks: true,
       enableSegmentation: true,
@@ -17,7 +17,7 @@ export const initHolistic = async (setAIData: React.Dispatch<React.SetStateActio
       minTrackingConfidence: 0.5,
    });
 
-   pose.onResults((results) => {
+   holistic.onResults((results) => {
       console.log("in results, landmarks:", results.poseLandmarks);
       setAIData(prevValue => ({
          ...prevValue,
@@ -27,13 +27,13 @@ export const initHolistic = async (setAIData: React.Dispatch<React.SetStateActio
 
    setAIData(prevValue => ({
       ...prevValue,
-      model: pose
+      model: holistic
    }))
 
    // Just to download assets needed for landmarks sooner
    const imgElem = document.getElementById("front") as HTMLImageElement | null;
    if (imgElem) {
-      await pose.send({ image: imgElem });
+      await holistic.send({ image: imgElem });
       setAIData(prevValue => ({
          ...prevValue,
          results: undefined,

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { drawOnCanvas, highlightLandmark } from "../../../../../../../utils/AIFuncs";
 import { useAIContext } from "../../../../context/AIContextProvider";
-import { GpuBuffer } from "@mediapipe/pose";
+import { GpuBuffer } from "@mediapipe/holistic";
 
 type SampleCanvasProps = {
    sampleImage: GpuBuffer,

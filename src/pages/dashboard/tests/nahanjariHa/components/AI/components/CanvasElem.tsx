@@ -1,4 +1,4 @@
-import { Results } from "@mediapipe/pose";
+import { Results } from "@mediapipe/holistic";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { canvasClick, canvasMouseMove, drawOnCanvas } from "../../../../../../../utils/AIFuncs";
 import SampleCanvasFirstLoad from "./SampleCanvasFirstLoad";

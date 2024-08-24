@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAIContext } from "../../../../context/AIContextProvider";
 import CanvasElem from "./CanvasElem";
-import { Results } from "@mediapipe/pose";
+import { Results } from "@mediapipe/holistic";
 
 type CanvasElemFirstLoadProps = {
    setShowCanvas: React.Dispatch<React.SetStateAction<boolean>>

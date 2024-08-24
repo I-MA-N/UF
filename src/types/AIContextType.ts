@@ -1,8 +1,8 @@
-import { Pose, Results } from "@mediapipe/pose";
+import { Holistic, Results } from "@mediapipe/holistic";
 import { AI_IMAGE_STATE } from "../pages/dashboard/tests/nahanjariHa/data/AI_IMAGES_STATE";
 
 type AIContextType = {
-   model?: Pose;
+   model?: Holistic;
    modelDownlaoded?: boolean;
    results?: Results;
    isSampleResults?: boolean;

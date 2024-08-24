@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAIContext } from "../../../../context/AIContextProvider";
 import SampleCanvas from "./SampleCanvas";
-import { GpuBuffer } from "@mediapipe/pose";
+import { GpuBuffer } from "@mediapipe/holistic";
 
 type SampleCanvasFirstLoad = {
    selectedLandmark: number | null
