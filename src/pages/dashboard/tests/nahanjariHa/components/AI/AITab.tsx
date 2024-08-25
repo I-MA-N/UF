@@ -15,29 +15,30 @@ function AITab({ AI_IMAGES_STATE, isHidden, setValue }: AITabProps) {
    const imageState = useMemo(() => AIData?.imageState, [AIData?.imageState])
 
    return (
-      <div className={`${isHidden ? "hidden" : "block"}`}>
+      <>
+         <div className={`${isHidden ? "hidden" : "block"}`}>
+            <div className="flex gap-4">
+               {
+                  AI_IMAGES_STATE.map(state => (
+                     <button
+                        key={state.name}
+                        type="button"
+                        onClick={() => setAIData(prevValue => ({
+                           ...prevValue,
+                           imageState: state
+                        }))}
+                     >
+                        {state.nameFA}
+                     </button>
+                  ))
+               }
+            </div>
+         </div>
          {
             imageState &&
             <CameraElem setValue={setValue} />
          }
-
-         <div className="flex gap-4">
-            {
-               AI_IMAGES_STATE.map(state => (
-                  <button
-                     key={state.name}
-                     type="button"
-                     onClick={() => setAIData(prevValue => ({
-                        ...prevValue,
-                        imageState: state
-                     }))}
-                  >
-                     {state.nameFA}
-                  </button>
-               ))
-            }
-         </div>
-      </div>
+      </>
    );
 };
 

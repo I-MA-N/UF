@@ -12,14 +12,14 @@ function CanvasElemFirstLoad({ setShowCanvas }: CanvasElemFirstLoadProps) {
    const [photoData, setPhotoData] = useState<Results | null>(null);
 
    useEffect(() => {
-      if (!AIData?.isSampleResults && AIData?.results) {
+      if (AIData?.results) {
          setPhotoData(AIData.results)
          setAIData(prevValue => ({
             ...prevValue,
             results: undefined
          }))
       }
-   }, [AIData?.results, AIData?.isSampleResults])
+   }, [AIData?.results])
 
    if (photoData?.image) return (
       <CanvasElem

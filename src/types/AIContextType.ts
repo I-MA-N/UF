@@ -6,7 +6,11 @@ type AIContextType = {
    modelDownlaoded?: boolean;
    results?: Results;
    isSampleResults?: boolean;
-   imageState?: AI_IMAGE_STATE
+   imageState?: AI_IMAGE_STATE,
+   videoSize?: {
+      width: number,
+      height: number
+   }
 }
 
 export default AIContextType;

@@ -42,16 +42,44 @@ export const initHolistic = async (setAIData: React.Dispatch<React.SetStateActio
    }
 }
 
-export const startCamera = async (videoRef: React.MutableRefObject<HTMLVideoElement | null>, facingMode: string) => {
+export const startCamera = async (
+      videoRef: React.MutableRefObject<HTMLVideoElement | null>, 
+      facingMode: string,
+      setIsStraight: React.Dispatch<React.SetStateAction<boolean>>,
+      setIsSupported: React.Dispatch<React.SetStateAction<boolean>>,
+   ) => {
    try {
       const stream = await navigator.mediaDevices.getUserMedia({
          video: {
-            facingMode: facingMode
+            facingMode: facingMode,
          },
          audio: false,
       })
 
       if (videoRef.current) videoRef.current.srcObject = stream;
+
+      if (window.DeviceOrientationEvent) {
+         window.addEventListener("deviceorientation", (e) => {
+            const alpha = e.alpha;
+            const gamma = e.gamma;
+            const beta = e.beta;
+            if (typeof alpha === "number" && typeof gamma === "number" && typeof beta === "number") {
+               const alphaBool = alpha >= -5 && alpha <= 5;
+               const gammaBool = gamma >= -5 && gamma <= 5;
+               const betaBool = beta >= 85 && beta <= 95;
+
+               if (alphaBool && gammaBool && betaBool) {
+                  setIsStraight(true);
+               } else {
+                  setIsStraight(false);
+               }
+            } else {
+               setIsSupported(false);
+            }
+         })
+      } else {
+         setIsSupported(false);
+      }
    } catch (error) {
       console.log(error);
    }

@@ -20,7 +20,7 @@ function HiddenInputs({ testName, initialData, register }: HiddenInputsProps) {
                         {...register(input.title, {
                            validate: value => input.keys.indexOf(Number(value)) === -1 ? false : true
                         })}
-                        defaultValue={initialData[input.title]}
+                        defaultValue={initialData?.[input.title]}
                         hidden
                      />
                   ))
@@ -31,7 +31,7 @@ function HiddenInputs({ testName, initialData, register }: HiddenInputsProps) {
                         type="text"
                         key={input.id + input.text}
                         {...register(input.text, {
-                           validate: value => value === 1 || value === 0
+                           validate: value => Number(value) === 1 || Number(value) === 0
                         })}
                         defaultValue={initialData[input.text]}
                         hidden

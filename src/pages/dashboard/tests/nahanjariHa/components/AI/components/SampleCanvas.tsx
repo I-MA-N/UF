@@ -1,14 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { drawOnCanvas, highlightLandmark } from "../../../../../../../utils/AIFuncs";
 import { useAIContext } from "../../../../context/AIContextProvider";
-import { GpuBuffer } from "@mediapipe/holistic";
 
 type SampleCanvasProps = {
-   sampleImage: GpuBuffer,
    selectedLandmark: number | null
 }
 
-function SampleCanvas({ sampleImage, selectedLandmark }: SampleCanvasProps) {
+function SampleCanvas({ selectedLandmark }: SampleCanvasProps) {
    const [AIData] = useAIContext();
    const imageState = useMemo(() => AIData?.imageState, [AIData?.imageState]);
 
@@ -18,23 +16,26 @@ function SampleCanvas({ sampleImage, selectedLandmark }: SampleCanvasProps) {
    >(null);
 
    useEffect(() => {
-      if (imageState?.sampleImageLandmarks) {
+      if (imageState?.name && imageState?.sampleImageLandmarks) {
          if (typeof selectedLandmark === "number") {
             highlightLandmark(canvasRef.current, selectedLandmark, imageState.sampleImageLandmarks, setLandmarkDetails)
          } else {
             setLandmarkDetails(null);
-            drawOnCanvas(canvasRef.current, sampleImage, imageState?.sampleImageLandmarks);
+            const imgElem = document.getElementById(imageState.name) as HTMLImageElement | null;
+            drawOnCanvas(canvasRef.current, imgElem, imageState?.sampleImageLandmarks);
          }
       }
-   }, [canvasRef.current, selectedLandmark, sampleImage])
+   }, [canvasRef.current, selectedLandmark])
 
    return (
-      <div className="relative">
+      <div className="absolute top-0 left-0">
          <canvas
             ref={canvasRef}
-            width={600}
-            height={400}
+            width={100}
+            height={200}
          />
+
+         {/* Backdrop when landmarks is selected */}
          <div
             className={
                `absolute top-0 left-0 bg-white/50 size-full 
@@ -42,6 +43,7 @@ function SampleCanvas({ sampleImage, selectedLandmark }: SampleCanvasProps) {
                `
             }
          />
+         {/* Circle when landmarks is selected */}
          <div
             className={
                `absolute size-7 border-2 border-primary rounded-full
