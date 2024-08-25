@@ -53,37 +53,21 @@ function CameraElem({ setValue }: CameraElemProps) {
 
                   <div className="flex items-center justify-center absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 size-32 rounded-full outline-dotted outline-4 outline-primary">
                      <div
-                        className={
-                           `w-full h-1 absolute
-                           ${className}
-                           `
-                        }
+                        className={`w-full h-1 absolute ${className}`}
                      />
                      <div
-                        className={
-                           `w-1 h-full absolute
-                           ${className}
-                           `
-                        }
+                        className={`w-1 h-full absolute ${className}`}
                      />
                      <div
-                        className={
-                           `w-1 h-full absolute bg-yellow
-                           
-                           `
-                        }
+                        className="w-1 h-full absolute bg-yellow"
                         style={{
-                           rotate: `${coordinates?.gamma}deg`
+                           rotate: coordinates?.gamma ? `${coordinates.gamma}deg` : '0deg'
                         }}
                      />
                      <div
-                        className={
-                           `w-full h-1 absolute bg-yellow
-
-                           `
-                        }
+                        className="w-1 h-full absolute bg-yellow"
                         style={{
-                           rotate: `${coordinates?.beta}deg`
+                           rotate: coordinates?.gamma ? `${coordinates.gamma + 90}deg` : '0deg'
                         }}
                      />
                   </div>
