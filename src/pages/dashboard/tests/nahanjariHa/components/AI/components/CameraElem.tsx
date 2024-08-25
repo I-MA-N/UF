@@ -15,6 +15,7 @@ function CameraElem({ setValue }: CameraElemProps) {
 
    const videoRef = useRef<HTMLVideoElement | null>(null);
    const [facingMode, setFacingMode] = useState<"environment" | "user">("environment");
+
    const [isSupported, setIsSupported] = useState(true);
    const [coordinates, setCoordinates] = useState<CoordinatesType>(null);
    const className = useMemo(() => {
@@ -44,28 +45,49 @@ function CameraElem({ setValue }: CameraElemProps) {
 
                   {/* <span className="absolute top-2 left-1/2 -translate-x-1/2">{AIData?.imageState?.nameFA}</span> */}
 
-                  <div className="flex gap-4 absolute top-1 left-1">
-                     <span>alpha is: {coordinates?.alpha}</span>
-                     <span>beta is: {coordinates?.beta}</span>
-                     <span>gamma is: {coordinates?.gamma}</span>
+                  <div className="absolute top-1 left-0">
+                     <p>alpha is: {coordinates?.alpha.toFixed(2)}</p>
+                     <p>beta is: {coordinates?.beta.toFixed(2)}</p>
+                     <p>gamma is: {coordinates?.gamma.toFixed(2)}</p>
                   </div>
 
-                  <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 size-32 rounded-full outline-dotted outline-4 outline-primary">
+                  <div className="flex items-center justify-center absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 size-32 rounded-full outline-dotted outline-4 outline-primary">
                      <div
                         className={
-                           `w-full h-1 absolute top-1/2 -translate-y-1/2
+                           `w-full h-1 absolute
                            ${className}
                            `
                         }
                      />
                      <div
                         className={
-                           `w-1 h-full absolute left-1/2 -translate-x-1/2
+                           `w-1 h-full absolute
                            ${className}
                            `
                         }
+                     />
+                     <div
+                        className={
+                           `w-1 h-full absolute bg-yellow
+                           
+                           `
+                        }
+                        style={{
+                           rotate: `${coordinates?.gamma}deg`
+                        }}
+                     />
+                     <div
+                        className={
+                           `w-full h-1 absolute bg-yellow
+
+                           `
+                        }
+                        style={{
+                           rotate: `${coordinates?.beta}deg`
+                        }}
                      />
                   </div>
+
 
                   <div className="w-full flex justify-center gap-4 absolute bottom-1 left-1/2 -translate-x-1/2">
                      <button
