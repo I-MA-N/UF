@@ -2,6 +2,7 @@ import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { GpuBuffer, NormalizedLandmarkList, POSE_CONNECTIONS } from "@mediapipe/holistic";
 import AIContextType from "../types/AIContextType";
 import { Holistic, Results } from "@mediapipe/holistic";
+import CoordinatesType from "../types/CoordinatesType";
 
 export const initHolistic = async (setAIData: React.Dispatch<React.SetStateAction<AIContextType | null>>) => {
    const holistic = new Holistic({
@@ -45,8 +46,8 @@ export const initHolistic = async (setAIData: React.Dispatch<React.SetStateActio
 export const startCamera = async (
       videoRef: React.MutableRefObject<HTMLVideoElement | null>, 
       facingMode: string,
-      setIsStraight: React.Dispatch<React.SetStateAction<boolean>>,
       setIsSupported: React.Dispatch<React.SetStateAction<boolean>>,
+      setCoordinates: React.Dispatch<React.SetStateAction<CoordinatesType>>,
    ) => {
    try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -64,15 +65,11 @@ export const startCamera = async (
             const gamma = e.gamma;
             const beta = e.beta;
             if (typeof alpha === "number" && typeof gamma === "number" && typeof beta === "number") {
-               const alphaBool = alpha >= -5 && alpha <= 5;
-               const gammaBool = gamma >= -5 && gamma <= 5;
-               const betaBool = beta >= 85 && beta <= 95;
-
-               if (alphaBool && gammaBool && betaBool) {
-                  setIsStraight(true);
-               } else {
-                  setIsStraight(false);
-               }
+               setCoordinates({
+                  alpha,
+                  beta,
+                  gamma
+               })
             } else {
                setIsSupported(false);
             }

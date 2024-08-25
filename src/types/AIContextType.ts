@@ -5,7 +5,6 @@ type AIContextType = {
    model?: Holistic;
    modelDownlaoded?: boolean;
    results?: Results;
-   isSampleResults?: boolean;
    imageState?: AI_IMAGE_STATE,
    videoSize?: {
       width: number,
