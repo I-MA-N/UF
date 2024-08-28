@@ -1,6 +1,6 @@
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { GpuBuffer, NormalizedLandmarkList, POSE_CONNECTIONS } from "@mediapipe/holistic";
-import AIContextType from "../types/AIContextType";
+import AIContextType, { ImageStateNames } from "../types/AIContextType";
 import { Holistic, Results } from "@mediapipe/holistic";
 import CoordinatesType from "../types/CoordinatesType";
 
@@ -19,7 +19,7 @@ export const initHolistic = async (setAIData: React.Dispatch<React.SetStateActio
    });
 
    holistic.onResults((results) => {
-      console.log("in results, landmarks:", results.poseLandmarks);
+      // console.log("in results, landmarks:", results.poseLandmarks);
       setAIData(prevValue => ({
          ...prevValue,
          results
@@ -43,43 +43,59 @@ export const initHolistic = async (setAIData: React.Dispatch<React.SetStateActio
    }
 }
 
-export const startCamera = async (
-      videoRef: React.MutableRefObject<HTMLVideoElement | null>, 
-      facingMode: string,
-      setIsSupported: React.Dispatch<React.SetStateAction<boolean>>,
-      setCoordinates: React.Dispatch<React.SetStateAction<CoordinatesType>>,
-   ) => {
-   try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-         video: {
-            facingMode: facingMode,
-         },
-         audio: false,
-      })
+export const cameraFuncs = (
+   videoRef: React.MutableRefObject<HTMLVideoElement | null>,
+   facingMode: string,
+   setIsSupported: React.Dispatch<React.SetStateAction<boolean>>,
+   setCoordinates: React.Dispatch<React.SetStateAction<CoordinatesType>>,
+) => {
+   let stream: MediaStream | null = null;
 
-      if (videoRef.current) videoRef.current.srcObject = stream;
-
-      if (window.DeviceOrientationEvent) {
-         window.addEventListener("deviceorientation", (e) => {
-            const alpha = e.alpha;
-            const gamma = e.gamma;
-            const beta = e.beta;
-            if (typeof alpha === "number" && typeof gamma === "number" && typeof beta === "number") {
-               setCoordinates({
-                  alpha,
-                  beta,
-                  gamma
-               })
-            } else {
-               setIsSupported(false);
-            }
+   const startCamera = async () => {
+      try {
+         stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+               facingMode: facingMode,
+               aspectRatio: 0.8,
+            },
+            audio: false,
          })
-      } else {
-         setIsSupported(false);
+
+         if (videoRef.current) videoRef.current.srcObject = stream;
+
+         if (window.DeviceOrientationEvent) {
+            window.addEventListener("deviceorientation", (e) => {
+               const alpha = e.alpha;
+               const gamma = e.gamma;
+               const beta = e.beta;
+               if (typeof alpha === "number" && typeof gamma === "number" && typeof beta === "number") {
+                  setCoordinates({
+                     alpha,
+                     beta,
+                     gamma
+                  })
+               } else {
+                  setIsSupported(false);
+               }
+            })
+         } else {
+            setIsSupported(false);
+         }
+      } catch (error) {
+         console.log(error);
       }
-   } catch (error) {
-      console.log(error);
    }
+
+   const stopCamera = () => {
+      if (stream) {
+         stream.getTracks().forEach(track => {
+            track.stop();
+         });
+         stream = null;
+      }
+   }
+
+   return { startCamera, stopCamera };
 }
 
 export const canvasClick = (
@@ -159,11 +175,42 @@ export const highlightLandmark = (
          drawConnectors(ctx, landmarks, POSE_CONNECTIONS, { color: '#FFFFFF', lineWidth: 1 });
          drawLandmarks(ctx, filteredLandmarks, { color: '#FFFFFF', radius: 3 });
          drawLandmarks(ctx, [landmark], { color: '#000', radius: 5 });
-         
+
          setLandmarkDetails({
             top: landmark.y * canvas.clientHeight - 14,
             left: landmark.x * canvas.clientWidth - 14,
          })
       }
    }
+}
+
+export const addImageZip = (
+   newObject: {
+      key: ImageStateNames;
+      value: string;
+   },
+   setAIData: React.Dispatch<React.SetStateAction<AIContextType | null>>
+) => {
+   setAIData(prevValue => {
+      const prevImages = prevValue?.imagesToSave;
+      let newImages = [newObject];
+
+      if (prevImages) {
+         newImages = [
+            ...prevImages,
+            newObject
+         ]
+
+         const keyIndex = prevImages.findIndex(image => image.key === newObject.key)
+         if (keyIndex !== -1) {
+            prevImages[keyIndex].value = newObject.value;
+            newImages = prevImages;
+         }
+      }
+      
+      return {
+         ...prevValue,
+         imagesToSave: [...newImages]
+      }
+   })
 }

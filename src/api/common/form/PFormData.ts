@@ -8,7 +8,7 @@ type Variables = {
 }
 
 function PFormData(username: string | undefined) {
-   const { mutate, data, isPending } = useMutation({
+   const { mutateAsync } = useMutation({
       mutationKey: ['mentorP: form data', username],
       mutationFn: async (data: Variables) => {
          const formData = getFormData({ ...data, setdata: true });
@@ -18,7 +18,7 @@ function PFormData(username: string | undefined) {
       },
    })
 
-   return { mutate, data, isPending }
+   return { mutateAsync }
 }
 
 export default PFormData;

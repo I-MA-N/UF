@@ -1,39 +1,23 @@
-import { FieldValues, UseFormGetValues, UseFormSetValue } from "react-hook-form";
-import testsData from "../../../data/testsData";
-import ManualInput from "./components/ManualInput";
+import SectionElem from "./components/SectionElem";
+import { useAIContext } from "../../../context/AIContextProvider";
 
 type ManualTabProps = {
-   getValues: UseFormGetValues<FieldValues>,
-   setValue: UseFormSetValue<FieldValues>
+   setIsAIMethod: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-function ManualTab({ getValues, setValue }: ManualTabProps) {
-   const data = getValues();
+function ManualTab({ setIsAIMethod }: ManualTabProps) {
+   const [AIData] = useAIContext();
 
    return (
-      <div className={`${testsData['ناهنجاری ها'].testClassName}`}>
+      <div className="grid grid-cols-1 justify-center divide-y divide-y-white">
          {
-            testsData['ناهنجاری ها'].testData.map(section => (
-               <div className="py-10" key={section.sectionTitle}>
-                  <h3 className="mb-3 text-center text-sm lg:text-base">{section.sectionTitle}</h3>
-                  <div className="flex gap-x-8 gap-y-4 lg:gap-y-8 items-center justify-center flex-wrap">
-                     {
-                        section.sectionQuestions.map(input => {
-                           const defaultValue = data?.[input.title];
-
-                           return <ManualInput
-                              key={input.title}
-                              title={input.title}
-                              keys={input.keys}
-                              values={input.values}
-                              index={input.id}
-                              defaultValue={Number(defaultValue)}
-                              setValue={setValue}
-                           />
-                        })
-                     }
-                  </div>
-               </div>
+            AIData?.testData?.map(section => (
+               <SectionElem
+                  key={section.name}
+                  setIsAIMethod={setIsAIMethod}
+                  section={section}
+                  formData={AIData?.formData}
+               />
             ))
          }
       </div>

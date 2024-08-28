@@ -1,15 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { FieldValues, UseFormSetValue } from "react-hook-form";
-import { startCamera } from "../../../../../../../utils/AIFuncs";
+import { cameraFuncs } from "../../../../../../../utils/AIFuncs";
 import CanvasElemFirstLoad from "./CanvasElemFirstLoad";
 import { useAIContext } from "../../../../context/AIContextProvider";
 import CoordinatesType from "../../../../../../../types/CoordinatesType";
 
-type CameraElemProps = {
-   setValue: UseFormSetValue<FieldValues>
-}
-
-function CameraElem({ setValue }: CameraElemProps) {
+function CameraElem() {
    const [AIData, setAIData] = useAIContext();
    const [showCanvas, setShowCanvas] = useState(false);
 
@@ -18,20 +13,31 @@ function CameraElem({ setValue }: CameraElemProps) {
 
    const [isSupported, setIsSupported] = useState(true);
    const [coordinates, setCoordinates] = useState<CoordinatesType>(null);
-   const className = useMemo(() => {
-      if (coordinates && isSupported) {
-         // const alphaBool = alpha >= -5 && alpha <= 5;
-         const betaBool = coordinates.beta >= 85 && coordinates.beta <= 95;
-         const gammaBool = coordinates.gamma >= -5 && coordinates.gamma <= 5;
+   const gammaClassName = useMemo(() => {
+      if (typeof coordinates?.gamma === "number" && isSupported) {
+         const gammaBool = coordinates.gamma >= -3 && coordinates.gamma <= 3;
 
-         return (gammaBool && betaBool) ? "bg-secondary" : "bg-red";
+         return gammaBool ? "bg-secondary" : "bg-red";
       }
       return "bg-white";
-   }, [coordinates])
+   }, [coordinates, isSupported])
+   const betaClassName = useMemo(() => {
+      if (typeof coordinates?.beta === "number" && isSupported) {
+         const betaBool = coordinates.beta >= 87 && coordinates.beta <= 93;
+         return betaBool ? "bg-secondary" : "bg-red";
+      }
+      return "bg-white";
+   }, [coordinates, isSupported])
 
    useEffect(() => {
+      const { startCamera, stopCamera } = cameraFuncs(videoRef, facingMode, setIsSupported, setCoordinates);
+
       if (!showCanvas) {
-         startCamera(videoRef, facingMode, setIsSupported, setCoordinates);
+         startCamera();
+      }
+
+      return () => {
+         stopCamera();
       }
    }, [facingMode, showCanvas])
 
@@ -41,9 +47,9 @@ function CameraElem({ setValue }: CameraElemProps) {
             showCanvas ?
                <CanvasElemFirstLoad setShowCanvas={setShowCanvas} /> :
                <div className="relative">
-                  <video ref={videoRef} autoPlay />
+                  <video ref={videoRef} autoPlay playsInline />
 
-                  {/* <span className="absolute top-2 left-1/2 -translate-x-1/2">{AIData?.imageState?.nameFA}</span> */}
+                  <span className="absolute top-2 left-1/2 -translate-x-1/2">{AIData?.imageState?.nameFA}</span>
 
                   <div className="absolute top-1 left-0">
                      <p>alpha is: {coordinates?.alpha.toFixed(2)}</p>
@@ -53,10 +59,10 @@ function CameraElem({ setValue }: CameraElemProps) {
 
                   <div className="flex items-center justify-center absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 size-32 rounded-full outline-dotted outline-4 outline-primary">
                      <div
-                        className={`w-full h-1 absolute ${className}`}
+                        className={`w-full h-1 absolute ${gammaClassName}`}
                      />
                      <div
-                        className={`w-1 h-full absolute ${className}`}
+                        className={`w-1 h-full absolute ${gammaClassName}`}
                      />
                      <div
                         className="w-1 h-full absolute bg-yellow"
@@ -72,6 +78,15 @@ function CameraElem({ setValue }: CameraElemProps) {
                      />
                   </div>
 
+                  <div
+                     className="absolute bottom-0 left-0"
+                     style={{ perspective: 100 }}
+                  >
+                     <div
+                        className={`w-2 h-12 ${betaClassName}`}
+                        style={{ transform: coordinates?.beta ? `rotateX(${90 - coordinates?.beta}deg) rotateZ(15deg)` : "" }}
+                     />
+                  </div>
 
                   <div className="w-full flex justify-center gap-4 absolute bottom-1 left-1/2 -translate-x-1/2">
                      <button
@@ -84,12 +99,10 @@ function CameraElem({ setValue }: CameraElemProps) {
 
                      <button
                         type="button"
-                        disabled={!AIData?.modelDownlaoded}
+                        disabled={!AIData?.modelDownlaoded || (isSupported && (betaClassName !== "bg-secondary" || gammaClassName !== "bg-secondary"))}
                         onClick={async () => {
                            await AIData?.model?.send({ image: videoRef.current! });
                            setShowCanvas(true);
-                           console.log(videoRef.current?.clientWidth);
-                           console.log(videoRef.current?.clientHeight);
                            setAIData(prevValue => ({
                               ...prevValue,
                               videoSize: {

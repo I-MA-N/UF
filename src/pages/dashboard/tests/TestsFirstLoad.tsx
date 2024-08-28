@@ -6,6 +6,7 @@ import PrevBtn from "../../common/PrevBtn";
 import Loading from "../../common/Loading";
 import Tests from "./Tests";
 import AIContextProvider from "./context/AIContextProvider";
+import replaceTestNames from "../../../utils/replaceTestNames";
 
 function TestsFirstLoad() {
    const { role, formname, username } = useParams();
@@ -26,6 +27,8 @@ function TestsFirstLoad() {
       const testsArr = formObj?.formTests.filter(test => test.testAccess.includes(role));
 
       if (formObj && testsArr && formData?.access !== 'false') {
+         replaceTestNames(testsArr);
+
          return (
             <AIContextProvider>
                <Tests username={username} formname={formname} testsArr={testsArr} initialFormData={formData} />

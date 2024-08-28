@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
-import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
+import { FieldValues, UseFormSetValue } from "react-hook-form";
 
 type ImageInputProps = {
-   register: UseFormRegister<FieldValues>,
    setValue: UseFormSetValue<FieldValues>,
    title: string,
    image: string,
-   direction: "vertical" | "horizental",
+   direction: string,
    defaultValue: number
 }
 
-function ImageInput({ register, setValue: setInputValue, title, image, direction, defaultValue }: ImageInputProps) {
+function ImageInput({ setValue: setInputValue, title, image, direction, defaultValue }: ImageInputProps) {
    const [value, setValue] = useState(defaultValue);
+
+   useEffect(() => {
+      setValue(defaultValue)
+   }, [defaultValue])
 
    useEffect(() => {
       setInputValue(title, value);
@@ -40,7 +43,6 @@ function ImageInput({ register, setValue: setInputValue, title, image, direction
             }
          </div>
          <p className="text-[10px] lg:text-sm">{title}</p>
-         <input type="text" hidden {...register(title, { validate: value => value === 1 || value === 0 })} />
       </div>
    )
 }

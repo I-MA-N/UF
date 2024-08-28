@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FieldValues, UseFormSetValue } from "react-hook-form";
 
 type ManualInputProps = {
@@ -16,6 +16,8 @@ function ManualInput({ title, keys, values, index, setValue: setInputValue, defa
       return (screenWidth < 380 ? 284 : screenWidth < 1024 ? 326 : 396) / keys.length
    }, [keys]);
    const [value, setValue] = useState(defaultValue);
+
+   useEffect(() => setValue(defaultValue), [defaultValue])
 
    return (
       <div className="flex flex-col justify-between bg-white text-primary rounded-[18px] w-72 xs:w-[330px] lg:w-[400px] h-40">

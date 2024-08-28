@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form";
 import { TestObj } from "../../../types/TestsTypes";
 import PFormData from "../../../api/common/form/PFormData";
@@ -9,9 +9,11 @@ import testsData from "./data/testsData";
 import generateTestInputs from "./data/generateTestInputs";
 import BottomBtns from "./components/BottomBtns";
 import ExitModal from "./components/ExitModal";
-import ResultModal from "./components/ResultModal";
-import AIElems from "./nahanjariHa/AIElems";
-import SampleImages from "./components/SampleImages";
+import TestTabsFirstLoad from "./nahanjariHa/TestTabsFirstLoad";
+import PImage from "../../../api/common/PImage";
+import { useAIContext } from "./context/AIContextProvider";
+import ErrorModal from "./components/ErrorModal";
+import ProgressModal from "./components/ProgressModal";
 
 type TestsProps = {
    username: string,
@@ -21,27 +23,55 @@ type TestsProps = {
 }
 
 function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
-   const { mutate, data, isPending } = PFormData(username);
+   const [AIData] = useAIContext();
+   const [progress, setProgress] = useState<number | null>(null);
+   const [error, setError] = useState<string | null>(null);
+
+   const { mutateAsync: formDataMutate } = PFormData(username);
 
    const { handleSubmit, register, setValue, getValues, reset, formState: { errors } } = useForm();
    const [formData, setFormData] = useState(initialFormData);
-   console.log("errors", errors);
+   // console.log("errors", errors);
 
    const [showExitModal, setShowExitModal] = useState(false);
    const [page, setPage] = useState(testsArr[0].testName);
 
+   const { mutateAsync: imageMutate } = PImage(username, formname);
+
+   useEffect(() => {
+      if (typeof progress === "number") {
+         const currentImage = AIData?.imagesToSave?.[progress - 1];
+         if (currentImage) {
+            imageMutate({
+               imgKey: currentImage.key,
+               imgValue: currentImage.value,
+            })
+               .then(res => {
+                  if (res?.msg) setProgress(prevValue => typeof prevValue === "number" ? prevValue += 1 : null);
+                  if (res?.error) setError(res.error);
+               })
+         }
+      }
+   }, [progress])
+
    const submitHandler = (data: any) => {
-      console.log('in submit', data);
       const nextPage = data["nextPage"];
       const shouldSave = data["shouldSave"];
       const newData = { ...formData };
       newData[page as keyof typeof newData] = data;
 
       if (nextPage) setPage(nextPage);
-      if (shouldSave) mutate({
-         formname,
-         data: JSON.stringify(newData).toString()
-      })
+      if (shouldSave) {
+         setProgress(0);
+         formDataMutate({
+            formname,
+            data: JSON.stringify(newData).toString()
+         })
+            .then(res => {
+               if (res?.msg) setProgress(prevValue => typeof prevValue === "number" ? prevValue += 1 : null);
+               if (res?.error) setError(res.error);
+            })
+      }
 
       setFormData(newData);
       reset();
@@ -54,8 +84,6 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
    return (
       <>
          <Container withTitle={false}>
-            <SampleImages />
-
             <form
                className="w-full"
                onSubmit={handleSubmit(submitHandler)}
@@ -94,13 +122,13 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
                }
 
                {
-                  (page === 'ناهنجاری ها'||  page === 'ارزیابی پویا') ?
-                     <AIElems
+                  (page === 'ناهنجاری ها' || page === 'ارزیابی پویا') ?
+                     <TestTabsFirstLoad
                         testName={page}
                         initialData={formData[page]}
-                        register={register}
-                        setValue={setValue}
                         getValues={getValues}
+                        setValue={setValue}
+                        register={register}
                      /> :
                      <>
                         <div className={testsData[page as keyof typeof testsData].testClassName}>
@@ -114,21 +142,21 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
                               }).map((input: any) => input)
                            }
                         </div>
-
-                        <BottomBtns
-                           page={page}
-                           testsArr={testsArr}
-                           setValue={setValue}
-                           setShowExitModal={setShowExitModal}
-                        />
                      </>
                }
 
+               <BottomBtns
+                  page={page}
+                  testsArr={testsArr}
+                  setValue={setValue}
+                  setShowExitModal={setShowExitModal}
+               />
             </form>
          </Container>
 
          {showExitModal && <ExitModal setShowExitModal={setShowExitModal} />}
-         <ResultModal data={data} isPending={isPending} />
+         {error && <ErrorModal error={error} setError={setError} />}
+         {typeof progress === "number" && <ProgressModal progress={progress} setProgress={setProgress} />}
       </>
    )
 }
