@@ -2,6 +2,7 @@ import CameraElem from "./components/CameraElem";
 import { useAIContext } from "../../../context/AIContextProvider";
 import { useMemo } from "react";
 import ImageStateBtn from "./components/buttons/ImageStateBtn";
+import CameraElem2 from "./components/CameraElem2";
 
 function AITab() {
    const [AIData] = useAIContext();
@@ -24,7 +25,9 @@ function AITab() {
          </div>
          {
             imageState &&
-            <CameraElem />
+            ("src" in AIData!.testData![0].questions[0] ?
+            <CameraElem2 />
+            : <CameraElem />)
          }
       </>
    );

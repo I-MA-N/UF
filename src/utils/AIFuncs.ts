@@ -19,7 +19,7 @@ export const initHolistic = async (setAIData: React.Dispatch<React.SetStateActio
    });
 
    holistic.onResults((results) => {
-      // console.log("in results, landmarks:", results.poseLandmarks);
+      console.log("in results, landmarks:", results.poseLandmarks);
       setAIData(prevValue => ({
          ...prevValue,
          results
@@ -51,12 +51,15 @@ export const cameraFuncs = (
 ) => {
    let stream: MediaStream | null = null;
 
-   const startCamera = async () => {
+   const startCamera = async (frameRate?: number) => {
       try {
          stream = await navigator.mediaDevices.getUserMedia({
             video: {
                facingMode: facingMode,
                aspectRatio: 0.8,
+               frameRate: {
+                  max: frameRate
+               }
             },
             audio: false,
          })
@@ -86,12 +89,14 @@ export const cameraFuncs = (
       }
    }
 
-   const stopCamera = () => {
+   const stopCamera = async (animationFrameId?: number) => {
       if (stream) {
+         videoRef.current?.pause();
          stream.getTracks().forEach(track => {
             track.stop();
          });
          stream = null;
+         if (animationFrameId !== undefined) cancelAnimationFrame(animationFrameId);
       }
    }
 
@@ -107,12 +112,13 @@ export const drawOnCanvas = (
 
    if (canvas && ctx) {
       if (image) {
+         console.log("draw");
          ctx.clearRect(0, 0, canvas.width, canvas.height);
          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
       }
       if (landmarks?.length) {
-         drawConnectors(ctx, landmarks, POSE_CONNECTIONS, { color: '#FFFFFF', lineWidth: 1 });
-         drawLandmarks(ctx, landmarks, { color: '#FFFFFF', radius: 3 });
+         drawConnectors(ctx, landmarks, POSE_CONNECTIONS, { color: '#083C5A', lineWidth: 1 });
+         drawLandmarks(ctx, landmarks, { color: '#FF0000', radius: 2 });
       }
    }
 }
@@ -144,8 +150,12 @@ export const canvasMove = (
    offsetX: number,
    offsetY: number
 ) => {
-   if (typeof selectedLandmark === "number" && canvas) {
-      document.body.style.cursor = "all-scroll";
+   const circleElem = document.getElementById("circle");
+
+   if (typeof selectedLandmark === "number" && canvas && circleElem) {
+      circleElem.style.left = `${offsetX - circleElem.clientWidth / 2}px`;
+      circleElem.style.top = `${offsetY - circleElem.clientWidth / 2}px`;
+      circleElem.style.display = "flex";
 
       setPhotoData(prevValue => {
          if (prevValue?.poseLandmarks && canvas) {
@@ -155,9 +165,15 @@ export const canvasMove = (
          }
          return prevValue;
       })
-   } else {
-      document.body.style.cursor = "auto";
    }
+}
+
+export const canvasUp = (
+   setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>,
+) => {
+   setSelectedLandmark(null);
+   const circleElem = document.getElementById("circle");
+   if (circleElem) circleElem.style.display = "none";
 }
 
 export const highlightLandmark = (

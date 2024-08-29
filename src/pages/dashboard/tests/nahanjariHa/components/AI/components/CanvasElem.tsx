@@ -1,6 +1,6 @@
 import { Results } from "@mediapipe/holistic";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { addImageZip, canvasDown, canvasMove, drawOnCanvas } from "../../../../../../../utils/AIFuncs";
+import { addImageZip, canvasDown, canvasMove, canvasUp, drawOnCanvas } from "../../../../../../../utils/AIFuncs";
 import SampleCanvas from "./SampleCanvas";
 import { useAIContext } from "../../../../context/AIContextProvider";
 import JSZip from 'jszip';
@@ -38,7 +38,7 @@ function CanvasElem({ photoData, setPhotoData, setShowCanvas }: CanvasElemProps)
                   const offsetY = e.nativeEvent.offsetY;
                   canvasMove(selectedLandmark, setPhotoData, canvasRef.current, offsetX, offsetY);
                }}
-               onMouseUp={() => setSelectedLandmark(null)}
+               onMouseUp={() => canvasUp(setSelectedLandmark)}
 
                onTouchStart={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
@@ -52,12 +52,19 @@ function CanvasElem({ photoData, setPhotoData, setShowCanvas }: CanvasElemProps)
                   const offsetY = e.targetTouches[0].pageY - rect.top;
                   canvasMove(selectedLandmark, setPhotoData, canvasRef.current, offsetX, offsetY);
                }}
-               onTouchEnd={() => setSelectedLandmark(null)}
+               onTouchEnd={() => canvasUp(setSelectedLandmark)}
 
                width={AIData?.videoSize?.width}
                height={AIData?.videoSize?.height}
                className="mx-auto"
             />
+            
+            <div
+               id="circle"
+               className="absolute top-0 left-0 hidden items-center justify-center size-6 rounded-full bg-yellow/50 border-[0.5px] border-red pointer-events-none"
+            >
+               <img src="/images/edit-cursor.png" alt="" />
+            </div>
          </div>
 
          {!landmarks?.length && <p>نقطه ای در عکس یافت نشد!</p>}

@@ -45,17 +45,16 @@ function CameraElem() {
       <div className="fixed top-0 left-0 w-full min-h-screen flex items-center justify-center z-30 transition-all duration-300 bg-primary/60">
          {
             showCanvas ?
-               <CanvasElemFirstLoad setShowCanvas={setShowCanvas} /> :
+               <CanvasElemFirstLoad setShowCanvas={setShowCanvas} />
+               :
                <div className="relative">
-                  <video ref={videoRef} autoPlay playsInline />
+                  <video
+                     ref={videoRef}
+                     autoPlay
+                     playsInline
+                  />
 
                   <span className="absolute top-2 left-1/2 -translate-x-1/2">{AIData?.imageState?.nameFA}</span>
-
-                  <div className="absolute top-1 left-0">
-                     <p>alpha is: {coordinates?.alpha.toFixed(2)}</p>
-                     <p>beta is: {coordinates?.beta.toFixed(2)}</p>
-                     <p>gamma is: {coordinates?.gamma.toFixed(2)}</p>
-                  </div>
 
                   <div className="flex items-center justify-center absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 size-32 rounded-full outline-dotted outline-4 outline-primary">
                      <div
@@ -120,10 +119,14 @@ function CameraElem() {
 
                      <button
                         type="button"
-                        onClick={() => setAIData(prevValue => ({
-                           ...prevValue,
-                           imageState: undefined
-                        }))}
+                        onClick={() => {
+                           const { stopCamera } = cameraFuncs(videoRef, facingMode, setIsSupported, setCoordinates);
+                           stopCamera();
+                           setAIData(prevValue => ({
+                              ...prevValue,
+                              imageState: undefined
+                           }))
+                        }}
                      >
                         برگشت
                      </button>
