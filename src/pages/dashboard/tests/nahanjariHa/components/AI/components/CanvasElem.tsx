@@ -1,6 +1,6 @@
 import { Results } from "@mediapipe/holistic";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { addImageZip, canvasClick, canvasMouseMove, drawOnCanvas } from "../../../../../../../utils/AIFuncs";
+import { addImageZip, canvasDown, canvasMove, drawOnCanvas } from "../../../../../../../utils/AIFuncs";
 import SampleCanvas from "./SampleCanvas";
 import { useAIContext } from "../../../../context/AIContextProvider";
 import JSZip from 'jszip';
@@ -19,7 +19,7 @@ function CanvasElem({ photoData, setPhotoData, setShowCanvas }: CanvasElemProps)
 
    useEffect(() => {
       drawOnCanvas(canvasRef.current, photoData.image, photoData.poseLandmarks);
-   }, [canvasRef.current, photoData, selectedLandmark])
+   }, [canvasRef.current, photoData])
 
    return (
       <>
@@ -27,23 +27,41 @@ function CanvasElem({ photoData, setPhotoData, setShowCanvas }: CanvasElemProps)
          <div className="relative">
             <canvas
                ref={canvasRef}
-               onClick={(e) => landmarks?.length &&
-                  canvasClick(
-                     e,
-                     canvasRef.current,
-                     selectedLandmark,
-                     setSelectedLandmark,
-                     landmarks,
-                     setPhotoData
-                  )
-               }
-               onMouseMove={() => canvasMouseMove(selectedLandmark)}
+
+               onMouseDown={(e) => {
+                  const offsetX = e.nativeEvent.offsetX;
+                  const offsetY = e.nativeEvent.offsetY;
+                  canvasDown(landmarks, setSelectedLandmark, canvasRef.current, offsetX, offsetY);
+               }}
+               onMouseMove={(e) => {
+                  const offsetX = e.nativeEvent.offsetX;
+                  const offsetY = e.nativeEvent.offsetY;
+                  canvasMove(selectedLandmark, setPhotoData, canvasRef.current, offsetX, offsetY);
+               }}
+               onMouseUp={() => setSelectedLandmark(null)}
+
+               onTouchStart={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const offsetX = e.targetTouches[0].pageX - rect.left;
+                  const offsetY = e.targetTouches[0].pageY - rect.top;
+                  canvasDown(landmarks, setSelectedLandmark, canvasRef.current, offsetX, offsetY);
+               }}
+               onTouchMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const offsetX = e.targetTouches[0].pageX - rect.left;
+                  const offsetY = e.targetTouches[0].pageY - rect.top;
+                  canvasMove(selectedLandmark, setPhotoData, canvasRef.current, offsetX, offsetY);
+               }}
+               onTouchEnd={() => setSelectedLandmark(null)}
+
                width={AIData?.videoSize?.width}
                height={AIData?.videoSize?.height}
                className="mx-auto"
             />
          </div>
+
          {!landmarks?.length && <p>نقطه ای در عکس یافت نشد!</p>}
+
          <div className="flex gap-4 absolute bottom-10 left-1/2 -translate-x-1/2">
             <button
                type="button"
@@ -67,7 +85,7 @@ function CanvasElem({ photoData, setPhotoData, setShowCanvas }: CanvasElemProps)
                            ...prevValue,
                            imageState: undefined
                         }
-                        
+
                         return {
                            ...prevValue,
                            imageState: {
@@ -89,7 +107,7 @@ function CanvasElem({ photoData, setPhotoData, setShowCanvas }: CanvasElemProps)
                   // Send image to save in database
                   const zip = new JSZip();
 
-                  const jsonLandmarks = JSON.stringify(photoData.poseLandmarks);
+                  const jsonLandmarks = JSON.stringify(landmarks);
                   zip.file('landmarks.json', jsonLandmarks);
 
                   // To generate "Blob" from "photoData.image", we need to draw it on canvas,
@@ -117,8 +135,8 @@ function CanvasElem({ photoData, setPhotoData, setShowCanvas }: CanvasElemProps)
                   }
 
                   // Evaluate function should be called here
-                  if (photoData.poseLandmarks?.length) {
-                     AIData?.imageState?.evaluateFn(photoData.poseLandmarks, AIData.setValue!);
+                  if (landmarks?.length) {
+                     AIData?.imageState?.evaluateFn(landmarks, AIData.setValue!);
                      setAIData(prevValue => ({
                         ...prevValue,
                         formData: AIData?.getValues!()

@@ -98,49 +98,6 @@ export const cameraFuncs = (
    return { startCamera, stopCamera };
 }
 
-export const canvasClick = (
-   event: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
-   canvas: HTMLCanvasElement | null,
-   selectedLandmark: number | null,
-   setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>,
-   landmarks: NormalizedLandmarkList,
-   setPhotoData: React.Dispatch<React.SetStateAction<Results | null>>
-) => {
-   if (canvas) {
-      const offsetX = event.nativeEvent.offsetX;
-      const offsetY = event.nativeEvent.offsetY;
-
-      if (typeof selectedLandmark === "number") {
-         setPhotoData(prevValue => {
-            prevValue!.poseLandmarks[selectedLandmark].x = offsetX / canvas.clientWidth;
-            prevValue!.poseLandmarks[selectedLandmark].y = offsetY / canvas.clientHeight;
-            return prevValue;
-         })
-         setSelectedLandmark(null);
-      } else {
-         for (let i = 0; i < landmarks.length; i++) {
-            const landmark = landmarks[i];
-            const pixelX = Math.floor(landmark.x * canvas.clientWidth);
-            const pixelY = Math.floor(landmark.y * canvas.clientHeight);
-
-            const isBetweenX = offsetX > pixelX - 4 && offsetX < pixelX + 4;
-            const isBetweenY = offsetY > pixelY - 4 && offsetY < pixelY + 4;
-            if (isBetweenX && isBetweenY) setSelectedLandmark(i);
-         }
-      }
-   }
-
-}
-
-export const canvasMouseMove = (selectedLandmark: number | null) => {
-   if (typeof selectedLandmark === "number") {
-      // try this one instead: document.body.style.cursor = "all-scroll";
-      document.getElementsByTagName("body")[0].style.cursor = "all-scroll";
-   } else {
-      document.getElementsByTagName("body")[0].style.cursor = "auto";
-   }
-}
-
 export const drawOnCanvas = (
    canvas: HTMLCanvasElement | null,
    image: GpuBuffer | null,
@@ -157,6 +114,49 @@ export const drawOnCanvas = (
          drawConnectors(ctx, landmarks, POSE_CONNECTIONS, { color: '#FFFFFF', lineWidth: 1 });
          drawLandmarks(ctx, landmarks, { color: '#FFFFFF', radius: 3 });
       }
+   }
+}
+
+export const canvasDown = (
+   landmarks: NormalizedLandmarkList,
+   setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>,
+   canvas: HTMLCanvasElement | null,
+   offsetX: number,
+   offsetY: number
+) => {
+   if (canvas) {
+      for (let i = 0; i < landmarks.length; i++) {
+         const landmark = landmarks[i];
+         const pixelX = Math.floor(landmark.x * canvas.clientWidth);
+         const pixelY = Math.floor(landmark.y * canvas.clientHeight);
+
+         const isBetweenX = offsetX > pixelX - 4 && offsetX < pixelX + 4;
+         const isBetweenY = offsetY > pixelY - 4 && offsetY < pixelY + 4;
+         if (isBetweenX && isBetweenY) setSelectedLandmark(i);
+      }
+   }
+}
+
+export const canvasMove = (
+   selectedLandmark: number | null,
+   setPhotoData: React.Dispatch<React.SetStateAction<Results | null>>,
+   canvas: HTMLCanvasElement | null,
+   offsetX: number,
+   offsetY: number
+) => {
+   if (typeof selectedLandmark === "number" && canvas) {
+      document.body.style.cursor = "all-scroll";
+
+      setPhotoData(prevValue => {
+         if (prevValue?.poseLandmarks && canvas) {
+            prevValue.poseLandmarks[selectedLandmark].x = offsetX / canvas.clientWidth;
+            prevValue.poseLandmarks[selectedLandmark].y = offsetY / canvas.clientHeight;
+            drawOnCanvas(canvas, prevValue.image, prevValue.poseLandmarks);
+         }
+         return prevValue;
+      })
+   } else {
+      document.body.style.cursor = "auto";
    }
 }
 
