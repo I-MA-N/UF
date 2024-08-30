@@ -47,47 +47,49 @@ function CameraElem() {
             showCanvas ?
                <CanvasElemFirstLoad setShowCanvas={setShowCanvas} />
                :
-               <div className="relative">
-                  <video
-                     ref={videoRef}
-                     autoPlay
-                     playsInline
-                  />
+               <>
+                  <div className="relative">
+                     <video
+                        ref={videoRef}
+                        autoPlay
+                        playsInline
+                     />
 
-                  <span className="absolute top-2 left-1/2 -translate-x-1/2">{AIData?.imageState?.nameFA}</span>
+                     <span className="absolute top-2 left-1/2 -translate-x-1/2">{AIData?.imageState?.nameFA}</span>
 
-                  <div className="flex items-center justify-center absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 size-32 rounded-full outline-dotted outline-4 outline-primary">
+                     <div className="flex items-center justify-center absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 size-32 rounded-full outline-dotted outline-4 outline-primary">
+                        <div
+                           className={`w-full h-1 absolute ${gammaClassName}`}
+                        />
+                        <div
+                           className={`w-1 h-full absolute ${gammaClassName}`}
+                        />
+                        <div
+                           className="w-1 h-full absolute bg-yellow"
+                           style={{
+                              rotate: coordinates?.gamma ? `${coordinates.gamma}deg` : '0deg'
+                           }}
+                        />
+                        <div
+                           className="w-1 h-full absolute bg-yellow"
+                           style={{
+                              rotate: coordinates?.gamma ? `${coordinates.gamma + 90}deg` : '0deg'
+                           }}
+                        />
+                     </div>
+
                      <div
-                        className={`w-full h-1 absolute ${gammaClassName}`}
-                     />
-                     <div
-                        className={`w-1 h-full absolute ${gammaClassName}`}
-                     />
-                     <div
-                        className="w-1 h-full absolute bg-yellow"
-                        style={{
-                           rotate: coordinates?.gamma ? `${coordinates.gamma}deg` : '0deg'
-                        }}
-                     />
-                     <div
-                        className="w-1 h-full absolute bg-yellow"
-                        style={{
-                           rotate: coordinates?.gamma ? `${coordinates.gamma + 90}deg` : '0deg'
-                        }}
-                     />
+                        className="absolute bottom-0 left-0"
+                        style={{ perspective: 100 }}
+                     >
+                        <div
+                           className={`w-2 h-12 ${betaClassName}`}
+                           style={{ transform: coordinates?.beta ? `rotateX(${90 - coordinates?.beta}deg) rotateZ(15deg)` : "" }}
+                        />
+                     </div>
                   </div>
 
-                  <div
-                     className="absolute bottom-0 left-0"
-                     style={{ perspective: 100 }}
-                  >
-                     <div
-                        className={`w-2 h-12 ${betaClassName}`}
-                        style={{ transform: coordinates?.beta ? `rotateX(${90 - coordinates?.beta}deg) rotateZ(15deg)` : "" }}
-                     />
-                  </div>
-
-                  <div className="w-full flex justify-center gap-4 absolute bottom-1 left-1/2 -translate-x-1/2">
+                  <div className="w-full flex flex-wrap justify-center gap-4 absolute bottom-12 left-1/2 -translate-x-1/2">
                      <button
                         type="button"
                         onClick={() => setFacingMode(
@@ -98,7 +100,10 @@ function CameraElem() {
 
                      <button
                         type="button"
-                        disabled={!AIData?.modelDownlaoded || (isSupported && (betaClassName !== "bg-secondary" || gammaClassName !== "bg-secondary"))}
+                        disabled={
+                           !AIData?.modelDownlaoded ||
+                           (isSupported && (betaClassName !== "bg-secondary" || gammaClassName !== "bg-secondary"))
+                        }
                         onClick={async () => {
                            await AIData?.model?.send({ image: videoRef.current! });
                            setShowCanvas(true);
@@ -109,7 +114,9 @@ function CameraElem() {
                                  height: videoRef.current?.clientHeight!,
                               }
                            }))
-                        }}>
+                        }}
+                        className="h-14 px-4 border border-white"
+                     >
                         {
                            AIData?.modelDownlaoded
                               ? "capture photo"
@@ -131,7 +138,7 @@ function CameraElem() {
                         برگشت
                      </button>
                   </div>
-               </div>
+               </>
          }
       </div>
    );

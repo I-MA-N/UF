@@ -13,7 +13,6 @@ function CameraElem2() {
 
    const videoRef = useRef<HTMLVideoElement | null>(null);
    const canvasRef = useRef<HTMLCanvasElement | null>(null);
-   const [facingMode, setFacingMode] = useState<"environment" | "user">("environment");
 
    const [isSupported, setIsSupported] = useState(true);
    const [coordinates, setCoordinates] = useState<CoordinatesType>(null);
@@ -34,7 +33,7 @@ function CameraElem2() {
    }, [coordinates, isSupported])
 
    useEffect(() => {
-      const { startCamera, stopCamera } = cameraFuncs(videoRef, facingMode, setIsSupported, setCoordinates);
+      const { startCamera, stopCamera } = cameraFuncs(videoRef, "environment", setIsSupported, setCoordinates);
 
       if (!showCanvas && AIData?.modelDownlaoded) {
          startCamera(30);
@@ -43,7 +42,7 @@ function CameraElem2() {
       return () => {
          stopCamera();
       }
-   }, [facingMode, showCanvas, AIData?.modelDownlaoded])
+   }, [showCanvas, AIData?.modelDownlaoded])
 
    useEffect(() => {
       if (AIData?.results && AIData.imageState?.videoFn) {
@@ -112,14 +111,6 @@ function CameraElem2() {
                      <div className="w-full flex justify-center gap-4 absolute bottom-1 left-1/2 -translate-x-1/2">
                         <button
                            type="button"
-                           onClick={() => setFacingMode(
-                              prevValue => prevValue === "environment" ? "user" : "environment"
-                           )}>
-                           change camera mode
-                        </button>
-
-                        <button
-                           type="button"
                            disabled={
                               !AIData?.modelDownlaoded
                                  || (isSupported && (betaClassName !== "bg-secondary" || gammaClassName !== "bg-secondary"))
@@ -148,7 +139,7 @@ function CameraElem2() {
                         <button
                            type="button"
                            onClick={() => {
-                              const { stopCamera } = cameraFuncs(videoRef, facingMode, setIsSupported, setCoordinates);
+                              const { stopCamera } = cameraFuncs(videoRef, "environment", setIsSupported, setCoordinates);
                               stopCamera();
                               setAIData(prevValue => ({
                                  ...prevValue,
