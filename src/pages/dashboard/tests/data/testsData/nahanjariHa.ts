@@ -1,7 +1,7 @@
 import { ImageStateNames } from "../../../../../types/AIContextType";
-import CBack from "../AIformulas/nahanjariHa/CBack";
-import CFront from "../AIformulas/nahanjariHa/CFront";
-import CSide from "../AIformulas/nahanjariHa/CSide";
+import Back_P from "../AIformulas/nahanjariHa/Back_P";
+import Front_P from "../AIformulas/nahanjariHa/Front_P";
+import Side_P from "../AIformulas/nahanjariHa/Side_P";
 
 const nahanjariHa = [
    {
@@ -271,7 +271,7 @@ const nahanjariHa = [
                "visibility": 0.0008558782865293324
             }
          ],
-         evaluateFn: CSide,
+         photoFn: Side_P,
       }
    },
    {
@@ -523,7 +523,7 @@ const nahanjariHa = [
                "visibility": 0.0008558782865293324
             }
          ],
-         evaluateFn: CFront,
+         photoFn: Front_P,
       }
    },
    {
@@ -757,7 +757,7 @@ const nahanjariHa = [
                "visibility": 0.0008558782865293324
             }
          ],
-         evaluateFn: CBack,
+         photoFn: Back_P,
       }
    },
    // {
@@ -1003,7 +1003,7 @@ const nahanjariHa = [
    //             "visibility": 0.0008558782865293324
    //          }
    //       ],
-   //       evaluateFn: CFront,
+   //       photoFn: CFront,
    //    }
    // },
 ]

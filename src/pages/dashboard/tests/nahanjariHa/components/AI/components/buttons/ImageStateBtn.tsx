@@ -19,9 +19,10 @@ function ImageStateBtn({ state }: ImageStateBtnProps) {
                imageState: {
                   name: state.name,
                   nameFA: state.nameFA,
-                  evaluateFn: state.AI.evaluateFn,
                   sampleImageLandmarks: state.AI.sampleImageLandmarks,
                   sampleImageSrc: state.AI.sampleImageSrc,
+                  photoFn: state.AI.photoFn,
+                  videoFn: "videoFn" in state.AI ? state.AI.videoFn : undefined
                }
             }))}
          >

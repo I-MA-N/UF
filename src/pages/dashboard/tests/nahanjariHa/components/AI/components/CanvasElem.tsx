@@ -100,7 +100,8 @@ function CanvasElem({ photoData, setPhotoData, setShowCanvas }: CanvasElemProps)
                               nameFA: nextImageState.nameFA,
                               sampleImageSrc: nextImageState.AI.sampleImageSrc,
                               sampleImageLandmarks: nextImageState.AI.sampleImageLandmarks,
-                              evaluateFn: nextImageState.AI.evaluateFn
+                              photoFn: nextImageState.AI.photoFn,
+                              videoFn: "videoFn" in nextImageState.AI ? nextImageState.AI.videoFn : undefined
                            }
                         }
                      }
@@ -143,7 +144,7 @@ function CanvasElem({ photoData, setPhotoData, setShowCanvas }: CanvasElemProps)
 
                   // Evaluate function should be called here
                   if (landmarks?.length) {
-                     AIData?.imageState?.evaluateFn(landmarks, AIData.setValue!);
+                     AIData?.imageState?.photoFn(landmarks, AIData.setValue!);
                      setAIData(prevValue => ({
                         ...prevValue,
                         formData: AIData?.getValues!()

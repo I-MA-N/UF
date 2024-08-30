@@ -3,6 +3,7 @@ import { GpuBuffer, NormalizedLandmarkList, POSE_CONNECTIONS } from "@mediapipe/
 import AIContextType, { ImageStateNames } from "../types/AIContextType";
 import { Holistic, Results } from "@mediapipe/holistic";
 import CoordinatesType from "../types/CoordinatesType";
+import VideoFnType from "../types/VideoFnType";
 
 export const initHolistic = async (setAIData: React.Dispatch<React.SetStateAction<AIContextType | null>>) => {
    const holistic = new Holistic({
@@ -19,7 +20,6 @@ export const initHolistic = async (setAIData: React.Dispatch<React.SetStateActio
    });
 
    holistic.onResults((results) => {
-      console.log("in results, landmarks:", results.poseLandmarks);
       setAIData(prevValue => ({
          ...prevValue,
          results
@@ -56,7 +56,7 @@ export const cameraFuncs = (
          stream = await navigator.mediaDevices.getUserMedia({
             video: {
                facingMode: facingMode,
-               aspectRatio: 0.8,
+               aspectRatio: 1600 / 1000,
                frameRate: {
                   max: frameRate
                }
@@ -89,18 +89,45 @@ export const cameraFuncs = (
       }
    }
 
-   const stopCamera = async (animationFrameId?: number) => {
+   const stopCamera = async () => {
       if (stream) {
-         videoRef.current?.pause();
          stream.getTracks().forEach(track => {
             track.stop();
          });
          stream = null;
-         if (animationFrameId !== undefined) cancelAnimationFrame(animationFrameId);
       }
    }
 
    return { startCamera, stopCamera };
+}
+
+export const drawOnVideo = (
+   video: HTMLVideoElement | null,
+   canvas: HTMLCanvasElement | null,
+   results: Results,
+   videoFn: VideoFnType,
+   landmarksStatus: boolean[],
+) => {
+   const ctx = canvas?.getContext("2d");
+   if (video && canvas && ctx && results) {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(results.image, 0, 0, video.videoWidth, video.videoHeight);
+
+      if (results.poseLandmarks?.length) {
+         drawConnectors(ctx, results.poseLandmarks, POSE_CONNECTIONS, { color: '#FCC72C', lineWidth: 1 });
+         drawLandmarks(ctx, results.poseLandmarks, { color: '#FF0000', radius: 2 });
+
+         landmarksStatus = [];
+         const videoStates = videoFn(results.poseLandmarks);
+         videoStates?.forEach(({ landmarks, status }) => {
+            drawConnectors(ctx, landmarks, POSE_CONNECTIONS, { color: status ? '#4CB648' : '#FF8225', lineWidth: 1.5 });
+            drawLandmarks(ctx, landmarks, { color: status ? '#4CB648' : '#FF8225', radius: 2.5 });
+            landmarksStatus.push(status);
+         })
+      }
+   }
+   return landmarksStatus;
 }
 
 export const drawOnCanvas = (
@@ -112,12 +139,11 @@ export const drawOnCanvas = (
 
    if (canvas && ctx) {
       if (image) {
-         console.log("draw");
          ctx.clearRect(0, 0, canvas.width, canvas.height);
          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
       }
       if (landmarks?.length) {
-         drawConnectors(ctx, landmarks, POSE_CONNECTIONS, { color: '#083C5A', lineWidth: 1 });
+         drawConnectors(ctx, landmarks, POSE_CONNECTIONS, { color: '#FCC72C', lineWidth: 1 });
          drawLandmarks(ctx, landmarks, { color: '#FF0000', radius: 2 });
       }
    }
@@ -223,7 +249,7 @@ export const addImageZip = (
             newImages = prevImages;
          }
       }
-      
+
       return {
          ...prevValue,
          imagesToSave: [...newImages]

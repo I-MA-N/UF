@@ -1,17 +1,15 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { cameraFuncs, drawOnCanvas } from "../../../../../../../utils/AIFuncs";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { cameraFuncs, drawOnVideo } from "../../../../../../../utils/AIFuncs";
 import CanvasElemFirstLoad from "./CanvasElemFirstLoad";
 import { useAIContext } from "../../../../context/AIContextProvider";
 import CoordinatesType from "../../../../../../../types/CoordinatesType";
 import Loading from "../../../../../../common/Loading";
-import { Camera } from "@mediapipe/camera_utils";
-import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
-import { POSE_CONNECTIONS } from "@mediapipe/holistic";
+
+let landmarksStatus = [false];
 
 function CameraElem2() {
    const [AIData, setAIData] = useAIContext();
    const [showCanvas, setShowCanvas] = useState(false);
-   let animationFrameId: number | undefined = undefined;
 
    const videoRef = useRef<HTMLVideoElement | null>(null);
    const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -39,36 +37,26 @@ function CameraElem2() {
       const { startCamera, stopCamera } = cameraFuncs(videoRef, facingMode, setIsSupported, setCoordinates);
 
       if (!showCanvas && AIData?.modelDownlaoded) {
-         startCamera(10);
+         startCamera(30);
       }
 
       return () => {
-         stopCamera(animationFrameId);
+         stopCamera();
       }
    }, [facingMode, showCanvas, AIData?.modelDownlaoded])
 
    useEffect(() => {
-      if (AIData?.results) {
-         const video = videoRef.current;
-         const canvas = canvasRef.current;
-         const ctx = canvas?.getContext("2d");
-
-         if (video && canvas && ctx) {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            ctx.drawImage(AIData.results.image, 0, 0, video.videoWidth, video.videoHeight);
-            drawConnectors(ctx, AIData.results.poseLandmarks, POSE_CONNECTIONS, { color: '#083C5A', lineWidth: 1 });
-            drawLandmarks(ctx, AIData.results.poseLandmarks, { color: '#FF0000', radius: 2 });
-         }
+      if (AIData?.results && AIData.imageState?.videoFn) {
+         landmarksStatus = drawOnVideo(videoRef.current, canvasRef.current, AIData.results, AIData.imageState.videoFn, landmarksStatus);
       }
    }, [AIData?.results])
 
-   async function proccessFrames() {
+   const proccessFrames = useCallback(async () => {
       if (videoRef.current) {
          await AIData?.model?.send({ image: videoRef.current });
       }
-      animationFrameId = requestAnimationFrame(proccessFrames);
-   }
+      if (videoRef.current) requestAnimationFrame(proccessFrames);
+   }, [videoRef.current])
 
    return (
       <div className="fixed top-0 left-0 w-full min-h-screen flex items-center justify-center z-30 transition-all duration-300 bg-primary/60">
@@ -83,19 +71,6 @@ function CameraElem2() {
                         autoPlay
                         hidden
                         onPlay={proccessFrames}
-                     // onTimeUpdate={async (e) => {
-                     //    const video = videoRef.current;
-                     //    const canvas = canvasRef.current;
-                     //    const ctx = canvas?.getContext("2d");
-                     //    console.log(video?.videoWidth, video?.videoHeight);
-
-                     //    if (video && canvas && ctx) {
-                     //       canvas.width = video.videoWidth;
-                     //       canvas.height = video.videoHeight;
-                     //       ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-                     //       // await AIData?.model?.send({ image: canvas });
-                     //    }
-                     // }}
                      />
                      <canvas
                         ref={canvasRef}
@@ -145,15 +120,21 @@ function CameraElem2() {
 
                         <button
                            type="button"
-                           disabled={!AIData?.modelDownlaoded || (isSupported && (betaClassName !== "bg-secondary" || gammaClassName !== "bg-secondary"))}
+                           disabled={
+                              !AIData?.modelDownlaoded
+                                 || (isSupported && (betaClassName !== "bg-secondary" || gammaClassName !== "bg-secondary"))
+                                 || landmarksStatus.includes(false) ? true : false
+                           }
                            onClick={async () => {
                               await AIData?.model?.send({ image: videoRef.current! });
                               setShowCanvas(true);
+                              const width = canvasRef.current?.width!;
+                              const height = canvasRef.current?.height!;
                               setAIData(prevValue => ({
                                  ...prevValue,
                                  videoSize: {
-                                    width: videoRef.current?.clientWidth!,
-                                    height: videoRef.current?.clientHeight!,
+                                    width,
+                                    height,
                                  }
                               }))
                            }}>
@@ -168,7 +149,7 @@ function CameraElem2() {
                            type="button"
                            onClick={() => {
                               const { stopCamera } = cameraFuncs(videoRef, facingMode, setIsSupported, setCoordinates);
-                              stopCamera(animationFrameId);
+                              stopCamera();
                               setAIData(prevValue => ({
                                  ...prevValue,
                                  imageState: undefined

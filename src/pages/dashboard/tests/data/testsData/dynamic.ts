@@ -1,5 +1,6 @@
 import { ImageStateNames } from "../../../../../types/AIContextType";
-import CWalking from "../AIformulas/dynamic/CWalking";
+import Walking_P from "../AIformulas/dynamic/Walking_P";
+import Walking_V from "../AIformulas/dynamic/Walking_V";
 
 const dynamic = [
    {
@@ -251,7 +252,8 @@ const dynamic = [
                "visibility": 0.0008558782865293324
             }
          ],
-         evaluateFn: CWalking,
+         photoFn: Walking_P,
+         videoFn: Walking_V
       }
    },
    // {
@@ -485,7 +487,7 @@ const dynamic = [
    //             "visibility": 0.0008558782865293324
    //          }
    //       ],
-   //       evaluateFn: CWalking,
+   //       photoFn: CWalking,
    //    }
    // },
    // {
@@ -719,7 +721,7 @@ const dynamic = [
    //             "visibility": 0.0008558782865293324
    //          }
    //       ],
-   //       evaluateFn: CWalking,
+   //       photoFn: CWalking,
    //    }
    // },
    // {
@@ -947,7 +949,7 @@ const dynamic = [
    //             "visibility": 0.0008558782865293324
    //          }
    //       ],
-   //       evaluateFn: CWalking,
+   //       photoFn: CWalking,
    //    }
    // },
    // {
@@ -1187,7 +1189,7 @@ const dynamic = [
    //             "visibility": 0.0008558782865293324
    //          }
    //       ],
-   //       evaluateFn: CWalking,
+   //       photoFn: CWalking,
    //    }
    // },
    // {
@@ -1421,7 +1423,7 @@ const dynamic = [
    //             "visibility": 0.0008558782865293324
    //          }
    //       ],
-   //       evaluateFn: CWalking,
+   //       photoFn: CWalking,
    //    }
    // },
    // {
@@ -1649,7 +1651,7 @@ const dynamic = [
    //             "visibility": 0.0008558782865293324
    //          }
    //       ],
-   //       evaluateFn: CWalking,
+   //       photoFn: CWalking,
    //    }
    // },
    // {
@@ -1877,7 +1879,7 @@ const dynamic = [
    //             "visibility": 0.0008558782865293324
    //          }
    //       ],
-   //       evaluateFn: CWalking,
+   //       photoFn: CWalking,
    //    }
    // },
    // {
@@ -2117,7 +2119,7 @@ const dynamic = [
    //             "visibility": 0.0008558782865293324
    //          }
    //       ],
-   //       evaluateFn: CWalking,
+   //       photoFn: CWalking,
    //    }
    // },
 ]
