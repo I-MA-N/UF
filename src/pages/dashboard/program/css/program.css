@@ -1,5 +1,5 @@
 .program-section {
-   @apply w-[210mm] mx-auto pt-32 pb-12 px-[33px] print:p-0;
+   @apply w-[210mm] mx-auto pt-32 lg:pt-36 pb-12 px-[33px] print:p-0;
 }
 
 .program-section .table-header ::-moz-selection {

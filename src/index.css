@@ -124,6 +124,26 @@
     .modal {
         @apply fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-transparent backdrop-blur-md z-10;
     }
+
+    .exit-btn {
+        @apply flex items-center text-sm border border-yellow rounded-[48px] transition-all duration-500 z-10;
+    }
+    .exit-btn-ellipse {
+        @apply absolute right-0 gap-2 px-8 py-4 text-yellow;
+    }
+    .exit-btn-circle {
+        @apply fixed top-6 right-4 justify-center bg-yellow text-white p-2.5;
+    }
+
+    .save-btn {
+        @apply flex items-center text-sm bg-secondary text-white border border-secondary rounded-[48px] transition-all duration-500 z-10;
+    }
+    .save-btn-ellipse {
+        @apply absolute left-0 gap-2 px-8 py-4;
+    }
+    .save-btn-circle {
+        @apply fixed top-[72px] right-4 justify-center p-2.5;
+    }
 }
 
 @layer utilities {

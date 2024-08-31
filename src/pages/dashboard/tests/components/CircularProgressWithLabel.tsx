@@ -11,7 +11,7 @@ function CircularProgressWithLabel(
             sx={{
                color: "#4CB648"
             }}
-            size={80}
+            size={85}
             variant="determinate"
             {...props}
          />
@@ -30,7 +30,7 @@ function CircularProgressWithLabel(
             <Typography
                variant="subtitle1"
                component="div"
-               className='text-white !font-Estedad-Black'
+               className='bg-primary px-2 text-white !font-Estedad-Black rounded-full'
             >{`${Math.round(props.value)}%`}</Typography>
          </Box>
       </Box>

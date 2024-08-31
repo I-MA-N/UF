@@ -15,6 +15,15 @@ function MuiTheme({ children }: PropsWithChildren) {
             main: "#4CB648"
          },
       },
+      components: {
+         MuiTab: {
+            styleOverrides: {
+               root: {
+                  color: "#E4F4FD",
+               },
+            },
+         },
+      },
    })
 
    return (
