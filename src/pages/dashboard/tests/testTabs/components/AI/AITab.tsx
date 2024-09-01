@@ -1,8 +1,8 @@
-import CameraElem from "./components/CameraElem";
+import CameraElemSimple from "./components/CameraElemSimple";
+import CameraElemLandmarks from "./components/CameraElemLandmarks";
 import { useAIContext } from "../../../context/AIContextProvider";
 import { useMemo } from "react";
 import ImageStateBtn from "./components/buttons/ImageStateBtn";
-import CameraElem2 from "./components/CameraElem2";
 
 function AITab() {
    const [AIData] = useAIContext();
@@ -11,7 +11,7 @@ function AITab() {
    return (
       <>
          <div>
-            <div className="flex gap-4">
+            <div className="grid grid-cols-2 gap-x-5 gap-y-6">
                {
                   AIData?.testData &&
                   AIData.testData.map(state => (
@@ -26,8 +26,8 @@ function AITab() {
          {
             imageState &&
             ("src" in AIData!.testData![0].questions[0] ?
-            <CameraElem2 />
-            : <CameraElem />)
+            <CameraElemLandmarks />
+            : <CameraElemSimple />)
          }
       </>
    );

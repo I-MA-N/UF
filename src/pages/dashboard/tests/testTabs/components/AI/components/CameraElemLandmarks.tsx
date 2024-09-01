@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { cameraFuncs, drawOnVideo } from "../../../../../../../utils/AIFuncs";
-import CanvasElemFirstLoad from "./CanvasElemFirstLoad";
 import { useAIContext } from "../../../../context/AIContextProvider";
 import CoordinatesType from "../../../../../../../types/CoordinatesType";
+import { cameraFuncs, drawOnVideo } from "../../../../../../../utils/AIFuncs";
+import CanvasElemFirstLoad from "./CanvasElemFirstLoad";
 import Loading from "../../../../../../common/Loading";
 
 let landmarksStatus = [false];
 
-function CameraElem2() {
+function CameraElemLandmarks() {
    const [AIData, setAIData] = useAIContext();
    const [showCanvas, setShowCanvas] = useState(false);
 
@@ -157,4 +157,4 @@ function CameraElem2() {
    );
 };
 
-export default CameraElem2;
+export default CameraElemLandmarks;

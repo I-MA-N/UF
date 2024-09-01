@@ -23,7 +23,10 @@ function TestTabs({ defaultIsAIMethod, getValues }: TestTabsProps) {
 
    return (
       <>
-         <TabButtons setIsAIMethod={setIsAIMethod} />
+         <TabButtons
+            isAIMethod={isAIMethod}
+            setIsAIMethod={setIsAIMethod}
+         />
 
          {
             isAIMethod &&

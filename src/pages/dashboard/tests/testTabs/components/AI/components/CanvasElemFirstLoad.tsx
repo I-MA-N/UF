@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useAIContext } from "../../../../context/AIContextProvider";
-import CanvasElem from "./CanvasElem";
 import { Results } from "@mediapipe/holistic";
+import Header from "./canvas/Header";
+import Footer from "./canvas/Footer";
+import Body from "./canvas/Body";
 
 type CanvasElemFirstLoadProps = {
    setShowCanvas: React.Dispatch<React.SetStateAction<boolean>>
@@ -21,26 +23,19 @@ function CanvasElemFirstLoad({ setShowCanvas }: CanvasElemFirstLoadProps) {
       }
    }, [AIData?.results])
 
-   if (photoData?.image) return (
-      <CanvasElem
-         photoData={photoData}
-         setPhotoData={setPhotoData}
-         setShowCanvas={setShowCanvas}
-      />
-   )
-
    return (
-      <>
-         <p>{AIData?.imageState!.nameFA}</p>
-         <button
-            type="button"
-            onClick={() => setShowCanvas(false)}
-         >
-            برگشت
-         </button>
-         <p>دریافت عکس گرفته شده با مشکل مواجه شد!</p>
-      </>
-   )
+      <div className="flex flex-col items-center justify-center gap-7 min-h-screen">
+         <Header />
+         <Body
+            photoData={photoData}
+            setPhotoData={setPhotoData}
+         />
+         <Footer
+            setShowCanvas={setShowCanvas}
+            photoData={photoData}
+         />
+      </div>
+   ) 
 };
 
 export default CanvasElemFirstLoad;

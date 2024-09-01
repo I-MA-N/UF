@@ -7,11 +7,11 @@ import testsData from "./data/testsData";
 import generateTestInputs from "./data/generateTestInputs";
 import BottomBtns from "./components/BottomBtns";
 import ExitModal from "./components/ExitModal";
-import TestTabsFirstLoad from "./nahanjariHa/TestTabsFirstLoad";
 import PImage from "../../../api/common/PImage";
 import { useAIContext } from "./context/AIContextProvider";
 import ErrorModal from "./components/ErrorModal";
 import ProgressModal from "./components/ProgressModal";
+import TestTabsFirstLoad from "./testTabs/TestTabsFirstLoad";
 
 type TestsProps = {
    username: string,

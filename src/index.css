@@ -129,20 +129,20 @@
         @apply flex items-center text-sm border border-yellow rounded-[48px] transition-all duration-500 z-10;
     }
     .exit-btn-ellipse {
-        @apply absolute right-0 gap-2 px-8 py-4 text-yellow;
+        @apply h-12 absolute right-0 gap-2 px-8 text-yellow;
     }
     .exit-btn-circle {
-        @apply fixed top-6 right-4 justify-center bg-yellow text-white p-2.5;
+        @apply fixed top-6 right-4 justify-center border-2 bg-primary text-yellow size-12;
     }
 
     .save-btn {
         @apply flex items-center text-sm bg-secondary text-white border border-secondary rounded-[48px] transition-all duration-500 z-10;
     }
     .save-btn-ellipse {
-        @apply absolute left-0 gap-2 px-8 py-4;
+        @apply h-12 absolute left-0 gap-2 px-8;
     }
     .save-btn-circle {
-        @apply fixed top-[72px] right-4 justify-center p-2.5;
+        @apply fixed top-20 right-4 justify-center size-12;
     }
 }
 

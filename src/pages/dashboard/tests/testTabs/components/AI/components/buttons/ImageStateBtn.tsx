@@ -11,7 +11,10 @@ function ImageStateBtn({ state }: ImageStateBtnProps) {
    const [AIData, setAIData] = useAIContext();
 
    return (
-      <div key={state.name}>
+      <div
+         className="w-full flex flex-col items-center"
+         key={state.name}
+      >
          <button
             type="button"
             onClick={() => setAIData(prevValue => ({
@@ -25,9 +28,16 @@ function ImageStateBtn({ state }: ImageStateBtnProps) {
                   videoFn: "videoFn" in state.AI ? state.AI.videoFn : undefined
                }
             }))}
+            className="w-full h-64 flex items-center justify-center border-4 border-dashed rounded-3xl"
          >
-            {state.nameFA}
+            <div
+               className="absolute w-10 h-1 bg-white rounded-full"
+            />
+            <div
+               className="absolute h-10 w-1 bg-white rounded-full"
+            />
          </button>
+         <span className="text-sm mt-4">{state.nameFA}</span>
          {
             AIData?.nameFromManualTab === state.name &&
             <ClickedStyle />
