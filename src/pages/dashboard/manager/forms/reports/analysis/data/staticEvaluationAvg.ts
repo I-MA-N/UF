@@ -1,13 +1,13 @@
-import NahanjariReportObj from "../../../../../../../types/NahanjariReportObj";
-import nahanjariHa from "../../../../../tests/data/testsData/nahanjariHa";
+import StaticEvaluationReportObj from "../../../../../../../types/StaticEvaluationReportObj";
+import staticEvaluation from "../../../../../tests/data/testsData/staticEvaluation";
 
-function nahanjariHaAvg(usersData: any) {
-   const resultArr: NahanjariReportObj[] = [];
+function staticEvaluationAvg(usersData: any) {
+   const resultArr: StaticEvaluationReportObj[] = [];
 
-   nahanjariHa.forEach(nahanjariSection => {
-      nahanjariSection.sectionQuestions.forEach(nahanjari => {
+   staticEvaluation.forEach(section => {
+      section.questions.forEach(input => {
          resultArr.push({
-            name: nahanjari.title,
+            name: input.title,
             five: 0,
             three: 0,
             one: 0,
@@ -38,4 +38,4 @@ function nahanjariHaAvg(usersData: any) {
    ))
 }
 
-export default nahanjariHaAvg;
+export default staticEvaluationAvg;

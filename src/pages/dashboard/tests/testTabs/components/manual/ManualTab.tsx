@@ -11,7 +11,7 @@ function ManualTab({ setIsAIMethod }: ManualTabProps) {
    return (
       <div className="grid grid-cols-1 justify-center divide-y divide-y-white">
          {
-            AIData?.testData?.map(section => (
+            AIData?.activeTestData?.map(section => (
                <SectionElem
                   key={section.name}
                   setIsAIMethod={setIsAIMethod}

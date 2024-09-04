@@ -1,11 +1,11 @@
-import dynamic from "../data/testsData/dynamic";
-import nahanjariHa from "../data/testsData/nahanjariHa";
+import dynamicEvaluation from "../data/testsData/dynamicEvaluation";
+import staticEvaluation from "../data/testsData/staticEvaluation";
 
 function SampleImages() {
    return (
       <div className="hidden">
          {
-            nahanjariHa.map(input => (
+            staticEvaluation.map(input => (
                <img
                   key={input.name}
                   src={input.AI.sampleImageSrc}
@@ -16,7 +16,7 @@ function SampleImages() {
             ))
          }
          {
-            dynamic.map(input => (
+            dynamicEvaluation.map(input => (
                <img
                   key={input.name}
                   src={input.AI.sampleImageSrc}

@@ -1,8 +1,8 @@
 import { BarChart } from "@mui/x-charts/BarChart";
-import NahanjariReportObj from "../../../../../../../types/NahanjariReportObj";
+import StaticEvaluationReportObj from "../../../../../../../types/StaticEvaluationReportObj";
 import { axisClasses } from "@mui/x-charts";
 
-function nahanjariHaAvgJsx(reportData: NahanjariReportObj[]) {
+function staticEvaluationAvgJsx(reportData: StaticEvaluationReportObj[]) {
    return (
       <div className="w-[500px] h-[1100px] lg:w-[600px] lg:h-[1200px] mx-auto p-8 lg:p-0">
          <BarChart
@@ -43,4 +43,4 @@ function nahanjariHaAvgJsx(reportData: NahanjariReportObj[]) {
    );
 };
 
-export default nahanjariHaAvgJsx;
+export default staticEvaluationAvgJsx;

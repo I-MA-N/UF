@@ -1,19 +1,23 @@
 import { Results } from "@mediapipe/holistic";
-import CanvasElem from "../CanvasElem";
+import EditElem from "../EditElem";
 
 type BodyProps = {
    photoData: Results | null,
-   setPhotoData: React.Dispatch<React.SetStateAction<Results | null>>,
+   setPhotoData: React.Dispatch<React.SetStateAction<Results | null | undefined>>,
+   selectedLandmark: number | null,
+   setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>
 }
 
-function Body({ photoData, setPhotoData }: BodyProps) {
+function Body({ photoData, setPhotoData, selectedLandmark, setSelectedLandmark }: BodyProps) {
    return (
       <div className="min-h-80 flex items-center justify-center">
          {
             photoData?.image ?
-               <CanvasElem
+               <EditElem
                   photoData={photoData}
                   setPhotoData={setPhotoData}
+                  selectedLandmark={selectedLandmark}
+                  setSelectedLandmark={setSelectedLandmark}
                />
                :
                <div>

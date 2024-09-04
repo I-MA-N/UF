@@ -1,21 +1,21 @@
 import { useEffect, useMemo } from "react";
-import { useAIContext } from "../context/AIContextProvider";
 import CircularProgressWithLabel from "./CircularProgressWithLabel";
+import ZipFileType from "../../../../types/ZipFileType";
 
 type ProgressModalProps = {
+   filesToSave:  ZipFileType[],
    progress: number,
    setProgress: React.Dispatch<React.SetStateAction<number | null>>,
 }
 
-function ProgressModal({ progress, setProgress }: ProgressModalProps) {
-   const [AIData] = useAIContext();
+function ProgressModal({ filesToSave, progress, setProgress }: ProgressModalProps) {
    const percentage = useMemo(() => {
-      if (AIData?.imagesToSave?.length) {
-         const division = progress / (AIData?.imagesToSave?.length + 1);
+      if (filesToSave.length) {
+         const division = progress / (filesToSave.length + 1);
          return division * 100;
       }
       return progress * 100;
-   }, [progress, AIData?.imagesToSave?.length])
+   }, [progress, filesToSave.length])
    
    useEffect(() => {
       if (percentage >= 100) {

@@ -1,42 +1,30 @@
-import { Holistic, NormalizedLandmarkList, Results } from "@mediapipe/holistic";
+import { Holistic, Results } from "@mediapipe/holistic";
 import { FieldValues, UseFormGetValues, UseFormSetValue } from "react-hook-form";
-import { nahanjariHaType } from "../pages/dashboard/tests/data/testsData/nahanjariHa";
-import { dynamicType } from "../pages/dashboard/tests/data/testsData/dynamic";
-import VideoFnType from "./VideoFnType";
+import { staticEvaluationType } from "../pages/dashboard/tests/data/testsData/staticEvaluation";
+import { dynamicEvaluationType } from "../pages/dashboard/tests/data/testsData/dynamicEvaluation";
 
-export type ImageStateNames =
+export type SectionNames =
    "front" |
    "back" |
    "side" |
-   "test"
-
-type ImageStateType = {
-   name: ImageStateNames,
-   nameFA: string,
-   sampleImageSrc: string,
-   sampleImageLandmarks: NormalizedLandmarkList,
-   photoFn: (landmarks: NormalizedLandmarkList, setValue: UseFormSetValue<FieldValues>) => void,
-   videoFn?: VideoFnType
-}
+   "test";
 
 type AIContextType = {
    model?: Holistic;
    modelDownlaoded?: boolean;
    results?: Results;
-   imageState?: ImageStateType,
-   testData?: nahanjariHaType | dynamicType,
+   currentSection?: staticEvaluationType[0] | dynamicEvaluationType[0],
+   staticEvaluationData?: staticEvaluationType,
+   dynamicEvaluationData?: dynamicEvaluationType,
+   activeTestData?: staticEvaluationType | dynamicEvaluationType,
    videoSize?: {
       width: number,
       height: number
    },
-   imagesToSave?: {
-      key: ImageStateNames,
-      value: string
-   }[],
-   nameFromManualTab?: ImageStateNames,
+   nameFromManualTab?: SectionNames,
    setValue?: UseFormSetValue<FieldValues>,
    getValues?: UseFormGetValues<FieldValues>,
-   formData?: any
+   formData?: any,
 }
 
 export default AIContextType;

@@ -1,34 +1,26 @@
 import { Results } from "@mediapipe/holistic";
 import AIContextType from "../../../../../../../../../types/AIContextType";
-import { dynamicType } from "../../../../../../data/testsData/dynamic";
-import { nahanjariHaType } from "../../../../../../data/testsData/nahanjariHa";
+import { dynamicEvaluationType } from "../../../../../../data/testsData/dynamicEvaluation";
+import { staticEvaluationType } from "../../../../../../data/testsData/staticEvaluation";
 import JSZip from "jszip";
-import { addImageZip } from "../../../../../../../../../utils/AIFuncs";
 
 async function nextBtnClickHandler(
    photoData: Results,
    AIData: AIContextType | null,
    setAIData: React.Dispatch<React.SetStateAction<AIContextType | null>>,
-   nextImageState: nahanjariHaType[0] | dynamicType[0] | undefined,
+   nextSection: staticEvaluationType[0] | dynamicEvaluationType[0] | undefined,
    setShowCanvas: React.Dispatch<React.SetStateAction<boolean>>,
 ) {
-   // Go for next imageState
+   // Go for next section
    setAIData(prevValue => {
-      if (nextImageState) return {
+      if (nextSection) return {
          ...prevValue,
-         imageState: {
-            name: nextImageState.name,
-            nameFA: nextImageState.nameFA,
-            sampleImageSrc: nextImageState.AI.sampleImageSrc,
-            sampleImageLandmarks: nextImageState.AI.sampleImageLandmarks,
-            photoFn: nextImageState.AI.photoFn,
-            videoFn: "videoFn" in nextImageState.AI ? nextImageState.AI.videoFn : undefined
-         }
+         currentSection: prevValue?.activeTestData?.find(section => section.name === nextSection.name)
       }
 
       return {
          ...prevValue,
-         imageState: undefined
+         currentSection: undefined
       }
    })
    setShowCanvas(false);
@@ -52,20 +44,28 @@ async function nextBtnClickHandler(
 
       if (blob) {
          zip.file('image.jpeg', blob);
-
          const base64 = await zip.generateAsync({ type: 'base64' });
+
          // Add new image to context
-         const newObject = {
-            key: AIData?.imageState?.name!,
-            value: base64
-         };
-         addImageZip(newObject, setAIData);
+         setAIData(prevValue => {
+            const activeTestData = prevValue?.activeTestData;
+            const currentSectionIndex = activeTestData?.findIndex(section => section.name === AIData?.currentSection?.name);
+            
+            if (activeTestData && currentSectionIndex !== undefined && currentSectionIndex > -1) {
+               activeTestData[currentSectionIndex].zipFile = base64;
+            }
+            
+            return {
+               ...prevValue,
+               activeTestData
+            }
+         })
       }
    }
 
    // Evaluate function should be called here
-   if (photoData.poseLandmarks?.length) {
-      AIData?.imageState?.photoFn(photoData.poseLandmarks, AIData.setValue!);
+   if (photoData.poseLandmarks?.length && AIData?.currentSection && "videoFn" in AIData.currentSection.AI) {
+      AIData.currentSection.AI.photoFn(photoData.poseLandmarks, AIData.setValue!);
       setAIData(prevValue => ({
          ...prevValue,
          formData: AIData?.getValues!()

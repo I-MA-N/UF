@@ -1,42 +1,23 @@
-import { useMemo } from "react";
-import AIContextType from "../../../../../../../../../types/AIContextType";
-import CoordinatesType from "../../../../../../../../../types/CoordinatesType";
-
 type CapturePhotoBtnProps = {
-   AIData: AIContextType | null,
-   isSupported: boolean,
-   coordinates: CoordinatesType,
+   isLoading: boolean,
+   isDisabled: boolean,
    clickHandler: () => Promise<void>
 }
 
-function CapturePhotoBtn({ AIData, isSupported, coordinates, clickHandler }: CapturePhotoBtnProps) {
-   const isDisabled = useMemo(() => {
-      if (AIData?.modelDownlaoded) {
-         if (isSupported && coordinates) {
-            const betaBool = coordinates.beta < 87 || coordinates.beta > 93;
-            const gammaBool = coordinates.gamma < -3 || coordinates?.gamma > 3;
-   
-            return betaBool || gammaBool;
-         }
-   
-         return false;
-      }
-      return true;
-   }, [AIData?.modelDownlaoded, isSupported, coordinates])
-
+function CapturePhotoBtn({ isLoading, isDisabled, clickHandler }: CapturePhotoBtnProps) {
    return (
       <button
          type="button"
-         disabled={isDisabled}
+         disabled={isLoading || isDisabled}
          onClick={clickHandler}
          className={`
             size-[60px] flex items-center justify-center outline outline-2
-            ${isDisabled ? "bg-gray outline-gray" : "bg-white outline-white"}
+            ${(isLoading || isDisabled) ? "bg-gray outline-gray" : "bg-white outline-white"}
             border-2 border-primary rounded-full transition-colors duration-200
          `}
       >
          {
-            !AIData?.modelDownlaoded && <LoadingSvg />
+            isLoading && <LoadingSvg />
          }
       </button>
    );

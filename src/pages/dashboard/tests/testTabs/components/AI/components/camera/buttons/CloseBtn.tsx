@@ -13,7 +13,7 @@ function CloseBtn({ stopCamera, setAIData }: CloseBtnProps) {
             stopCamera();
             setAIData(prevValue => ({
                ...prevValue,
-               imageState: undefined
+               currentSection: undefined
             }))
          }}
          className="flex items-center justify-center size-11 border-2 border-yellow bg-primary text-yellow rounded-full"

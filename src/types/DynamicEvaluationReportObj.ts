@@ -1,4 +1,4 @@
-type DynamicReportObj = {
+type DynamicEvaluationReportObj = {
    title: string,
    data: {
       name: string,
@@ -7,4 +7,4 @@ type DynamicReportObj = {
    }[]
 }
 
-export default DynamicReportObj;
+export default DynamicEvaluationReportObj;

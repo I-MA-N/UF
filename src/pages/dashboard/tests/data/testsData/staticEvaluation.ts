@@ -1,11 +1,11 @@
-import { ImageStateNames } from "../../../../../types/AIContextType";
-import Back_P from "../AIformulas/nahanjariHa/Back_P";
-import Front_P from "../AIformulas/nahanjariHa/Front_P";
-import Side_P from "../AIformulas/nahanjariHa/Side_P";
+import { SectionNames } from "../../../../../types/AIContextType";
+import Back_P from "../AIformulas/staticEvaluation/Back_P";
+import Front_P from "../AIformulas/staticEvaluation/Front_P";
+import Side_P from "../AIformulas/staticEvaluation/Side_P";
 
-const nahanjariHa = [
+const staticEvaluation = [
    {
-      name: "side" as ImageStateNames,
+      name: "side" as SectionNames,
       nameFA: 'نمای جانبی',
       questions: [
          {
@@ -272,10 +272,11 @@ const nahanjariHa = [
             }
          ],
          photoFn: Side_P,
-      }
+      },
+      zipFile: undefined as string | null | undefined
    },
    {
-      name: "front" as ImageStateNames,
+      name: "front" as SectionNames,
       nameFA: 'نمای قدامی',
       questions: [
          {
@@ -524,10 +525,11 @@ const nahanjariHa = [
             }
          ],
          photoFn: Front_P,
-      }
+      },
+      zipFile: undefined as string | null | undefined
    },
    {
-      name: "back" as ImageStateNames,
+      name: "back" as SectionNames,
       nameFA: 'نمای خلفی',
       questions: [
          {
@@ -758,10 +760,11 @@ const nahanjariHa = [
             }
          ],
          photoFn: Back_P,
-      }
+      },
+      zipFile: undefined as string | null | undefined
    },
    // {
-   //    name: "test" as ImageStateNames,
+   //    name: "test" as SectionNames,
    //    nameFA: 'نا معلوم',
    //    questions: [
    //       {
@@ -1004,9 +1007,10 @@ const nahanjariHa = [
    //          }
    //       ],
    //       photoFn: CFront,
-   //    }
+   //    },
+   //    zipFile: undefined as string | null | undefined
    // },
 ]
 
-export type nahanjariHaType = typeof nahanjariHa;
-export default nahanjariHa;
+export type staticEvaluationType = typeof staticEvaluation;
+export default staticEvaluation;

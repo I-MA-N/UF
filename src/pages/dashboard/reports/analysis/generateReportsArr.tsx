@@ -1,19 +1,19 @@
 import physicalIndexJsx from "./jsx/physicalIndexJsx";
-import nahanjariHaJsx from "./jsx/nahanjariHaJsx";
-import walkingData from "./data/dynamic/walkingData";
-import squatOneData from "./data/dynamic/squatOneData";
-import squatData from "./data/dynamic/squatData";
-import handsRotationData from "./data/dynamic/handsRotationData";
-import swimData from "./data/dynamic/swimData";
-import handsAwayData from "./data/dynamic/handsAwayData";
-import handsBendingData from "./data/dynamic/handsBendingData";
-import walkingJsx from "./jsx/dynamic/walkingJsx";
-import squatOneJsx from "./jsx/dynamic/squatOneJsx";
-import squatJsx from "./jsx/dynamic/squatJsx";
-import handsRotationJsx from "./jsx/dynamic/handsRotationJsx";
-import handsBendingJsx from "./jsx/dynamic/handsBendingJsx";
-import handsAwayJsx from "./jsx/dynamic/handsAwayJsx";
-import swimJsx from "./jsx/dynamic/swimJsx";
+import staticEvaluationJsx from "./jsx/staticEvaluationJsx";
+import walkingData from "./data/dynamicEvaluation/walkingData";
+import squatOneData from "./data/dynamicEvaluation/squatOneData";
+import squatData from "./data/dynamicEvaluation/squatData";
+import handsRotationData from "./data/dynamicEvaluation/handsRotationData";
+import swimData from "./data/dynamicEvaluation/swimData";
+import handsAwayData from "./data/dynamicEvaluation/handsAwayData";
+import handsBendingData from "./data/dynamicEvaluation/handsBendingData";
+import walkingJsx from "./jsx/dynamicEvaluation/walkingJsx";
+import squatOneJsx from "./jsx/dynamicEvaluation/squatOneJsx";
+import squatJsx from "./jsx/dynamicEvaluation/squatJsx";
+import handsRotationJsx from "./jsx/dynamicEvaluation/handsRotationJsx";
+import handsBendingJsx from "./jsx/dynamicEvaluation/handsBendingJsx";
+import handsAwayJsx from "./jsx/dynamicEvaluation/handsAwayJsx";
+import swimJsx from "./jsx/dynamicEvaluation/swimJsx";
 import FMSJsx from "./jsx/FMSJsx";
 import physicalIndexData from "../../common/analysis/data/physicalIndexData";
 import bodyCompositionData from "../../common/analysis/data/bodyCompositionData";
@@ -82,7 +82,7 @@ function generateReportsArr(formData: any, gender: string) {
             status: item[1] === 5 ? 'طبیعی' : item[1] === 3 ? 'خفیف' : 'شدید',
          }
       });
-      const reportJsx = nahanjariHaJsx(reportData)
+      const reportJsx = staticEvaluationJsx(reportData)
       reportsArr.push({
          reportName: 'ناهنجاری اسکلتی - عضلانی',
          reportJsx,

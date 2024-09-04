@@ -1,51 +1,51 @@
-import { ImageStateNames } from "../../../../../types/AIContextType";
-import Walking_P from "../AIformulas/dynamic/Walking_P";
-import Walking_V from "../AIformulas/dynamic/Walking_V";
+import { SectionNames } from "../../../../../types/AIContextType";
+import Walking_P from "../AIformulas/dynamicEvaluation/Walking_P";
+import Walking_V from "../AIformulas/dynamicEvaluation/Walking_V";
 
-const dynamic = [
+const dynamicEvaluation = [
    {
-      name: 'test' as ImageStateNames,
+      name: 'test' as SectionNames,
       nameFA: 'راه رفتن',
       questions: [
          {
             id: 1,
-            src: '/images/dynamicMentoring/img-1.png',
+            src: '/images/dynamicEvaluation/img-1.png',
             title: 'صاف شدن پاها و زانو به داخل',
             direction: 'vertical'
          },
          {
             id: 2,
-            src: '/images/dynamicMentoring/img-14.png',
+            src: '/images/dynamicEvaluation/img-14.png',
             title: 'سر به جلو',
             direction: 'vertical'
          },
          {
             id: 3,
-            src: '/images/dynamicMentoring/img-15.png',
+            src: '/images/dynamicEvaluation/img-15.png',
             title: 'شانه ها گرد می شود',
             direction: 'vertical'
          },
          {
             id: 4,
-            src: '/images/dynamicMentoring/img-16.png',
+            src: '/images/dynamicEvaluation/img-16.png',
             title: 'گود شدن کمر',
             direction: 'vertical'
          },
          {
             id: 5,
-            src: '/images/dynamicMentoring/img-17.png',
+            src: '/images/dynamicEvaluation/img-17.png',
             title: 'بالا آمدن ران',
             direction: 'vertical'
          },
          {
             id: 6,
-            src: '/images/dynamicMentoring/img-18.png',
+            src: '/images/dynamicEvaluation/img-18.png',
             title: 'چرخش بیش از حد لگن',
             direction: 'vertical'
          },
          {
             id: 7,
-            src: '/images/dynamicMentoring/img-19.png',
+            src: '/images/dynamicEvaluation/img-19.png',
             title: 'صاف شدن و چرخش به خارج پاها',
             direction: 'vertical'
          },
@@ -254,33 +254,34 @@ const dynamic = [
          ],
          photoFn: Walking_P,
          videoFn: Walking_V
-      }
+      },
+      zipFile: undefined as string | null | undefined
    },
    // {
-   //    name: 'test' as ImageStateNames,
+   //    name: 'test' as SectionNames,
    //    nameFA: 'اسکات قدامی',
    //    questions: [
    //       {
    //          id: 8,
-   //          src: '/images/dynamicMentoring/img-2.png',
+   //          src: '/images/dynamicEvaluation/img-2.png',
    //          title: 'حرکت زانوها به خارج',
    //          direction: 'vertical'
    //       },
    //       {
    //          id: 9,
-   //          src: '/images/dynamicMentoring/img-3.png',
+   //          src: '/images/dynamicEvaluation/img-3.png',
    //          title: 'صاف شدن پاها',
    //          direction: 'vertical'
    //       },
    //       {
    //          id: 10,
-   //          src: '/images/dynamicMentoring/img-4.png',
+   //          src: '/images/dynamicEvaluation/img-4.png',
    //          title: 'حرکت زانوها به داخل',
    //          direction: 'vertical'
    //       },
    //       {
    //          id: 11,
-   //          src: '/images/dynamicMentoring/img-5.png',
+   //          src: '/images/dynamicEvaluation/img-5.png',
    //          title: 'چرخش پاها به خارج',
    //          direction: 'vertical'
    //       },
@@ -491,30 +492,30 @@ const dynamic = [
    //    }
    // },
    // {
-   //    name: 'test' as ImageStateNames,
+   //    name: 'test' as SectionNames,
    //    nameFA: 'اسکات جانبی',
    //    questions: [
    //       {
    //          id: 12,
-   //          src: '/images/dynamicMentoring/img-7.png',
+   //          src: '/images/dynamicEvaluation/img-7.png',
    //          title: 'کمر صاف',
    //          direction: 'vertical'
    //       },
    //       {
    //          id: 13,
-   //          src: '/images/dynamicMentoring/img-8.png',
+   //          src: '/images/dynamicEvaluation/img-8.png',
    //          title: 'خمیدگی به جلو',
    //          direction: 'vertical'
    //       },
    //       {
    //          id: 14,
-   //          src: '/images/dynamicMentoring/img-9.png',
+   //          src: '/images/dynamicEvaluation/img-9.png',
    //          title: 'دست ها در جلو',
    //          direction: 'vertical'
    //       },
    //       {
    //          id: 15,
-   //          src: '/images/dynamicMentoring/img-10.png',
+   //          src: '/images/dynamicEvaluation/img-10.png',
    //          title: 'گود شدن کمر',
    //          direction: 'vertical'
    //       },
@@ -725,24 +726,24 @@ const dynamic = [
    //    }
    // },
    // {
-   //    name: 'test' as ImageStateNames,
+   //    name: 'test' as SectionNames,
    //    nameFA: 'اسکات خلفی',
    //    questions: [
    //       {
    //          id: 16,
-   //          src: '/images/dynamicMentoring/img-11.png',
+   //          src: '/images/dynamicEvaluation/img-11.png',
    //          title: 'انتقال نامتقارن',
    //          direction: 'vertical'
    //       },
    //       {
    //          id: 17,
-   //          src: '/images/dynamicMentoring/img-12.png',
+   //          src: '/images/dynamicEvaluation/img-12.png',
    //          title: 'بلند شدن پاشنه',
    //          direction: 'vertical'
    //       },
    //       {
    //          id: 18,
-   //          src: '/images/dynamicMentoring/img-13.png',
+   //          src: '/images/dynamicEvaluation/img-13.png',
    //          title: 'صاف شدن پا',
    //          direction: 'vertical'
    //       },
@@ -953,36 +954,36 @@ const dynamic = [
    //    }
    // },
    // {
-   //    name: 'test' as ImageStateNames,
+   //    name: 'test' as SectionNames,
    //    nameFA: 'اسکات تک پا',
    //    questions: [
    //       {
    //          id: 19,
-   //          src: '/images/dynamicMentoring/img-20.png',
+   //          src: '/images/dynamicEvaluation/img-20.png',
    //          title: 'چرخش خارجی تنه',
    //          direction: 'vertical'
    //       },
    //       {
    //          id: 20,
-   //          src: '/images/dynamicMentoring/img-21.png',
+   //          src: '/images/dynamicEvaluation/img-21.png',
    //          title: 'چرخش داخلی تنه',
    //          direction: 'vertical'
    //       },
    //       {
    //          id: 21,
-   //          src: '/images/dynamicMentoring/img-22.png',
+   //          src: '/images/dynamicEvaluation/img-22.png',
    //          title: 'سقوط ران',
    //          direction: 'vertical'
    //       },
    //       {
    //          id: 22,
-   //          src: '/images/dynamicMentoring/img-23.png',
+   //          src: '/images/dynamicEvaluation/img-23.png',
    //          title: 'حرکت زانو به داخل',
    //          direction: 'vertical'
    //       },
    //       {
    //          id: 23,
-   //          src: '/images/dynamicMentoring/img-24.png',
+   //          src: '/images/dynamicEvaluation/img-24.png',
    //          title: 'بالا آمدن ران',
    //          direction: 'vertical'
    //       },
@@ -1193,30 +1194,30 @@ const dynamic = [
    //    }
    // },
    // {
-   //    name: 'test' as ImageStateNames,
+   //    name: 'test' as SectionNames,
    //    nameFA: 'چرخش دست ها',
    //    questions: [
    //       {
    //          id: 24,
-   //          src: '/images/dynamicMentoring/img-26.png',
+   //          src: '/images/dynamicEvaluation/img-26.png',
    //          title: 'چرخش دست ها بالاآمدن شانه ها',
    //          direction: 'horizental'
    //       },
    //       {
    //          id: 25,
-   //          src: '/images/dynamicMentoring/img-27.png',
+   //          src: '/images/dynamicEvaluation/img-27.png',
    //          title: 'چرخش دست ها پروترکشن شانه ها',
    //          direction: 'horizental'
    //       },
    //       {
    //          id: 26,
-   //          src: '/images/dynamicMentoring/img-28.png',
+   //          src: '/images/dynamicEvaluation/img-28.png',
    //          title: 'چرخش داخلی دست ها فاصله از دیوار',
    //          direction: 'horizental'
    //       },
    //       {
    //          id: 27,
-   //          src: '/images/dynamicMentoring/img-25.png',
+   //          src: '/images/dynamicEvaluation/img-25.png',
    //          title: 'چرخش خارجی دست ها فاصله از دیوار',
    //          direction: 'horizental'
    //       },
@@ -1427,24 +1428,24 @@ const dynamic = [
    //    }
    // },
    // {
-   //    name: 'test' as ImageStateNames,
+   //    name: 'test' as SectionNames,
    //    nameFA: 'دور شدن دست ها',
    //    questions: [
    //       {
    //          id: 28,
-   //          src: '/images/dynamicMentoring/img-29.png',
+   //          src: '/images/dynamicEvaluation/img-29.png',
    //          title: 'بالا آمدن شانه',
    //          direction: 'horizental'
    //       },
    //       {
    //          id: 29,
-   //          src: '/images/dynamicMentoring/img-30.png',
+   //          src: '/images/dynamicEvaluation/img-30.png',
    //          title: 'پروتکشن شانه',
    //          direction: 'horizental'
    //       },
    //       {
    //          id: 30,
-   //          src: '/images/dynamicMentoring/img-31.png',
+   //          src: '/images/dynamicEvaluation/img-31.png',
    //          title: 'خم شدن آرنج ها',
    //          direction: 'horizental'
    //       },
@@ -1655,24 +1656,24 @@ const dynamic = [
    //    }
    // },
    // {
-   //    name: 'test' as ImageStateNames,
+   //    name: 'test' as SectionNames,
    //    nameFA: 'خم شدن دست ها',
    //    questions: [
    //       {
    //          id: 31,
-   //          src: '/images/dynamicMentoring/img-32.png',
+   //          src: '/images/dynamicEvaluation/img-32.png',
    //          title: 'بالاآمدن شانه',
    //          direction: 'horizental'
    //       },
    //       {
    //          id: 32,
-   //          src: '/images/dynamicMentoring/img-33.png',
+   //          src: '/images/dynamicEvaluation/img-33.png',
    //          title: 'گود شدن کمر',
    //          direction: 'horizental'
    //       },
    //       {
    //          id: 33,
-   //          src: '/images/dynamicMentoring/img-34.png',
+   //          src: '/images/dynamicEvaluation/img-34.png',
    //          title: 'خم شدن آرنج',
    //          direction: 'horizental'
    //       },
@@ -1883,36 +1884,36 @@ const dynamic = [
    //    }
    // },
    // {
-   //    name: 'test' as ImageStateNames,
+   //    name: 'test' as SectionNames,
    //    nameFA: 'شنا',
    //    questions: [
    //       {
    //          id: 34,
-   //          src: '/images/dynamicMentoring/img-35.png',
+   //          src: '/images/dynamicEvaluation/img-35.png',
    //          title: 'گود شدن کمر',
    //          direction: 'horizental'
    //       },
    //       {
    //          id: 35,
-   //          src: '/images/dynamicMentoring/img-36.png',
+   //          src: '/images/dynamicEvaluation/img-36.png',
    //          title: 'صاف شدن کمر',
    //          direction: 'horizental'
    //       },
    //       {
    //          id: 36,
-   //          src: '/images/dynamicMentoring/img-37.png',
+   //          src: '/images/dynamicEvaluation/img-37.png',
    //          title: 'بالا آمدن شانه',
    //          direction: 'horizental'
    //       },
    //       {
    //          id: 37,
-   //          src: '/images/dynamicMentoring/img-38.png',
+   //          src: '/images/dynamicEvaluation/img-38.png',
    //          title: 'بالی شدن کتف',
    //          direction: 'horizental'
    //       },
    //       {
    //          id: 38,
-   //          src: '/images/dynamicMentoring/img-39.png',
+   //          src: '/images/dynamicEvaluation/img-39.png',
    //          title: 'هایپراکستنشن گردن',
    //          direction: 'horizental'
    //       },
@@ -2124,5 +2125,5 @@ const dynamic = [
    // },
 ]
 
-export type dynamicType = typeof dynamic;
-export default dynamic;
+export type dynamicEvaluationType = typeof dynamicEvaluation;
+export default dynamicEvaluation;

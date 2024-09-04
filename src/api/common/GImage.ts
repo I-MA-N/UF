@@ -1,14 +1,14 @@
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 function GImage(
    username: string | undefined,
    formname: string | undefined,
    imgKey: string | undefined
 ) {
-   const { data, isPending, isError } = useQuery({
-      queryKey: ['get: ai image', username, formname, imgKey],
-      queryFn: async () => {
+   const { mutateAsync } = useMutation({
+      mutationKey: ['get: ai image', username, formname],
+      mutationFn: async () => {
          const req = await axios.get(
             import.meta.env.VITE_ENDPOINT +
             `/form-images/${username}/${formname}/${imgKey}`,
@@ -18,7 +18,7 @@ function GImage(
       }
    })
 
-   return { data, isPending, isError }
+   return { mutateAsync }
 }
 
 export default GImage;

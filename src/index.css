@@ -161,6 +161,10 @@
         text-overflow: clip;
     }
 
+    .touch-action-none {
+        touch-action: none;
+    }
+
     /* For MUI Gauge chart */
     svg text {
         @apply !fill-white;

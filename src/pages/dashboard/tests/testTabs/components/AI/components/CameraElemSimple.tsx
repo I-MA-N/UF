@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { cameraFuncs } from "../../../../../../../utils/AIFuncs";
-import CanvasElemFirstLoad from "./CanvasElemFirstLoad";
+import EditElemFirstLoad from "./EditElemFirstLoad";
 import { useAIContext } from "../../../../context/AIContextProvider";
 import CoordinatesType from "../../../../../../../types/CoordinatesType";
 import AimContainer from "./camera/AimContainer";
 import BetaLine from "./camera/BetaLine";
-import Buttons from "./camera/Buttons";
+import CloseBtn from "./camera/buttons/CloseBtn";
+import CapturePhotoBtn from "./camera/buttons/CapturePhotoBtn";
+import CameraModeBtn from "./camera/buttons/CameraModeBtn";
 
 function CameraElemSimple() {
    const [AIData, setAIData] = useAIContext();
@@ -14,17 +16,27 @@ function CameraElemSimple() {
    const videoRef = useRef<HTMLVideoElement | null>(null);
    const [facingMode, setFacingMode] = useState<"environment" | "user">("environment");
 
+   const [isCameraLoaded, setIsCameraLoaded] = useState(false);
    const [isSupported, setIsSupported] = useState(true);
    const [coordinates, setCoordinates] = useState<CoordinatesType>(null);
 
+   const isDisabled = useMemo(() => {
+      if (isSupported && coordinates) {
+         const betaBool = coordinates.beta < 87 || coordinates.beta > 93;
+         const gammaBool = coordinates.gamma < -3 || coordinates?.gamma > 3;
+
+         return betaBool || gammaBool;
+      }
+
+      return false;
+   }, [isSupported, coordinates?.beta, coordinates?.gamma])
+
    const { startCamera, stopCamera } = useMemo(() => (
-      cameraFuncs(videoRef, facingMode, setIsSupported, setCoordinates)
-   ), [videoRef, facingMode, setIsSupported, setCoordinates])
+      cameraFuncs(videoRef, facingMode, setIsCameraLoaded, setIsSupported, setCoordinates)
+   ), [videoRef, facingMode, setIsCameraLoaded, setIsSupported, setCoordinates])
 
    useEffect(() => {
-      if (!showCanvas) {
-         startCamera();
-      }
+      if (!showCanvas) startCamera();
 
       return () => {
          stopCamera();
@@ -35,10 +47,10 @@ function CameraElemSimple() {
       <div className="w-full fixed top-0 left-0 z-30 bg-primary/60 px-4">
          {
             showCanvas ?
-               <CanvasElemFirstLoad setShowCanvas={setShowCanvas} />
+               <EditElemFirstLoad setShowCanvas={setShowCanvas} />
                :
                <div className="flex flex-col items-center justify-center gap-7 min-h-screen">
-                  <p className="text-center">{AIData?.imageState?.nameFA}</p>
+                  <p className="text-center">{AIData?.currentSection?.nameFA}</p>
 
                   <div className="w-full min-h-80 flex items-center justify-center">
                      <div className="relative">
@@ -53,24 +65,38 @@ function CameraElemSimple() {
                      </div>
                   </div>
 
-                  <Buttons
-                     setFacingMode={setFacingMode}
-                     isSupported={isSupported}
-                     clickHandler={async () => {
-                        console.log("click", videoRef.current);
-                        await AIData?.model?.send({ image: videoRef.current! });
-                        setShowCanvas(true);
-                        setAIData(prevValue => ({
-                           ...prevValue,
-                           videoSize: {
-                              width: videoRef.current?.clientWidth!,
-                              height: videoRef.current?.clientHeight!,
+                  <div className="w-full flex justify-center items-center gap-8">
+                     <CameraModeBtn
+                        isDisabled={!isCameraLoaded}
+                        setFacingMode={setFacingMode}
+                     />
+
+                     <CapturePhotoBtn
+                        isLoading={!isCameraLoaded || !AIData?.modelDownlaoded}
+                        isDisabled={isDisabled}
+                        clickHandler={async () => {
+                           const video = videoRef.current;
+                           if (video) {
+                              await AIData?.model?.send({ image: video });
+                              setShowCanvas(true);
+                              const width = video.clientWidth;
+                              const height = video.clientHeight;
+                              setAIData(prevValue => ({
+                                 ...prevValue,
+                                 videoSize: {
+                                    width,
+                                    height,
+                                 }
+                              }))
                            }
-                        }))
-                     }}
-                     coordinates={coordinates}
-                     stopCamera={stopCamera}
-                  />
+                        }}
+                     />
+
+                     <CloseBtn
+                        stopCamera={stopCamera}
+                        setAIData={setAIData}
+                     />
+                  </div>
                </div>
          }
       </div>

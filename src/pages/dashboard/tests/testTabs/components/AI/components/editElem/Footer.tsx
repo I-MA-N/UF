@@ -4,7 +4,7 @@ import NextBtn from "./footerButtons/NextBtn";
 
 type FooterProps = {
    setShowCanvas: React.Dispatch<React.SetStateAction<boolean>>,
-   photoData: Results | null
+   photoData: Results | null | undefined
 }
 
 function Footer({ setShowCanvas, photoData }: FooterProps) {

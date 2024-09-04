@@ -1,6 +1,6 @@
 import { createContext, PropsWithChildren, useContext, useEffect, useRef, useState } from "react";
 import AIContextType from "../../../../types/AIContextType";
-import { initHolistic } from "../../../../utils/AIFuncs";
+import { initHolistic, initPoseLandmarker } from "../../../../utils/AIFuncs";
 import SampleImages from "../components/SampleImages";
 
 const AIContext = createContext<
@@ -13,6 +13,7 @@ function AIContextProvider({ children }: PropsWithChildren) {
 
    useEffect(() => {
       if (onceRef.current) {
+         // initPoseLandmarker();
          initHolistic(setAIData);
       }
       onceRef.current = false;

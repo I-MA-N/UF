@@ -1,12 +1,35 @@
-import { dynamicType } from "../../../../../../data/testsData/dynamic";
-import { nahanjariHaType } from "../../../../../../data/testsData/nahanjariHa";
+import { dynamicEvaluationType } from "../../../../../../data/testsData/dynamicEvaluation";
+import { staticEvaluationType } from "../../../../../../data/testsData/staticEvaluation";
 
 type NextBtnSvgProps = {
-   nextImageState: nahanjariHaType[0] | dynamicType[1] | undefined
+   nextSection: staticEvaluationType[0] | dynamicEvaluationType[1] | undefined,
+   isPhotoDataUndefined: boolean
 }
 
-function NextBtnSvg({ nextImageState }: NextBtnSvgProps) {
-   if (nextImageState) return (
+function NextBtnSvg({ nextSection, isPhotoDataUndefined }: NextBtnSvgProps) {
+   if (isPhotoDataUndefined) return (
+      <svg className="w-5" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" width="52" height="52" style={{ shapeRendering: "auto", display: "block" }}>
+         <g><circle fill="#E4F4FD" r="10" cy="50" cx="84">
+            <animate begin="0s" keySplines="0 0.5 0.5 1" values="10;0" keyTimes="0;1" calcMode="spline" dur="0.7142857142857142s" repeatCount="indefinite" attributeName="r" />
+            <animate begin="0s" values="#E4F4FD;#E4F4FD;#E4F4FD;#E4F4FD;#E4F4FD" keyTimes="0;0.25;0.5;0.75;1" calcMode="discrete" dur="2.8571428571428568s" repeatCount="indefinite" attributeName="fill" />
+         </circle><circle fill="#E4F4FD" r="10" cy="50" cx="16">
+               <animate begin="0s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="0;0;10;10;10" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="2.8571428571428568s" repeatCount="indefinite" attributeName="r" />
+               <animate begin="0s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="16;16;16;50;84" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="2.8571428571428568s" repeatCount="indefinite" attributeName="cx" />
+            </circle><circle fill="#E4F4FD" r="10" cy="50" cx="50">
+               <animate begin="-0.7142857142857142s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="0;0;10;10;10" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="2.8571428571428568s" repeatCount="indefinite" attributeName="r" />
+               <animate begin="-0.7142857142857142s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="16;16;16;50;84" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="2.8571428571428568s" repeatCount="indefinite" attributeName="cx" />
+            </circle><circle fill="#E4F4FD" r="10" cy="50" cx="84">
+               <animate begin="-1.4285714285714284s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="0;0;10;10;10" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="2.8571428571428568s" repeatCount="indefinite" attributeName="r" />
+               <animate begin="-1.4285714285714284s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="16;16;16;50;84" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="2.8571428571428568s" repeatCount="indefinite" attributeName="cx" />
+            </circle><circle fill="#E4F4FD" r="10" cy="50" cx="16">
+               <animate begin="-2.142857142857143s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="0;0;10;10;10" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="2.8571428571428568s" repeatCount="indefinite" attributeName="r" />
+               <animate begin="-2.142857142857143s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="16;16;16;50;84" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="2.8571428571428568s" repeatCount="indefinite" attributeName="cx" />
+            </circle><g />
+         </g>
+      </svg>
+   )
+
+   if (nextSection) return (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 10" fill="none" className="size-4">
          <path d="M4.99992 0.833496L0.833252 5.00016M0.833252 5.00016H14.1666M0.833252 5.00016L4.99992 9.16683" stroke="#E4F4FD" strokeLinecap="round" strokeLinejoin="round" />
       </svg>

@@ -1,4 +1,4 @@
-function nahanjariHaJsx(data: any) {
+function staticEvaluationJsx(data: any) {
    return (
       <>
          <h2 className="mb-2 text-center text-sm lg:text-lg">ناهنجاری اسکلتی -عضلانی</h2>
@@ -21,10 +21,10 @@ function nahanjariHaJsx(data: any) {
                         <td>{problem.title}</td>
                         <td>{problem.status}</td>
                         <td className="w-[60px] lg:w-[80px] bg-[#fff]">
-                           <img src={`/images/reportsImages/nahanjariHa/${problem.title}1.png`} className="w-full" alt="report-img" />
+                           <img src={`/images/reportsImages/staticEvaluation/${problem.title}1.png`} className="w-full" alt="report-img" />
                         </td>
                         <td className="w-[60px] lg:w-[80px] bg-[#fff]">
-                           <img src={`/images/reportsImages/nahanjariHa/${problem.title}2.png`} className="w-full" alt="report-img" />
+                           <img src={`/images/reportsImages/staticEvaluation/${problem.title}2.png`} className="w-full" alt="report-img" />
                         </td>
                      </tr>
                   ))
@@ -35,4 +35,4 @@ function nahanjariHaJsx(data: any) {
    )
 }
 
-export default nahanjariHaJsx
+export default staticEvaluationJsx;
