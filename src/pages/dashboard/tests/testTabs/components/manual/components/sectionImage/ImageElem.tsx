@@ -1,6 +1,6 @@
-import { SectionNames } from "../../../../../../../../types/AIContextType";
 import ImageCanvas from "./ImageCanvas";
-import { useAIContext } from "../../../../../context/AIContextProvider";
+import SectionNames from "../../../../../../../../types/SectionNames";
+import useAIStore from "../../../../../store/AIStore";
 
 type ImageELemProps = {
    setIsAIMethod: React.Dispatch<React.SetStateAction<boolean>>,
@@ -9,7 +9,7 @@ type ImageELemProps = {
 }
 
 function ImageElem({ setIsAIMethod, sectionName, zipFile }: ImageELemProps) {
-   const [_AIData, setAIData] = useAIContext();
+   const setNameFromManualTab = useAIStore(state => state.setNameFromManualTab);
 
    if (zipFile) return (
       <ImageCanvas fileContent={zipFile} />
@@ -19,10 +19,7 @@ function ImageElem({ setIsAIMethod, sectionName, zipFile }: ImageELemProps) {
       <button
          type="button"
          onClick={() => {
-            setAIData(prevValue => ({
-               ...prevValue,
-               nameFromManualTab: sectionName
-            }))
+            setNameFromManualTab(sectionName);
             setIsAIMethod(true);
          }}
       >

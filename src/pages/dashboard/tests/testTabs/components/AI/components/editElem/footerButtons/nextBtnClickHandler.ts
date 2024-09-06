@@ -1,38 +1,29 @@
 import { Results } from "@mediapipe/holistic";
-import AIContextType from "../../../../../../../../../types/AIContextType";
-import { dynamicEvaluationType } from "../../../../../../data/testsData/dynamicEvaluation";
-import { staticEvaluationType } from "../../../../../../data/testsData/staticEvaluation";
 import JSZip from "jszip";
+import SectionNames from "../../../../../../../../../types/SectionNames";
+import useAIStore from "../../../../../../store/AIStore";
+import useFormStore from "../../../../../../store/formStore";
 
 async function nextBtnClickHandler(
    photoData: Results,
-   AIData: AIContextType | null,
-   setAIData: React.Dispatch<React.SetStateAction<AIContextType | null>>,
-   nextSection: staticEvaluationType[0] | dynamicEvaluationType[0] | undefined,
+   nextSectionName: SectionNames | undefined,
    setShowCanvas: React.Dispatch<React.SetStateAction<boolean>>,
 ) {
-   // Go for next section
-   setAIData(prevValue => {
-      if (nextSection) return {
-         ...prevValue,
-         currentSection: prevValue?.activeTestData?.find(section => section.name === nextSection.name)
-      }
+   const { currentSection, setCurrentSection, getOrSetZipFile } = useAIStore.getState();
+   const { updateFormData, setValue } = useFormStore.getState();
 
-      return {
-         ...prevValue,
-         currentSection: undefined
-      }
-   })
+   // Update current section & hide canvas
+   setCurrentSection(nextSectionName);
    setShowCanvas(false);
 
-   // Add image to context
+   // Add base64 string of image & landmarks to store
    const zip = new JSZip();
 
    const jsonLandmarks = JSON.stringify(photoData.poseLandmarks);
    zip.file('landmarks.json', jsonLandmarks);
 
-   // To generate "Blob" from "photoData.image", we need to draw it on canvas,
-   // after that we use "toBlob" function to get "Blob" of image
+   // To generate "Blob" from "photoData.image", we need to
+   // draw it on canvas first, then we use "toBlob" function to get "Blob" of image
    const canvas = document.createElement("canvas");
    const ctx = canvas.getContext("2d");
    if (canvas && ctx) {
@@ -46,30 +37,15 @@ async function nextBtnClickHandler(
          zip.file('image.jpeg', blob);
          const base64 = await zip.generateAsync({ type: 'base64' });
 
-         // Add new image to context
-         setAIData(prevValue => {
-            const activeTestData = prevValue?.activeTestData;
-            const currentSectionIndex = activeTestData?.findIndex(section => section.name === AIData?.currentSection?.name);
-            
-            if (activeTestData && currentSectionIndex !== undefined && currentSectionIndex > -1) {
-               activeTestData[currentSectionIndex].zipFile = base64;
-            }
-            
-            return {
-               ...prevValue,
-               activeTestData
-            }
-         })
+         if (currentSection?.name) getOrSetZipFile(currentSection.name, base64);
       }
    }
 
-   // Evaluate function should be called here
-   if (photoData.poseLandmarks?.length && AIData?.currentSection && "videoFn" in AIData.currentSection.AI) {
-      AIData.currentSection.AI.photoFn(photoData.poseLandmarks, AIData.setValue!);
-      setAIData(prevValue => ({
-         ...prevValue,
-         formData: AIData?.getValues!()
-      }))
+   // Call "photoFn" function to evalutate based on "photoData.poseLandmarks"
+   // Update form data using "getValues" function
+   if (photoData.poseLandmarks?.length && currentSection && setValue) {
+      currentSection.AI.photoFn(photoData.poseLandmarks, setValue);
+      updateFormData()
    }
 }
 

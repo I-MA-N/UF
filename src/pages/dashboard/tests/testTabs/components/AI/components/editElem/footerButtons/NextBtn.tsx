@@ -1,8 +1,8 @@
 import { Results } from "@mediapipe/holistic";
-import { useAIContext } from "../../../../../../context/AIContextProvider";
 import { useMemo } from "react";
 import clickHandler from "./nextBtnClickHandler";
 import NextBtnSvg from "./NextBtnSvg";
+import useAIStore from "../../../../../../store/AIStore";
 
 type NextBtnProps = {
    setShowCanvas: React.Dispatch<React.SetStateAction<boolean>>,
@@ -10,11 +10,11 @@ type NextBtnProps = {
 }
 
 function NextBtn({ setShowCanvas, photoData }: NextBtnProps) {
-   const [AIData, setAIData] = useAIContext();
+   const { currentSection, activeTestData } = useAIStore(state => ({ currentSection: state.currentSection, activeTestData: state.activeTestData }));
 
    const nextSection = useMemo(() => {
-      const sectionName = AIData?.currentSection?.name;
-      const testData = AIData?.activeTestData;
+      const sectionName = currentSection?.name;
+      const testData = activeTestData;
       const sectionIndex = testData?.findIndex(section => section.name === sectionName);
 
       if (testData && typeof sectionIndex === "number") {
@@ -24,7 +24,7 @@ function NextBtn({ setShowCanvas, photoData }: NextBtnProps) {
       }
 
       return undefined;
-   }, [AIData?.currentSection])
+   }, [currentSection])
 
    const isDisabled = useMemo(() => !photoData?.image || !photoData?.poseLandmarks, [photoData])
 
@@ -33,18 +33,20 @@ function NextBtn({ setShowCanvas, photoData }: NextBtnProps) {
          type="button"
          className={`
             h-full flex items-center gap-2 px-8 text-sm border rounded-full
-            ${(isDisabled) ? "bg-gray border-gray" : "bg-primary"}
-            ${!nextSection && "bg-secondary border-secondary"}
+            ${
+               (isDisabled) ? "bg-gray border-gray" : 
+               nextSection ? "bg-primary" : "bg-secondary border-secondary"
+            }
          `}
          onClick={async () => {
-            if (photoData) clickHandler(photoData, AIData, setAIData, nextSection, setShowCanvas);
+            if (photoData) clickHandler(photoData, nextSection?.name, setShowCanvas);
          }}
       >
          {
             nextSection ? "بعدی" : "تایید"
          }
-         <NextBtnSvg 
-            nextSection={nextSection} 
+         <NextBtnSvg
+            nextSection={nextSection}
             isPhotoDataUndefined={photoData === undefined}
          />
       </button>

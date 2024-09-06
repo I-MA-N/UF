@@ -1,20 +1,18 @@
-import AIContextType from "../../../../../../../../../types/AIContextType";
+import useAIStore from "../../../../../../store/AIStore";
 
 type CloseBtnProps = {
    stopCamera: () => Promise<void>,
-   setAIData: React.Dispatch<React.SetStateAction<AIContextType | null>>
 }
 
-function CloseBtn({ stopCamera, setAIData }: CloseBtnProps) {
+function CloseBtn({ stopCamera }: CloseBtnProps) {
+   const removeCurrentSection = useAIStore(state => state.removeCurrentSection);
+
    return (
       <button
          type="button"
          onClick={() => {
             stopCamera();
-            setAIData(prevValue => ({
-               ...prevValue,
-               currentSection: undefined
-            }))
+            removeCurrentSection();
          }}
          className="flex items-center justify-center size-11 border-2 border-yellow bg-primary text-yellow rounded-full"
       >

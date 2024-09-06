@@ -1,4 +1,4 @@
-import { useAIContext } from "../../../../../context/AIContextProvider";
+import useAIStore from "../../../../../store/AIStore";
 import SampleCanvas from "./body/SampleCanvas";
 
 type HeaderProps = {
@@ -8,18 +8,13 @@ type HeaderProps = {
 }
 
 function Header({ showSample, setShowSample, selectedLandmark }: HeaderProps) {
-   const [_AIData, setAIData] = useAIContext();
+   const removeCurrentSection = useAIStore(state => state.removeCurrentSection);
 
    return (
       <div className="w-full h-11 relative">
          <button
             type="button"
-            onClick={() => {
-               setAIData(prevValue => ({
-                  ...prevValue,
-                  currentSection: undefined,
-               }))
-            }}
+            onClick={removeCurrentSection}
             className="absolute top-0 right-0 flex items-center justify-center size-11 border-2 border-yellow text-yellow bg-primary rounded-full"
          >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" className="w-5">

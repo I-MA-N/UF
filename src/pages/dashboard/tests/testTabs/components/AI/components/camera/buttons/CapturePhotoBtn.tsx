@@ -1,15 +1,30 @@
+import { Holistic } from "@mediapipe/holistic";
+import useAIStore from "../../../../../../store/AIStore";
+
 type CapturePhotoBtnProps = {
    isLoading: boolean,
    isDisabled: boolean,
-   clickHandler: () => Promise<void>
+   video: HTMLVideoElement | null,
+   model: Holistic,
+   setShowCanvas: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function CapturePhotoBtn({ isLoading, isDisabled, clickHandler }: CapturePhotoBtnProps) {
+function CapturePhotoBtn({ isLoading, isDisabled, video, model, setShowCanvas }: CapturePhotoBtnProps) {
+   const setVideoSize = useAIStore(state => state.setVideoSize);
+
    return (
       <button
          type="button"
          disabled={isLoading || isDisabled}
-         onClick={clickHandler}
+         onClick={async () => {
+            if (video) {
+               await model.send({ image: video });
+               setShowCanvas(true);
+               const width = video.clientWidth;
+               const height = video.clientHeight;
+               setVideoSize(width, height);
+            }
+         }}
          className={`
             size-[60px] flex items-center justify-center outline outline-2
             ${(isLoading || isDisabled) ? "bg-gray outline-gray" : "bg-white outline-white"}

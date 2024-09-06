@@ -7,7 +7,7 @@ function Back_P(landmarks: NormalizedLandmarkList, setValue: UseFormSetValue<Fie
    const result = p11.x / p12.y;
 
    if (result) {
-      setValue("پشت گرد", result > 1 ? "3": "5");
+      setValue("پشت گرد", "5");
    }
 }
 

@@ -7,7 +7,7 @@ function Side_P(landmarks: NormalizedLandmarkList, setValue: UseFormSetValue<Fie
    const result = p11.x / p12.y;
 
    if (result) {
-      setValue("شانه گرد", result > 1 ? "3": "5");
+      setValue("شانه گرد", "5");
    }
 }
 

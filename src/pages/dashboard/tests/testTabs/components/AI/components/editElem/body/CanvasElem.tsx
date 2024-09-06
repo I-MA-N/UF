@@ -1,19 +1,19 @@
 import { NormalizedLandmarkList, Results } from "@mediapipe/holistic";
 import { canvasDown, canvasMove, canvasUp } from "../../../../../../../../../utils/AIFuncs";
-import { useAIContext } from "../../../../../../context/AIContextProvider";
 import { useEffect } from "react";
+import useAIStore from "../../../../../../store/AIStore";
 
 type CanvasElemProps = {
    canvasRef: React.MutableRefObject<HTMLCanvasElement | null>,
    landmarks: NormalizedLandmarkList,
    selectedLandmark: number | null,
    setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>,
-   setPhotoData: React.Dispatch<React.SetStateAction<Results | null | undefined>>
+   setPhotoData: React.Dispatch<React.SetStateAction<Results | undefined>>
 }
 
 function CanvasElem({ canvasRef, landmarks, selectedLandmark, setSelectedLandmark, setPhotoData }: CanvasElemProps) {
-   const [AIData] = useAIContext();
-
+   const videoSize = useAIStore(state => state.videoSize);
+   
    useEffect(() => {
       document.documentElement.style.overflow = "hidden";
 
@@ -57,8 +57,8 @@ function CanvasElem({ canvasRef, landmarks, selectedLandmark, setSelectedLandmar
             canvasUp(setSelectedLandmark)
          }}
 
-         width={AIData?.videoSize?.width}
-         height={AIData?.videoSize?.height}
+         width={videoSize?.width}
+         height={videoSize?.height}
          className="mx-auto"
       />
    );

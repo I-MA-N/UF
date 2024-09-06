@@ -1,46 +1,54 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useAIContext } from "../../../../context/AIContextProvider";
 import { cameraFuncs, drawOnVideo } from "../../../../../../../utils/AIFuncs";
 import EditCameraFirstLoad from "./EditElemFirstLoad";
-import Loading from "../../../../../../common/Loading";
 import CameraModeBtn from "./camera/buttons/CameraModeBtn";
 import CapturePhotoBtn from "./camera/buttons/CapturePhotoBtn";
 import CloseBtn from "./camera/buttons/CloseBtn";
+import useAIStore from "../../../../store/AIStore";
+import { Holistic } from "@mediapipe/holistic";
+
+type CameraElemLandmarksProps = {
+   model: Holistic
+}
 
 let lastVideoTime = -1;
-let landmarksStatus = [false];
 
-function CameraElemLandmarks() {
-   const [AIData, setAIData] = useAIContext();
+function CameraElemLandmarks({ model }: CameraElemLandmarksProps) {
+   const currentSection = useAIStore(state => state.currentSection);
+
    const [showCanvas, setShowCanvas] = useState(false);
+   const [isCameraLoaded, setIsCameraLoaded] = useState(false);
+   const [landmarksStatus, setLandmarksStatus] = useState<boolean[]>([]);
 
    const videoRef = useRef<HTMLVideoElement | null>(null);
    const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
    const { startCamera, stopCamera } = useMemo(() => (
-      cameraFuncs(videoRef, "environment")
-   ), [videoRef])
+      cameraFuncs(videoRef, "environment", setIsCameraLoaded)
+   ), [videoRef, setIsCameraLoaded])
 
    useEffect(() => {
-      if (!showCanvas && AIData?.modelDownlaoded) startCamera(20);
+      if (!showCanvas) startCamera(20);
 
       return () => {
          stopCamera();
       }
-   }, [startCamera, stopCamera, showCanvas, AIData?.modelDownlaoded])
+   }, [startCamera, stopCamera, showCanvas])
 
    useEffect(() => {
-      if (AIData?.results && AIData.currentSection?.AI && "videoFn" in AIData.currentSection?.AI) {
-         landmarksStatus = drawOnVideo(videoRef.current, canvasRef.current, AIData.results, AIData.currentSection.AI.videoFn, landmarksStatus);
+      if (currentSection && "videoFn" in currentSection.AI) {
+         model.onResults(results => {
+            // @ts-ignore
+            const status = drawOnVideo(videoRef.current, canvasRef.current, results, currentSection.AI.videoFn, landmarksStatus);
+            setLandmarksStatus(status);
+         })
       }
-   }, [AIData?.results])
+   }, [currentSection])
 
    const proccessFrames = useCallback(async () => {
       const video = videoRef.current;
-      if (video) {
-         if (lastVideoTime !== video.currentTime) {
-            AIData?.model?.send({ image: video });
-         }
+      if (video && lastVideoTime !== video.currentTime) {
+         model.send({ image: video });
       }
       if (videoRef.current) requestAnimationFrame(proccessFrames);
    }, [videoRef.current])
@@ -49,31 +57,23 @@ function CameraElemLandmarks() {
       <div className="w-full fixed top-0 left-0 z-30 bg-primary/60 px-4">
          {
             showCanvas ?
-               <EditCameraFirstLoad setShowCanvas={setShowCanvas} />
+               <EditCameraFirstLoad model={model} setShowCanvas={setShowCanvas} />
                :
                <div className="flex flex-col items-center justify-center gap-7 min-h-screen">
-                  <p className="text-center">{AIData?.currentSection?.nameFA}</p>
+                  <p className="text-center">{currentSection?.nameFA}</p>
 
                   <div className="w-full min-h-80 flex items-center justify-center">
                      <div className="relative">
-                        {
-                           AIData?.modelDownlaoded ?
-                              <>
-                                 <video
-                                    ref={videoRef}
-                                    autoPlay
-                                    onLoadedData={proccessFrames}
-                                 />
-                                 {videoRef.current &&
-                                    <canvas
-                                       ref={canvasRef}
-                                       className="absolute top-0 left-0"
-                                       width={videoRef.current.clientWidth}
-                                       height={videoRef.current.clientHeight}
-                                    />
-                                 }
-                              </>
-                              : <Loading fullHeight={false} />
+                        <video
+                           ref={videoRef}
+                           autoPlay
+                           onLoadedData={proccessFrames}
+                        />
+                        {(videoRef.current && isCameraLoaded) &&
+                           <canvas
+                              ref={canvasRef}
+                              className="absolute top-0 left-0"
+                           />
                         }
                      </div>
 
@@ -85,29 +85,15 @@ function CameraElemLandmarks() {
                      />
 
                      <CapturePhotoBtn
-                        isLoading={!AIData?.modelDownlaoded}
+                        isLoading={!isCameraLoaded}
                         isDisabled={landmarksStatus.includes(false)}
-                        clickHandler={async () => {
-                           const video = videoRef.current;
-                           if (video) {
-                              await AIData?.model?.send({ image: video });
-                              setShowCanvas(true);
-                              const width = video.clientWidth;
-                              const height = video.clientHeight;
-                              setAIData(prevValue => ({
-                                 ...prevValue,
-                                 videoSize: {
-                                    width,
-                                    height,
-                                 }
-                              }))
-                           }
-                        }}
+                        video={videoRef.current}
+                        model={model}
+                        setShowCanvas={setShowCanvas}
                      />
 
                      <CloseBtn
                         stopCamera={stopCamera}
-                        setAIData={setAIData}
                      />
                   </div>
                </div>

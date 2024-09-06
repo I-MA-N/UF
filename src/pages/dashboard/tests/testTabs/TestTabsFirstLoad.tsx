@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { FieldValues, UseFormGetValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import HiddenInputs from "./components/HiddenInputs";
 import TestTabs from "./TestTabs";
-import { useAIContext } from "../context/AIContextProvider";
-import Loading from "../../../common/Loading";
+import useFormStore from "../store/formStore";
 
 type TestTabsFirstLoadProps = {
    testName: 'ناهنجاری ها' | 'ارزیابی پویا',
@@ -14,35 +13,28 @@ type TestTabsFirstLoadProps = {
 }
 
 function TestTabsFirstLoad({ testName, initialData, getValues, setValue, register }: TestTabsFirstLoadProps) {
-   const [AIData, setAIData] = useAIContext();
+   const setFormState = useFormStore(state => state.setFormState);
 
    useEffect(() => {
-      setAIData(prevValue => ({
-         ...prevValue,
-         formData: initialData,
+      setFormState({
+         register,
          setValue,
          getValues,
-      }))
-   }, [initialData, setValue])
+         formData: initialData
+      })
+   }, [register, setValue, getValues, initialData])
 
-   if (AIData?.setValue && AIData?.activeTestData) {
-      return (
-         <>
-            <HiddenInputs
-               testName={testName}
-               initialData={initialData}
-               register={register}
-            />
+   return (
+      <>
+         <HiddenInputs
+            testName={testName}
+         />
 
-            <TestTabs
-               defaultIsAIMethod={localStorage.getItem("AIMethod") ? true : false}
-               getValues={getValues}
-            />
-         </>
-      );
-   }
-
-   return <Loading />
+         <TestTabs
+            defaultIsAIMethod={localStorage.getItem("AIMethod") ? true : false}
+         />
+      </>
+   );
 };
 
 export default TestTabsFirstLoad;

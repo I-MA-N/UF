@@ -1,38 +1,45 @@
-import { useState } from "react";
-import { useAIContext } from "../../../../../context/AIContextProvider";
+import { useEffect, useState } from "react";
 import { dynamicEvaluationType } from "../../../../../data/testsData/dynamicEvaluation";
 import { staticEvaluationType } from "../../../../../data/testsData/staticEvaluation";
-import ClickedStyle from "./ClickedStyle";
 import ImageModal from "./ImageModal";
+import useAIStore from "../../../../../store/AIStore";
 
 type SectionBtnProps = {
    section: staticEvaluationType[0] | dynamicEvaluationType[0]
 }
 
 function SectionBtn({ section }: SectionBtnProps) {
-   const [AIData, setAIData] = useAIContext();
+   const { nameFromManualTab, setCurrentSection } = useAIStore(state => ({ nameFromManualTab: state.nameFromManualTab, setCurrentSection: state.setCurrentSection }));
+   
    const [showImage, setShowImage] = useState(false);
+   const [isClicked, setIsClicked] = useState(false);
+
+   useEffect(() => {
+      if (nameFromManualTab === section.name) {
+         setIsClicked(true);
+         setTimeout(() => {
+            setIsClicked(false);
+         }, 1500);
+      }
+   }, [nameFromManualTab, section.name])
 
    return (
       <>
          <div
-            className="w-full flex flex-col items-center"
+            className={`w-full flex flex-col items-center text-white ${isClicked ? "clicked-animation" : "!text-white"}`}
             key={section.name}
          >
             <button
                type="button"
-               onClick={() => setAIData(prevValue => ({
-                  ...prevValue,
-                  currentSection: prevValue?.activeTestData?.find(sec => sec.name === section.name)
-               }))}
+               onClick={() => setCurrentSection(section.name)}
                className="w-full h-64 flex items-center justify-center border-4 border-dashed rounded-3xl"
             >
-               <div
-                  className="absolute w-10 h-1 bg-white rounded-full"
-               />
-               <div
-                  className="absolute h-10 w-1 bg-white rounded-full"
-               />
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 40" fill="none" className="w-1 absolute">
+                  <line x1="2" y1="38" x2="2" y2="2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+               </svg>
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 4" fill="none" className="w-10 absolute">
+                  <line x1="2" y1="2" x2="38" y2="2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+               </svg>
             </button>
 
             <div className="relative mt-4">
@@ -48,11 +55,6 @@ function SectionBtn({ section }: SectionBtnProps) {
 
                <span className="text-sm">{section.nameFA}</span>
             </div>
-
-            {
-               AIData?.nameFromManualTab === section.name &&
-               <ClickedStyle />
-            }
          </div>
 
          {

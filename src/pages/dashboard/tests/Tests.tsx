@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form";
 import { TestObj } from "../../../types/TestsTypes";
 import PFormData from "../../../api/common/form/PFormData";
@@ -8,13 +8,10 @@ import generateTestInputs from "./data/generateTestInputs";
 import BottomBtns from "./components/BottomBtns";
 import ExitModal from "./components/ExitModal";
 import PImage from "../../../api/common/PImage";
-import { useAIContext } from "./context/AIContextProvider";
 import ErrorModal from "./components/ErrorModal";
 import ProgressModal from "./components/ProgressModal";
 import TestTabsFirstLoad from "./testTabs/TestTabsFirstLoad";
-import staticEvaluation from "./data/testsData/staticEvaluation";
-import dynamicEvaluation from "./data/testsData/dynamicEvaluation";
-import ZipFileType from "../../../types/ZipFileType";
+import useAIStore from "./store/AIStore";
 
 type TestsProps = {
    username: string,
@@ -24,7 +21,7 @@ type TestsProps = {
 }
 
 function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
-   const [AIData, setAIData] = useAIContext();
+   const { getFilesToSave, updateTestsData } = useAIStore(state => ({ getFilesToSave: state.getFilesToSave, updateTestsData: state.updateTestsData }));
    const [progress, setProgress] = useState<number | null>(null);
    const [error, setError] = useState<string | null>(null);
 
@@ -32,39 +29,12 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
 
    const { handleSubmit, register, setValue, getValues, reset, formState: { errors } } = useForm();
    const [formData, setFormData] = useState(initialFormData);
+   console.log("errors", errors);
 
    const [showExitModal, setShowExitModal] = useState(false);
    const [page, setPage] = useState(testsArr[0].testName);
 
    const { mutateAsync: imageMutate } = PImage(username, formname);
-   const filesToSave = useMemo(() => {
-      const arr: ZipFileType[] = [];
-      if (AIData?.activeTestData !== undefined) {
-         const isDynamicEvaluationData = "src" in AIData.activeTestData[0].questions[0];
-         if (isDynamicEvaluationData) {
-            AIData.staticEvaluationData?.forEach(section =>
-               typeof section.zipFile === "string" && arr.push({
-                  name: section.name,
-                  value: section.zipFile
-               })
-            );
-         } else {
-            AIData.dynamicEvaluationData?.forEach(section =>
-               typeof section.zipFile === "string" && arr.push({
-                  name: section.name,
-                  value: section.zipFile
-               })
-            );
-         }
-         AIData.activeTestData.forEach(section =>
-            typeof section.zipFile === "string" && arr.push({
-               name: section.name,
-               value: section.zipFile
-            })
-         );
-      }
-      return arr;
-   }, [JSON.stringify(AIData?.activeTestData)])
 
    useEffect(() => {
       if (Object.keys(errors).length) {
@@ -73,14 +43,7 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
    }, [JSON.stringify(Object.keys(errors))])
 
    useEffect(() => {
-      setAIData(prevValue => ({
-         ...prevValue,
-         staticEvaluationData: staticEvaluation,
-         dynamicEvaluationData: dynamicEvaluation
-      }))
-   }, [])
-
-   useEffect(() => {
+      const filesToSave = getFilesToSave();
       if (progress !== null && progress > 0 && filesToSave.length) {
          const file = filesToSave[progress - 1];
          if (file) {
@@ -94,7 +57,7 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
                })
          }
       }
-   }, [progress, filesToSave])
+   }, [progress, getFilesToSave])
 
    const submitHandler = (data: any) => {
       const nextPage = data["nextPage"];
@@ -102,27 +65,10 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
       const newData = { ...formData };
       newData[page as keyof typeof newData] = data;
 
-      const lastPage = page;
-      if (lastPage === "ناهنجاری ها" || lastPage === "ارزیابی پویا") {
-         const lastPageKey = lastPage === "ناهنجاری ها" ? "staticEvaluationData" : "dynamicEvaluationData";
-         setAIData(prevValue => {
-            if (prevValue?.activeTestData !== undefined) {
-               // @ts-ignore
-               prevValue[lastPageKey] = prevValue.activeTestData;
-            }
-            return prevValue;
-         })
-      }
+      updateTestsData(page, nextPage);
 
-      if (nextPage === "ناهنجاری ها" || nextPage === "ارزیابی پویا") {
-         const nextPageKey = nextPage === "ناهنجاری ها" ? "staticEvaluationData" : "dynamicEvaluationData";
-         setAIData(prevValue => {
-            if (prevValue?.[nextPageKey]) {
-               prevValue.activeTestData = prevValue[nextPageKey];
-            }
-            return prevValue;
-         })
-      }
+      delete data["nextPage"];
+      delete data["shouldSave"];
 
       if (nextPage) {
          setPage(nextPage);
@@ -142,9 +88,6 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
 
       setFormData(newData);
       reset();
-
-      delete data["nextPage"];
-      delete data["shouldSave"];
    }
 
    return (
@@ -205,11 +148,10 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
 
          {showExitModal && <ExitModal setShowExitModal={setShowExitModal} />}
          {error && <ErrorModal error={error} setError={setError} />}
-         {typeof progress === "number" && 
-            <ProgressModal 
-               filesToSave={filesToSave} 
-               progress={progress} 
-               setProgress={setProgress} 
+         {typeof progress === "number" &&
+            <ProgressModal
+               progress={progress}
+               setProgress={setProgress}
             />
          }
       </>

@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef } from "react";
 import { drawOnCanvas } from "../../../../../../../../../utils/AIFuncs";
-import { useAIContext } from "../../../../../../context/AIContextProvider";
 import BackdropElem from "./sampleCanvas/BackdropElem";
 import CircleElem from "./sampleCanvas/CircleElem";
+import useAIStore from "../../../../../../store/AIStore";
 
 type SampleCanvasProps = {
    setShowSample: React.Dispatch<React.SetStateAction<boolean>>,
@@ -11,8 +11,7 @@ type SampleCanvasProps = {
 }
 
 function SampleCanvas({ setShowSample, showSample, selectedLandmark }: SampleCanvasProps) {
-   const [AIData] = useAIContext();
-   const currentSection = useMemo(() => AIData?.currentSection, [AIData?.currentSection]);
+   const currentSection = useAIStore(state => state.currentSection);
    const sampleLandmarks = useMemo(() => currentSection?.AI.sampleImageLandmarks, [currentSection]);
 
    const canvasRef = useRef<HTMLCanvasElement>(null);

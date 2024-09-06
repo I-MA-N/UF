@@ -1,10 +1,10 @@
-import { useAIContext } from "../../../../../context/AIContextProvider";
 import Loading from "../../../../../../../common/Loading";
 import ImageElem from "./ImageElem";
-import { SectionNames } from "../../../../../../../../types/AIContextType";
 import { useParams } from "react-router-dom";
 import GImage from "../../../../../../../../api/common/GImage";
 import { useEffect, useMemo } from "react";
+import SectionNames from "../../../../../../../../types/SectionNames";
+import useAIStore from "../../../../../store/AIStore";
 
 type ImageElemFirstLoadProps = {
    setIsAIMethod: React.Dispatch<React.SetStateAction<boolean>>,
@@ -12,36 +12,20 @@ type ImageElemFirstLoadProps = {
 }
 
 function ImageElemFirstLoad({ setIsAIMethod, sectionName }: ImageElemFirstLoadProps) {
-   const [AIData, setAIData] = useAIContext();
-   const zipFile = useMemo(() => (
-      AIData?.activeTestData?.find(section => section.name === sectionName)?.zipFile
-   ), [JSON.stringify(AIData?.activeTestData)])
-
+   const getOrSetZipFile = useAIStore(state => state.getOrSetZipFile);
+   
    const { formname, username } = useParams();
-   const { mutateAsync } = GImage(username, formname, sectionName);
+   const { mutate, data, isPending } = GImage(username, formname, sectionName);
+   
+   const zipFile = useMemo(() => (
+      getOrSetZipFile(sectionName, data ? (data?.result || null) : undefined)
+   ), [getOrSetZipFile, sectionName, data])
 
    useEffect(() => {
-      if (zipFile === undefined) {
-         mutateAsync()
-            .then(res => {
-               setAIData(prevValue => {
-                  const activeTestData = prevValue?.activeTestData;
-                  const currentSectionIndex = activeTestData?.findIndex(section => section.name === sectionName);
-                  
-                  if (activeTestData && currentSectionIndex !== undefined && currentSectionIndex > -1) {
-                     activeTestData[currentSectionIndex].zipFile = res?.result || null;
-                  }
-                  
-                  return {
-                     ...prevValue,
-                     activeTestData
-                  }
-               })
-            })
-      }
+      if (zipFile === undefined) mutate();
    }, [zipFile])
 
-   if (zipFile === undefined) return (
+   if (isPending || zipFile === undefined) return (
       <div className="pb-8">
          <Loading fullHeight={false} />
       </div>

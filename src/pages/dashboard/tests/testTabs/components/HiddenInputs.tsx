@@ -1,14 +1,14 @@
-import { FieldValues, UseFormRegister } from "react-hook-form";
 import testsData from "../../data/testsData";
+import useFormStore from "../../store/formStore";
 
 type HiddenInputsProps = {
    testName: 'ناهنجاری ها' | 'ارزیابی پویا',
-   initialData: any,
-   register: UseFormRegister<FieldValues>
 }
 
-function HiddenInputs({ testName, initialData, register }: HiddenInputsProps) {
-   return (
+function HiddenInputs({ testName }: HiddenInputsProps) {
+   const { register, formData } = useFormStore(state => ({ register: state.register, formData: state.formData }));
+
+   if (register) return (
       <div className="hidden">
          {
             testName === 'ناهنجاری ها' ?
@@ -20,7 +20,7 @@ function HiddenInputs({ testName, initialData, register }: HiddenInputsProps) {
                         {...register(input.title, {
                            validate: value => input.keys.indexOf(Number(value)) === -1 ? false : true
                         })}
-                        defaultValue={initialData?.[input.title]}
+                        defaultValue={formData?.[input.title]}
                         hidden
                      />
                   ))
@@ -33,7 +33,7 @@ function HiddenInputs({ testName, initialData, register }: HiddenInputsProps) {
                         {...register(input.title, {
                            validate: value => Number(value) === 1 || Number(value) === 0
                         })}
-                        defaultValue={initialData?.[input.title]}
+                        defaultValue={formData?.[input.title]}
                         hidden
                      />
                   ))

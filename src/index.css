@@ -128,9 +128,11 @@
     .exit-btn {
         @apply flex items-center text-sm border border-yellow rounded-[48px] transition-all duration-500 z-10;
     }
+
     .exit-btn-ellipse {
         @apply h-12 absolute right-0 gap-2 px-8 text-yellow;
     }
+
     .exit-btn-circle {
         @apply fixed top-6 right-4 justify-center border-2 bg-primary text-yellow size-12;
     }
@@ -138,11 +140,31 @@
     .save-btn {
         @apply flex items-center text-sm bg-secondary text-white border border-secondary rounded-[48px] transition-all duration-500 z-10;
     }
+
     .save-btn-ellipse {
         @apply h-12 absolute left-0 gap-2 px-8;
     }
+
     .save-btn-circle {
         @apply fixed top-20 right-4 justify-center size-12;
+    }
+
+    .clicked-animation {
+        animation: pulse-red 1.5s 1 forwards;
+    }
+    @keyframes pulse-red {
+        0% {
+            color: #E4F4FD;
+            scale: 1;
+        }
+        50% {
+            color: rgba(255, 0, 0, 1);
+            scale: 1.05;
+        }
+        100% {
+            color: #E4F4FD;
+            scale: 1;
+        }
     }
 }
 

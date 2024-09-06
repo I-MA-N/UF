@@ -5,8 +5,8 @@ import Container from "../../common/Container";
 import PrevBtn from "../../common/PrevBtn";
 import Loading from "../../common/Loading";
 import Tests from "./Tests";
-import AIContextProvider from "./context/AIContextProvider";
 import replaceTestNames from "../../../utils/replaceTestNames";
+import SampleImages from "./components/SampleImages";
 
 function TestsFirstLoad() {
    const { role, formname, username } = useParams();
@@ -30,9 +30,10 @@ function TestsFirstLoad() {
          replaceTestNames(testsArr);
 
          return (
-            <AIContextProvider>
+            <>
+               <SampleImages />
                <Tests username={username} formname={formname} testsArr={testsArr} initialFormData={formData} />
-            </AIContextProvider>
+            </>
          )
       } else {
          return <Container>

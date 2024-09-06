@@ -1,4 +1,4 @@
-import { SectionNames } from "./AIContextType";
+import SectionNames from "./SectionNames";
 
 type ZipFileType = {
    name: SectionNames,

@@ -1,49 +1,10 @@
 import { FilesetResolver, PoseLandmarker } from "@mediapipe/tasks-vision";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { GpuBuffer, NormalizedLandmarkList, POSE_CONNECTIONS } from "@mediapipe/holistic";
-import AIContextType from "../types/AIContextType";
-import { Holistic, Results } from "@mediapipe/holistic";
+import { Results } from "@mediapipe/holistic";
 import CoordinatesType from "../types/CoordinatesType";
 import VideoFnType from "../types/VideoFnType";
 import JSZip from "jszip";
-
-export const initHolistic = async (setAIData: React.Dispatch<React.SetStateAction<AIContextType | null>>) => {
-   const holistic = new Holistic({
-      locateFile: (file: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/holistic/${file}`
-   });
-
-   holistic.setOptions({
-      modelComplexity: 1,
-      smoothLandmarks: true,
-      enableSegmentation: true,
-      smoothSegmentation: true,
-      minDetectionConfidence: 0.5,
-      minTrackingConfidence: 0.5,
-   });
-
-   holistic.onResults((results) => {
-      setAIData(prevValue => ({
-         ...prevValue,
-         results
-      }))
-   })
-
-   setAIData(prevValue => ({
-      ...prevValue,
-      model: holistic
-   }))
-
-   // Just to download assets needed for landmarks sooner
-   const imgElem = document.getElementById("front") as HTMLImageElement | null;
-   if (imgElem) {
-      await holistic.send({ image: imgElem });
-      setAIData(prevValue => ({
-         ...prevValue,
-         results: undefined,
-         modelDownlaoded: true
-      }))
-   }
-}
 
 export const initPoseLandmarker = async () => {
    if (!window.model.poseLandmarker) {
@@ -136,6 +97,8 @@ export const drawOnVideo = (
 ) => {
    const ctx = canvas?.getContext("2d");
    if (video && canvas && ctx && results) {
+      canvas.width = video.clientWidth;
+      canvas.height = video.clientHeight;
       ctx.drawImage(results.image, 0, 0, video.clientWidth, video.clientHeight);
 
       if (results.poseLandmarks?.length) {
@@ -195,7 +158,7 @@ export const canvasDown = (
 
 export const canvasMove = (
    selectedLandmark: number | null,
-   setPhotoData: React.Dispatch<React.SetStateAction<Results | null | undefined>>,
+   setPhotoData: React.Dispatch<React.SetStateAction<Results | undefined>>,
    canvas: HTMLCanvasElement | null,
    offsetX: number,
    offsetY: number

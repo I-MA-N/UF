@@ -17,7 +17,13 @@ function ManualInput({ title, keys, values, index, setValue: setInputValue, defa
    }, [keys]);
    const [value, setValue] = useState(defaultValue);
 
-   useEffect(() => setValue(defaultValue), [defaultValue])
+   useEffect(() => {
+      setValue(defaultValue)
+   }, [defaultValue])
+
+   useEffect(() => {
+      setInputValue(title, value);
+   }, [value])
 
    return (
       <div className="flex flex-col justify-between bg-white text-primary rounded-[18px] w-72 xs:w-[330px] lg:w-[400px] h-40">
@@ -41,10 +47,7 @@ function ManualInput({ title, keys, values, index, setValue: setInputValue, defa
                         type="button"
                         className={`text-[8px] lg:text-[10px]/[17px] lg:text-balance transition-colors duration-200 whitespace-nowrap overflow-x-auto ${value === key ? 'text-white' : ''}`}
                         style={{ width: btnWidth }}
-                        onClick={() => {
-                           setValue(key);
-                           setInputValue(title, key);
-                        }}
+                        onClick={() => setValue(key)}
                      >
                         {values[index]}
                      </button>

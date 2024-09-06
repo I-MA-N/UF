@@ -6,7 +6,7 @@ function GImage(
    formname: string | undefined,
    imgKey: string | undefined
 ) {
-   const { mutateAsync } = useMutation({
+   const { mutate, data, isPending } = useMutation({
       mutationKey: ['get: ai image', username, formname],
       mutationFn: async () => {
          const req = await axios.get(
@@ -14,11 +14,11 @@ function GImage(
             `/form-images/${username}/${formname}/${imgKey}`,
          )
 
-         return req.data
-      }
+         return req.data as { [key: string]: string }
+      },
    })
 
-   return { mutateAsync }
+   return { mutate, data, isPending }
 }
 
 export default GImage;

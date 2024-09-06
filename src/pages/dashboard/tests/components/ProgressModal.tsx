@@ -1,21 +1,23 @@
 import { useEffect, useMemo } from "react";
 import CircularProgressWithLabel from "./CircularProgressWithLabel";
-import ZipFileType from "../../../../types/ZipFileType";
+import useAIStore from "../store/AIStore";
 
 type ProgressModalProps = {
-   filesToSave:  ZipFileType[],
    progress: number,
    setProgress: React.Dispatch<React.SetStateAction<number | null>>,
 }
 
-function ProgressModal({ filesToSave, progress, setProgress }: ProgressModalProps) {
+function ProgressModal({progress, setProgress }: ProgressModalProps) {
+   const getFilesToSave = useAIStore(state => state.getFilesToSave);
+
    const percentage = useMemo(() => {
+      const filesToSave = getFilesToSave();
       if (filesToSave.length) {
          const division = progress / (filesToSave.length + 1);
          return division * 100;
       }
       return progress * 100;
-   }, [progress, filesToSave.length])
+   }, [progress, getFilesToSave])
    
    useEffect(() => {
       if (percentage >= 100) {

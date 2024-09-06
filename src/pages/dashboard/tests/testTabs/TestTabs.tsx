@@ -2,24 +2,19 @@ import { useEffect, useState } from "react";
 import TabButtons from "./components/TabButtons";
 import AITab from "./components/AI/AITab";
 import ManualTab from "./components/manual/ManualTab";
-import { useAIContext } from "../context/AIContextProvider";
-import { FieldValues, UseFormGetValues } from "react-hook-form";
+import useFormStore from "../store/formStore";
 
 type TestTabsProps = {
    defaultIsAIMethod: boolean,
-   getValues: UseFormGetValues<FieldValues>,
 }
 
-function TestTabs({ defaultIsAIMethod, getValues }: TestTabsProps) {
-   const [_AIData, setAIData] = useAIContext();
+function TestTabs({ defaultIsAIMethod }: TestTabsProps) {
+   const updateFormData = useFormStore(state => state.updateFormData);
    const [isAIMethod, setIsAIMethod] = useState(defaultIsAIMethod);
 
    useEffect(() => {
-      setAIData(prevValue => ({
-         ...prevValue,
-         formData: getValues()
-      }))
-   }, [isAIMethod])
+      updateFormData();
+   }, [isAIMethod, updateFormData])
 
    return (
       <>

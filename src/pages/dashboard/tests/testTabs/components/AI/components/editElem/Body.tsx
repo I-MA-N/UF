@@ -3,7 +3,7 @@ import EditElem from "../EditElem";
 
 type BodyProps = {
    photoData: Results | null,
-   setPhotoData: React.Dispatch<React.SetStateAction<Results | null | undefined>>,
+   setPhotoData: React.Dispatch<React.SetStateAction<Results | undefined>>,
    selectedLandmark: number | null,
    setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>
 }

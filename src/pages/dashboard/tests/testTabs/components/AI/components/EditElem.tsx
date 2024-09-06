@@ -6,7 +6,7 @@ import EditCursor from "./editElem/body/EditCursor";
 
 type EditElemProps = {
    photoData: Results,
-   setPhotoData: React.Dispatch<React.SetStateAction<Results | null | undefined>>,
+   setPhotoData: React.Dispatch<React.SetStateAction<Results | undefined>>,
    selectedLandmark: number | null,
    setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>
 }

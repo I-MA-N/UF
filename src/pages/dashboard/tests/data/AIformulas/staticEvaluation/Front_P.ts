@@ -7,7 +7,7 @@ function Front_P(landmarks: NormalizedLandmarkList, setValue: UseFormSetValue<Fi
    const result = p11.x / p12.y;
 
    if (result) {
-      setValue("سر به جلو", "1");
+      setValue("سر به جلو", "5");
    }
 }
 

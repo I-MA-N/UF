@@ -1,4 +1,4 @@
-import { SectionNames } from "../../../../../types/AIContextType";
+import SectionNames from "../../../../../types/SectionNames";
 import Walking_P from "../AIformulas/dynamicEvaluation/Walking_P";
 import Walking_V from "../AIformulas/dynamicEvaluation/Walking_V";
 

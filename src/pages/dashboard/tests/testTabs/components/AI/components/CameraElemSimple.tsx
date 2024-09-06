@@ -1,16 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { cameraFuncs } from "../../../../../../../utils/AIFuncs";
 import EditElemFirstLoad from "./EditElemFirstLoad";
-import { useAIContext } from "../../../../context/AIContextProvider";
 import CoordinatesType from "../../../../../../../types/CoordinatesType";
 import AimContainer from "./camera/AimContainer";
 import BetaLine from "./camera/BetaLine";
 import CloseBtn from "./camera/buttons/CloseBtn";
 import CapturePhotoBtn from "./camera/buttons/CapturePhotoBtn";
 import CameraModeBtn from "./camera/buttons/CameraModeBtn";
+import { Holistic } from "@mediapipe/holistic";
+import useAIStore from "../../../../store/AIStore";
 
-function CameraElemSimple() {
-   const [AIData, setAIData] = useAIContext();
+type CameraElemSimpleProps = {
+   model: Holistic
+}
+
+function CameraElemSimple({ model }: CameraElemSimpleProps) {
+   const currentSection = useAIStore(state => state.currentSection);
    const [showCanvas, setShowCanvas] = useState(false);
 
    const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -47,10 +52,10 @@ function CameraElemSimple() {
       <div className="w-full fixed top-0 left-0 z-30 bg-primary/60 px-4">
          {
             showCanvas ?
-               <EditElemFirstLoad setShowCanvas={setShowCanvas} />
+               <EditElemFirstLoad model={model} setShowCanvas={setShowCanvas} />
                :
                <div className="flex flex-col items-center justify-center gap-7 min-h-screen">
-                  <p className="text-center">{AIData?.currentSection?.nameFA}</p>
+                  <p className="text-center">{currentSection?.nameFA}</p>
 
                   <div className="w-full min-h-80 flex items-center justify-center">
                      <div className="relative">
@@ -72,29 +77,15 @@ function CameraElemSimple() {
                      />
 
                      <CapturePhotoBtn
-                        isLoading={!isCameraLoaded || !AIData?.modelDownlaoded}
+                        isLoading={!isCameraLoaded}
                         isDisabled={isDisabled}
-                        clickHandler={async () => {
-                           const video = videoRef.current;
-                           if (video) {
-                              await AIData?.model?.send({ image: video });
-                              setShowCanvas(true);
-                              const width = video.clientWidth;
-                              const height = video.clientHeight;
-                              setAIData(prevValue => ({
-                                 ...prevValue,
-                                 videoSize: {
-                                    width,
-                                    height,
-                                 }
-                              }))
-                           }
-                        }}
+                        video={videoRef.current}
+                        model={model}
+                        setShowCanvas={setShowCanvas}
                      />
 
                      <CloseBtn
                         stopCamera={stopCamera}
-                        setAIData={setAIData}
                      />
                   </div>
                </div>

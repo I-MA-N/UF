@@ -7,7 +7,7 @@ function Walking_P(landmarks: NormalizedLandmarkList, setValue: UseFormSetValue<
    const result = p11.x / p12.y;
 
    if (result) {
-      setValue("شانه ها گرد می شود", "1");
+      setValue("شانه ها گرد می شود", "0");
    }
 }
 

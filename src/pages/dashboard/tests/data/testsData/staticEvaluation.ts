@@ -1,4 +1,4 @@
-import { SectionNames } from "../../../../../types/AIContextType";
+import SectionNames from "../../../../../types/SectionNames";
 import Back_P from "../AIformulas/staticEvaluation/Back_P";
 import Front_P from "../AIformulas/staticEvaluation/Front_P";
 import Side_P from "../AIformulas/staticEvaluation/Side_P";
