@@ -1,17 +1,16 @@
-import { NormalizedLandmarkList, Results } from "@mediapipe/holistic";
 import { canvasDown, canvasMove, canvasUp } from "../../../../../../../../../utils/AIFuncs";
 import { useEffect } from "react";
 import useAIStore from "../../../../../../store/AIStore";
+import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 
 type CanvasElemProps = {
    canvasRef: React.MutableRefObject<HTMLCanvasElement | null>,
-   landmarks: NormalizedLandmarkList,
+   landmarks: NormalizedLandmark[],
    selectedLandmark: number | null,
    setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>,
-   setPhotoData: React.Dispatch<React.SetStateAction<Results | undefined>>
 }
 
-function CanvasElem({ canvasRef, landmarks, selectedLandmark, setSelectedLandmark, setPhotoData }: CanvasElemProps) {
+function CanvasElem({ canvasRef, landmarks, selectedLandmark, setSelectedLandmark }: CanvasElemProps) {
    const videoSize = useAIStore(state => state.videoSize);
    
    useEffect(() => {
@@ -34,7 +33,7 @@ function CanvasElem({ canvasRef, landmarks, selectedLandmark, setSelectedLandmar
          onMouseMove={(e) => {
             const offsetX = e.nativeEvent.offsetX;
             const offsetY = e.nativeEvent.offsetY;
-            canvasMove(selectedLandmark, setPhotoData, canvasRef.current, offsetX, offsetY);
+            canvasMove(landmarks, selectedLandmark, canvasRef.current, offsetX, offsetY);
          }}
          onMouseUp={() => canvasUp(setSelectedLandmark)}
 
@@ -50,7 +49,7 @@ function CanvasElem({ canvasRef, landmarks, selectedLandmark, setSelectedLandmar
             const rect = e.currentTarget.getBoundingClientRect();
             const offsetX = e.targetTouches[0].pageX - rect.left;
             const offsetY = e.targetTouches[0].pageY - rect.top;
-            canvasMove(selectedLandmark, setPhotoData, canvasRef.current, offsetX, offsetY);
+            canvasMove(landmarks, selectedLandmark, canvasRef.current, offsetX, offsetY);
          }}
          onTouchEnd={() => {
             // document.querySelectorAll("*").forEach(elem => elem.classList.remove("touch-action-none"))

@@ -1,6 +1,6 @@
-import { NormalizedLandmarkList } from "@mediapipe/holistic";
+import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 
-function Walking_V(landmarks: NormalizedLandmarkList) {
+function Walking_V(landmarks:  NormalizedLandmark[]) {
    // Calculations
    const p11 = landmarks[11];
    const p12 = landmarks[12];

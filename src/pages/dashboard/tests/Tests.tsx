@@ -29,7 +29,6 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
 
    const { handleSubmit, register, setValue, getValues, reset, formState: { errors } } = useForm();
    const [formData, setFormData] = useState(initialFormData);
-   console.log("errors", errors);
 
    const [showExitModal, setShowExitModal] = useState(false);
    const [page, setPage] = useState(testsArr[0].testName);

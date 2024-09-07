@@ -1,23 +1,12 @@
-import { Results } from "@mediapipe/holistic";
 import BackBtn from "./footerButtons/BackBtn";
 import NextBtn from "./footerButtons/NextBtn";
 
-type FooterProps = {
-   setShowCanvas: React.Dispatch<React.SetStateAction<boolean>>,
-   photoData: Results | null | undefined
-}
-
-function Footer({ setShowCanvas, photoData }: FooterProps) {
+function Footer() {
    return (
       <div className="flex items-center justify-between w-full h-12">
-         <BackBtn
-            setShowCanvas={setShowCanvas}
-         />
+         <BackBtn />
 
-         <NextBtn
-            setShowCanvas={setShowCanvas}
-            photoData={photoData}
-         />
+         <NextBtn />
       </div>
    );
 };

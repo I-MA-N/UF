@@ -30,12 +30,14 @@ function SampleCanvas({ setShowSample, showSample, selectedLandmark }: SampleCan
    }, [selectedLandmark, sampleLandmarks])
 
    useEffect(() => {
-      if (currentSection?.name && sampleLandmarks && canvasRef?.current) {
-         const imgElem = document.getElementById(currentSection.name) as HTMLImageElement | null;
+      const canvas = canvasRef.current;
+      if (currentSection?.name && sampleLandmarks && canvas) {
+         const imgElem = document.getElementById(currentSection.name) as HTMLImageElement;
+
          if (selectedLandmark !== null) {
-            drawOnCanvas(canvasRef.current, imgElem, []);
+            drawOnCanvas(canvas, imgElem, canvas.clientWidth, canvas.clientHeight, sampleLandmarks);
          } else {
-            drawOnCanvas(canvasRef.current, imgElem, sampleLandmarks);
+            drawOnCanvas(canvas, imgElem, canvas.clientWidth, canvas.clientHeight, sampleLandmarks);
          }
       }
    }, [canvasRef.current, selectedLandmark])

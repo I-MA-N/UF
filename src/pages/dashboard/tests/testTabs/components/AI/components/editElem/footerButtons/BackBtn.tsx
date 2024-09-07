@@ -1,12 +1,12 @@
-type BackBtnProps = {
-   setShowCanvas: React.Dispatch<React.SetStateAction<boolean>>
-}
+import usePhotoStore from "../../../../../../store/photoStore";
 
-function BackBtn({ setShowCanvas }: BackBtnProps) {
+function BackBtn() {
+   const removePhoto = usePhotoStore(state => state.removePhoto);
+
    return (
       <button
          type="button"
-         onClick={() => setShowCanvas(false)}
+         onClick={() => removePhoto()}
          className="h-full flex items-center gap-2 px-8 text-sm border rounded-full bg-primary"
       >
          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 10" fill="none" className="size-4">

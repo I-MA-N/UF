@@ -1,56 +1,47 @@
 import { useEffect, useState } from "react";
-import { Holistic, Results } from "@mediapipe/holistic";
 import Header from "./editElem/Header";
 import Footer from "./editElem/Footer";
-import Body from "./editElem/Body";
-import Loading from "../../../../../../common/Loading";
+import EditElem from "./EditElem";
+import usePhotoStore from "../../../../store/photoStore";
+import { PoseLandmarker } from "@mediapipe/tasks-vision";
 
 type EditElemFirstLoadProps = {
-   model: Holistic,
-   setShowCanvas: React.Dispatch<React.SetStateAction<boolean>>
+   model: PoseLandmarker
 }
 
-let photoDataRef: Results | undefined = undefined;
-
-function EditElemFirstLoad({ model, setShowCanvas }: EditElemFirstLoadProps) {
-   const [photoData, setPhotoData] = useState<Results | undefined>(undefined);
+function EditElemFirstLoad({ model }: EditElemFirstLoadProps) {
+   const { image, landmarks, setLandmarks } = usePhotoStore(state => ({ image: state.image, landmarks: state.landmarks, setLandmarks: state.setLandmarks }));
 
    const [showSample, setShowSample] = useState(false);
    const [selectedLandmark, setSelectedLandmark] = useState<number | null>(null);
 
    useEffect(() => {
-      model.onResults(results => {
-         photoDataRef = results;
-         console.log("in result", photoDataRef);
-      });
-   }, [])
+      if (image) {
+         model.setOptions({
+            runningMode: "IMAGE"
+         });
+         const result = model.detect(image);
 
-   useEffect(() => {
-      setPhotoData(photoDataRef);
-   }, [photoDataRef])
-   console.log(photoData, photoDataRef);
+         setLandmarks(result.landmarks[0]);
+      }
+   }, [image])
 
    return (
-      <div className="flex flex-col items-center justify-center gap-7 min-h-screen">
+      <div className="flex flex-col items-center justify-center gap-7 min-h-dvh">
          <Header
             showSample={showSample}
             setShowSample={setShowSample}
             selectedLandmark={selectedLandmark}
          />
          {
-            photoData === undefined ?
-               <Loading fullHeight={false} /> :
-               <Body
-                  photoData={photoData}
-                  setPhotoData={setPhotoData}
-                  selectedLandmark={selectedLandmark}
-                  setSelectedLandmark={setSelectedLandmark}
-               />
+            landmarks &&
+            <EditElem
+               selectedLandmark={selectedLandmark}
+               setSelectedLandmark={setSelectedLandmark}
+            />
          }
-         <Footer
-            setShowCanvas={setShowCanvas}
-            photoData={photoData}
-         />
+
+         <Footer />
       </div>
    )
 };

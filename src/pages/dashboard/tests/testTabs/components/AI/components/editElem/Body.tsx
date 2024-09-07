@@ -1,9 +1,9 @@
-import { Results } from "@mediapipe/holistic";
 import EditElem from "../EditElem";
+import PhotoResult from "../../../../../../../../types/PhotoData";
 
 type BodyProps = {
-   photoData: Results | null,
-   setPhotoData: React.Dispatch<React.SetStateAction<Results | undefined>>,
+   photoData: PhotoResult | null,
+   setPhotoData: React.Dispatch<React.SetStateAction<PhotoResult | undefined>>,
    selectedLandmark: number | null,
    setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>
 }

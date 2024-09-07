@@ -1,16 +1,12 @@
-import { Results } from "@mediapipe/holistic";
 import { useMemo } from "react";
 import clickHandler from "./nextBtnClickHandler";
 import NextBtnSvg from "./NextBtnSvg";
 import useAIStore from "../../../../../../store/AIStore";
+import usePhotoStore from "../../../../../../store/photoStore";
 
-type NextBtnProps = {
-   setShowCanvas: React.Dispatch<React.SetStateAction<boolean>>,
-   photoData: Results | null | undefined,
-}
-
-function NextBtn({ setShowCanvas, photoData }: NextBtnProps) {
+function NextBtn() {
    const { currentSection, activeTestData } = useAIStore(state => ({ currentSection: state.currentSection, activeTestData: state.activeTestData }));
+   const landmarks = usePhotoStore(state => state.landmarks);
 
    const nextSection = useMemo(() => {
       const sectionName = currentSection?.name;
@@ -26,7 +22,7 @@ function NextBtn({ setShowCanvas, photoData }: NextBtnProps) {
       return undefined;
    }, [currentSection])
 
-   const isDisabled = useMemo(() => !photoData?.image || !photoData?.poseLandmarks, [photoData])
+   const isDisabled = useMemo(() => !landmarks?.length, [landmarks]);
 
    return (
       <button
@@ -39,7 +35,7 @@ function NextBtn({ setShowCanvas, photoData }: NextBtnProps) {
             }
          `}
          onClick={async () => {
-            if (photoData) clickHandler(photoData, nextSection?.name, setShowCanvas);
+            if (landmarks?.length) clickHandler(landmarks, nextSection?.name);
          }}
       >
          {
@@ -47,7 +43,6 @@ function NextBtn({ setShowCanvas, photoData }: NextBtnProps) {
          }
          <NextBtnSvg
             nextSection={nextSection}
-            isPhotoDataUndefined={photoData === undefined}
          />
       </button>
    );

@@ -1,34 +1,36 @@
-import { Results } from "@mediapipe/holistic";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { drawOnCanvas } from "../../../../../../../utils/AIFuncs";
 import CanvasElem from "./editElem/body/CanvasElem";
 import EditCursor from "./editElem/body/EditCursor";
+import usePhotoStore from "../../../../store/photoStore";
 
 type EditElemProps = {
-   photoData: Results,
-   setPhotoData: React.Dispatch<React.SetStateAction<Results | undefined>>,
    selectedLandmark: number | null,
    setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>
 }
 
-function EditElem({ photoData, setPhotoData, selectedLandmark, setSelectedLandmark }: EditElemProps) {
+function EditElem({ selectedLandmark, setSelectedLandmark }: EditElemProps) {
+   const { image, landmarks, videoSize } = usePhotoStore(state => ({ image: state.image, landmarks: state.landmarks, videoSize: state.videoSize }));
    const canvasRef = useRef<HTMLCanvasElement | null>(null);
-   const landmarks = useMemo(() => photoData.poseLandmarks, [photoData])
 
    useEffect(() => {
-      drawOnCanvas(canvasRef.current, photoData.image, photoData.poseLandmarks);
-   }, [canvasRef.current, photoData])
+      if (image && landmarks && videoSize) {
+         drawOnCanvas(canvasRef.current, image, videoSize.width, videoSize.height, landmarks);
+      }
+   }, [image, landmarks, canvasRef.current])
 
    return (
       <>
          <div className="relative">
-            <CanvasElem
-               canvasRef={canvasRef}
-               landmarks={photoData.poseLandmarks}
-               selectedLandmark={selectedLandmark}
-               setSelectedLandmark={setSelectedLandmark}
-               setPhotoData={setPhotoData}
-            />
+            {
+               landmarks &&
+               <CanvasElem
+                  canvasRef={canvasRef}
+                  landmarks={landmarks}
+                  selectedLandmark={selectedLandmark}
+                  setSelectedLandmark={setSelectedLandmark}
+               />
+            }
 
             <EditCursor />
 

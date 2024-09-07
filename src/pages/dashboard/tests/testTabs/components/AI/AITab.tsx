@@ -1,11 +1,10 @@
-import CameraElemSimple from "./components/CameraElemSimple";
-import CameraElemLandmarks from "./components/CameraElemLandmarks";
 import SectionBtn from "./components/sectionBtn/SectionBtn";
 import useAIStore from "../../../store/AIStore";
 import useModelStore from "../../../store/modelStore";
 import ModalElem from "./components/modal/ModalElem";
 import Loading from "../../../../../common/Loading";
 import { useCallback } from "react";
+import CameraFirstLoad from "./components/CameraFirstLoad";
 
 function AITab() {
    const model = useModelStore(state => state.model);
@@ -27,12 +26,8 @@ function AITab() {
             </ModalElem>
          )
 
-         if ("src" in activeTestData[0].questions[0]) return (
-            <CameraElemLandmarks model={model} />
-         )
-
          return (
-            <CameraElemSimple model={model} />
+            <CameraFirstLoad model={model} activeTestData={activeTestData[0]} />
          )
       }
    }, [model, activeTestData, currentSection])

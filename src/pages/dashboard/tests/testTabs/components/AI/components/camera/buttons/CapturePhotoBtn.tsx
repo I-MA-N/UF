@@ -1,27 +1,35 @@
-import { Holistic } from "@mediapipe/holistic";
-import useAIStore from "../../../../../../store/AIStore";
+import usePhotoStore from "../../../../../../store/photoStore";
 
 type CapturePhotoBtnProps = {
    isLoading: boolean,
    isDisabled: boolean,
    video: HTMLVideoElement | null,
-   model: Holistic,
-   setShowCanvas: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function CapturePhotoBtn({ isLoading, isDisabled, video, model, setShowCanvas }: CapturePhotoBtnProps) {
-   const setVideoSize = useAIStore(state => state.setVideoSize);
+function CapturePhotoBtn({ isLoading, isDisabled, video }: CapturePhotoBtnProps) {
+   const { setImage, setVideoSize } = usePhotoStore(state => ({ setImage: state.setImage, setVideoSize: state.setVideoSize }));
 
    return (
       <button
          type="button"
          disabled={isLoading || isDisabled}
          onClick={async () => {
-            if (video) {
-               await model.send({ image: video });
-               setShowCanvas(true);
+            console.log("clicked");
+            const canvas = document.createElement("canvas");
+            const ctx = canvas?.getContext("2d");
+
+            if (video && canvas && ctx) {
                const width = video.clientWidth;
                const height = video.clientHeight;
+
+               ctx.save();
+               ctx.clearRect(0, 0, canvas.width, canvas.height);
+               canvas.width = width;
+               canvas.height = height;
+               ctx.drawImage(video, 0, 0, width, height);
+               ctx.restore();
+
+               setImage(canvas);
                setVideoSize(width, height);
             }
          }}

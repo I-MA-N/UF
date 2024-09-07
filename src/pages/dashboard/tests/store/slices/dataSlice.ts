@@ -2,9 +2,9 @@ import { StateCreator } from "zustand";
 import dynamicEvaluation, { dynamicEvaluationType } from "../../data/testsData/dynamicEvaluation";
 import staticEvaluation, { staticEvaluationType } from "../../data/testsData/staticEvaluation";
 import { SectionsSlice } from "./sectionsSlice";
-import { VideoSizeSlice } from "./videoSizeSlice";
 import ZipFileType from "../../../../../types/ZipFileType";
 import SectionNames from "../../../../../types/SectionNames";
+import { VideoSizeSlice } from "./videoSizeSlice";
 
 interface DataState {
    staticEvaluationData: staticEvaluationType,
