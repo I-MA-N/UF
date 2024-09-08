@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef } from "react";
-import { drawOnCanvas } from "../../../../../../../../../utils/AIFuncs";
 import BackdropElem from "./sampleCanvas/BackdropElem";
 import CircleElem from "./sampleCanvas/CircleElem";
 import useAIStore from "../../../../../../store/AIStore";
+import { drawOnCanvas } from "../../../../../../../../../utils/AIFuncs";
 
 type SampleCanvasProps = {
    setShowSample: React.Dispatch<React.SetStateAction<boolean>>,
@@ -30,15 +30,9 @@ function SampleCanvas({ setShowSample, showSample, selectedLandmark }: SampleCan
    }, [selectedLandmark, sampleLandmarks])
 
    useEffect(() => {
-      const canvas = canvasRef.current;
-      if (currentSection?.name && sampleLandmarks && canvas) {
-         const imgElem = document.getElementById(currentSection.name) as HTMLImageElement;
-
-         if (selectedLandmark !== null) {
-            drawOnCanvas(canvas, imgElem, canvas.clientWidth, canvas.clientHeight, sampleLandmarks);
-         } else {
-            drawOnCanvas(canvas, imgElem, canvas.clientWidth, canvas.clientHeight, sampleLandmarks);
-         }
+      const imgElem = document.getElementById(currentSection!.name) as HTMLImageElement | null;
+      if (canvasRef.current && imgElem) {
+         drawOnCanvas(canvasRef, canvasRef.current.clientWidth, canvasRef.current.clientHeight, imgElem, sampleLandmarks);
       }
    }, [canvasRef.current, selectedLandmark])
 

@@ -1,42 +1,19 @@
-import usePhotoStore from "../../../../../../store/photoStore";
-
 type CapturePhotoBtnProps = {
    isLoading: boolean,
    isDisabled: boolean,
-   video: HTMLVideoElement | null,
+   isClickedRef: React.MutableRefObject<boolean>
 }
 
-function CapturePhotoBtn({ isLoading, isDisabled, video }: CapturePhotoBtnProps) {
-   const { setImage, setVideoSize } = usePhotoStore(state => ({ setImage: state.setImage, setVideoSize: state.setVideoSize }));
-
+function CapturePhotoBtn({ isLoading, isDisabled, isClickedRef }: CapturePhotoBtnProps) {
    return (
       <button
          type="button"
          disabled={isLoading || isDisabled}
-         onClick={async () => {
-            console.log("clicked");
-            const canvas = document.createElement("canvas");
-            const ctx = canvas?.getContext("2d");
-
-            if (video && canvas && ctx) {
-               const width = video.clientWidth;
-               const height = video.clientHeight;
-
-               ctx.save();
-               ctx.clearRect(0, 0, canvas.width, canvas.height);
-               canvas.width = width;
-               canvas.height = height;
-               ctx.drawImage(video, 0, 0, width, height);
-               ctx.restore();
-
-               setImage(canvas);
-               setVideoSize(width, height);
-            }
-         }}
+         onClick={() => isClickedRef.current = true}
          className={`
             size-[60px] flex items-center justify-center outline outline-2
             ${(isLoading || isDisabled) ? "bg-gray outline-gray" : "bg-white outline-white"}
-            border-2 border-primary rounded-full transition-colors duration-200
+            border-2 border-primary rounded-full transition-all duration-200
          `}
       >
          {

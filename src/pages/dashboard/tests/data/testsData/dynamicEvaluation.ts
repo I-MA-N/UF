@@ -16,7 +16,7 @@ const dynamicEvaluation = [
          {
             id: 2,
             src: '/images/dynamicEvaluation/img-14.png',
-            title: 'سر به جلو',
+            title: 'سر به جلو ',
             direction: 'vertical'
          },
          {

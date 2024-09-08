@@ -1,19 +1,12 @@
 import useAIStore from "../../../../../../store/AIStore";
 
-type CloseBtnProps = {
-   stopCamera: () => Promise<void>,
-}
-
-function CloseBtn({ stopCamera }: CloseBtnProps) {
+function CloseBtn() {
    const removeCurrentSection = useAIStore(state => state.removeCurrentSection);
 
    return (
       <button
          type="button"
-         onClick={() => {
-            stopCamera();
-            removeCurrentSection();
-         }}
+         onClick={() => removeCurrentSection()}
          className="flex items-center justify-center size-11 border-2 border-yellow bg-primary text-yellow rounded-full"
       >
          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" className="w-5">

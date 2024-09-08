@@ -11,35 +11,26 @@ async function nextBtnClickHandler(
 ) {
    const { currentSection, setCurrentSection, getOrSetZipFile } = useAIStore.getState();
    const { updateFormData, setValue } = useFormStore.getState();
-   const { image, removePhoto } = usePhotoStore.getState();
+   const { image, removePhoto, videoSize } = usePhotoStore.getState();
 
    // Update current section & hide canvas
    setCurrentSection(nextSectionName);
    removePhoto();
 
-   // Add base64 string of image & landmarks to store
+   // Add "landmarks" & "imageSize" string & "image" base64 to store
    const zip = new JSZip();
+   
+   if (image) {
+      const landmarksJson = JSON.stringify(landmarks);
+      zip.file('landmarks.json', landmarksJson);
 
-   const jsonLandmarks = JSON.stringify(landmarks);
-   zip.file('landmarks.json', jsonLandmarks);
+      const imageSizeJson = JSON.stringify(videoSize);
+      zip.file('imageSize.json', imageSizeJson);
 
-   // To generate "Blob" from "image", we need to
-   // draw it on canvas first, then we use "toBlob" function to get "Blob" of image
-   const canvas = document.createElement("canvas");
-   const ctx = canvas.getContext("2d");
-   if (canvas && ctx && image) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-      const blob = await new Promise<Blob | null>((resolve) => {
-         canvas.toBlob(resolve, 'image/jpeg'); // Change format if needed
-      });
+      zip.file('image.jpeg', image);
+      const base64 = await zip.generateAsync({ type: 'base64' });
 
-      if (blob) {
-         zip.file('image.jpeg', blob);
-         const base64 = await zip.generateAsync({ type: 'base64' });
-
-         if (currentSection?.name) getOrSetZipFile(currentSection.name, base64);
-      }
+      if (currentSection?.name) getOrSetZipFile(currentSection.name, base64);
    }
 
    // Call "photoFn" function to evalutate based on "landmarks"

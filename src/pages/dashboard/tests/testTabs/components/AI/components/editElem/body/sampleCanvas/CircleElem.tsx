@@ -11,7 +11,7 @@ function CircleElem({ landmarkCoordinates }: CircleElemProps) {
          <div
             className={
                `
-               absolute size-6 bg-yellow blur-[8px] rounded-full transition-all duration-200
+               absolute size-6 bg-secondary blur-[8px] rounded-full transition-all duration-200
                ${landmarkCoordinates ? "opacity-100 z-10" : "opacity-0 z-0"}
                `
             }
@@ -24,7 +24,7 @@ function CircleElem({ landmarkCoordinates }: CircleElemProps) {
          <div
             className={
                `
-               absolute size-2 bg-red rounded-full transition-all duration-200
+               absolute size-2 bg-white rounded-full transition-all duration-200
                ${landmarkCoordinates ? "opacity-100 z-10" : "opacity-0 z-0"}
                `
             }

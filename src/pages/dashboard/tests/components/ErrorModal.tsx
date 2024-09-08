@@ -12,7 +12,7 @@ function ErrorModal({ error, setError }: ErrorModalProps) {
          <div className="w-[298px] xs:w-80 bg-white text-primary rounded-[32px] p-12 text-sm/7">
             <div className="space-y-6">
                <div className="flex flex-col gap-2 items-center">
-                  <span className="inline-block text-center">ذخیره اطلاعات با مشکل مواجه شد!</span>
+                  <span className="inline-block text-center">مشکلی پیش آمده است!</span>
                   <span className="text-xs inline-block text-center">{error}</span>
                </div>
                <button

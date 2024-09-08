@@ -1,10 +1,10 @@
-import SectionBtn from "./components/sectionBtn/SectionBtn";
 import useAIStore from "../../../store/AIStore";
 import useModelStore from "../../../store/modelStore";
 import ModalElem from "./components/modal/ModalElem";
 import Loading from "../../../../../common/Loading";
 import { useCallback } from "react";
 import CameraFirstLoad from "./components/CameraFirstLoad";
+import SectionCard from "./components/sectionCard/SectionCard";
 
 function AITab() {
    const model = useModelStore(state => state.model);
@@ -38,15 +38,15 @@ function AITab() {
             <div className="grid grid-cols-2 gap-x-5 gap-y-6">
                {
                   activeTestData?.map(section => (
-                     <SectionBtn
-                        key={section.name}
+                     <SectionCard
+                        key={`${section.name}_${section.zipFile?.slice(0, 30)}`}
                         section={section}
                      />
                   ))
                }
             </div>
          </div>
-         
+
          {generateJSX()}
       </>
    );

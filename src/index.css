@@ -122,7 +122,7 @@
     }
 
     .modal {
-        @apply fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-transparent backdrop-blur-md z-10;
+        @apply fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-transparent backdrop-blur-md z-50;
     }
 
     .exit-btn {
@@ -150,15 +150,15 @@
     }
 
     .clicked-animation {
-        animation: pulse-red 1.5s 1 forwards;
+        animation: pulse-yellow 1.5s 1 forwards;
     }
-    @keyframes pulse-red {
+    @keyframes pulse-yellow {
         0% {
             color: #E4F4FD;
             scale: 1;
         }
         50% {
-            color: rgba(255, 0, 0, 1);
+            color: #FCC72C;
             scale: 1.05;
         }
         100% {

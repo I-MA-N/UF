@@ -2,7 +2,7 @@ import { NormalizedLandmark } from "@mediapipe/tasks-vision"
 import { create } from "zustand"
 
 interface PhotoState {
-   image: HTMLCanvasElement | undefined,
+   image: string | undefined,
    landmarks: NormalizedLandmark[] | undefined,
    videoSize: {
       width: number,
@@ -11,7 +11,7 @@ interface PhotoState {
 }
 
 interface PhotoActions {
-   setImage: (image: HTMLCanvasElement) => void,
+   setImage: (image: string) => void,
    setLandmarks: (landmarks: NormalizedLandmark[]) => void,
    removePhoto: () => void,
    setVideoSize: (width: number, height: number) => void

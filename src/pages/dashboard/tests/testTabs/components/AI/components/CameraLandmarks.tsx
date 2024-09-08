@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { cameraFuncs, drawOnVideo } from "../../../../../../../utils/AIFuncs";
+import { useCallback, useEffect, useRef, useState } from "react";
 import CameraModeBtn from "./camera/buttons/CameraModeBtn";
 import CapturePhotoBtn from "./camera/buttons/CapturePhotoBtn";
 import CloseBtn from "./camera/buttons/CloseBtn";
 import useAIStore from "../../../../store/AIStore";
-import { DrawingUtils, PoseLandmarker } from "@mediapipe/tasks-vision";
+import { PoseLandmarker } from "@mediapipe/tasks-vision";
+import Webcam from "react-webcam";
+import usePhotoStore from "../../../../store/photoStore";
+import { drawOnCanvas, executeVideoFn, initMediaRecorder } from "../../../../../../../utils/AIFuncs";
 
 type CameraLandmarksProps = {
    model: PoseLandmarker,
@@ -14,42 +16,56 @@ let landmarksStatus: boolean[] = [];
 
 function CameraLandmarks({ model }: CameraLandmarksProps) {
    const currentSection = useAIStore(state => state.currentSection);
+   const { setImage, setLandmarks, setVideoSize } = usePhotoStore(state => ({ setImage: state.setImage, setLandmarks: state.setLandmarks, setVideoSize: state.setVideoSize }));
 
    const [isCameraLoaded, setIsCameraLoaded] = useState(false);
 
-   const videoRef = useRef<HTMLVideoElement | null>(null);
+   const webcamRef = useRef<Webcam | null>(null);
+   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
    const canvasRef = useRef<HTMLCanvasElement | null>(null);
+   const isClickedRef = useRef(false);
 
-   const { startCamera, stopCamera } = useMemo(() => (
-      cameraFuncs(videoRef, "environment", setIsCameraLoaded)
-   ), [videoRef, setIsCameraLoaded])
+   const startRecording = useCallback(() => {
+      if (webcamRef.current?.stream) {
+         initMediaRecorder(mediaRecorderRef, webcamRef.current.stream, proccessFrames);
+      }
+   }, [])
+
+   const stopRecording = useCallback(() => {
+      if (mediaRecorderRef.current) {
+         mediaRecorderRef.current.stop();
+      }
+   }, [])
+
+   const proccessFrames = useCallback(() => {
+      if (!isCameraLoaded) setIsCameraLoaded(true);
+
+      const video = webcamRef.current?.video;
+      if (video) {
+         let startTimeMs = performance.now();
+         const result = model.detectForVideo(video, startTimeMs);
+         const landmarks = result.landmarks[0];
+
+         drawOnCanvas(canvasRef, video.clientWidth, video.clientHeight, video, landmarks);
+
+         executeVideoFn(canvasRef, currentSection, landmarks, landmarksStatus);
+
+         if (isClickedRef.current) {
+            const base64 = webcamRef.current?.getScreenshot();
+            if (base64) {
+               setImage(base64);
+               setLandmarks(landmarks);
+               setVideoSize(video.clientWidth, video.clientHeight);
+            }
+         }
+      }
+   }, [])
 
    useEffect(() => {
-      startCamera(20);
-
       return () => {
-         console.log("stop camera");
-         stopCamera();
+         stopRecording();
       }
-   }, [startCamera, stopCamera])
-
-   const proccessFrames = async (
-      video: HTMLVideoElement,
-      canvas: HTMLCanvasElement,
-      ctx: CanvasRenderingContext2D,
-      drawingUtils: DrawingUtils
-   ) => {
-      if (videoRef.current && currentSection && "videoFn" in currentSection.AI) {
-         drawOnVideo(video, canvas, ctx, drawingUtils, model, currentSection.AI.videoFn, landmarksStatus)
-      }
-
-      if (videoRef.current) {
-         requestAnimationFrame(() => {
-            console.log("request frame");
-            proccessFrames(video, canvas, ctx, drawingUtils)
-         });
-      }
-   }
+   }, [])
 
    return (
       <div className="flex flex-col items-center justify-center gap-7 min-h-dvh">
@@ -57,44 +73,32 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
 
          <div className="w-full min-h-80 flex items-center justify-center">
             <div className="relative">
-               <video
-                  ref={videoRef}
-                  autoPlay
-                  onLoadedData={() => {
-                     const video = videoRef.current as HTMLVideoElement;
-                     const canvas = canvasRef.current as HTMLCanvasElement;
-                     const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
-                     let drawingUtils = new DrawingUtils(ctx);
-                     model.setOptions({
-                        runningMode: "VIDEO"
-                     })
-                     proccessFrames(video, canvas, ctx, drawingUtils);
+               <Webcam
+                  ref={webcamRef}
+                  videoConstraints={{
+                     facingMode: "environment",
+                     aspectRatio: 1600 / 1000,
                   }}
+                  onLoadedData={() => startRecording()}
                />
-               {(videoRef.current && isCameraLoaded) &&
-                  <canvas
-                     ref={canvasRef}
-                     className="absolute top-0 left-0"
-                  />
-               }
+               <canvas
+                  ref={canvasRef}
+                  className="absolute top-0 left-0"
+               />
             </div>
 
          </div>
 
          <div className="w-full flex justify-center items-center gap-8">
-            <CameraModeBtn
-               isDisabled={true}
-            />
+            <CameraModeBtn isDisabled={true} />
 
             <CapturePhotoBtn
                isLoading={!isCameraLoaded}
                isDisabled={landmarksStatus.includes(false)}
-               video={videoRef.current}
+               isClickedRef={isClickedRef}
             />
 
-            <CloseBtn
-               stopCamera={stopCamera}
-            />
+            <CloseBtn />
          </div>
       </div>
    );

@@ -1,40 +1,58 @@
 import { useEffect, useRef, useState } from "react";
-import { extractZip } from "../../../../../../../../utils/AIFuncs";
+import { drawOnCanvas, extractZip } from "../../../../../../../../utils/AIFuncs";
+import Loading from "../../../../../../../common/Loading";
+import ExtractedZipType from "../../../../../../../../types/ExtractedZipType";
 
 type ImageCanvasProps = {
    fileContent: string
 }
 
 function ImageCanvas({ fileContent }: ImageCanvasProps) {
-   const [width, setWidth] = useState(384);
+   const [files, setFiles] = useState<ExtractedZipType | null | undefined>(undefined);
+
    const canvasRef = useRef<HTMLCanvasElement>(null);
 
    useEffect(() => {
-      const resizeHandler = () => {
-         // @ts-ignore
-         const width = window.innerWidth;
-         if (width < 384) setWidth(width)
-
+      const extractFiles = async () => {
+         const files = await extractZip(fileContent);
+         setFiles(files);
       }
-      window.addEventListener("resize", resizeHandler);
 
-      return () => {
-         window.removeEventListener("resize", resizeHandler);
-      }
-   }, [])
+      extractFiles();
+   }, [fileContent])
 
    useEffect(() => {
-      const canvas = canvasRef.current;
-      if (canvas) extractZip(fileContent, canvas);
-   }, [canvasRef.current, fileContent, width])
+      if (canvasRef.current) {
+         drawOnCanvas(canvasRef, canvasRef.current.width, canvasRef.current.height, undefined, files!.landmarks);
+      }
+   }, [files?.landmarks])
+
+   if (files === undefined) return (
+      <Loading fullHeight={false} />
+   )
+
+   if (files === null) return (
+      <span className="text-xs  text-center text-yellow">دریافت عکس با مشکل مواجه شد!</span>
+   )
 
    return (
-      <canvas
-         ref={canvasRef}
-         width={width}
-         height={width / 1.6}
-         className="max-w-full"
-      />
+      <div className="relative">
+         <img
+            src={files.image}
+            alt="captured photo for this section"
+            style={{
+               width: files.imageSize.width,
+               height: files.imageSize.height
+            }}
+         />
+
+         <canvas
+            ref={canvasRef}
+            width={files.imageSize.width}
+            height={files.imageSize.height}
+            className="absolute top-0 left-0"
+         />
+      </div>
    );
 };
 
