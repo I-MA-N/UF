@@ -1,7 +1,7 @@
-import DynamicReportObj from "../../../../../../../types/DynamicReportObj";
+import DynamicEvaluationReportObj from "../../../../../../../types/DynamicEvaluationReportObj";
 import DynamicChart from "./components/DynamicChart";
 
-function dynamicAvgJsx(reportData: DynamicReportObj[]) {
+function dynamicAvgJsx(reportData: DynamicEvaluationReportObj[]) {
    return (
       <div className="flex flex-col items-center gap-12">
          {

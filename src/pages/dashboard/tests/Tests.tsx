@@ -2,18 +2,16 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form";
 import { TestObj } from "../../../types/TestsTypes";
 import PFormData from "../../../api/common/form/PFormData";
-import Container from "../../common/Container";
 import TopBtns from "./components/TopBtns";
-import Btn from "../../common/Btn";
 import testsData from "./data/testsData";
 import generateTestInputs from "./data/generateTestInputs";
 import BottomBtns from "./components/BottomBtns";
 import ExitModal from "./components/ExitModal";
-import TestTabsFirstLoad from "./nahanjariHa/TestTabsFirstLoad";
 import PImage from "../../../api/common/PImage";
-import { useAIContext } from "./context/AIContextProvider";
 import ErrorModal from "./components/ErrorModal";
 import ProgressModal from "./components/ProgressModal";
+import TestTabsFirstLoad from "./testTabs/TestTabsFirstLoad";
+import useAIStore from "./store/AIStore";
 
 type TestsProps = {
    username: string,
@@ -23,7 +21,7 @@ type TestsProps = {
 }
 
 function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
-   const [AIData] = useAIContext();
+   const { getFilesToSave, updateTestsData } = useAIStore(state => ({ getFilesToSave: state.getFilesToSave, updateTestsData: state.updateTestsData }));
    const [progress, setProgress] = useState<number | null>(null);
    const [error, setError] = useState<string | null>(null);
 
@@ -31,7 +29,6 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
 
    const { handleSubmit, register, setValue, getValues, reset, formState: { errors } } = useForm();
    const [formData, setFormData] = useState(initialFormData);
-   // console.log("errors", errors);
 
    const [showExitModal, setShowExitModal] = useState(false);
    const [page, setPage] = useState(testsArr[0].testName);
@@ -39,12 +36,19 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
    const { mutateAsync: imageMutate } = PImage(username, formname);
 
    useEffect(() => {
-      if (typeof progress === "number") {
-         const currentImage = AIData?.imagesToSave?.[progress - 1];
-         if (currentImage) {
+      if (Object.keys(errors).length) {
+         setError("لطفا تمامی فیلد ها را به درستی پر نمایید!")
+      }
+   }, [JSON.stringify(Object.keys(errors))])
+
+   useEffect(() => {
+      const filesToSave = getFilesToSave();
+      if (progress !== null && progress > 0 && filesToSave.length) {
+         const file = filesToSave[progress - 1];
+         if (file) {
             imageMutate({
-               imgKey: currentImage.key,
-               imgValue: currentImage.value,
+               imgKey: file.name,
+               imgValue: file.value,
             })
                .then(res => {
                   if (res?.msg) setProgress(prevValue => typeof prevValue === "number" ? prevValue += 1 : null);
@@ -52,7 +56,7 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
                })
          }
       }
-   }, [progress])
+   }, [progress, getFilesToSave])
 
    const submitHandler = (data: any) => {
       const nextPage = data["nextPage"];
@@ -60,7 +64,15 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
       const newData = { ...formData };
       newData[page as keyof typeof newData] = data;
 
-      if (nextPage) setPage(nextPage);
+      updateTestsData(page, nextPage);
+
+      delete data["nextPage"];
+      delete data["shouldSave"];
+
+      if (nextPage) {
+         setPage(nextPage);
+         window.scrollTo(0, 0);
+      };
       if (shouldSave) {
          setProgress(0);
          formDataMutate({
@@ -75,41 +87,20 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
 
       setFormData(newData);
       reset();
-      window.scrollTo(0, 0);
-
-      delete data["nextPage"];
-      delete data["shouldSave"];
    }
 
    return (
       <>
-         <Container withTitle={false}>
+         <div className="px-4 sm:container pt-24 lg:pt-32">
             <form
-               className="w-full"
+               className="w-full relative pt-24 pb-16"
                onSubmit={handleSubmit(submitHandler)}
             >
                <TopBtns
+                  page={page}
                   setValue={setValue}
                   setShowExitModal={setShowExitModal}
-                  errors={errors}
                />
-
-               <input hidden {...register("nextPage")} />
-               <div className="flex lg:flex-wrap items-center gap-4 w-full mt-8 mb-14 overflow-x-auto">
-                  {
-                     testsArr.map(test => (
-                        <Btn
-                           key={test.testName}
-                           text={test.testName}
-                           type="submit"
-                           className={`w-auto px-6 py-3 flex-shrink-0 text-white
-                                 ${page === test.testName ? 'bg-secondary' : 'bg-transparent border border-white'}`
-                           }
-                           onClick={() => setValue("nextPage", test.testName)}
-                        />
-                     ))
-                  }
-               </div>
 
                {
                   testsData[page as keyof typeof testsData].testSubTitle &&
@@ -124,6 +115,7 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
                {
                   (page === 'ناهنجاری ها' || page === 'ارزیابی پویا') ?
                      <TestTabsFirstLoad
+                        key={page}
                         testName={page}
                         initialData={formData[page]}
                         getValues={getValues}
@@ -146,17 +138,21 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
                }
 
                <BottomBtns
-                  page={page}
                   testsArr={testsArr}
+                  page={page}
                   setValue={setValue}
-                  setShowExitModal={setShowExitModal}
                />
             </form>
-         </Container>
+         </div>
 
          {showExitModal && <ExitModal setShowExitModal={setShowExitModal} />}
          {error && <ErrorModal error={error} setError={setError} />}
-         {typeof progress === "number" && <ProgressModal progress={progress} setProgress={setProgress} />}
+         {typeof progress === "number" &&
+            <ProgressModal
+               progress={progress}
+               setProgress={setProgress}
+            />
+         }
       </>
    )
 }

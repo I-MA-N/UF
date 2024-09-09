@@ -17,6 +17,9 @@ export default {
         "3.5": "14px",
         "4.5": "18px",
       },
+      animation: {
+        'spin-slow': 'spin 4s linear infinite',
+      }
     },
     colors: {
       "primary": "#083C5A",

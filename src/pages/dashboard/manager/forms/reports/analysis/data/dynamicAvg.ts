@@ -1,14 +1,14 @@
-import DynamicReportObj from "../../../../../../../types/DynamicReportObj";
-import dynamic from "../../../../../tests/data/testsData/dynamic";
+import DynamicEvaluationReportObj from "../../../../../../../types/DynamicEvaluationReportObj";
+import dynamicEvaluation from "../../../../../tests/data/testsData/dynamicEvaluation";
 
 function dynamicAvg(usersData: any) {
-   const resultArr: DynamicReportObj[] = [];
+   const resultArr: DynamicEvaluationReportObj[] = [];
 
-   dynamic.forEach(section => {
+   dynamicEvaluation.forEach(section => {
       resultArr.push({
-         title: section.sectionTitle,
-         data: section.sectionQuestions.map(question => ({
-            name: question.text,
+         title: section.name,
+         data: section.questions.map(question => ({
+            name: question.title,
             src: question.src,
             value: 0
          }))

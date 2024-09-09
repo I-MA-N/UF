@@ -1,7 +1,7 @@
-import { NormalizedLandmarkList } from "@mediapipe/holistic";
+import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 
-type VideoFnType = (landmarks: NormalizedLandmarkList) => {
-   landmarks: NormalizedLandmarkList;
+type VideoFnType = (landmarks: NormalizedLandmark[]) => {
+   landmarks: NormalizedLandmark[];
    status: boolean;
 }[]
 

@@ -1,0 +1,140 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import CoordinatesType from "../../../../../../../types/CoordinatesType";
+import AimContainer from "./camera/AimContainer";
+import BetaLine from "./camera/BetaLine";
+import CloseBtn from "./camera/buttons/CloseBtn";
+import CapturePhotoBtn from "./camera/buttons/CapturePhotoBtn";
+import CameraModeBtn from "./camera/buttons/CameraModeBtn";
+import useAIStore from "../../../../store/AIStore";
+import { PoseLandmarker } from "@mediapipe/tasks-vision";
+import Webcam from "react-webcam";
+import usePhotoStore from "../../../../store/photoStore";
+import { initMediaRecorder } from "../../../../../../../utils/AIFuncs";
+
+type CameraSimpleProps = {
+   model: PoseLandmarker
+}
+
+function CameraSimple({ model }: CameraSimpleProps) {
+   const currentSection = useAIStore(state => state.currentSection);
+   const { setImage, setLandmarks, setVideoSize } = usePhotoStore(state => ({ setImage: state.setImage, setLandmarks: state.setLandmarks, setVideoSize: state.setVideoSize }));
+
+   const webcamRef = useRef<Webcam | null>(null);
+   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+   const isClickedRef = useRef(false);
+
+   const [facingMode, setFacingMode] = useState<"environment" | "user">("environment");
+   const [isCameraLoaded, setIsCameraLoaded] = useState(false);
+   const [isSupported, setIsSupported] = useState(true);
+   const [coordinates, setCoordinates] = useState<CoordinatesType>(null);
+
+   const startRecording = useCallback(() => {
+      if (webcamRef.current?.stream) {
+         initMediaRecorder(mediaRecorderRef, webcamRef.current.stream, proccessFrames);
+
+         if (window.DeviceOrientationEvent) {
+            window.addEventListener("deviceorientation", handleDeviceOrientaion);
+         } else {
+            setIsSupported(false);
+         }
+      }
+   }, [])
+
+   const stopRecording = useCallback(() => {
+      window.removeEventListener("deviceorientation", handleDeviceOrientaion);
+      if (mediaRecorderRef.current) {
+         mediaRecorderRef.current.stop();
+      }
+   }, [])
+
+   const proccessFrames = useCallback(() => {
+      if (!isCameraLoaded) setIsCameraLoaded(true);
+
+      const video = webcamRef.current?.video;
+      if (video) {
+         let startTimeMs = performance.now();
+         const result = model.detectForVideo(video, startTimeMs);
+         const landmarks = result.landmarks[0];
+
+         if (isClickedRef.current) {
+            const base64 = webcamRef.current?.getScreenshot();
+            if (base64) {
+               setImage(base64);
+               setLandmarks(landmarks);
+               setVideoSize(video.clientWidth, video.clientHeight);
+            }
+         }
+      }
+   }, [])
+
+   const handleDeviceOrientaion = useCallback((e: DeviceOrientationEvent) => {
+      const alpha = e.alpha;
+      const gamma = e.gamma;
+      const beta = e.beta;
+      if (typeof alpha === "number" && typeof gamma === "number" && typeof beta === "number") {
+         setCoordinates({
+            alpha,
+            beta,
+            gamma
+         })
+      } else {
+         setIsSupported(false);
+      }
+   }, [])
+
+   const isDisabled = useMemo(() => {
+      if (isSupported && coordinates) {
+         const betaBool = coordinates.beta < 87 || coordinates.beta > 93;
+         const gammaBool = coordinates.gamma < -3 || coordinates?.gamma > 3;
+
+         return betaBool || gammaBool;
+      }
+
+      return false;
+   }, [isSupported, coordinates?.beta, coordinates?.gamma])
+
+   useEffect(() => {
+      return () => {
+         stopRecording();
+      }
+   }, [])
+
+   return (
+      <div className="flex flex-col items-center justify-center gap-7 min-h-dvh">
+         <p className="text-center">{currentSection?.nameFA}</p>
+
+         <div className="w-full min-h-80 flex items-center justify-center">
+            <div className="relative">
+               <Webcam
+                  ref={webcamRef}
+                  videoConstraints={{
+                     facingMode,
+                     aspectRatio: 1600 / 1000,
+                  }}
+                  onLoadedData={() => startRecording()}
+               />
+
+               <AimContainer isSupported={isSupported} gamma={coordinates?.gamma} />
+               <BetaLine isSupported={isSupported} beta={coordinates?.beta} />
+            </div>
+         </div>
+
+         <div className="w-full flex justify-center items-center gap-8">
+            <CameraModeBtn
+               isDisabled={!isCameraLoaded}
+               setFacingMode={setFacingMode}
+            />
+
+            <CapturePhotoBtn
+               isLoading={!isCameraLoaded}
+               isDisabled={isDisabled}
+               isClickedRef={isClickedRef}
+            />
+
+            <CloseBtn />
+         </div>
+      </div>
+   );
+};
+
+export default CameraSimple;

@@ -3,7 +3,7 @@ import activityRate from "./testsData/activityRate";
 import activityReadinessData from "./testsData/activityReadinessData";
 import bodyStatus from "./testsData/bodyStatus";
 import diseaseBackgroundData from "./testsData/diseaseBackgroundData";
-import dynamic from "./testsData/dynamic";
+import dynamicEvaluation from "./testsData/dynamicEvaluation";
 import FMS from "./testsData/FMS";
 import generalHealthData from "./testsData/generalHealthData";
 import happinessData from "./testsData/happinessData";
@@ -11,7 +11,7 @@ import hasPainData from "./testsData/hasPainData";
 import jobPerformance from "./testsData/jobPerformance";
 import jobSatisfactionData from "./testsData/jobSatisfactionData";
 import lifeQuality from "./testsData/lifeQuality";
-import nahanjariHa from "./testsData/nahanjariHa";
+import staticEvaluation from "./testsData/staticEvaluation";
 import physicalPreparationData from "./testsData/physicalPreparationData";
 
 const testsData = {
@@ -84,13 +84,13 @@ const testsData = {
    'ناهنجاری ها': {
       testSubTitle: '',
       testPattern: "Choice" as testPatternTypes,
-      testData: nahanjariHa,
+      testData: staticEvaluation,
       testClassName: 'grid grid-cols-1 justify-center divide-y divide-y-white'
    },
    'ارزیابی پویا': {
       testSubTitle: '',
       testPattern: "ImageWithDivide" as testPatternTypes,
-      testData: dynamic,
+      testData: dynamicEvaluation,
       testClassName: 'grid grid-cols-1 justify-center divide-y divide-y-white'
    },
    'عملکردی وضعیت بدنی': {

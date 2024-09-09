@@ -1,7 +1,6 @@
 import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import MultipleChoiceInput from "../components/inputs/MultipleChoiceInput";
 import ChoiceInput from "../components/inputs/ChoiceInput";
-import ImageInput from "../nahanjariHa/components/manual/components/ImageInput";
 import ChoiceImage from "../components/inputs/ChoiceImage";
 
 export type testPatternTypes = "MultipleChoice" | "Choice" | "ChoiceWithDivide" | "Radio" | "Text" | "ImageWithDivide" | "ChoiceImage";
@@ -32,9 +31,9 @@ function generateTestInputs({ initialData, testPattern, testData, register, setV
          return testData.map((input: any, index: number) => {
             const defaultValue = initialData?.[input.title as keyof typeof initialData];
 
-            const defaultValueIndex = input.keys.indexOf(defaultValue);
+            const defaultValueIndex = input.keys.indexOf(Number(defaultValue));
 
-            return <>
+            return <div key={input.title + input.id}>
                <input
                   type="text"
                   hidden
@@ -44,7 +43,6 @@ function generateTestInputs({ initialData, testPattern, testData, register, setV
                   })}
                />
                <ChoiceInput
-                  key={input.title}
                   register={register}
                   title={input.title}
                   keys={input.keys}
@@ -53,12 +51,12 @@ function generateTestInputs({ initialData, testPattern, testData, register, setV
                   defaultValue={defaultValueIndex}
                   setValue={setValue}
                />
-            </>
+            </div>
          })
 
       case "ChoiceWithDivide":
          return testData.map((section: any) => (
-            <div>
+            <div key={section.sectionTitle}>
                <h3 className="mb-3 text-center text-sm lg:text-base">{section.sectionTitle}</h3>
                <div className="flex gap-x-8 gap-y-4 lg:gap-y-8 items-center justify-center flex-wrap">
                   {
@@ -115,28 +113,6 @@ function generateTestInputs({ initialData, testPattern, testData, register, setV
                />
             </div>
          ))
-
-      // case "ImageWithDivide":
-      //    return testData.map((section: any) => (
-      //       <div className="py-10">
-      //          <h3 className="mb-4 lg:text-lg text-center">{section.sectionTitle}</h3>
-      //          <div className="flex gap-x-8 gap-y-4 lg:gap-y-8 justify-center flex-wrap">
-      //             {
-      //                section.sectionQuestions.map((image: any) => (
-      //                   <ImageInput
-      //                      key={image.id}
-      //                      title={image.text}
-      //                      image={image.src}
-      //                      direction={image.direction === 'vertical' ? "vertical" : "horizental"}
-      //                      register={register}
-      //                      setValue={setValue}
-      //                      defaultValue={initialData?.[image.text as keyof typeof initialData] || 0}
-      //                   />
-      //                ))
-      //             }
-      //          </div>
-      //       </div>
-      //    ))
 
       case "ChoiceImage":
          return testData.map((input: any) => {

@@ -10,7 +10,10 @@ function PLogin() {
     const { mutate, error, isPending } = useMutation({
         mutationKey: ['post: login'],
         mutationFn: async (userData: any) => {
-            const formData = getFormData(userData);
+            const formData = getFormData({
+                ...userData,
+                username: userData.username.trim()
+            });
             const req = await axios.post(import.meta.env.VITE_ENDPOINT + `/login/`, formData)
 
             return req.data

@@ -7,14 +7,14 @@ import bodyCompositionWhole from "./data/bodyCompositionWhole";
 import calorieAmountAvg from "./data/calorieAmountAvg";
 import dynamicAvg from "./data/dynamicAvg";
 import FMSAvg from "./data/FMSAvg";
-import nahanjariHaAvg from "./data/nahanjariHaAvg";
+import staticEvaluationAvg from "./data/staticEvaluationAvg";
 import physicalIndexChartData from "./data/physicalIndexChartData";
 import physicalIndexWhole from "./data/physicalIndexWhole";
 import questionariesAvg from "./data/questionariesAvg";
 import statusBodyAvg from "./data/statusBodyAvg";
 import dynamicAvgJsx from "./jsx/dynamicAvgJsx";
 import FMSAvgJsx from "./jsx/FMSAvgJsx";
-import nahanjariHaAvgJsx from "./jsx/nahanjariHaAvgJsx";
+import staticEvaluationAvgJsx from "./jsx/staticEvaluationAvgJsx";
 import physicalIndexAvgJsx from "./jsx/physicalIndexAvgJsx";
 import questionariesAvgJsx from "./jsx/questionariesAvgJsx";
 
@@ -79,8 +79,8 @@ function generateReportsArr(usersData: any, gender: GenderStrings) {
    }
 
    {
-      const reportData = nahanjariHaAvg(usersData);
-      const reportJsx = nahanjariHaAvgJsx(reportData)
+      const reportData = staticEvaluationAvg(usersData);
+      const reportJsx = staticEvaluationAvgJsx(reportData)
       reportsArr.push({
          reportName: 'ناهنجاری اسکلتی - عضلانی',
          reportJsx,

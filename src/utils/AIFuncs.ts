@@ -1,156 +1,79 @@
-import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
-import { GpuBuffer, NormalizedLandmarkList, POSE_CONNECTIONS } from "@mediapipe/holistic";
-import AIContextType, { ImageStateNames } from "../types/AIContextType";
-import { Holistic, Results } from "@mediapipe/holistic";
-import CoordinatesType from "../types/CoordinatesType";
-import VideoFnType from "../types/VideoFnType";
+import JSZip from "jszip";
+import { DrawingUtils, NormalizedLandmark, PoseLandmarker } from "@mediapipe/tasks-vision";
+import usePhotoStore from "../pages/dashboard/tests/store/photoStore";
+import ExtractedZipType from "../types/ExtractedZipType";
+import useModelStore from "../pages/dashboard/tests/store/modelStore";
+import { staticEvaluationType } from "../pages/dashboard/tests/data/testsData/staticEvaluation";
+import { dynamicEvaluationType } from "../pages/dashboard/tests/data/testsData/dynamicEvaluation";
 
-export const initHolistic = async (setAIData: React.Dispatch<React.SetStateAction<AIContextType | null>>) => {
-   const holistic = new Holistic({
-      locateFile: (file: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/holistic/${file}`
-   });
-
-   holistic.setOptions({
-      modelComplexity: 1,
-      smoothLandmarks: true,
-      enableSegmentation: true,
-      smoothSegmentation: true,
-      minDetectionConfidence: 0.5,
-      minTrackingConfidence: 0.5,
-   });
-
-   holistic.onResults((results) => {
-      setAIData(prevValue => ({
-         ...prevValue,
-         results
-      }))
-   })
-
-   setAIData(prevValue => ({
-      ...prevValue,
-      model: holistic
-   }))
-
-   // Just to download assets needed for landmarks sooner
-   const imgElem = document.getElementById("front") as HTMLImageElement | null;
-   if (imgElem) {
-      await holistic.send({ image: imgElem });
-      setAIData(prevValue => ({
-         ...prevValue,
-         results: undefined,
-         modelDownlaoded: true
-      }))
-   }
-}
-
-export const cameraFuncs = (
-   videoRef: React.MutableRefObject<HTMLVideoElement | null>,
-   facingMode: string,
-   setIsSupported: React.Dispatch<React.SetStateAction<boolean>>,
-   setCoordinates: React.Dispatch<React.SetStateAction<CoordinatesType>>,
+export const initMediaRecorder = (
+   mediaRecorderRef: React.MutableRefObject<MediaRecorder | null>,
+   stream: MediaStream,
+   handleDataAvailable: () => void 
 ) => {
-   let stream: MediaStream | null = null;
-
-   const startCamera = async (frameRate?: number) => {
-      try {
-         stream = await navigator.mediaDevices.getUserMedia({
-            video: {
-               facingMode: facingMode,
-               aspectRatio: 1600 / 1000,
-               frameRate: {
-                  max: frameRate
-               }
-            },
-            audio: false,
-         })
-
-         if (videoRef.current) videoRef.current.srcObject = stream;
-
-         if (window.DeviceOrientationEvent) {
-            window.addEventListener("deviceorientation", (e) => {
-               const alpha = e.alpha;
-               const gamma = e.gamma;
-               const beta = e.beta;
-               if (typeof alpha === "number" && typeof gamma === "number" && typeof beta === "number") {
-                  setCoordinates({
-                     alpha,
-                     beta,
-                     gamma
-                  })
-               } else {
-                  setIsSupported(false);
-               }
-            })
-         } else {
-            setIsSupported(false);
-         }
-      } catch (error) {
-         console.log(error);
-      }
-   }
-
-   const stopCamera = async () => {
-      if (stream) {
-         stream.getTracks().forEach(track => {
-            track.stop();
-         });
-         stream = null;
-      }
-   }
-
-   return { startCamera, stopCamera };
-}
-
-export const drawOnVideo = (
-   video: HTMLVideoElement | null,
-   canvas: HTMLCanvasElement | null,
-   results: Results,
-   videoFn: VideoFnType,
-   landmarksStatus: boolean[],
-) => {
-   const ctx = canvas?.getContext("2d");
-   if (video && canvas && ctx && results) {
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      ctx.drawImage(results.image, 0, 0, video.videoWidth, video.videoHeight);
-
-      if (results.poseLandmarks?.length) {
-         drawConnectors(ctx, results.poseLandmarks, POSE_CONNECTIONS, { color: '#FCC72C', lineWidth: 1 });
-         drawLandmarks(ctx, results.poseLandmarks, { color: '#FF0000', radius: 2 });
-
-         landmarksStatus = [];
-         const videoStates = videoFn(results.poseLandmarks);
-         videoStates?.forEach(({ landmarks, status }) => {
-            drawConnectors(ctx, landmarks, POSE_CONNECTIONS, { color: status ? '#4CB648' : '#FF8225', lineWidth: 1.5 });
-            drawLandmarks(ctx, landmarks, { color: status ? '#4CB648' : '#FF8225', radius: 2.5 });
-            landmarksStatus.push(status);
-         })
-      }
-   }
-   return landmarksStatus;
+   const model = useModelStore.getState().model;
+   mediaRecorderRef.current = new MediaRecorder(stream, {
+      mimeType: "video/webm"
+   });
+   model!.setOptions({
+      runningMode: "VIDEO"
+   });
+   mediaRecorderRef.current.addEventListener("dataavailable", handleDataAvailable);
+   mediaRecorderRef.current.start(1);
 }
 
 export const drawOnCanvas = (
-   canvas: HTMLCanvasElement | null,
-   image: GpuBuffer | null,
-   landmarks: NormalizedLandmarkList,
+   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>,
+   width: number,
+   height: number,
+   image?: CanvasImageSource,
+   landmarks?: NormalizedLandmark[]
 ) => {
+   const canvas = canvasRef.current;
    const ctx = canvas?.getContext("2d");
 
    if (canvas && ctx) {
+      ctx.save();
+
+      canvas.width = width;
+      canvas.height = height;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
       if (image) {
-         ctx.clearRect(0, 0, canvas.width, canvas.height);
          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
       }
-      if (landmarks?.length) {
-         drawConnectors(ctx, landmarks, POSE_CONNECTIONS, { color: '#FCC72C', lineWidth: 1 });
-         drawLandmarks(ctx, landmarks, { color: '#FF0000', radius: 2 });
+   
+      if (landmarks) {
+         let drawingUtils = new DrawingUtils(ctx);
+         drawingUtils.drawLandmarks(landmarks, { color: '#FFFFFF', radius: 2 });
+         drawingUtils.drawConnectors(landmarks, PoseLandmarker.POSE_CONNECTIONS, { color: '#FFFFFF', lineWidth: 1 });
       }
+   
+      ctx.restore();
+   }
+}
+
+export const executeVideoFn = (
+   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>,
+   currentSection: staticEvaluationType[0] | dynamicEvaluationType[0] | undefined,
+   landmarks: NormalizedLandmark[],
+   landmarksStatus: boolean[]
+) => {
+   const ctx = canvasRef.current?.getContext("2d");
+   if (ctx && currentSection && "videoFn" in currentSection.AI && landmarks?.length) {
+      const videoStates = currentSection.AI.videoFn(landmarks);
+      videoStates.forEach(({ landmarks, status }) => {
+         let drawingUtils = new DrawingUtils(ctx);
+         drawingUtils.drawLandmarks(landmarks, { color: status ? '#4CB648' : '#FF0000', radius: 2 });
+         drawingUtils.drawConnectors(landmarks, PoseLandmarker.POSE_CONNECTIONS, { color: status ? '#4CB648' : '#FF0000', lineWidth: 1 });
+
+         landmarksStatus.push(status);
+      })
    }
 }
 
 export const canvasDown = (
-   landmarks: NormalizedLandmarkList,
+   landmarks: NormalizedLandmark[],
    setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>,
    canvas: HTMLCanvasElement | null,
    offsetX: number,
@@ -170,12 +93,13 @@ export const canvasDown = (
 }
 
 export const canvasMove = (
+   landmarks: NormalizedLandmark[],
    selectedLandmark: number | null,
-   setPhotoData: React.Dispatch<React.SetStateAction<Results | null>>,
    canvas: HTMLCanvasElement | null,
    offsetX: number,
    offsetY: number
 ) => {
+   const setLandmarks = usePhotoStore.getState().setLandmarks;
    const circleElem = document.getElementById("circle");
 
    if (typeof selectedLandmark === "number" && canvas && circleElem) {
@@ -183,14 +107,9 @@ export const canvasMove = (
       circleElem.style.top = `${offsetY - circleElem.clientWidth / 2}px`;
       circleElem.style.display = "flex";
 
-      setPhotoData(prevValue => {
-         if (prevValue?.poseLandmarks && canvas) {
-            prevValue.poseLandmarks[selectedLandmark].x = offsetX / canvas.clientWidth;
-            prevValue.poseLandmarks[selectedLandmark].y = offsetY / canvas.clientHeight;
-            drawOnCanvas(canvas, prevValue.image, prevValue.poseLandmarks);
-         }
-         return prevValue;
-      })
+      landmarks[selectedLandmark].x = offsetX / canvas.clientWidth;
+      landmarks[selectedLandmark].y = offsetY / canvas.clientHeight;
+      setLandmarks(landmarks);
    }
 }
 
@@ -202,57 +121,29 @@ export const canvasUp = (
    if (circleElem) circleElem.style.display = "none";
 }
 
-export const highlightLandmark = (
-   canvas: HTMLCanvasElement | null,
-   selectedLandmark: number,
-   landmarks: NormalizedLandmarkList,
-   setLandmarkDetails: React.Dispatch<React.SetStateAction<{ top: number, left: number } | null>>
-) => {
-   const ctx = canvas?.getContext("2d");
-   const landmark = landmarks[selectedLandmark];
-   const filteredLandmarks = landmarks.filter((_value, index) => index !== selectedLandmark);
+export const extractZip = async (fileContent: string) => {
+   const zip = new JSZip();
+   await zip.loadAsync(fileContent, { base64: true });
 
-   if (canvas && ctx) {
-      if (landmarks.length && filteredLandmarks.length && landmark) {
-         drawConnectors(ctx, landmarks, POSE_CONNECTIONS, { color: '#FFFFFF', lineWidth: 1 });
-         drawLandmarks(ctx, filteredLandmarks, { color: '#FFFFFF', radius: 3 });
-         drawLandmarks(ctx, [landmark], { color: '#000', radius: 5 });
+   const image = zip.file("image.jpeg");
+   const landmarksJson = zip.file("landmarks.json");
+   const imageSizeJson = zip.file("imageSize.json");
 
-         setLandmarkDetails({
-            top: landmark.y * canvas.clientHeight - 14,
-            left: landmark.x * canvas.clientWidth - 14,
-         })
-      }
-   }
-}
+   if (image && landmarksJson && imageSizeJson) {
+      const base64 = await image.async("string");
 
-export const addImageZip = (
-   newObject: {
-      key: ImageStateNames;
-      value: string;
-   },
-   setAIData: React.Dispatch<React.SetStateAction<AIContextType | null>>
-) => {
-   setAIData(prevValue => {
-      const prevImages = prevValue?.imagesToSave;
-      let newImages = [newObject];
+      const imageSizeString = await imageSizeJson.async("string");
+      const imageSize: { width: number, height: number } = JSON.parse(imageSizeString);
 
-      if (prevImages) {
-         newImages = [
-            ...prevImages,
-            newObject
-         ]
-
-         const keyIndex = prevImages.findIndex(image => image.key === newObject.key)
-         if (keyIndex !== -1) {
-            prevImages[keyIndex].value = newObject.value;
-            newImages = prevImages;
-         }
-      }
+      const landmarksString = await landmarksJson.async("string");
+      const landmarks: NormalizedLandmark[] = JSON.parse(landmarksString);
 
       return {
-         ...prevValue,
-         imagesToSave: [...newImages]
-      }
-   })
+         image: base64,
+         imageSize,
+         landmarks
+      } as ExtractedZipType
+   }
+
+   return null;
 }

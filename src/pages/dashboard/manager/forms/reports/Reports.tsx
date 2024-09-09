@@ -5,7 +5,6 @@ import generateReportsArr from "./analysis/generateReportsArr";
 import ReportsTopBtns from "./components/ReportsTopBtns";
 import GenderStrings from "../../../../../types/GenderStrings";
 import filterUsersData from "./analysis/filterUsersData";
-import MuiTheme from "./components/MuiTheme";
 import NoDataElem from "./components/NoDataElem";
 
 type ReportsProps = {
@@ -41,9 +40,7 @@ function Reports({ data }: ReportsProps) {
          </section>
 
          <section className="container mx-auto min-w-[600px] max-w-[1200px] pl-4 pb-12 text-xs lg:text-base">
-            <MuiTheme>
-               {page?.reportJsx}
-            </MuiTheme>
+            {page?.reportJsx}
          </section>
       </>
    )

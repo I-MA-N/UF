@@ -8,7 +8,6 @@ import TextsHeader from './components/TextsHeader';
 import ImagesHeader from './components/ImagesHeader';
 import GUserData from '../../../api/common/GUserData';
 import Loading from '../../common/Loading';
-import { useEffect } from 'react';
 
 type ProgramProps = {
    programData: Exercise[][],
@@ -17,21 +16,6 @@ type ProgramProps = {
 
 function Program({ programData, username }: ProgramProps) {
    const { data, isError, isPending } = GUserData(username);
-
-   useEffect(() => {
-      const nav = document.getElementsByTagName("nav")[0];
-      nav.style.position = "absolute";
-      nav.style.left = "0";
-      nav.style.right = "0";
-      nav.style.transform = "none";
-
-      return () => {
-         nav.style.position = "";
-         nav.style.left = "";
-         nav.style.right = "";
-         nav.style.transform = "";
-      }
-   }, [])
 
    if (isPending) return <Loading />;
 

@@ -10,6 +10,8 @@ import ProtectedRoute from "./pages/authentication/ProtectedRoute"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import generalRoutes from "./routes/generalRoutes"
 import commonRoutes from "./routes/commonRoutes"
+import MuiTheme from "./pages/common/MuiTheme"
+import WindowModelType from "./types/WindowModelType"
 
 // ProtectedRoute -> Handle access token proccess,
 // UserDataProvider -> Provide user data as context,
@@ -71,10 +73,18 @@ const queryClient = new QueryClient({
     }
 })
 
+declare global {
+    interface Window {
+        model: WindowModelType
+    }
+}
+
 function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
+            <MuiTheme>
+                <RouterProvider router={router} />
+            </MuiTheme>
             <ReactQueryDevtools />
         </QueryClientProvider>
     )

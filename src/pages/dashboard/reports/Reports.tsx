@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import ReportsMainInfo from "./components/ReportsMainInfo";
 import ReportsButtons from "./components/ReportsButtons";
@@ -16,27 +16,14 @@ type ReportsProps = {
 }
 
 function Reports({ userData, reportsArr, formData }: ReportsProps) {
-   useEffect(() => {
-      const nav = document.getElementsByTagName("nav")[0];
-      nav.style.position = "sticky";
-      nav.style.left = "0";
-      nav.style.transform = "none";
-
-      return () => {
-         nav.style.position = "";
-         nav.style.left = "";
-         nav.style.transform = "";
-      }
-   }, [])
-
-   const navigate = useNavigate()
+   const navigate = useNavigate();
 
    const [page, setPage] = useState(reportsArr[0]);
 
    return (
-      <>
+      <div className="pt-32 lg:pt-36">
          <button
-            className="btn w-fit h-auto p-3 gap-3 mt-8 mx-auto"
+            className="btn w-fit h-auto p-3 gap-3 mx-auto"
             onClick={() => navigate(-1)}
          >
             برگشت
@@ -53,7 +40,7 @@ function Reports({ userData, reportsArr, formData }: ReportsProps) {
          <section className="container mx-auto min-w-[600px] text-xs/6 lg:text-base pl-4 pb-12">
             {page?.reportJsx}
          </section>
-      </>
+      </div>
    )
 }
 

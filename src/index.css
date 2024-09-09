@@ -122,7 +122,49 @@
     }
 
     .modal {
-        @apply fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-transparent backdrop-blur-md z-10;
+        @apply fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-transparent backdrop-blur-md z-50;
+    }
+
+    .exit-btn {
+        @apply flex items-center text-sm border border-yellow rounded-[48px] transition-all duration-500 z-30;
+    }
+
+    .exit-btn-ellipse {
+        @apply h-12 absolute right-0 gap-2 px-8 text-yellow;
+    }
+
+    .exit-btn-circle {
+        @apply fixed top-6 right-4 justify-center border-2 bg-primary text-yellow size-12;
+    }
+
+    .save-btn {
+        @apply flex items-center text-sm bg-secondary text-white border border-secondary rounded-[48px] transition-all duration-500 z-30;
+    }
+
+    .save-btn-ellipse {
+        @apply h-12 absolute left-0 gap-2 px-8;
+    }
+
+    .save-btn-circle {
+        @apply fixed top-20 right-4 justify-center size-12;
+    }
+
+    .clicked-animation {
+        animation: pulse-yellow 1.5s 1 forwards;
+    }
+    @keyframes pulse-yellow {
+        0% {
+            color: #E4F4FD;
+            scale: 1;
+        }
+        50% {
+            color: #FCC72C;
+            scale: 1.05;
+        }
+        100% {
+            color: #E4F4FD;
+            scale: 1;
+        }
     }
 }
 
@@ -139,6 +181,10 @@
         white-space: nowrap;
         overflow: scroll;
         text-overflow: clip;
+    }
+
+    .touch-action-none {
+        touch-action: none;
     }
 
     /* For MUI Gauge chart */
