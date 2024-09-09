@@ -12,7 +12,7 @@ function CardBtn({ sectionName }: CardBtnProps) {
       <button
          type="button"
          onClick={() => setCurrentSection(sectionName)}
-         className="size-full flex items-center justify-center border-4 border-dashed rounded-3xl"
+         className="size-full min-h-80 flex items-center justify-center border-4 border-dashed rounded-3xl"
       >
          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 40" fill="none" className="w-1 absolute">
             <line x1="2" y1="38" x2="2" y2="2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />

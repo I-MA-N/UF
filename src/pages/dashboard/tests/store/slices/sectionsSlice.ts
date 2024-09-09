@@ -14,6 +14,7 @@ interface SectionsActions {
    setCurrentSection: (sectionName: SectionNames | undefined) => void,
    removeCurrentSection: () => void,
    setNameFromManualTab: (sectionName: SectionNames) => void,
+   removeNameFromAITab: () => void,
 }
 
 export type SectionsSlice = SectionsState & SectionsActions;
@@ -46,6 +47,12 @@ const createSectionsSlice: StateCreator<
       set(state => ({
          ...state,
          nameFromManualTab: name
+      }))
+   },
+   removeNameFromAITab: () => {
+      set(state => ({
+         ...state,
+         nameFromManualTab: undefined
       }))
    }
 })

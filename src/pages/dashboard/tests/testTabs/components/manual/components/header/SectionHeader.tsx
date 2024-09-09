@@ -1,22 +1,24 @@
 import Loading from "../../../../../../../common/Loading";
-import ImageElem from "./ImageElem";
+import SectionCardFirtLoad from "./SectionCardFirstLoad";
 import { useParams } from "react-router-dom";
 import GImage from "../../../../../../../../api/common/GImage";
 import { useEffect, useMemo } from "react";
 import SectionNames from "../../../../../../../../types/SectionNames";
 import useAIStore from "../../../../../store/AIStore";
+import AddImageBtn from "./AddImageBtn";
 
-type ImageElemFirstLoadProps = {
+type SectionHeaderProps = {
    setIsAIMethod: React.Dispatch<React.SetStateAction<boolean>>,
    sectionName: SectionNames,
+   sectionNameFA: string,
 }
 
-function ImageElemFirstLoad({ setIsAIMethod, sectionName }: ImageElemFirstLoadProps) {
+function SectionHeader({ setIsAIMethod, sectionName, sectionNameFA }: SectionHeaderProps) {
    const getOrSetZipFile = useAIStore(state => state.getOrSetZipFile);
-   
+
    const { formname, username } = useParams();
    const { mutate, data, isPending } = GImage(username, formname, sectionName);
-   
+
    const zipFile = useMemo(() => (
       getOrSetZipFile(sectionName, data ? (data?.result || null) : undefined)
    ), [getOrSetZipFile, sectionName, data])
@@ -25,19 +27,31 @@ function ImageElemFirstLoad({ setIsAIMethod, sectionName }: ImageElemFirstLoadPr
       if (zipFile === undefined) mutate();
    }, [zipFile])
 
-   if (isPending || zipFile === undefined) return (
-      <div className="pb-8">
-         <Loading fullHeight={false} />
-      </div>
-   )
-
    return (
-      <ImageElem
-         setIsAIMethod={setIsAIMethod}
-         zipFile={zipFile}
-         sectionName={sectionName}
-      />
+      <>
+         <h3 className="mb-4 text-center text-sm lg:text-base">{sectionNameFA}</h3>
+
+         {
+            zipFile === undefined || isPending &&
+            <div className="pb-8">
+               <Loading fullHeight={false} />
+            </div>
+         }
+         {
+            zipFile === null &&
+            <AddImageBtn
+               sectionName={sectionName}
+               setIsAIMethod={setIsAIMethod}
+            />
+         }
+         {
+            zipFile &&
+            <SectionCardFirtLoad
+               zipFile={zipFile}
+            />
+         }
+      </>
    )
 };
 
-export default ImageElemFirstLoad;
+export default SectionHeader;

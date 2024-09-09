@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { extractZip } from "../../../../../../../../../utils/AIFuncs";
 import Loading from "../../../../../../../../common/Loading";
 import CardImage from "./CardImage";
@@ -15,6 +15,23 @@ function CardImageFirstLoad({ sectionName, fileContent }: CardImageFristLoadProp
    const [files, setFiles] = useState<ExtractedZipType | null | undefined>(undefined);
    const [showLandmarks, setShowLandmarks] = useState(true);
 
+   const divRef = useRef<HTMLDivElement>(null);
+   const [width, setWidth] = useState(divRef.current?.clientWidth);
+   const height = useMemo(() => width && width / 1.6, [width]);
+
+   useEffect(() => {
+      setWidth(divRef.current?.clientWidth);
+
+      const handleResize = () => {
+         setWidth(divRef.current?.clientWidth);
+      }
+
+      divRef.current?.addEventListener("resize", handleResize);
+      return () => {
+         divRef.current?.removeEventListener("resize", handleResize);
+      }
+   }, [divRef.current])
+
    useEffect(() => {
       const extractFiles = async () => {
          const files = await extractZip(fileContent);
@@ -25,7 +42,10 @@ function CardImageFirstLoad({ sectionName, fileContent }: CardImageFristLoadProp
    }, [fileContent])
 
    return (
-      <div className="size-full flex items-center justify-center border-4 rounded-3xl relative">
+      <div
+         ref={divRef}
+         className="size-full flex items-center justify-center border-4 rounded-3xl relative p-2"
+      >
          <CardMenu
             sectionName={sectionName}
             setShowLandmarks={setShowLandmarks}
@@ -47,6 +67,8 @@ function CardImageFirstLoad({ sectionName, fileContent }: CardImageFristLoadProp
                image={files.image}
                landmarks={files.landmarks}
                showLandmarks={showLandmarks}
+               width={width}
+               height={height}
             />
          }
       </div>

@@ -15,7 +15,7 @@ type SectionCardProps = {
 }
 
 function SectionCard({ section }: SectionCardProps) {
-   const { getOrSetZipFile, nameFromManualTab } = useAIStore(state => ({ getOrSetZipFile: state.getOrSetZipFile, nameFromManualTab: state.nameFromManualTab }));
+   const { getOrSetZipFile, nameFromManualTab, removeNameFromAITab } = useAIStore(state => ({ getOrSetZipFile: state.getOrSetZipFile, nameFromManualTab: state.nameFromManualTab, removeNameFromAITab: state.removeNameFromAITab }));
    const sectionName = useMemo(() => section.name, [section.name]);
 
    const [showImage, setShowImage] = useState(false);
@@ -37,6 +37,7 @@ function SectionCard({ section }: SectionCardProps) {
          setIsClicked(true);
          setTimeout(() => {
             setIsClicked(false);
+            removeNameFromAITab();
          }, 1500);
       }
    }, [nameFromManualTab, section.name])
@@ -50,8 +51,7 @@ function SectionCard({ section }: SectionCardProps) {
    return (
       <>
          <div
-            className={`w-full h-80 flex flex-col items-center ${isClicked ? "clicked-animation" : "text-white"}`}
-            key={section.name}
+            className={`w-full flex flex-col items-center ${isClicked ? "clicked-animation" : "text-white"}`}
          >
             {
                zipFile === null
