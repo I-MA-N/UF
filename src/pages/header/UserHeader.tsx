@@ -2,8 +2,9 @@ import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom"
 import ProfileBtn from "./components/ProfileBtn";
 import GUserData from "../../api/common/GUserData";
 import UserDataProvider from "../authentication/UserDataProvider";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import LogoutBtn from "./components/LogoutBtn";
+import LogoutModal from "./components/LogoutModal";
 
 type SetStyleFuncProps = {
    isActive: boolean
@@ -23,6 +24,8 @@ function UserHeader() {
       return true;
    }, [pathname])
    const navigate = useNavigate();
+
+   const [showModal, setShowModal] = useState(false);
 
    useEffect(() => {
       if (data?.role && pathname.split('/')[1] !== data.role) {
@@ -44,9 +47,13 @@ function UserHeader() {
                      درباره ما
                   </NavLink>
                </div>
-               <LogoutBtn />
+               <LogoutBtn setShowModal={setShowModal} />
             </div>
          </nav>
+         {
+            showModal &&
+            <LogoutModal setShowModal={setShowModal} />
+         }
          {
             data &&
             <UserDataProvider userData={data}>

@@ -54,9 +54,9 @@ function CheckUserExistElem({ orgName, setUserStatus }: CheckUserExistElemProps)
             </button>
          </form>
          {
-            <span className="inline-block text-xs lg:text-sm text-yellow mr-3 mt-3">
-               {errors.username?.type === "validate" && 'باید فقط شامل حروف انگلیسی، اعداد یا "_" باشد!'}
-            </span>
+            <p className="text-center text-xs lg:text-sm text-yellow mt-3">
+               {errors.username?.type === "validate" && 'باید فقط شامل حروف، اعداد یا "_" باشد!'}
+            </p>
          }
       </div>
    )

@@ -39,7 +39,7 @@ function ForgotPass() {
                   render={() => (
                      <span className="text-xs text-yellow mr-5 mt-2">
                         {errors.username?.type === "required" && 'پر کردن این فیلد الزامی است!'}
-                        {errors.username?.type === "validate" && 'باید فقط شامل حروف انگلیسی، اعداد یا "_" باشد!'}
+                        {errors.username?.type === "validate" && 'باید فقط شامل حروف، اعداد یا "_" باشد!'}
                      </span>
                   )}
                />
