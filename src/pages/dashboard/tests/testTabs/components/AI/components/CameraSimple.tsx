@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import CoordinatesType from "../../../../../../../types/CoordinatesType";
-import AimContainer from "./camera/AimContainer";
-import BetaLine from "./camera/BetaLine";
 import CloseBtn from "./camera/buttons/CloseBtn";
 import CapturePhotoBtn from "./camera/buttons/CapturePhotoBtn";
 import CameraModeBtn from "./camera/buttons/CameraModeBtn";
@@ -10,6 +8,7 @@ import { PoseLandmarker } from "@mediapipe/tasks-vision";
 import Webcam from "react-webcam";
 import usePhotoStore from "../../../../store/photoStore";
 import { initMediaRecorder } from "../../../../../../../utils/AIFuncs";
+import DeviceOrientation from "./camera/DeviceOrientation";
 
 type CameraSimpleProps = {
    model: PoseLandmarker
@@ -31,17 +30,10 @@ function CameraSimple({ model }: CameraSimpleProps) {
    const startRecording = useCallback(() => {
       if (webcamRef.current?.stream) {
          initMediaRecorder(mediaRecorderRef, webcamRef.current.stream, proccessFrames);
-
-         if (window.DeviceOrientationEvent) {
-            window.addEventListener("deviceorientation", handleDeviceOrientaion);
-         } else {
-            setIsSupported(false);
-         }
       }
    }, [])
 
    const stopRecording = useCallback(() => {
-      window.removeEventListener("deviceorientation", handleDeviceOrientaion);
       if (mediaRecorderRef.current) {
          mediaRecorderRef.current.stop();
       }
@@ -64,21 +56,6 @@ function CameraSimple({ model }: CameraSimpleProps) {
                setVideoSize(video.clientWidth, video.clientHeight);
             }
          }
-      }
-   }, [])
-
-   const handleDeviceOrientaion = useCallback((e: DeviceOrientationEvent) => {
-      const alpha = e.alpha;
-      const gamma = e.gamma;
-      const beta = e.beta;
-      if (typeof alpha === "number" && typeof gamma === "number" && typeof beta === "number") {
-         setCoordinates({
-            alpha,
-            beta,
-            gamma
-         })
-      } else {
-         setIsSupported(false);
       }
    }, [])
 
@@ -105,6 +82,10 @@ function CameraSimple({ model }: CameraSimpleProps) {
 
          <div className="w-full min-h-80 flex items-center justify-center">
             <div className="relative">
+               <div className="absolute flex flex-col gap-1">
+                  <span>{coordinates?.gamma.toFixed(2)}</span>
+                  <span>{coordinates?.beta.toFixed(2)}</span>
+               </div>
                <Webcam
                   ref={webcamRef}
                   videoConstraints={{
@@ -114,8 +95,12 @@ function CameraSimple({ model }: CameraSimpleProps) {
                   onLoadedData={() => startRecording()}
                />
 
-               <AimContainer isSupported={isSupported} gamma={coordinates?.gamma} />
-               <BetaLine isSupported={isSupported} beta={coordinates?.beta} />
+               <DeviceOrientation
+                  isSupported={isSupported}
+                  setIsSupported={setIsSupported}
+                  coordinates={coordinates}
+                  setCoordinates={setCoordinates}
+               />
             </div>
          </div>
 

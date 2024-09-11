@@ -19,7 +19,7 @@ export const initMediaRecorder = (
       runningMode: "VIDEO"
    });
    mediaRecorderRef.current.addEventListener("dataavailable", handleDataAvailable);
-   mediaRecorderRef.current.start(1);
+   mediaRecorderRef.current.start(5);
 }
 
 export const drawOnCanvas = (
