@@ -34,21 +34,18 @@ function CanvasElem({ canvasRef, selectedLandmark, setSelectedLandmark }: Canvas
          onMouseUp={() => canvasUp(setSelectedLandmark)}
 
          onTouchStart={(e) => {
-            // document.querySelectorAll("*").forEach(elem => elem.classList.add("touch-action-none"));
-            // e.currentTarget.style.touchAction = "auto !important";
             const rect = e.currentTarget.getBoundingClientRect();
-            const offsetX = e.targetTouches[0].pageX - rect.left;
-            const offsetY = e.targetTouches[0].pageY - rect.top;
+            const offsetX = e.changedTouches[0].pageX - rect.left;
+            const offsetY = e.changedTouches[0].pageY - rect.top;
             canvasDown(landmarks!, setSelectedLandmark, canvasRef.current, offsetX, offsetY);
          }}
          onTouchMove={(e) => {
             const rect = e.currentTarget.getBoundingClientRect();
-            const offsetX = e.targetTouches[0].pageX - rect.left;
-            const offsetY = e.targetTouches[0].pageY - rect.top;
+            const offsetX = e.changedTouches[0].pageX - rect.left;
+            const offsetY = e.changedTouches[0].pageY - rect.top;
             canvasMove(landmarks!, selectedLandmark, canvasRef.current, offsetX, offsetY);
          }}
          onTouchEnd={() => {
-            // document.querySelectorAll("*").forEach(elem => elem.classList.remove("touch-action-none"))
             canvasUp(setSelectedLandmark)
          }}
 

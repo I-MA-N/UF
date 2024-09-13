@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import CoordinatesType from "../../../../../../../types/CoordinatesType";
 import CloseBtn from "./camera/buttons/CloseBtn";
 import CapturePhotoBtn from "./camera/buttons/CapturePhotoBtn";
@@ -7,7 +7,6 @@ import useAIStore from "../../../../store/AIStore";
 import { PoseLandmarker } from "@mediapipe/tasks-vision";
 import Webcam from "react-webcam";
 import usePhotoStore from "../../../../store/photoStore";
-import { initMediaRecorder } from "../../../../../../../utils/AIFuncs";
 import DeviceOrientation from "./camera/DeviceOrientation";
 
 type CameraSimpleProps = {
@@ -19,25 +18,12 @@ function CameraSimple({ model }: CameraSimpleProps) {
    const { setImage, setLandmarks, setVideoSize } = usePhotoStore(state => ({ setImage: state.setImage, setLandmarks: state.setLandmarks, setVideoSize: state.setVideoSize }));
 
    const webcamRef = useRef<Webcam | null>(null);
-   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
    const isClickedRef = useRef(false);
 
    const [facingMode, setFacingMode] = useState<"environment" | "user">("environment");
    const [isCameraLoaded, setIsCameraLoaded] = useState(false);
    const [isSupported, setIsSupported] = useState(true);
    const [coordinates, setCoordinates] = useState<CoordinatesType>(null);
-
-   const startRecording = useCallback(() => {
-      if (webcamRef.current?.stream) {
-         initMediaRecorder(mediaRecorderRef, webcamRef.current.stream, proccessFrames);
-      }
-   }, [])
-
-   const stopRecording = useCallback(() => {
-      if (mediaRecorderRef.current) {
-         mediaRecorderRef.current.stop();
-      }
-   }, [])
 
    const proccessFrames = useCallback(() => {
       if (!isCameraLoaded) setIsCameraLoaded(true);
@@ -56,6 +42,8 @@ function CameraSimple({ model }: CameraSimpleProps) {
                setVideoSize(video.clientWidth, video.clientHeight);
             }
          }
+
+         requestAnimationFrame(proccessFrames);
       }
    }, [])
 
@@ -69,12 +57,6 @@ function CameraSimple({ model }: CameraSimpleProps) {
 
       return false;
    }, [isSupported, coordinates?.beta, coordinates?.gamma])
-
-   useEffect(() => {
-      return () => {
-         stopRecording();
-      }
-   }, [])
 
    return (
       <div className="flex flex-col items-center justify-center gap-7 min-h-dvh">
@@ -92,7 +74,7 @@ function CameraSimple({ model }: CameraSimpleProps) {
                      facingMode,
                      aspectRatio: 1600 / 1000,
                   }}
-                  onLoadedData={() => startRecording()}
+                  onLoadedData={proccessFrames}
                />
 
                <DeviceOrientation

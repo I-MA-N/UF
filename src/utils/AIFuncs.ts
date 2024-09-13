@@ -85,9 +85,13 @@ export const canvasDown = (
          const pixelX = Math.floor(landmark.x * canvas.clientWidth);
          const pixelY = Math.floor(landmark.y * canvas.clientHeight);
 
-         const isBetweenX = offsetX > pixelX - 4 && offsetX < pixelX + 4;
-         const isBetweenY = offsetY > pixelY - 4 && offsetY < pixelY + 4;
-         if (isBetweenX && isBetweenY) setSelectedLandmark(i);
+         const isBetweenX = offsetX > pixelX - 8 && offsetX < pixelX + 8;
+         const isBetweenY = offsetY > pixelY - 8 && offsetY < pixelY + 8;
+
+         if (isBetweenX && isBetweenY) {
+            setSelectedLandmark(i);
+            break;
+         };
       }
    }
 }
