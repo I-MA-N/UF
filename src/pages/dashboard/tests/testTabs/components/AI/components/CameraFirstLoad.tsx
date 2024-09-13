@@ -16,7 +16,10 @@ function CameraFirstLoad({ model, activeTestData }: CameraFirstLoadProps) {
    const { image, removePhoto } = usePhotoStore(state => ({ image: state.image, removePhoto: state.removePhoto }));
 
    useEffect(() => {
+      document.documentElement.style.overflow = "hidden";
+
       return () => {
+         document.documentElement.style.overflow = "auto";
          removePhoto();
       }
    }, [])

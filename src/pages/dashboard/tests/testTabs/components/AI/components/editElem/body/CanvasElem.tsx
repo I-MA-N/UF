@@ -10,14 +10,6 @@ type CanvasElemProps = {
 
 function CanvasElem({ canvasRef, selectedLandmark, setSelectedLandmark }: CanvasElemProps) {
    const { landmarks, videoSize } = usePhotoStore(state => ({ landmarks: state.landmarks, videoSize: state.videoSize }));
-   
-   useEffect(() => {
-      document.documentElement.style.overflow = "hidden";
-
-      return () => {
-         document.documentElement.style.overflow = "auto";
-      }
-   }, [])
 
    useEffect(() => {
       if (videoSize) {

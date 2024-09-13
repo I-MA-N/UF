@@ -25,7 +25,7 @@ function TopBtns({ page, setValue, setShowExitModal }: TopBtnsPropsType) {
 
    return (
       <>
-         <div className="w-full h-12 absolute top-0 flex items-center justify-center">
+         <div className="w-full h-12 absolute top-0 flex items-center justify-between">
             <button
                type="button"
                className={`exit-btn ${isCircle ? "exit-btn-circle" : "exit-btn-ellipse"}`}
