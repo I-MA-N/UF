@@ -1,9 +1,10 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision"
 import { create } from "zustand"
+import PhotoLandmarksType from "../../../../types/PhotoLandmarksType"
 
 interface PhotoState {
    image: string | undefined,
-   landmarks: NormalizedLandmark[] | undefined,
+   landmarks: PhotoLandmarksType,
    videoSize: {
       width: number,
       height: number
@@ -12,14 +13,17 @@ interface PhotoState {
 
 interface PhotoActions {
    setImage: (image: string) => void,
-   setLandmarks: (landmarks: NormalizedLandmark[]) => void,
+   setLandmarks: (landmarks: NormalizedLandmark[], type: "nature" | "dummy") => void,
    removePhoto: () => void,
    setVideoSize: (width: number, height: number) => void
 }
 
 const usePhotoStore = create<PhotoState & PhotoActions>()((set) => ({
    image: undefined,
-   landmarks: undefined,
+   landmarks: {
+      nature: undefined,
+      dummy: undefined
+   },
    videoSize: undefined,
    setImage: (image) => {
       set(state => ({
@@ -27,11 +31,26 @@ const usePhotoStore = create<PhotoState & PhotoActions>()((set) => ({
          image
       }))
    },
-   setLandmarks: (landmarks) => {
-      set(state => ({
-         ...state,
-         landmarks
-      }))
+   setLandmarks: (landmarks, type) => {
+      set(state => {
+         if (type === "nature") {
+            return {
+               ...state,
+               landmarks: {
+                  ...state.landmarks,
+                  nature: landmarks
+               }
+            }
+         }
+
+         return {
+            ...state,
+            landmarks: {
+               ...state.landmarks,
+               dummy: landmarks
+            }
+         }
+      })
    },
    removePhoto: () => {
       set(state => ({

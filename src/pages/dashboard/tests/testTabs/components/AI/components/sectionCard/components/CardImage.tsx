@@ -10,7 +10,7 @@ type CardImageProps = {
    showLandmarks: boolean,
 }
 
-function CardImage({ image, width ,height, landmarks, showLandmarks }: CardImageProps) {
+function CardImage({ image, width, height, landmarks, showLandmarks }: CardImageProps) {
    const imgRef = useRef<HTMLImageElement>(null);
    const canvasRef = useRef<HTMLCanvasElement>(null);
 

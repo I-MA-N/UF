@@ -5,6 +5,7 @@ import ExtractedZipType from "../types/ExtractedZipType";
 import useModelStore from "../pages/dashboard/tests/store/modelStore";
 import { staticEvaluationType } from "../pages/dashboard/tests/data/testsData/staticEvaluation";
 import { dynamicEvaluationType } from "../pages/dashboard/tests/data/testsData/dynamicEvaluation";
+import PhotoLandmarksType from "../types/PhotoLandmarksType";
 
 export const initMediaRecorder = (
    mediaRecorderRef: React.MutableRefObject<MediaRecorder | null>,
@@ -27,7 +28,7 @@ export const drawOnCanvas = (
    width: number,
    height: number,
    image?: CanvasImageSource,
-   landmarks?: NormalizedLandmark[]
+   landmarks?: PhotoLandmarksType
 ) => {
    const canvas = canvasRef.current;
    const ctx = canvas?.getContext("2d");
@@ -45,12 +46,38 @@ export const drawOnCanvas = (
    
       if (landmarks) {
          let drawingUtils = new DrawingUtils(ctx);
-         drawingUtils.drawLandmarks(landmarks, { color: '#FFFFFF', radius: 2 });
-         drawingUtils.drawConnectors(landmarks, PoseLandmarker.POSE_CONNECTIONS, { color: '#FFFFFF', lineWidth: 1 });
+         drawingUtils.drawLandmarks(landmarks.nature, { color: '#FFFFFF', radius: 2 });
+         drawingUtils.drawConnectors(landmarks.nature, PoseLandmarker.POSE_CONNECTIONS, { color: '#FFFFFF', lineWidth: 1 });
+         
+         drawingUtils.drawLandmarks(landmarks.dummy, { color: '#4CB648', radius: 2 });
+         drawingUtils.drawConnectors(landmarks.dummy, PoseLandmarker.POSE_CONNECTIONS, { color: '#4CB648', lineWidth: 1 });
       }
    
       ctx.restore();
    }
+}
+
+export const updateMiddleLine = (
+   landmarks: NormalizedLandmark[]
+) => {
+   const setLandmarks = usePhotoStore.getState().setLandmarks;
+   const newLandmarks = [];
+
+   newLandmarks[0] = {
+      x: (landmarks[3].x + landmarks[6].x) / 2,
+      y: (landmarks[3].y + landmarks[6].y) / 2,
+      z: landmarks[3].z,
+      visibility: landmarks[3].visibility,
+   }
+
+   newLandmarks[1] = {
+      x: (landmarks[29].x + landmarks[30].x) / 2,
+      y: (landmarks[29].y + landmarks[30].y) / 2,
+      z: landmarks[29].z,
+      visibility: landmarks[29].visibility,
+   }
+   
+   setLandmarks(newLandmarks, "dummy");
 }
 
 export const executeVideoFn = (
@@ -113,7 +140,8 @@ export const canvasMove = (
 
       landmarks[selectedLandmark].x = offsetX / canvas.clientWidth;
       landmarks[selectedLandmark].y = offsetY / canvas.clientHeight;
-      setLandmarks(landmarks);
+
+      setLandmarks(landmarks, "nature");
    }
 }
 
@@ -140,7 +168,7 @@ export const extractZip = async (fileContent: string) => {
       const imageSize: { width: number, height: number } = JSON.parse(imageSizeString);
 
       const landmarksString = await landmarksJson.async("string");
-      const landmarks: NormalizedLandmark[] = JSON.parse(landmarksString);
+      const landmarks: PhotoLandmarksType = JSON.parse(landmarksString);
 
       return {
          image: base64,

@@ -27,7 +27,7 @@ function CardMenu({ sectionName, setShowLandmarks, isImageBtnsDisabled }: CardMe
             flex justify-center items-center text-primary text-xs rounded-2xl
          `}
          >
-            <div className="flex flex-col gap-6 items-center">
+            <div className="h-full flex flex-col justify-evenly items-center">
 
                <button
                   type="button"

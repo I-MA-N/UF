@@ -22,7 +22,7 @@ function NextBtn() {
       return undefined;
    }, [currentSection])
 
-   const isDisabled = useMemo(() => !landmarks?.length, [landmarks]);
+   const isDisabled = useMemo(() => !landmarks.nature?.length, [landmarks]);
 
    return (
       <button
@@ -35,7 +35,7 @@ function NextBtn() {
             }
          `}
          onClick={async () => {
-            if (landmarks?.length) clickHandler(landmarks, nextSection?.name);
+            if (!isDisabled) clickHandler(landmarks, nextSection?.name);
          }}
       >
          {

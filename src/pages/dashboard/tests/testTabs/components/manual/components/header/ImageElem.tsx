@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
 import { drawOnCanvas } from "../../../../../../../../utils/AIFuncs";
-import { NormalizedLandmark } from "@mediapipe/tasks-vision";
+import ExtractedZipType from "../../../../../../../../types/ExtractedZipType";
 
 type ImageElemProps = {
-   image: string,
+   image: ExtractedZipType["image"],
    width: number | undefined,
    height: number | undefined,
-   landmarks: NormalizedLandmark[],
+   landmarks: ExtractedZipType["landmarks"],
 }
 
 function ImageElem({ image, width, height, landmarks }: ImageElemProps) {

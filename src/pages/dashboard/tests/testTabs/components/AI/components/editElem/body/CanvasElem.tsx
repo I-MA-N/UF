@@ -1,4 +1,4 @@
-import { canvasDown, canvasMove, canvasUp, drawOnCanvas } from "../../../../../../../../../utils/AIFuncs";
+import { canvasDown, canvasMove, canvasUp, updateMiddleLine, drawOnCanvas } from "../../../../../../../../../utils/AIFuncs";
 import { useEffect } from "react";
 import usePhotoStore from "../../../../../../store/photoStore";
 
@@ -15,6 +15,7 @@ function CanvasElem({ canvasRef, selectedLandmark, setSelectedLandmark }: Canvas
       if (videoSize) {
          drawOnCanvas(canvasRef, videoSize.width, videoSize.height, undefined, landmarks);
       }
+      updateMiddleLine(landmarks.nature!);
    }, [JSON.stringify(landmarks)])
 
    return (
@@ -24,26 +25,28 @@ function CanvasElem({ canvasRef, selectedLandmark, setSelectedLandmark }: Canvas
          onMouseDown={(e) => {
             const offsetX = e.nativeEvent.offsetX;
             const offsetY = e.nativeEvent.offsetY;
-            canvasDown(landmarks!, setSelectedLandmark, canvasRef.current, offsetX, offsetY);
+            canvasDown(landmarks.nature!, setSelectedLandmark, canvasRef.current, offsetX, offsetY);
          }}
          onMouseMove={(e) => {
             const offsetX = e.nativeEvent.offsetX;
             const offsetY = e.nativeEvent.offsetY;
-            canvasMove(landmarks!, selectedLandmark, canvasRef.current, offsetX, offsetY);
+            canvasMove(landmarks.nature!, selectedLandmark, canvasRef.current, offsetX, offsetY);
          }}
-         onMouseUp={() => canvasUp(setSelectedLandmark)}
+         onMouseUp={() => {
+            canvasUp(setSelectedLandmark)
+         }}
 
          onTouchStart={(e) => {
             const rect = e.currentTarget.getBoundingClientRect();
             const offsetX = e.changedTouches[0].pageX - rect.left;
             const offsetY = e.changedTouches[0].pageY - rect.top;
-            canvasDown(landmarks!, setSelectedLandmark, canvasRef.current, offsetX, offsetY);
+            canvasDown(landmarks.nature!, setSelectedLandmark, canvasRef.current, offsetX, offsetY);
          }}
          onTouchMove={(e) => {
             const rect = e.currentTarget.getBoundingClientRect();
             const offsetX = e.changedTouches[0].pageX - rect.left;
             const offsetY = e.changedTouches[0].pageY - rect.top;
-            canvasMove(landmarks!, selectedLandmark, canvasRef.current, offsetX, offsetY);
+            canvasMove(landmarks.nature!, selectedLandmark, canvasRef.current, offsetX, offsetY);
          }}
          onTouchEnd={() => {
             canvasUp(setSelectedLandmark)

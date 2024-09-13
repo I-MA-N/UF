@@ -3,10 +3,10 @@ import SectionNames from "../../../../../../../../../types/SectionNames";
 import useAIStore from "../../../../../../store/AIStore";
 import useFormStore from "../../../../../../store/formStore";
 import usePhotoStore from "../../../../../../store/photoStore";
-import { NormalizedLandmark } from "@mediapipe/tasks-vision";
+import PhotoLandmarksType from "../../../../../../../../../types/PhotoLandmarksType";
 
 async function nextBtnClickHandler(
-   landmarks: NormalizedLandmark[],
+   landmarks: PhotoLandmarksType,
    nextSectionName: SectionNames | undefined,
 ) {
    const { currentSection, setCurrentSection, getOrSetZipFile } = useAIStore.getState();

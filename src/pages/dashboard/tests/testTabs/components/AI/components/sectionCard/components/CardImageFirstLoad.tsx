@@ -44,7 +44,7 @@ function CardImageFirstLoad({ sectionName, fileContent }: CardImageFristLoadProp
    return (
       <div
          ref={divRef}
-         className="size-full flex items-center justify-center border-4 rounded-3xl relative p-2"
+         className="size-full min-h-36 flex items-center justify-center border-4 rounded-3xl relative p-2"
       >
          <CardMenu
             sectionName={sectionName}

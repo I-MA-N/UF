@@ -46,7 +46,7 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
          const result = model.detectForVideo(video, startTimeMs);
          const landmarks = result.landmarks[0];
 
-         drawOnCanvas(canvasRef, video.clientWidth, video.clientHeight, video, landmarks);
+         drawOnCanvas(canvasRef, video.clientWidth, video.clientHeight, video, { nature: landmarks, dummy: undefined });
 
          executeVideoFn(canvasRef, currentSection, landmarks, landmarksStatus);
 
@@ -54,7 +54,7 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
             const base64 = webcamRef.current?.getScreenshot();
             if (base64) {
                setImage(base64);
-               setLandmarks(landmarks);
+               setLandmarks(landmarks, "nature");
                setVideoSize(video.clientWidth, video.clientHeight);
             }
          }
