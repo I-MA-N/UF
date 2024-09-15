@@ -55,11 +55,14 @@ const useModelStore = create<ModelState & ModelActions>()((set, get) => ({
          );
          const poseLandmarker = await PoseLandmarker.createFromOptions(vision, {
             baseOptions: {
-               modelAssetPath: `/AIModel/pose_landmarker_heavy.task`,
+               modelAssetPath: `/AIModel/pose_landmarker_lite.task`,
                delegate: "GPU",
             },
             runningMode: "VIDEO",
             numPoses: 1,
+            minPoseDetectionConfidence: 0.8,
+            minPosePresenceConfidence: 0.8,
+            minTrackingConfidence: 0.8,
          });
          set(state => ({
             ...state,
