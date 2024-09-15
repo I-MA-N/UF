@@ -3,6 +3,7 @@ import BackdropElem from "./sampleCanvas/BackdropElem";
 import CircleElem from "./sampleCanvas/CircleElem";
 import useAIStore from "../../../../../../store/AIStore";
 import { drawOnCanvas } from "../../../../../../../../../utils/AIFuncs";
+import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 
 type SampleCanvasProps = {
    setShowSample: React.Dispatch<React.SetStateAction<boolean>>,
@@ -12,7 +13,8 @@ type SampleCanvasProps = {
 
 function SampleCanvas({ setShowSample, showSample, selectedLandmark }: SampleCanvasProps) {
    const currentSection = useAIStore(state => state.currentSection);
-   const sampleLandmarks = useMemo(() => currentSection?.AI.sampleImageLandmarks, [currentSection]);
+   const sampleLandmarks = useMemo(() => currentSection?.AI.sampleImageLandmarks, [currentSection]) as NormalizedLandmark[];
+   console.log(sampleLandmarks)
 
    const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -32,9 +34,9 @@ function SampleCanvas({ setShowSample, showSample, selectedLandmark }: SampleCan
    useEffect(() => {
       const imgElem = document.getElementById(currentSection!.name) as HTMLImageElement | null;
       if (canvasRef.current && imgElem) {
-         drawOnCanvas(canvasRef, canvasRef.current.clientWidth, canvasRef.current.clientHeight, imgElem, sampleLandmarks);
+         drawOnCanvas(canvasRef, canvasRef.current.clientWidth, canvasRef.current.clientHeight, imgElem, { nature: sampleLandmarks, dummy: undefined });
       }
-   }, [canvasRef.current, selectedLandmark])
+   }, [canvasRef.current, selectedLandmark, sampleLandmarks])
 
    return (
       <div className="absolute top-0 left-0 flex flex-col items-center">

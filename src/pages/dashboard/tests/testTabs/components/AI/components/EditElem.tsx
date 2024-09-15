@@ -11,6 +11,8 @@ type EditElemProps = {
 function EditElem({ selectedLandmark, setSelectedLandmark }: EditElemProps) {
    const { image, landmarks, videoSize } = usePhotoStore(state => ({ image: state.image, landmarks: state.landmarks, videoSize: state.videoSize }));
    const canvasRef = useRef<HTMLCanvasElement | null>(null);
+   console.log(image);
+   console.log(landmarks);
 
    return (
       <>

@@ -10,17 +10,20 @@ type ImageElemProps = {
 }
 
 function ImageElem({ image, width, height, landmarks }: ImageElemProps) {
+   const imgRef = useRef<HTMLImageElement>(null);
    const canvasRef = useRef<HTMLCanvasElement>(null);
 
    useEffect(() => {
-      if (canvasRef.current) {
-         drawOnCanvas(canvasRef, canvasRef.current.width, canvasRef.current.height, undefined, landmarks);
+      const img = imgRef.current;
+      if (img) {
+         drawOnCanvas(canvasRef, img.clientWidth, img.clientHeight, undefined, landmarks);
       }
    }, [landmarks, width])
 
    return (
       <div className="absolute top-0 left-0 -z-20">
          <img
+            ref={imgRef}
             src={image}
             alt="captured photo for this section"
             width={width}

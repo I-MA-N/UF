@@ -17,7 +17,7 @@ function CardImageFirstLoad({ sectionName, fileContent }: CardImageFristLoadProp
 
    const divRef = useRef<HTMLDivElement>(null);
    const [width, setWidth] = useState(divRef.current?.clientWidth);
-   const height = useMemo(() => width && width / 1.6, [width]);
+   const height = useMemo(() => width && width * 1.6, [width]);
 
    useEffect(() => {
       setWidth(divRef.current?.clientWidth);

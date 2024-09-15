@@ -11,7 +11,17 @@ function SectionCard({ files }: SectionCardProps) {
    const divRef = useRef<HTMLDivElement>(null);
 
    const [width, setWidth] = useState(divRef.current?.clientWidth);
-   const height = useMemo(() => width && width / 1.6, [width]);
+   const height = useMemo(() => {
+      if (width) {
+         if (files.imageSize.width > files.imageSize.height) {
+            return width / 1.6
+         }
+
+         return width * 1.6;
+      }
+
+      return undefined
+   }, [width]);
 
    const [isVisible, setIsVisible] = useState(false);
 

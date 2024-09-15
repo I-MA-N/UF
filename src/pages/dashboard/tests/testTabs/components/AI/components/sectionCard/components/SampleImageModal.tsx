@@ -7,7 +7,7 @@ function SampleImageModal({ src, setShowImage }: SampleImageModalProps) {
    return (
       <div className="modal">
          <div className="bg-primary px-4 py-9 rounded-[32px] border-2 relative">
-            
+
             <button
                type="button"
                className="size-11 flex items-center justify-center absolute bottom-[calc(100%+16px)] right-4 bg-primary text-yellow border border-yellow rounded-full"
@@ -20,7 +20,11 @@ function SampleImageModal({ src, setShowImage }: SampleImageModalProps) {
 
             <span className="absolute bottom-[calc(100%+24px)] left-1/2 -translate-x-1/2 -ml-2">عکس نمونه</span>
 
-            <img src={src} alt="sample image for this section" />
+            <img
+               src={src}
+               alt="sample image for this section"
+               className="max-w-80"
+            />
 
          </div>
       </div>
