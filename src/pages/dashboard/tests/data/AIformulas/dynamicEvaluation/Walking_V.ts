@@ -10,7 +10,7 @@ function Walking_V(landmarks:  NormalizedLandmark[]) {
    return [
       {
          landmarks: [p11, p12],
-         status: true
+         status: false
       },
       {
          landmarks: [p2, p3],
