@@ -69,7 +69,7 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
 
    return (
       <div className="flex flex-col items-center justify-center gap-7 min-h-dvh">
-         <p className="text-center">{currentSection?.nameFA}</p>
+         <p className="text-center font-Estedad-Black lg:text-xl">{currentSection?.nameFA}</p>
 
          <div className="w-full min-h-80 flex items-center justify-center">
             <div className="relative">

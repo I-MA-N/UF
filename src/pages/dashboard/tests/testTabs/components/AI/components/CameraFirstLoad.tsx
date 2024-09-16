@@ -25,18 +25,20 @@ function CameraFirstLoad({ model, activeTestData }: CameraFirstLoadProps) {
    }, [])
 
    return (
-      <div className="w-full fixed top-0 left-0 z-30 bg-primary/60 px-4">
-         {
-            image
-               ?
-               <EditElemFirstLoad />
-               :
-               "src" in activeTestData.questions[0]
+      <div className="w-full fixed top-0 left-0 z-30 bg-primary/80">
+         <div className="w-full px-4 sm:container">
+            {
+               image
                   ?
-                  <CameraLandmarks model={model} />
+                  <EditElemFirstLoad />
                   :
-                  <CameraSimple model={model} />
-         }
+                  "src" in activeTestData.questions[0]
+                     ?
+                     <CameraLandmarks model={model} />
+                     :
+                     <CameraSimple model={model} />
+            }
+         </div>
       </div>
    );
 };

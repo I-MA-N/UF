@@ -11,7 +11,7 @@ function CapturePhotoBtn({ isLoading, isDisabled, isClickedRef }: CapturePhotoBt
          disabled={isLoading || isDisabled}
          onClick={() => isClickedRef.current = true}
          className={`
-            size-[60px] flex items-center justify-center outline outline-2
+            size-[3.75rem] lg:size-[4.5rem] flex items-center justify-center outline outline-2
             ${(isLoading || isDisabled) ? "bg-gray outline-gray" : "bg-white outline-white"}
             border-2 border-primary rounded-full transition-all duration-200
          `}

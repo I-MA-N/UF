@@ -12,12 +12,12 @@ function CardBtn({ sectionName }: CardBtnProps) {
       <button
          type="button"
          onClick={() => setCurrentSection(sectionName)}
-         className="size-full min-h-80 flex items-center justify-center border-4 border-dashed rounded-3xl"
+         className="size-full flex items-center justify-center border-4 lg:border-[5px] border-dashed rounded-3xl lg:rounded-[48px]"
       >
-         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 40" fill="none" className="w-1 absolute">
-            <line x1="2" y1="38" x2="2" y2="2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 4" fill="none" className="w-10 lg:w-14 absolute">
+            <line x1="2" y1="2" x2="38" y2="2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
          </svg>
-         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 4" fill="none" className="w-10 absolute">
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 4" fill="none" className="w-10 lg:w-14 absolute rotate-90">
             <line x1="2" y1="2" x2="38" y2="2" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
          </svg>
       </button>

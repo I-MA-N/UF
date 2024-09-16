@@ -29,7 +29,7 @@ function SectionHeader({ setIsAIMethod, sectionName, sectionNameFA }: SectionHea
 
    return (
       <>
-         <h3 className="mb-4 text-center text-sm lg:text-base">{sectionNameFA}</h3>
+         <h3 className="mb-4 text-center text-sm lg:text-lg">{sectionNameFA}</h3>
 
          {
             zipFile === undefined || isPending &&

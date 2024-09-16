@@ -52,7 +52,7 @@ function CanvasElem({ canvasRef, selectedLandmark, setSelectedLandmark }: Canvas
             canvasUp(setSelectedLandmark)
          }}
 
-         className="absolute top-0 left-0"
+         className="absolute top-0 left-0 w-full"
       />
    );
 };

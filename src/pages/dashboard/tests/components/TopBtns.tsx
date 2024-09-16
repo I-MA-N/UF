@@ -40,7 +40,7 @@ function TopBtns({ page, setValue, setShowExitModal }: TopBtnsPropsType) {
                }
             </button>
 
-            <h2 className="font-Estedad-Black max-w-28 text-center">{page}</h2>
+            <h2 className="font-Estedad-Black max-w-28 lg:max-w-40 text-center lg:text-2xl">{page}</h2>
 
             <button
                type="submit"

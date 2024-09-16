@@ -130,23 +130,23 @@
     }
 
     .exit-btn {
-        @apply flex items-center text-sm border border-yellow rounded-[48px] transition-all duration-500 z-30;
+        @apply flex items-center text-sm lg:text-lg border border-yellow rounded-[48px] transition-all duration-500 z-30;
     }
     .exit-btn-ellipse {
-        @apply h-12 gap-2 px-8 text-yellow;
+        @apply h-12 lg:h-14 gap-2 px-8 lg:px-12 text-yellow;
     }
     .exit-btn-circle {
-        @apply fixed top-6 right-4 justify-center border-2 bg-primary text-yellow size-12;
+        @apply fixed top-6 right-4 justify-center border-2 bg-primary text-yellow size-12 lg:size-14;
     }
 
     .save-btn {
-        @apply flex items-center text-sm bg-secondary text-white border border-secondary rounded-[48px] transition-all duration-500 z-30;
+        @apply flex items-center text-sm lg:text-lg bg-secondary text-white border border-secondary rounded-[48px] transition-all duration-500 z-30;
     }
     .save-btn-ellipse {
-        @apply h-12 gap-2 px-8;
+        @apply h-12 lg:h-14 gap-2 px-8 lg:px-12;
     }
     .save-btn-circle {
-        @apply fixed top-20 right-4 justify-center size-12;
+        @apply fixed top-20 lg:top-[5.5rem] right-4 justify-center size-12 lg:size-14;
     }
 
     .clicked-animation {

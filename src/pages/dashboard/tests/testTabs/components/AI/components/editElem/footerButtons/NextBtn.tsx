@@ -28,7 +28,7 @@ function NextBtn() {
       <button
          type="button"
          className={`
-            h-full flex items-center gap-2 px-8 text-sm border rounded-full
+            h-full flex items-center gap-2 px-8 border rounded-full
             ${
                (isDisabled) ? "bg-gray border-gray" : 
                nextSection ? "bg-primary" : "bg-secondary border-secondary"

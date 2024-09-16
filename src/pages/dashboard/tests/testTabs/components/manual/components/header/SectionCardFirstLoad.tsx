@@ -25,7 +25,7 @@ function SectionCardFirtLoad({ zipFile }: SectionCardFirtLoadProps) {
    )
 
    if (files === null) return (
-      <span className="text-xs  text-center text-yellow">دریافت عکس با مشکل مواجه شد!</span>
+      <p className="text-xs lg:text-sm text-center text-yellow mb-10">دریافت عکس با مشکل مواجه شد!</p>
    )
 
    return (

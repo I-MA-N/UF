@@ -26,9 +26,9 @@ function CardImageFirstLoad({ sectionName, fileContent }: CardImageFristLoadProp
          setWidth(divRef.current?.clientWidth);
       }
 
-      divRef.current?.addEventListener("resize", handleResize);
+      window.addEventListener("resize", handleResize);
       return () => {
-         divRef.current?.removeEventListener("resize", handleResize);
+         window.removeEventListener("resize", handleResize);
       }
    }, [divRef.current])
 
@@ -44,7 +44,7 @@ function CardImageFirstLoad({ sectionName, fileContent }: CardImageFristLoadProp
    return (
       <div
          ref={divRef}
-         className="size-full min-h-36 flex items-center justify-center border-4 rounded-3xl relative p-2"
+         className="size-full flex items-center justify-center border-4 lg:border-[5px] rounded-3xl lg:rounded-[48px] relative p-2"
       >
          <CardMenu
             sectionName={sectionName}
@@ -59,7 +59,7 @@ function CardImageFirstLoad({ sectionName, fileContent }: CardImageFristLoadProp
          }
          {
             files === null &&
-            <span className="text-xs  text-center text-yellow">دریافت عکس با مشکل مواجه شد!</span>
+            <span className="text-xs lg:text-sm text-center text-yellow">دریافت عکس با مشکل مواجه شد!</span>
          }
          {
             files &&

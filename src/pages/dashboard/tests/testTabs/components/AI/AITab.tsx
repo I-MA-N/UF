@@ -14,7 +14,7 @@ function AITab() {
       if (currentSection && activeTestData) {
          if (model === null) return (
             <ModalElem>
-               <p className="text-sm font-Estedad-Black text-red bg-white px-4 py-2 rounded-full mt-5">
+               <p className="text-sm lg:text-base font-Estedad-Black text-red bg-white px-4 py-2 rounded-full mt-5">
                   دانلود مدل هوش مصنوعی با مشکل مواجه شد!
                </p>
             </ModalElem>
@@ -35,7 +35,7 @@ function AITab() {
    return (
       <>
          <div>
-            <div className="grid grid-cols-2 gap-x-5 gap-y-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-5 md:gap-x-7 gap-y-6 md:gap-y-8 justify-center">
                {
                   activeTestData?.map(section => (
                      <SectionCard

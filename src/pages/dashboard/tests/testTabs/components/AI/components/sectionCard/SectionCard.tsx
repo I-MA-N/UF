@@ -53,13 +53,15 @@ function SectionCard({ section }: SectionCardProps) {
          <div
             className={`w-full flex flex-col items-center ${isClicked ? "clicked-animation" : "text-white"}`}
          >
-            {
-               zipFile === null
-                  ?
-                  <CardBtn sectionName={section.name} />
-                  :
-                  <CardImageFirstLoad sectionName={section.name} fileContent={zipFile} />
-            }
+            <div className="size-full min-h-80 md:min-h-[23rem] lg:min-h-96">
+               {
+                  zipFile === null
+                     ?
+                     <CardBtn sectionName={section.name} />
+                     :
+                     <CardImageFirstLoad sectionName={section.name} fileContent={zipFile} />
+               }
+            </div>
 
             <CardFooter
                setShowImage={setShowImage}

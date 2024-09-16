@@ -18,7 +18,7 @@ function AimContainer({ isSupported, gamma }: AimCotainerProps) {
    }, [gamma, isSupported])
 
    return (
-      <div className="flex items-center justify-center absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 size-[100px]">
+      <div className="flex items-center justify-center absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 size-[6.25rem] lg:size-[6.75rem]">
          <StaticAim gammaColor={gammaColor} />
          <DynamicAim gamma={gamma} gammaColor={gammaColor} />
       </div>

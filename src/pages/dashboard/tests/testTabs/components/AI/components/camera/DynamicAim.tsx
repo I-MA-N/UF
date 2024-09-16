@@ -18,7 +18,7 @@ function DynamicAim({ gamma, gammaColor }: DynamicAimProps) {
             className={`h-1 w-full absolute rounded-full transition-all duration-500 ${gammaColor === "bg-secondary" ? "bg-secondary" : "bg-yellow"}`}
          />
          <div
-            className={`size-[75px] rounded-full transition-all duration-500 border-4 ${gammaColor === "bg-secondary" ? "border-secondary" : "border-yellow"}`}
+            className={`size-[4.5rem] lg:size-[5rem] rounded-full transition-all duration-500 border-4 ${gammaColor === "bg-secondary" ? "border-secondary" : "border-yellow"}`}
          />
       </div>
    );

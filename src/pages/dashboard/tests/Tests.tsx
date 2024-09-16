@@ -93,7 +93,7 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
       <>
          <div className="px-4 sm:container pt-24 lg:pt-32">
             <form
-               className="w-full relative pt-24 pb-16"
+               className="w-full relative pt-24 lg:pt-32 pb-16 lg:pb-24"
                onSubmit={handleSubmit(submitHandler)}
             >
                <TopBtns

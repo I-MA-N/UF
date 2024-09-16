@@ -32,16 +32,16 @@ function SectionCard({ files }: SectionCardProps) {
          setWidth(divRef.current?.clientWidth);
       }
 
-      divRef.current?.addEventListener("resize", handleResize);
+      window.addEventListener("resize", handleResize);
       return () => {
-         divRef.current?.removeEventListener("resize", handleResize);
+         window.removeEventListener("resize", handleResize);
       }
    }, [divRef.current])
 
    return (
       <div
          ref={divRef}
-         className="relative mb-6"
+         className="relative mb-6 max-w-5xl mx-auto"
       >
          {
             width && height &&
