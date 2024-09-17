@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import useAIStore from "../../../../store/AIStore";
 import { NormalizedLandmark, PoseLandmarker } from "@mediapipe/tasks-vision";
 import { drawOnCanvas } from "../../../../../../../utils/AIFuncs";
+import CloseBtn from "./camera/buttons/CloseBtn";
 
 type CameraLandmarksProps = {
    model: PoseLandmarker,
@@ -99,7 +100,7 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
                   onPlay={() => startRecording()}
                   onPause={() => stopRecording()}
                   style={{
-                     height: 700
+                     height: 600
                   }}
                />
                <canvas
@@ -124,6 +125,8 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
             >
                play/pause
             </button>
+            
+            <CloseBtn />
          </div>
       </div>
    );
