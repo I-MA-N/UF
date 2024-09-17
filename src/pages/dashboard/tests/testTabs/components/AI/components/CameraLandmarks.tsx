@@ -1,69 +1,78 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import CameraModeBtn from "./camera/buttons/CameraModeBtn";
-import CapturePhotoBtn from "./camera/buttons/CapturePhotoBtn";
-import CloseBtn from "./camera/buttons/CloseBtn";
+import { useCallback, useRef, useState } from "react";
 import useAIStore from "../../../../store/AIStore";
-import { PoseLandmarker } from "@mediapipe/tasks-vision";
-import Webcam from "react-webcam";
-import usePhotoStore from "../../../../store/photoStore";
-import { drawOnCanvas, executeVideoFn, initMediaRecorder } from "../../../../../../../utils/AIFuncs";
+import { NormalizedLandmark, PoseLandmarker } from "@mediapipe/tasks-vision";
+import { drawOnCanvas } from "../../../../../../../utils/AIFuncs";
 
 type CameraLandmarksProps = {
    model: PoseLandmarker,
 }
 
-let landmarksStatus: boolean[] = [];
+type DegreesType = {
+   ears: number,
+   shoulder: number,
+   pelvis: number,
+   knee: number,
+}
+
+function degreeTwoPoints(p1: NormalizedLandmark, p2: NormalizedLandmark) {
+   // Calculate the difference in coordinates
+   const deltaX = p1.x - p2.x;
+   const deltaY = p1.y - p2.y;
+
+   // Calculate the angle in radians
+   const angleInRadians = Math.atan2(deltaY, deltaX);
+
+   // Convert radians to degrees
+   const angleInDegrees = angleInRadians * (180 / Math.PI);
+
+   // Normalize the angle to be between 0 and 360 degrees
+   return angleInDegrees;
+}
 
 function CameraLandmarks({ model }: CameraLandmarksProps) {
    const currentSection = useAIStore(state => state.currentSection);
-   const { setImage, setLandmarks, setVideoSize } = usePhotoStore(state => ({ setImage: state.setImage, setLandmarks: state.setLandmarks, setVideoSize: state.setVideoSize }));
 
-   const [isCameraLoaded, setIsCameraLoaded] = useState(false);
-
-   const webcamRef = useRef<Webcam | null>(null);
+   const videoRef = useRef<HTMLVideoElement | null>(null);
    const mediaRecorderRef = useRef<MediaRecorder | null>(null);
    const canvasRef = useRef<HTMLCanvasElement | null>(null);
-   const isClickedRef = useRef(false);
+
+   const [degrees, setDegrees] = useState<DegreesType | undefined>(undefined);
 
    const startRecording = useCallback(() => {
-      if (webcamRef.current?.stream) {
-         initMediaRecorder(mediaRecorderRef, webcamRef.current.stream, proccessFrames);
+      const video = videoRef.current;
+      if (video) {
+         // @ts-ignore
+         const stream = video.captureStream();
+         mediaRecorderRef.current = new MediaRecorder(stream, {
+            mimeType: "video/webm"
+         });
+         mediaRecorderRef.current.addEventListener("dataavailable", proccessFrames);
+         mediaRecorderRef.current.start(1);
       }
    }, [])
 
    const stopRecording = useCallback(() => {
-      if (mediaRecorderRef.current) {
-         mediaRecorderRef.current.stop();
-      }
+      if (videoRef.current && mediaRecorderRef.current) mediaRecorderRef.current.stop();
    }, [])
 
    const proccessFrames = useCallback(() => {
-      if (!isCameraLoaded) setIsCameraLoaded(true);
-
-      const video = webcamRef.current?.video;
+      const video = videoRef.current;
       if (video) {
          let startTimeMs = performance.now();
          const result = model.detectForVideo(video, startTimeMs);
          const landmarks = result.landmarks[0];
 
          drawOnCanvas(canvasRef, video.clientWidth, video.clientHeight, video, { nature: landmarks, dummy: undefined });
-
-         executeVideoFn(canvasRef, currentSection, landmarks, landmarksStatus);
-
-         if (isClickedRef.current) {
-            const base64 = webcamRef.current?.getScreenshot();
-            if (base64) {
-               setImage(base64);
-               setLandmarks(landmarks, "nature");
-               setVideoSize(video.clientWidth, video.clientHeight);
-            }
-         }
-      }
-   }, [])
-
-   useEffect(() => {
-      return () => {
-         stopRecording();
+         const ears = degreeTwoPoints(landmarks[7], landmarks[8]);
+         const shoulder = degreeTwoPoints(landmarks[11], landmarks[12]);
+         const pelvis = degreeTwoPoints(landmarks[23], landmarks[24]);
+         const knee = degreeTwoPoints(landmarks[25], landmarks[26]);
+         setDegrees({
+            ears,
+            shoulder,
+            pelvis,
+            knee
+         })
       }
    }, [])
 
@@ -73,13 +82,25 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
 
          <div className="w-full min-h-80 flex items-center justify-center">
             <div className="relative">
-               <Webcam
-                  ref={webcamRef}
-                  videoConstraints={{
-                     facingMode: "environment",
-                     aspectRatio: 1600 / 1000,
+               <div className="absolute top-1 right-1 z-10">
+                  {
+                     degrees && Object.entries(degrees).map(([key, value]) => (
+                        <p>{key}: {value.toFixed(2)}</p>
+                     ))
+                  }
+               </div>
+               <div className="absolute top-1 left-1 z-10">
+                  <p>{videoRef.current?.currentTime.toFixed(1)}s</p>
+               </div>
+
+               <video
+                  ref={videoRef}
+                  src="/video/test-video.mp4"
+                  onPlay={() => startRecording()}
+                  onPause={() => stopRecording()}
+                  style={{
+                     height: 700
                   }}
-                  onLoadedData={() => startRecording()}
                />
                <canvas
                   ref={canvasRef}
@@ -90,15 +111,19 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
          </div>
 
          <div className="w-full flex justify-center items-center gap-8">
-            <CameraModeBtn isDisabled={true} />
-
-            <CapturePhotoBtn
-               isLoading={!isCameraLoaded}
-               isDisabled={landmarksStatus.includes(false)}
-               isClickedRef={isClickedRef}
-            />
-
-            <CloseBtn />
+            <button
+               type="button"
+               onClick={() => {
+                  const video = videoRef.current;
+                  if (video) {
+                     const isPlaying = !!(video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2);
+                     if (isPlaying) video.pause();
+                     if (!isPlaying) video.play();
+                  }
+               }}
+            >
+               play/pause
+            </button>
          </div>
       </div>
    );

@@ -24,3 +24,6 @@ dist-ssr
 
 #Env file
 .env
+
+#Video file
+public/video
