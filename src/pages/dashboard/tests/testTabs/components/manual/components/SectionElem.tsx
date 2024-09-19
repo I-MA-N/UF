@@ -11,12 +11,15 @@ type SectionElemProps = {
 function SectionElem({ setIsAIMethod, section }: SectionElemProps) {
    return (
       <div className="py-10" key={section.name}>
-         <SectionHeader
-            key={section.name}
-            setIsAIMethod={setIsAIMethod}
-            sectionName={section.name}
-            sectionNameFA={section.nameFA}
-         />
+         <h3 className="mb-4 text-center text-sm lg:text-lg">{section.nameFA}</h3>
+         {
+            section.shouldAIShow &&
+            <SectionHeader
+               key={section.name}
+               setIsAIMethod={setIsAIMethod}
+               sectionName={section.name}
+            />
+         }
 
          <SectionBody
             section={section}

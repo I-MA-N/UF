@@ -38,7 +38,7 @@ function AITab() {
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-5 md:gap-x-7 gap-y-6 md:gap-y-8 justify-center">
                {
                   activeTestData?.map(section => (
-                     <SectionCard
+                     section.shouldAIShow && <SectionCard
                         key={`${section.name}_${section.zipFile?.slice(0, 30)}`}
                         section={section}
                      />

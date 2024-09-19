@@ -36,7 +36,7 @@ function SectionBody({ section }: SectionBodyProps) {
                      image={input.src}
                      direction={input.direction}
                      setValue={setValue}
-                     defaultValue={Number(defaultValue) || 0}
+                     defaultValue={defaultValue}
                   />
                )
             })

@@ -8,6 +8,8 @@ import { PoseLandmarker } from "@mediapipe/tasks-vision";
 import Webcam from "react-webcam";
 import usePhotoStore from "../../../../store/photoStore";
 import DeviceOrientation from "./camera/DeviceOrientation";
+import { addExtraLandmarks } from "../../../../../../../utils/AIFuncs";
+import HeightInput from "./camera/HeightInput";
 
 type CameraSimpleProps = {
    model: PoseLandmarker
@@ -15,7 +17,8 @@ type CameraSimpleProps = {
 
 function CameraSimple({ model }: CameraSimpleProps) {
    const currentSection = useAIStore(state => state.currentSection);
-   const { setImage, setLandmarks, setVideoSize } = usePhotoStore(state => ({ setImage: state.setImage, setLandmarks: state.setLandmarks, setVideoSize: state.setVideoSize }));
+   const isSide = useMemo(() => currentSection?.name === "side", [currentSection?.name]);
+   const { setImage, setLandmarks, setVideoSize, userHeight } = usePhotoStore(state => ({ setImage: state.setImage, setLandmarks: state.setLandmarks, setVideoSize: state.setVideoSize, userHeight: state.userHeight }));
 
    const webcamRef = useRef<Webcam | null>(null);
    const isClickedRef = useRef(false);
@@ -38,7 +41,8 @@ function CameraSimple({ model }: CameraSimpleProps) {
             const base64 = webcamRef.current?.getScreenshot();
             if (base64) {
                setImage(base64);
-               setLandmarks(landmarks, "nature");
+               addExtraLandmarks(landmarks, true);
+               setLandmarks(landmarks);
                setVideoSize(video.clientWidth, video.clientHeight);
             }
          }
@@ -48,6 +52,10 @@ function CameraSimple({ model }: CameraSimpleProps) {
    }, [])
 
    const isDisabled = useMemo(() => {
+      if (isSide) {
+         if (typeof userHeight !== "number" || userHeight <= 0) return true;
+      }
+
       if (isSupported && coordinates) {
          const betaBool = coordinates.beta < 87 || coordinates.beta > 93;
          const gammaBool = coordinates.gamma < -3 || coordinates?.gamma > 3;
@@ -56,11 +64,17 @@ function CameraSimple({ model }: CameraSimpleProps) {
       }
 
       return false;
-   }, [isSupported, coordinates?.beta, coordinates?.gamma])
+   }, [isSide, userHeight, isSupported, coordinates?.beta, coordinates?.gamma])
 
    return (
       <div className="flex flex-col items-center justify-center gap-7 min-h-dvh">
-         <p className="text-center font-Estedad-Black lg:text-xl">{currentSection?.nameFA}</p>
+         <div className="relative">
+            {
+               isSide &&
+               <HeightInput />
+            }
+            <p className="text-center font-Estedad-Black lg:text-xl">{currentSection?.nameFA}</p>
+         </div>
 
          <div className="w-full min-h-80 flex items-center justify-center">
             <div className="relative">

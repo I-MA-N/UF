@@ -31,7 +31,7 @@ function HiddenInputs({ testName }: HiddenInputsProps) {
                         type="text"
                         key={input.id + input.title}
                         {...register(input.title, {
-                           validate: value => Number(value) === 1 || Number(value) === 0
+                           validate: value => value == 1 || value == 0
                         })}
                         defaultValue={formData?.[input.title]}
                         hidden

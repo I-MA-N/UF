@@ -6,7 +6,7 @@ import useAIStore from "../../../../store/AIStore";
 import { PoseLandmarker } from "@mediapipe/tasks-vision";
 import Webcam from "react-webcam";
 import usePhotoStore from "../../../../store/photoStore";
-import { drawOnCanvas, executeVideoFn, initMediaRecorder } from "../../../../../../../utils/AIFuncs";
+import { addExtraLandmarks, drawOnVideo, executeVideoFn, initMediaRecorder } from "../../../../../../../utils/AIFuncs";
 
 type CameraLandmarksProps = {
    model: PoseLandmarker,
@@ -46,7 +46,7 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
          const result = model.detectForVideo(video, startTimeMs);
          const landmarks = result.landmarks[0];
 
-         drawOnCanvas(canvasRef, video.clientWidth, video.clientHeight, video, { nature: landmarks, dummy: undefined });
+         drawOnVideo(canvasRef, video, landmarks);
 
          executeVideoFn(canvasRef, currentSection, landmarks, landmarksStatus);
 
@@ -54,7 +54,8 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
             const base64 = webcamRef.current?.getScreenshot();
             if (base64) {
                setImage(base64);
-               setLandmarks(landmarks, "nature");
+               addExtraLandmarks(landmarks, false);
+               setLandmarks(landmarks);
                setVideoSize(video.clientWidth, video.clientHeight);
             }
          }

@@ -1,56 +1,41 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision"
 import { create } from "zustand"
-import PhotoLandmarksType from "../../../../types/PhotoLandmarksType"
 
 interface PhotoState {
    image: string | undefined,
-   landmarks: PhotoLandmarksType,
+   landmarks: NormalizedLandmark[],
    videoSize: {
       width: number,
       height: number
-   } | undefined
+   } | undefined,
+   userHeight: number | undefined
 }
 
 interface PhotoActions {
    setImage: (image: string) => void,
-   setLandmarks: (landmarks: NormalizedLandmark[], type: "nature" | "dummy") => void,
+   setLandmarks: (landmarks: NormalizedLandmark[]) => void,
    removePhoto: () => void,
-   setVideoSize: (width: number, height: number) => void
+   setVideoSize: (width: number, height: number) => void,
+   setUserHeight: (height: number) => void,
+   resetUserHeight: () => void,
 }
 
 const usePhotoStore = create<PhotoState & PhotoActions>()((set) => ({
    image: undefined,
-   landmarks: {
-      nature: undefined,
-      dummy: undefined
-   },
+   landmarks: [],
    videoSize: undefined,
+   userHeight: undefined,
    setImage: (image) => {
       set(state => ({
          ...state,
          image
       }))
    },
-   setLandmarks: (landmarks, type) => {
-      set(state => {
-         if (type === "nature") {
-            return {
-               ...state,
-               landmarks: {
-                  ...state.landmarks,
-                  nature: landmarks
-               }
-            }
-         }
-
-         return {
-            ...state,
-            landmarks: {
-               ...state.landmarks,
-               dummy: landmarks
-            }
-         }
-      })
+   setLandmarks: (landmarks) => {
+      set(state => ({
+         ...state,
+         landmarks
+      }))
    },
    removePhoto: () => {
       set(state => ({
@@ -66,6 +51,18 @@ const usePhotoStore = create<PhotoState & PhotoActions>()((set) => ({
             width,
             height
          }
+      }))
+   },
+   setUserHeight: (height) => {
+      set(state => ({
+         ...state,
+         userHeight: height
+      }))
+   },
+   resetUserHeight: () => {
+      set(state => ({
+         ...state,
+         userHeight: undefined
       }))
    }
 }))

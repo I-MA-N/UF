@@ -10,7 +10,7 @@ type BottomBtnsProps = {
 
 function BottomBtns({ testsArr, page, setValue }: BottomBtnsProps) {
    return (
-      <div className="w-full px-4 sm:container fixed bottom-4 left-1/2 -translate-x-1/2 bg-primary">
+      <div className="w-full px-4 sm:container fixed z-20 bottom-4 left-1/2 -translate-x-1/2 bg-primary">
          <Tabs
             value={page}
             variant="scrollable"

@@ -17,6 +17,7 @@ function CameraFirstLoad({ model, activeTestData }: CameraFirstLoadProps) {
 
    useEffect(() => {
       document.documentElement.style.overflow = "hidden";
+      window.scrollTo(0, 0);
 
       return () => {
          document.documentElement.style.overflow = "auto";

@@ -3,23 +3,19 @@ import SectionNames from "../../../../../../../../../types/SectionNames";
 import useAIStore from "../../../../../../store/AIStore";
 import useFormStore from "../../../../../../store/formStore";
 import usePhotoStore from "../../../../../../store/photoStore";
-import PhotoLandmarksType from "../../../../../../../../../types/PhotoLandmarksType";
+import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 
 async function nextBtnClickHandler(
-   landmarks: PhotoLandmarksType,
+   landmarks: NormalizedLandmark[],
    nextSectionName: SectionNames | undefined,
 ) {
    const { currentSection, setCurrentSection, getOrSetZipFile } = useAIStore.getState();
    const { updateFormData, setValue } = useFormStore.getState();
    const { image, removePhoto, videoSize } = usePhotoStore.getState();
 
-   // Update current section & hide canvas
-   setCurrentSection(nextSectionName);
-   removePhoto();
-
    // Add "landmarks" & "imageSize" string & "image" base64 to store
    const zip = new JSZip();
-   
+
    if (image) {
       const landmarksJson = JSON.stringify(landmarks);
       zip.file('landmarks.json', landmarksJson);
@@ -36,9 +32,17 @@ async function nextBtnClickHandler(
    // Call "photoFn" function to evalutate based on "landmarks"
    // Update form data using "getValues" function
    if (currentSection && setValue) {
-      currentSection.AI.photoFn(landmarks, setValue);
+      const resultObj = currentSection.AI.photoFn(landmarks);
+      Object.entries(resultObj).forEach(([key, value]) => {
+         setValue(key, value);
+      })
+      
       updateFormData()
    }
+
+   // Update current section & hide canvas
+   setCurrentSection(nextSectionName);
+   removePhoto();
 }
 
 export default nextBtnClickHandler;

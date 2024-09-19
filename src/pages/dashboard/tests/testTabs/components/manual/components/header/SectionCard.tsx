@@ -2,12 +2,14 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import ExtractedZipType from "../../../../../../../../types/ExtractedZipType";
 import ImageToggleBtn from "./ImageToggleBtn";
 import ImageElem from "./ImageElem";
+import SectionNames from "../../../../../../../../types/SectionNames";
 
 type SectionCardProps = {
+   sectionName: SectionNames,
    files: ExtractedZipType,
 }
 
-function SectionCard({ files }: SectionCardProps) {
+function SectionCard({ sectionName, files }: SectionCardProps) {
    const divRef = useRef<HTMLDivElement>(null);
 
    const [width, setWidth] = useState(divRef.current?.clientWidth);
@@ -67,6 +69,7 @@ function SectionCard({ files }: SectionCardProps) {
                   }}
                />
                <ImageElem
+                  sectionName={sectionName}
                   image={files.image}
                   landmarks={files.landmarks}
                   width={width}

@@ -7,6 +7,7 @@ function CardFooter({ setShowImage, nameFA }: CardFooterProps) {
    return (
       <div className="relative mt-4">
          <button
+            type="button"
             className="absolute top-1/2 -translate-y-1/2 left-[calc(100%+8px)]"
             onClick={() => setShowImage(true)}
          >

@@ -10,10 +10,9 @@ import AddImageBtn from "./AddImageBtn";
 type SectionHeaderProps = {
    setIsAIMethod: React.Dispatch<React.SetStateAction<boolean>>,
    sectionName: SectionNames,
-   sectionNameFA: string,
 }
 
-function SectionHeader({ setIsAIMethod, sectionName, sectionNameFA }: SectionHeaderProps) {
+function SectionHeader({ setIsAIMethod, sectionName }: SectionHeaderProps) {
    const getOrSetZipFile = useAIStore(state => state.getOrSetZipFile);
 
    const { formname, username } = useParams();
@@ -29,8 +28,6 @@ function SectionHeader({ setIsAIMethod, sectionName, sectionNameFA }: SectionHea
 
    return (
       <>
-         <h3 className="mb-4 text-center text-sm lg:text-lg">{sectionNameFA}</h3>
-
          {
             zipFile === undefined || isPending &&
             <div className="pb-8">
@@ -47,6 +44,7 @@ function SectionHeader({ setIsAIMethod, sectionName, sectionNameFA }: SectionHea
          {
             zipFile &&
             <SectionCardFirtLoad
+               sectionName={sectionName}
                zipFile={zipFile}
             />
          }

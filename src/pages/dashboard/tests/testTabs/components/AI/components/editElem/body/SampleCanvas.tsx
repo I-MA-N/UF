@@ -33,8 +33,9 @@ function SampleCanvas({ setShowSample, showSample, selectedLandmark }: SampleCan
    useEffect(() => {
       const imgElem = document.getElementById(currentSection!.name) as HTMLImageElement | null;
       const canvas = canvasRef.current;
+      const isSide = currentSection?.name.toLowerCase().includes("side");
       if (canvas && imgElem) {
-         drawOnCanvas(canvasRef, canvas.clientWidth, canvas.clientHeight, imgElem, { nature: sampleLandmarks, dummy: undefined });
+         drawOnCanvas(canvasRef, canvas.clientWidth, canvas.clientHeight, 0.8, imgElem, sampleLandmarks, isSide);
       }
    }, [canvasRef.current, selectedLandmark, sampleLandmarks])
 

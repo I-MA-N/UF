@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react";
 import ExtractedZipType from "../../../../../../../../../types/ExtractedZipType";
 import { drawOnCanvas } from "../../../../../../../../../utils/AIFuncs";
+import SectionNames from "../../../../../../../../../types/SectionNames";
 
 type CardImageProps = {
+   sectionName: SectionNames,
    image: ExtractedZipType["image"],
    width: number | undefined,
    height: number | undefined,
@@ -10,14 +12,15 @@ type CardImageProps = {
    showLandmarks: boolean,
 }
 
-function CardImage({ image, width, height, landmarks, showLandmarks }: CardImageProps) {
+function CardImage({ sectionName, image, width, height, landmarks, showLandmarks }: CardImageProps) {
    const imgRef = useRef<HTMLImageElement>(null);
    const canvasRef = useRef<HTMLCanvasElement>(null);
 
    useEffect(() => {
       const img = imgRef.current;
+      const isSide = sectionName.toLowerCase().includes("side");
       if (img) {
-         drawOnCanvas(canvasRef, img.clientWidth, img.clientHeight, undefined, showLandmarks ? landmarks : undefined);
+         drawOnCanvas(canvasRef, img.clientWidth, img.clientHeight, 0.6, undefined, showLandmarks ? landmarks : undefined, isSide);
       }
    }, [showLandmarks, width])
 

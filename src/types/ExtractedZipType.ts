@@ -1,4 +1,4 @@
-import PhotoLandmarksType from "./PhotoLandmarksType";
+import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 
 type ExtractedZipType = {
    image: string;
@@ -6,7 +6,7 @@ type ExtractedZipType = {
       width: number;
       height: number;
    };
-   landmarks: PhotoLandmarksType;
+   landmarks: NormalizedLandmark[];
 }
 
 export default ExtractedZipType;

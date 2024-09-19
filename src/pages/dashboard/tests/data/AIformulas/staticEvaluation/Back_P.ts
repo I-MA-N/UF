@@ -1,17 +1,20 @@
-import { FieldValues, UseFormSetValue } from "react-hook-form";
-import PhotoLandmarksType from "../../../../../../types/PhotoLandmarksType";
+import { NormalizedLandmark } from "@mediapipe/tasks-vision";
+import degreeTwoPoints from "../../../../../../utils/degreeTwoPoints";
 
-function Back_P(landmarks: PhotoLandmarksType, setValue: UseFormSetValue<FieldValues>) {
-   const nature = landmarks.nature;
-   if (nature) {
-      const p11 = nature[11];
-      const p12 = nature[12];
-      const result = p11.x / p12.y;
-   
-      if (result) {
-         setValue("پشت گرد", "3");
-      }
+function Back_P(landmarks: NormalizedLandmark[]) {
+   const resultObj = {
+      'چرخش مچ پا به داخل': '5',
+      'چرخش مچ پا به خارج': '5',
    }
+
+   const ankle = Math.abs(degreeTwoPoints(landmarks[28], landmarks[30])) - 90;
+
+   if (ankle >= 2.5 && ankle <= 7.5) resultObj["چرخش مچ پا به داخل"] = "3";
+   if (ankle > 7.5) resultObj["چرخش مچ پا به داخل"] = "1";
+   if (ankle <= -2.5 && ankle >= -7.5) resultObj["چرخش مچ پا به خارج"] = "3";
+   if (ankle < -7.5) resultObj["چرخش مچ پا به خارج"] = "1";
+
+   return resultObj
 }
 
 export default Back_P;

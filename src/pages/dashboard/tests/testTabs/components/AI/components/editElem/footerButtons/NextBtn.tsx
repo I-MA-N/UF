@@ -22,7 +22,7 @@ function NextBtn() {
       return undefined;
    }, [currentSection])
 
-   const isDisabled = useMemo(() => !landmarks.nature?.length, [landmarks]);
+   const isDisabled = useMemo(() => !landmarks?.length, [landmarks]);
 
    return (
       <button

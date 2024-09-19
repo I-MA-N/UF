@@ -64,6 +64,7 @@ function CardImageFirstLoad({ sectionName, fileContent }: CardImageFristLoadProp
          {
             files &&
             <CardImage
+               sectionName={sectionName}
                image={files.image}
                landmarks={files.landmarks}
                showLandmarks={showLandmarks}
