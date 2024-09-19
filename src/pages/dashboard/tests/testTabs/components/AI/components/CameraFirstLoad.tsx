@@ -15,15 +15,18 @@ type CameraFirstLoadProps = {
 function CameraFirstLoad({ model, activeTestData }: CameraFirstLoadProps) {
    const { image, removePhoto } = usePhotoStore(state => ({ image: state.image, removePhoto: state.removePhoto }));
 
+   const scrollHandler = () => {
+      window.scrollTo(0, 0);
+   }
+
    useEffect(() => {
       document.documentElement.style.overflow = "hidden";
       window.scrollTo(0, 0);
-      window.addEventListener("scroll", (e) => {
-         window.scrollTo(0, 0);
-         console.log("scroll", e);
-      })
+      window.addEventListener("scroll", scrollHandler);
+
       return () => {
          document.documentElement.style.overflow = "auto";
+         window.removeEventListener("scroll", scrollHandler);
          removePhoto();
       }
    }, [])
