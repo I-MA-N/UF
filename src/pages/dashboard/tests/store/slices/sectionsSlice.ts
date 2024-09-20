@@ -7,7 +7,9 @@ import { DataSlice } from "./dataSlice";
 interface SectionsState {
    currentSection: staticEvaluationType[0] | dynamicEvaluationType[0] | undefined,
    nameFromManualTab: SectionNames | undefined,
-   isTipShown: boolean
+   isTipShown: boolean,
+   userHeight: number | undefined,
+   showUserHeight: boolean
 }
 
 interface SectionsActions {
@@ -16,6 +18,8 @@ interface SectionsActions {
    setNameFromManualTab: (sectionName: SectionNames) => void,
    removeNameFromAITab: () => void,
    toggleIsTipShown: () => void,
+   setUserHeight: (height: number) => void,
+   setShowUserHeight: (showUserHeight: boolean) => void,
    resetSections: () => void,
 }
 
@@ -24,7 +28,9 @@ export type SectionsSlice = SectionsState & SectionsActions;
 const initialState: SectionsState = {
    currentSection: undefined,
    nameFromManualTab: undefined,
-   isTipShown: false
+   isTipShown: false,
+   userHeight: undefined,
+   showUserHeight: true
 }
 
 const createSectionsSlice: StateCreator<
@@ -40,7 +46,8 @@ const createSectionsSlice: StateCreator<
 
          return {
             ...state,
-            currentSection: foundedSection
+            currentSection: foundedSection,
+            showUserHeight: foundedSection?.name === "side"
          }
       })
    },
@@ -66,6 +73,18 @@ const createSectionsSlice: StateCreator<
       set(state => ({
          ...state,
          isTipShown: !state.isTipShown
+      }))
+   },
+   setUserHeight: (height) => {
+      set(state => ({
+         ...state,
+         userHeight: height
+      }))
+   },
+   setShowUserHeight: (showUserHeight) => {
+      set(state => ({
+         ...state,
+         showUserHeight
       }))
    },
    resetSections: () => {

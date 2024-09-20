@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import CoordinatesType from "../../../../../../../types/CoordinatesType";
 import CloseBtn from "./camera/buttons/CloseBtn";
 import CapturePhotoBtn from "./camera/buttons/CapturePhotoBtn";
@@ -16,10 +16,10 @@ type CameraSimpleProps = {
 }
 
 function CameraSimple({ model }: CameraSimpleProps) {
-   const currentSection = useAIStore(state => state.currentSection);
-   const { setImage, setLandmarks, setVideoSize } = usePhotoStore(state => ({ setImage: state.setImage, setLandmarks: state.setLandmarks, setVideoSize: state.setVideoSize }));
-
-   const [showHeightInputModal, setShowHeightInputModal] = useState(currentSection?.name === "side");
+   const { currentSection, showUserHeight } = useAIStore(state => ({ currentSection: state.currentSection, showUserHeight: state.showUserHeight }));
+   const { setImage, setLandmarks, setVideoSize } = usePhotoStore(state => (
+      { setImage: state.setImage, setLandmarks: state.setLandmarks, setVideoSize: state.setVideoSize }
+   ));
 
    const webcamRef = useRef<Webcam | null>(null);
    const isClickedRef = useRef(false);
@@ -28,6 +28,12 @@ function CameraSimple({ model }: CameraSimpleProps) {
    const [isCameraLoaded, setIsCameraLoaded] = useState(false);
    const [isSupported, setIsSupported] = useState(true);
    const [coordinates, setCoordinates] = useState<CoordinatesType>(null);
+
+   useEffect(() => {
+      return () => {
+
+      }
+   }, [])
 
    const proccessFrames = useCallback(() => {
       if (!isCameraLoaded) setIsCameraLoaded(true);
@@ -54,8 +60,8 @@ function CameraSimple({ model }: CameraSimpleProps) {
 
    const isDisabled = useMemo(() => {
       if (isSupported && coordinates) {
-         const betaBool = coordinates.beta < 87 || coordinates.beta > 93;
-         const gammaBool = coordinates.gamma < -3 || coordinates.gamma > 3 || coordinates.gamma > 93 || coordinates.gamma < 87;
+         const betaBool = coordinates.beta < 82 || coordinates.beta > 90;
+         const gammaBool = coordinates.gamma < -3 || coordinates.gamma > 3;
 
          return betaBool || gammaBool;
       }
@@ -108,8 +114,8 @@ function CameraSimple({ model }: CameraSimpleProps) {
             </div>
          </div>
          {
-            showHeightInputModal &&
-            <HeightInputModal setShowHeightInputModal={setShowHeightInputModal} />
+            showUserHeight &&
+            <HeightInputModal />
          }
       </>
    );

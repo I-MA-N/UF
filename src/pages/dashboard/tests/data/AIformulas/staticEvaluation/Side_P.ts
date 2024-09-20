@@ -1,8 +1,7 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 import degreeTwoPoints from "../../../../../../utils/degreeTwoPoints";
-import usePhotoStore from "../../../store/photoStore";
 
-function Side_P(landmarks: NormalizedLandmark[]) {
+function Side_P(landmarks: NormalizedLandmark[], userHeight?: number) {
    const resultObj = {
       'سر به جلو': '5',
       'شانه گرد': '5',
@@ -27,7 +26,6 @@ function Side_P(landmarks: NormalizedLandmark[]) {
    if (shoulderC7 < 30) resultObj["شانه گرد"] = "1";
 
    const editCanvas = document.getElementById("editCanvas");
-   const userHeight = usePhotoStore.getState().userHeight;
    if (editCanvas && userHeight) {
       const distanceCentimeters = userHeight - 12;
       const distancePixels = (landmarks[35].y - landmarks[34].y) * editCanvas.clientHeight;

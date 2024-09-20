@@ -8,7 +8,7 @@ type BetaLineProps = {
 function BetaLine({ isSupported, beta }: BetaLineProps) {
    const betaColor = useMemo(() => {
       if (typeof beta === "number" && isSupported) {
-         const betaBool = beta >= 87 && beta <= 93;
+         const betaBool = beta >= 82 && beta <= 90;
          return betaBool ? "bg-secondary" : "bg-red";
       }
       return "bg-white";
@@ -16,7 +16,7 @@ function BetaLine({ isSupported, beta }: BetaLineProps) {
 
    return (
       <div
-         className={`absolute bottom-2 left-2 w-12 lg:w-14 h-1 rounded-full transition-all duration-500 origin-left ${betaColor}`}
+         className={`absolute bottom-2 left-2 w-12 lg:w-14 h-1 rounded-full transition-all duration-100 origin-left ${betaColor}`}
          style={{ transform: beta ? `rotate(-${beta}deg)` : "" }}
       />
    );

@@ -8,7 +8,6 @@ interface PhotoState {
       width: number,
       height: number
    } | undefined,
-   userHeight: number | undefined
 }
 
 interface PhotoActions {
@@ -16,7 +15,6 @@ interface PhotoActions {
    setLandmarks: (landmarks: NormalizedLandmark[]) => void,
    removePhoto: () => void,
    setVideoSize: (width: number, height: number) => void,
-   setUserHeight: (height: number) => void,
    reset: () => void,
 }
 
@@ -24,7 +22,6 @@ const initialState: PhotoState = {
    image: undefined,
    landmarks: [],
    videoSize: undefined,
-   userHeight: undefined,
 }
 
 const usePhotoStore = create<PhotoState & PhotoActions>()((set) => ({
@@ -55,12 +52,6 @@ const usePhotoStore = create<PhotoState & PhotoActions>()((set) => ({
             width,
             height
          }
-      }))
-   },
-   setUserHeight: (height) => {
-      set(state => ({
-         ...state,
-         userHeight: height
       }))
    },
    reset: () => {

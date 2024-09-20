@@ -7,7 +7,6 @@ import PrevBtn from "../../common/PrevBtn";
 import Loading from "../../common/Loading";
 import Tests from "./Tests";
 import replaceTestNames from "../../../utils/replaceTestNames";
-import SampleImages from "./components/SampleImages";
 import usePhotoStore from "./store/photoStore";
 import useFormStore from "./store/formStore";
 import useAIStore from "./store/AIStore";
@@ -50,10 +49,7 @@ function TestsFirstLoad() {
          replaceTestNames(testsArr);
 
          return (
-            <>
-               <SampleImages />
-               <Tests username={username} formname={formname} testsArr={testsArr} initialFormData={formData} />
-            </>
+            <Tests username={username} formname={formname} testsArr={testsArr} initialFormData={formData} />
          )
       } else {
          return <Container>
