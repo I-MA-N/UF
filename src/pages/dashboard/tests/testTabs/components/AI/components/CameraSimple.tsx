@@ -55,7 +55,7 @@ function CameraSimple({ model }: CameraSimpleProps) {
    const isDisabled = useMemo(() => {
       if (isSupported && coordinates) {
          const betaBool = coordinates.beta < 87 || coordinates.beta > 93;
-         const gammaBool = coordinates.gamma < -3 || coordinates?.gamma > 3;
+         const gammaBool = coordinates.gamma < -3 || coordinates.gamma > 3 || coordinates.gamma > 93 || coordinates.gamma < 87;
 
          return betaBool || gammaBool;
       }
