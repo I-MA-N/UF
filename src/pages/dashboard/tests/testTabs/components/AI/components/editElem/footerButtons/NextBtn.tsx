@@ -22,6 +22,11 @@ function NextBtn() {
       return undefined;
    }, [currentSection])
 
+   const shouldGoNext = useMemo(() => {
+      if (currentSection?.zipFile || !nextSection) return false;
+      return true;
+   }, [nextSection, currentSection?.zipFile]);
+
    const isDisabled = useMemo(() => !landmarks?.length, [landmarks]);
 
    return (
@@ -31,18 +36,18 @@ function NextBtn() {
             h-full flex items-center gap-2 px-8 border rounded-full
             ${
                (isDisabled) ? "bg-gray border-gray" : 
-               nextSection ? "bg-primary" : "bg-secondary border-secondary"
+               shouldGoNext ? "bg-primary" : "bg-secondary border-secondary"
             }
          `}
          onClick={async () => {
-            if (!isDisabled) clickHandler(landmarks, nextSection?.name);
+            if (!isDisabled) clickHandler(landmarks, shouldGoNext ? nextSection!.name : undefined);
          }}
       >
          {
-            nextSection ? "بعدی" : "تایید"
+            shouldGoNext ? "بعدی" : "تایید"
          }
          <NextBtnSvg
-            nextSection={nextSection}
+            shouldGoNext={shouldGoNext}
          />
       </button>
    );
