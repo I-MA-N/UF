@@ -4,7 +4,6 @@ import staticEvaluation, { staticEvaluationType } from "../../data/testsData/sta
 import { SectionsSlice } from "./sectionsSlice";
 import ZipFileType from "../../../../../types/ZipFileType";
 import SectionNames from "../../../../../types/SectionNames";
-import { VideoSizeSlice } from "./videoSizeSlice";
 
 interface DataState {
    staticEvaluationData: staticEvaluationType,
@@ -19,12 +18,13 @@ interface DataActions {
    ) => string | null | undefined,
    getFilesToSave: () => ZipFileType[],
    updateTestsData: (lastPage: string, nextPage: string) => void,
+   resetData: () => void,
 }
 
 export type DataSlice = DataState & DataActions;
 
 const createDataSlice: StateCreator<
-   DataSlice & SectionsSlice & VideoSizeSlice,
+   DataSlice & SectionsSlice,
    [],
    [],
    DataSlice
@@ -104,6 +104,20 @@ const createDataSlice: StateCreator<
          })
       }
    },
+   resetData: () => {
+      set(state => ({
+         ...state,
+         activeTestData: undefined,
+         staticEvaluationData: staticEvaluation.map(section => {
+            section.zipFile = undefined;
+            return section
+         }),
+         dynamicEvaluationData: dynamicEvaluation.map(section => {
+            section.zipFile = undefined;
+            return section
+         })
+      }));
+   }
 })
 
 export default createDataSlice;

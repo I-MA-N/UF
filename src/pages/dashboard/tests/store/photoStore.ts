@@ -17,14 +17,18 @@ interface PhotoActions {
    removePhoto: () => void,
    setVideoSize: (width: number, height: number) => void,
    setUserHeight: (height: number) => void,
-   resetUserHeight: () => void,
+   reset: () => void,
 }
 
-const usePhotoStore = create<PhotoState & PhotoActions>()((set) => ({
+const initialState: PhotoState = {
    image: undefined,
    landmarks: [],
    videoSize: undefined,
    userHeight: undefined,
+}
+
+const usePhotoStore = create<PhotoState & PhotoActions>()((set) => ({
+   ...initialState,
    setImage: (image) => {
       set(state => ({
          ...state,
@@ -59,11 +63,8 @@ const usePhotoStore = create<PhotoState & PhotoActions>()((set) => ({
          userHeight: height
       }))
    },
-   resetUserHeight: () => {
-      set(state => ({
-         ...state,
-         userHeight: undefined
-      }))
+   reset: () => {
+      set(initialState);
    }
 }))
 

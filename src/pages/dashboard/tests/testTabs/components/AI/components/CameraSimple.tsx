@@ -9,7 +9,7 @@ import Webcam from "react-webcam";
 import usePhotoStore from "../../../../store/photoStore";
 import DeviceOrientation from "./camera/DeviceOrientation";
 import { addExtraLandmarks } from "../../../../../../../utils/AIFuncs";
-import HeightInput from "./camera/HeightInput";
+import HeightInputModal from "./camera/HeightInputModal";
 
 type CameraSimpleProps = {
    model: PoseLandmarker
@@ -17,8 +17,9 @@ type CameraSimpleProps = {
 
 function CameraSimple({ model }: CameraSimpleProps) {
    const currentSection = useAIStore(state => state.currentSection);
-   const isSide = useMemo(() => currentSection?.name === "side", [currentSection?.name]);
-   const { setImage, setLandmarks, setVideoSize, userHeight } = usePhotoStore(state => ({ setImage: state.setImage, setLandmarks: state.setLandmarks, setVideoSize: state.setVideoSize, userHeight: state.userHeight }));
+   const { setImage, setLandmarks, setVideoSize } = usePhotoStore(state => ({ setImage: state.setImage, setLandmarks: state.setLandmarks, setVideoSize: state.setVideoSize }));
+
+   const [showHeightInputModal, setShowHeightInputModal] = useState(currentSection?.name === "side");
 
    const webcamRef = useRef<Webcam | null>(null);
    const isClickedRef = useRef(false);
@@ -52,10 +53,6 @@ function CameraSimple({ model }: CameraSimpleProps) {
    }, [])
 
    const isDisabled = useMemo(() => {
-      if (isSide) {
-         if (typeof userHeight !== "number" || userHeight <= 0) return true;
-      }
-
       if (isSupported && coordinates) {
          const betaBool = coordinates.beta < 87 || coordinates.beta > 93;
          const gammaBool = coordinates.gamma < -3 || coordinates?.gamma > 3;
@@ -64,57 +61,57 @@ function CameraSimple({ model }: CameraSimpleProps) {
       }
 
       return false;
-   }, [isSide, userHeight, isSupported, coordinates?.beta, coordinates?.gamma])
+   }, [isSupported, coordinates?.beta, coordinates?.gamma])
 
    return (
-      <div className="flex flex-col items-center justify-center gap-7 min-h-dvh">
-         <div className="relative">
-            {
-               isSide &&
-               <HeightInput />
-            }
+      <>
+         <div className="flex flex-col items-center justify-center gap-7 min-h-dvh">
             <p className="text-center font-Estedad-Black lg:text-xl">{currentSection?.nameFA}</p>
-         </div>
 
-         <div className="w-full min-h-80 flex items-center justify-center">
-            <div className="relative">
-               <div className="absolute flex flex-col gap-1">
-                  <span>{coordinates?.gamma.toFixed(2)}</span>
-                  <span>{coordinates?.beta.toFixed(2)}</span>
+            <div className="w-full min-h-80 flex items-center justify-center">
+               <div className="relative">
+                  <div className="absolute flex flex-col gap-1">
+                     <span>{coordinates?.gamma.toFixed(2)}</span>
+                     <span>{coordinates?.beta.toFixed(2)}</span>
+                  </div>
+                  <Webcam
+                     ref={webcamRef}
+                     videoConstraints={{
+                        facingMode,
+                        aspectRatio: 1600 / 1000,
+                     }}
+                     onLoadedData={proccessFrames}
+                  />
+
+                  <DeviceOrientation
+                     isSupported={isSupported}
+                     setIsSupported={setIsSupported}
+                     coordinates={coordinates}
+                     setCoordinates={setCoordinates}
+                  />
                </div>
-               <Webcam
-                  ref={webcamRef}
-                  videoConstraints={{
-                     facingMode,
-                     aspectRatio: 1600 / 1000,
-                  }}
-                  onLoadedData={proccessFrames}
+            </div>
+
+            <div className="w-full flex justify-center items-center gap-8">
+               <CameraModeBtn
+                  isDisabled={!isCameraLoaded}
+                  setFacingMode={setFacingMode}
                />
 
-               <DeviceOrientation
-                  isSupported={isSupported}
-                  setIsSupported={setIsSupported}
-                  coordinates={coordinates}
-                  setCoordinates={setCoordinates}
+               <CapturePhotoBtn
+                  isLoading={!isCameraLoaded}
+                  isDisabled={isDisabled}
+                  isClickedRef={isClickedRef}
                />
+
+               <CloseBtn />
             </div>
          </div>
-
-         <div className="w-full flex justify-center items-center gap-8">
-            <CameraModeBtn
-               isDisabled={!isCameraLoaded}
-               setFacingMode={setFacingMode}
-            />
-
-            <CapturePhotoBtn
-               isLoading={!isCameraLoaded}
-               isDisabled={isDisabled}
-               isClickedRef={isClickedRef}
-            />
-
-            <CloseBtn />
-         </div>
-      </div>
+         {
+            showHeightInputModal &&
+            <HeightInputModal setShowHeightInputModal={setShowHeightInputModal} />
+         }
+      </>
    );
 };
 

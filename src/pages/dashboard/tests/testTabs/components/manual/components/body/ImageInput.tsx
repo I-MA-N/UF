@@ -13,8 +13,8 @@ function ImageInput({ setValue: setInputValue, title, image, direction, defaultV
    const [value, setValue] = useState(defaultValue);
    
    useEffect(() => {
-      if (defaultValue !== undefined) setValue(Number(defaultValue));
-      else setValue(defaultValue);
+      if (typeof defaultValue === "number") setValue(Number(defaultValue));
+      else setValue(undefined);
    }, [defaultValue])
 
    useEffect(() => {
@@ -26,7 +26,11 @@ function ImageInput({ setValue: setInputValue, title, image, direction, defaultV
          className={`flex flex-col gap-1 lg:gap-2 items-center text-center
             ${direction === "vertical" ? 'w-[100px] lg:w-32' : 'w-[158px] lg:w-48'}
          `}
-         onClick={() => setValue(prevValue => prevValue ? 0 : 1)}
+         onClick={() => setValue(prevValue => {
+            if (prevValue === undefined) return 0;
+            if (prevValue === 1) return 0;
+            return 1
+         })}
       >
          <div className="relative w-full">
             <img

@@ -11,13 +11,18 @@ interface FormState {
 interface FormActions {
    setFormState: (formState: Partial<FormState>) => void,
    updateFormData: () => void,
+   reset: () => void
 }
 
-const useFormStore = create<FormState & FormActions>()((set) => ({
+const initialState: FormState = {
    register: undefined,
    setValue: undefined,
    getValues: undefined,
    formData: undefined,
+}
+
+const useFormStore = create<FormState & FormActions>()((set) => ({
+   ...initialState,
    setFormState: (formState) => {
       set(state => ({
          setFormState: state.setFormState,
@@ -34,6 +39,9 @@ const useFormStore = create<FormState & FormActions>()((set) => ({
          }
          return state;
       })
+   },
+   reset: () => {
+      set(initialState);
    }
 }))
 

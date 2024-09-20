@@ -3,11 +3,11 @@ import SectionNames from "../../../../../types/SectionNames";
 import { dynamicEvaluationType } from "../../data/testsData/dynamicEvaluation";
 import { staticEvaluationType } from "../../data/testsData/staticEvaluation";
 import { DataSlice } from "./dataSlice";
-import { VideoSizeSlice } from "./videoSizeSlice";
 
 interface SectionsState {
    currentSection: staticEvaluationType[0] | dynamicEvaluationType[0] | undefined,
    nameFromManualTab: SectionNames | undefined,
+   isTipShown: boolean
 }
 
 interface SectionsActions {
@@ -15,18 +15,25 @@ interface SectionsActions {
    removeCurrentSection: () => void,
    setNameFromManualTab: (sectionName: SectionNames) => void,
    removeNameFromAITab: () => void,
+   toggleIsTipShown: () => void,
+   resetSections: () => void,
 }
 
 export type SectionsSlice = SectionsState & SectionsActions;
 
+const initialState: SectionsState = {
+   currentSection: undefined,
+   nameFromManualTab: undefined,
+   isTipShown: false
+}
+
 const createSectionsSlice: StateCreator<
-   SectionsSlice & DataSlice & VideoSizeSlice,
+   SectionsSlice & DataSlice,
    [],
    [],
    SectionsSlice
 > = (set) => ({
-   currentSection: undefined,
-   nameFromManualTab: undefined,
+   ...initialState,
    setCurrentSection: (name) => {
       set(state => {
          const foundedSection = state.activeTestData?.find(section => section.name === name);
@@ -54,6 +61,15 @@ const createSectionsSlice: StateCreator<
          ...state,
          nameFromManualTab: undefined
       }))
+   },
+   toggleIsTipShown: () => {
+      set(state => ({
+         ...state,
+         isTipShown: !state.isTipShown
+      }))
+   },
+   resetSections: () => {
+      set(initialState);
    }
 })
 
