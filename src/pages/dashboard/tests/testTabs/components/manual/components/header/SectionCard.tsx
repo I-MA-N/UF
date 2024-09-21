@@ -46,7 +46,7 @@ function SectionCard({ sectionName, files }: SectionCardProps) {
          className="relative mb-6 max-w-5xl mx-auto"
       >
          {
-            width && height &&
+            (width && height) &&
             <>
                <div
                   className="relative top-0 left-0 transition-all duration-500"
@@ -72,6 +72,7 @@ function SectionCard({ sectionName, files }: SectionCardProps) {
                   sectionName={sectionName}
                   image={files.image}
                   landmarks={files.landmarks}
+                  isVisible={isVisible}
                   width={width}
                   height={height}
                />
