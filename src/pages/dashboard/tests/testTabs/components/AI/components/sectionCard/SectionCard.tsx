@@ -59,7 +59,11 @@ function SectionCard({ section }: SectionCardProps) {
                      ?
                      <CardBtn sectionName={section.name} />
                      :
-                     <CardImageFirstLoad sectionName={section.name} fileContent={zipFile} />
+                     <CardImageFirstLoad
+                        sectionName={section.name}
+                        sectionNameFA={section.nameFA}
+                        fileContent={zipFile}
+                     />
                }
             </div>
 

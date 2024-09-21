@@ -1,6 +1,6 @@
 import { PropsWithChildren, useEffect, useLayoutEffect, useState } from "react";
-import PNewToken from "../../api/common/PNewToken";
 import axios from "axios";
+import PNewToken from "../../api/common/PNewToken";
 import NotAllowedElem from "./NotAllowedElem";
 
 function ProtectedRoute({ children }: PropsWithChildren) {
@@ -11,9 +11,8 @@ function ProtectedRoute({ children }: PropsWithChildren) {
     useEffect(() => {
         mutateAsync()
             .then(res => {
-                if (res.access) {
-                    setToken(res.access)
-                }
+                if (res?.access) setToken(res.access);
+                else setToken(null);
             })
             .catch(() => { setToken(null) });
     }, [])
@@ -42,21 +41,26 @@ function ProtectedRoute({ children }: PropsWithChildren) {
             response => response,
             async error => {
                 const originalConfig = error.config;
-
+                
                 if (
                     error.response.status === 401 &&
                     error.response.data.code === "token_not_valid"
                 ) {
                     try {
                         const res = await mutateAsync();
-                        setToken(res.access)
 
-                        originalConfig.headers.Authorization = `Bearer ${res.access}`;
-                        originalConfig._requested = true;
-
-                        return axios(originalConfig)
+                        if (res?.access) {
+                            setToken(res.access)
+    
+                            originalConfig.headers.Authorization = `Bearer ${res.access}`;
+                            originalConfig._requested = true;
+    
+                            return axios(originalConfig)
+                        } else {
+                            setToken(null);
+                        }
                     } catch {
-                        setToken(null)
+                        setToken(null);
                     }
                 }
 

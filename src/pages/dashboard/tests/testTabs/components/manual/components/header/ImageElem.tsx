@@ -6,38 +6,40 @@ import SectionNames from "../../../../../../../../types/SectionNames";
 type ImageElemProps = {
    sectionName: SectionNames,
    image: ExtractedZipType["image"],
+   landmarks: ExtractedZipType["landmarks"],
+   isVisible: boolean,
    width: number | undefined,
    height: number | undefined,
-   landmarks: ExtractedZipType["landmarks"],
 }
 
-function ImageElem({ sectionName, image, width, height, landmarks }: ImageElemProps) {
-   const imgRef = useRef<HTMLImageElement>(null);
+function ImageElem({ sectionName, image, landmarks, isVisible, width, height }: ImageElemProps) {
    const canvasRef = useRef<HTMLCanvasElement>(null);
 
    useEffect(() => {
-      const img = imgRef.current;
       const isSide = sectionName.toLowerCase().includes("side");
-      if (img) {
-         drawOnCanvas(canvasRef, img.clientWidth, img.clientHeight, 1.5, undefined, landmarks, isSide);
+
+      if (width && height) {
+         drawOnCanvas(canvasRef, width, height, width >= 1024 ? 2.5 : 1.5, undefined, landmarks, isSide);
       }
-   }, [landmarks, width])
+   }, [landmarks, width, height])
 
    return (
-      <div className="absolute top-0 left-0 -z-20">
+      <div
+         className="absolute top-0 left-0 z-0 transition-all duration-500"
+         style={{
+            width,
+            height: isVisible ? height : 0
+         }}
+      >
          <img
-            ref={imgRef}
             src={image}
             alt="captured photo for this section"
-            width={width}
-            height={height}
+            className="size-full"
          />
 
          <canvas
             ref={canvasRef}
-            className="absolute top-0 left-0"
-            width={width}
-            height={height}
+            className="size-full absolute top-0 left-0"
          />
       </div>
    );

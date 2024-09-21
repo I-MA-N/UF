@@ -15,6 +15,7 @@ function SampleCanvas({ setShowSample, showSample, selectedLandmark }: SampleCan
    const currentSection = useAIStore(state => state.currentSection);
    const sampleLandmarks = useMemo(() => currentSection?.AI.sampleImageLandmarks, [currentSection]) as NormalizedLandmark[];
 
+   const imgRef = useRef<HTMLImageElement>(null);
    const canvasRef = useRef<HTMLCanvasElement>(null);
 
    const landmarkCoordinates = useMemo(() => {
@@ -31,11 +32,12 @@ function SampleCanvas({ setShowSample, showSample, selectedLandmark }: SampleCan
    }, [selectedLandmark, sampleLandmarks])
 
    useEffect(() => {
-      const imgElem = document.getElementById(currentSection!.name) as HTMLImageElement | null;
+      const img = imgRef.current;
       const canvas = canvasRef.current;
       const isSide = currentSection?.name.toLowerCase().includes("side");
-      if (canvas && imgElem) {
-         drawOnCanvas(canvasRef, canvas.clientWidth, canvas.clientHeight, 0.8, imgElem, sampleLandmarks, isSide);
+
+      if (canvas && img) {
+         drawOnCanvas(canvasRef, img.clientWidth, img.clientHeight, 0.8, undefined, sampleLandmarks, isSide);
       }
    }, [canvasRef.current, selectedLandmark, sampleLandmarks])
 
@@ -57,9 +59,14 @@ function SampleCanvas({ setShowSample, showSample, selectedLandmark }: SampleCan
 
             <div className="bg-primary px-2 py-5 border rounded-2xl">
                <div className="relative">
+                  <img
+                     ref={imgRef}
+                     src={currentSection?.AI.sampleImageSrc}
+                     className="w-32 lg:w-40 h-44 lg:h-52"
+                  />
                   <canvas
                      ref={canvasRef}
-                     className="w-32 lg:w-40 h-44 lg:h-52"
+                     className="absolute top-0 left-0"
                   />
 
                   <BackdropElem isShown={landmarkCoordinates === null ? false : true} />

@@ -10,7 +10,7 @@ type AimCotainerProps = {
 function AimContainer({ isSupported, gamma }: AimCotainerProps) {
    const gammaColor = useMemo(() => {
       if (typeof gamma === "number" && isSupported) {
-         const gammaBool = (gamma >= -3 && gamma <= 3) || (gamma >= 87 && gamma <= 93);
+         const gammaBool = gamma >= -3 && gamma <= 3;
 
          return gammaBool ? "bg-secondary" : "bg-red";
       }

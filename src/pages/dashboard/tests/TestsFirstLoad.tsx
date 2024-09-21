@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 import GFormData from "../../../api/common/form/GFormData";
 import GFormNames from "../../../api/common/form/GFormNames";
 import Container from "../../common/Container";
@@ -6,7 +7,10 @@ import PrevBtn from "../../common/PrevBtn";
 import Loading from "../../common/Loading";
 import Tests from "./Tests";
 import replaceTestNames from "../../../utils/replaceTestNames";
-import SampleImages from "./components/SampleImages";
+import usePhotoStore from "./store/photoStore";
+import useFormStore from "./store/formStore";
+import useAIStore from "./store/AIStore";
+import useModelStore from "./store/modelStore";
 
 function TestsFirstLoad() {
    const { role, formname, username } = useParams();
@@ -14,6 +18,21 @@ function TestsFirstLoad() {
 
    const { data: formData, isPending: formDataPending } = GFormData(username, formname);
    const { data, isPending } = GFormNames(username);
+
+   const setModel = useModelStore(state => state.setModel);
+   const { resetData, resetSections } = useAIStore(state => ({ resetData: state.resetData, resetSections: state.resetSections }));
+   const resetPhotoStore = usePhotoStore(state => state.reset);
+   const resetFormStore = useFormStore(state => state.reset);
+   useEffect(() => {
+      setModel();
+
+      return () => {
+         resetData();
+         resetSections();
+         resetPhotoStore();
+         resetFormStore();
+      }
+   }, [])
 
    if (isPending && formDataPending) return <Loading />
 
@@ -30,10 +49,7 @@ function TestsFirstLoad() {
          replaceTestNames(testsArr);
 
          return (
-            <>
-               <SampleImages />
-               <Tests username={username} formname={formname} testsArr={testsArr} initialFormData={formData} />
-            </>
+            <Tests username={username} formname={formname} testsArr={testsArr} initialFormData={formData} />
          )
       } else {
          return <Container>

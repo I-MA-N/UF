@@ -1,12 +1,9 @@
-import { dynamicEvaluationType } from "../../../../../../data/testsData/dynamicEvaluation";
-import { staticEvaluationType } from "../../../../../../data/testsData/staticEvaluation";
-
 type NextBtnSvgProps = {
-   nextSection: staticEvaluationType[0] | dynamicEvaluationType[1] | undefined,
+   shouldGoNext: boolean,
 }
 
-function NextBtnSvg({ nextSection }: NextBtnSvgProps) {
-   if (nextSection) return (
+function NextBtnSvg({ shouldGoNext }: NextBtnSvgProps) {
+   if (shouldGoNext) return (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 10" fill="none" className="size-4 lg:size-6">
          <path d="M4.99992 0.833496L0.833252 5.00016M0.833252 5.00016H14.1666M0.833252 5.00016L4.99992 9.16683" stroke="#E4F4FD" strokeLinecap="round" strokeLinejoin="round" />
       </svg>

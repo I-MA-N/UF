@@ -9,7 +9,7 @@ async function nextBtnClickHandler(
    landmarks: NormalizedLandmark[],
    nextSectionName: SectionNames | undefined,
 ) {
-   const { currentSection, setCurrentSection, getOrSetZipFile } = useAIStore.getState();
+   const { currentSection, setCurrentSection, getOrSetZipFile, userHeight } = useAIStore.getState();
    const { updateFormData, setValue } = useFormStore.getState();
    const { image, removePhoto, videoSize } = usePhotoStore.getState();
 
@@ -32,7 +32,7 @@ async function nextBtnClickHandler(
    // Call "photoFn" function to evalutate based on "landmarks"
    // Update form data using "getValues" function
    if (currentSection && setValue) {
-      const resultObj = currentSection.AI.photoFn(landmarks);
+      const resultObj = currentSection.AI.photoFn(landmarks, userHeight);
       Object.entries(resultObj).forEach(([key, value]) => {
          setValue(key, value);
       })
