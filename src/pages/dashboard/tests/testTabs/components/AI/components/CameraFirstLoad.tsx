@@ -1,7 +1,7 @@
 import { PoseLandmarker } from "@mediapipe/tasks-vision";
 import usePhotoStore from "../../../../store/photoStore";
 import CameraLandmarks from "./CameraLandmarks";
-import EditElemFirstLoad from "./EditElemFirstLoad";
+import EditElem from "./EditElem";
 import CameraSimple from "./CameraSimple";
 import { dynamicEvaluationType } from "../../../../data/testsData/dynamicEvaluation";
 import { staticEvaluationType } from "../../../../data/testsData/staticEvaluation";
@@ -43,7 +43,7 @@ function CameraFirstLoad({ model, activeTestData }: CameraFirstLoadProps) {
             {
                image
                   ?
-                  <EditElemFirstLoad />
+                  <EditElem />
                   :
                   "src" in activeTestData.questions[0]
                      ?
