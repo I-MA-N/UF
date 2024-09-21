@@ -1040,7 +1040,7 @@ const dynamicEvaluation = [
          {
             id: 34,
             src: '/images/dynamicEvaluation/img-35.png',
-            title: 'گود شدن کمر',
+            title: 'گود شدن  کمر',
             direction: 'horizental'
          },
          {
@@ -1301,7 +1301,7 @@ const dynamicEvaluation = [
          {
             id: 28,
             src: '/images/dynamicEvaluation/img-29.png',
-            title: 'بالا آمدن شانه',
+            title: 'بالاآمدن شانه',
             direction: 'horizental'
          },
          {
@@ -1550,13 +1550,13 @@ const dynamicEvaluation = [
          {
             id: 31,
             src: '/images/dynamicEvaluation/img-32.png',
-            title: 'بالاآمدن شانه',
+            title: 'بالا آمدن  شانه',
             direction: 'horizental'
          },
          {
             id: 32,
             src: '/images/dynamicEvaluation/img-33.png',
-            title: 'گود شدن کمر',
+            title: 'گودشدن کمر',
             direction: 'horizental'
          },
          {
@@ -2291,7 +2291,7 @@ const dynamicEvaluation = [
          {
             id: 2,
             src: '/images/dynamicEvaluation/img-17.png',
-            title: 'بالا آمدن ران',
+            title: 'بالاآمدن ران',
             direction: 'vertical'
          },
          {
@@ -2552,7 +2552,7 @@ const dynamicEvaluation = [
          {
             id: 7,
             src: '/images/dynamicEvaluation/img-16.png',
-            title: 'گود شدن کمر',
+            title: 'کمر گود می شود',
             direction: 'vertical'
          },
       ],
