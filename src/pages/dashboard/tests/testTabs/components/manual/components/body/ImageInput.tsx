@@ -6,14 +6,14 @@ type ImageInputProps = {
    title: string,
    image: string,
    direction: string,
-   defaultValue: number | undefined
+   defaultValue: string | number | undefined
 }
 
 function ImageInput({ setValue: setInputValue, title, image, direction, defaultValue }: ImageInputProps) {
    const [value, setValue] = useState(defaultValue);
    
    useEffect(() => {
-      if (typeof defaultValue === "number") setValue(Number(defaultValue));
+      if (typeof defaultValue === "number" || typeof defaultValue === "string") setValue(Number(defaultValue));
       else setValue(undefined);
    }, [defaultValue])
 

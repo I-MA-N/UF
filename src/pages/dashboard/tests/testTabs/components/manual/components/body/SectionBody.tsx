@@ -19,7 +19,7 @@ function SectionBody({ section }: SectionBodyProps) {
 
                if ("keys" in input) return (
                   <ManualInput
-                     key={input.title}
+                     key={input.id + defaultValue}
                      title={input.title}
                      keys={input.keys}
                      values={input.values}
@@ -31,7 +31,7 @@ function SectionBody({ section }: SectionBodyProps) {
 
                return (
                   <ImageInput
-                     key={input.id}
+                     key={input.id + defaultValue}
                      title={input.title}
                      image={input.src}
                      direction={input.direction}

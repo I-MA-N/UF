@@ -6,10 +6,11 @@ import CardMenuBtns from "./CardMenuBtns";
 type CardMenuProps = {
    sectionName: SectionNames,
    setShowLandmarks: React.Dispatch<React.SetStateAction<boolean>>,
+   setShowImageBigger: React.Dispatch<React.SetStateAction<boolean>>,
    isImageBtnsDisabled: boolean
 }
 
-function CardMenu({ sectionName, setShowLandmarks, isImageBtnsDisabled }: CardMenuProps) {
+function CardMenu({ sectionName, setShowImageBigger, setShowLandmarks, isImageBtnsDisabled }: CardMenuProps) {
    const setCurrentSection = useAIStore(state => state.setCurrentSection);
    const [showMenu, setShowMenu] = useState(false);
 
@@ -19,7 +20,7 @@ function CardMenu({ sectionName, setShowLandmarks, isImageBtnsDisabled }: CardMe
             showMenu={showMenu}
             setShowMenu={setShowMenu}
          />
-         
+
          <div
             className={`
                size-full bg-white absolute top-0 right-0 transition-all duration-200
@@ -77,6 +78,23 @@ function CardMenu({ sectionName, setShowLandmarks, isImageBtnsDisabled }: CardMe
                      <path d="M19 10.5L20.5 12L24.5 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   عکس با مارک
+               </button>
+
+               <button
+                  type="button"
+                  className={`flex flex-col gap-1 items-center ${isImageBtnsDisabled ? "text-gray" : ""}`}
+                  disabled={isImageBtnsDisabled}
+                  onClick={() => {
+                     setShowMenu(false);
+                     setShowImageBigger(true);
+                  }}
+               >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className="size-4.5 md:size-5 lg:size-6">
+                     <path d="M1 11.4783C1 15.8486 1.78302 18.3581 3.30283 19.8237C4.83125 21.2975 7.35021 21.9565 11.4783 21.9565C15.6063 21.9565 18.1253 21.2975 19.6537 19.8237C21.1735 18.3581 21.9565 15.8486 21.9565 11.4783C21.9565 7.10793 21.1735 4.59845 19.6537 3.13291C18.1253 1.65907 15.6063 1.00002 11.4783 1.00002C7.35021 1.00002 4.83125 1.65907 3.30283 3.13291C1.78302 4.59845 1 7.10793 1 11.4783Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                     <path d="M22.9565 22.9565L20.3478 20.3478" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                     <path d="M8.34784 11.4783H11.4783M14.6087 11.4783H11.4783M11.4783 11.4783V8.34784V14.6087" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  مشاهده عکس در ابعاد بزرگتر
                </button>
 
             </div>

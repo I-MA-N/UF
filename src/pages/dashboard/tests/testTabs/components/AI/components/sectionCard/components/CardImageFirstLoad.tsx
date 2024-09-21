@@ -5,19 +5,24 @@ import CardImage from "./CardImage";
 import ExtractedZipType from "../../../../../../../../../types/ExtractedZipType";
 import SectionNames from "../../../../../../../../../types/SectionNames";
 import CardMenu from "./CardMenu";
+import ImageBiggerModal from "./ImageBiggerModal";
 
 type CardImageFristLoadProps = {
    sectionName: SectionNames,
+   sectionNameFA: string,
    fileContent: string,
 }
 
-function CardImageFirstLoad({ sectionName, fileContent }: CardImageFristLoadProps) {
+function CardImageFirstLoad({ sectionName, sectionNameFA, fileContent }: CardImageFristLoadProps) {
    const [files, setFiles] = useState<ExtractedZipType | null | undefined>(undefined);
    const [showLandmarks, setShowLandmarks] = useState(true);
+   const [showImageBigger, setShowImageBigger] = useState(false);
 
    const divRef = useRef<HTMLDivElement>(null);
    const [width, setWidth] = useState(divRef.current?.clientWidth);
    const height = useMemo(() => width && width * 1.6, [width]);
+
+   const isSide = useMemo(() => sectionName.toLowerCase().includes("side"), [sectionName]);
 
    useEffect(() => {
       setWidth(divRef.current?.clientWidth);
@@ -49,6 +54,7 @@ function CardImageFirstLoad({ sectionName, fileContent }: CardImageFristLoadProp
          <CardMenu
             sectionName={sectionName}
             setShowLandmarks={setShowLandmarks}
+            setShowImageBigger={setShowImageBigger}
             isImageBtnsDisabled={!files}
          />
 
@@ -63,14 +69,27 @@ function CardImageFirstLoad({ sectionName, fileContent }: CardImageFristLoadProp
          }
          {
             files &&
-            <CardImage
-               sectionName={sectionName}
-               image={files.image}
-               landmarks={files.landmarks}
-               showLandmarks={showLandmarks}
-               width={width}
-               height={height}
-            />
+            <>
+               <CardImage
+                  isSide={isSide}
+                  image={files.image}
+                  landmarks={files.landmarks}
+                  showLandmarks={showLandmarks}
+                  width={width}
+                  height={height}
+               />
+               {
+                  showImageBigger &&
+                  <ImageBiggerModal
+                     isSide={isSide}
+                     landmarks={files.landmarks}
+                     showLandmarks={showLandmarks}
+                     sectionNameFA={sectionNameFA}
+                     src={files.image}
+                     setShowImageBigger={setShowImageBigger}
+                  />
+               }
+            </>
          }
       </div>
    )
