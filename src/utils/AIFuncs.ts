@@ -5,6 +5,7 @@ import useModelStore from "../pages/dashboard/tests/store/modelStore";
 import { staticEvaluationType } from "../pages/dashboard/tests/data/testsData/staticEvaluation";
 import { dynamicEvaluationType } from "../pages/dashboard/tests/data/testsData/dynamicEvaluation";
 import useAIStore from "../pages/dashboard/tests/store/AIStore";
+import usePhotoStore from "../pages/dashboard/tests/store/photoStore";
 
 export const initMediaRecorder = (
    mediaRecorderRef: React.MutableRefObject<MediaRecorder | null>,
@@ -66,47 +67,48 @@ export const addExtraLandmarks = (
    landmarks: NormalizedLandmark[],
    drawPlubmLine: boolean
 ) => {
-   landmarks[33] = {
-      x: (landmarks[11].x + landmarks[12].x) / 2,
-      y: landmarks[11].y - (30 * (landmarks[11].y - landmarks[7].y)) / 100,
-      z: landmarks[29].z,
-      visibility: landmarks[29].visibility,
-   }
-
-   if (drawPlubmLine) {
-      const currentSection = useAIStore.getState().currentSection;
-
-      // Direction of coordinates on side images have differences, so 'x' coordinate should be changed
-      if (currentSection?.name.toLowerCase().includes("side")) {
-         landmarks[34] = {
-            x: landmarks[29].x,
-            y: (landmarks[3].y + landmarks[6].y) / 2,
-            z: landmarks[29].z,
-            visibility: landmarks[29].visibility,
-         }
-
-         landmarks[35] = {
-            x: landmarks[29].x,
-            y: (landmarks[29].y + landmarks[30].y) / 2,
-            z: landmarks[29].z,
-            visibility: landmarks[29].visibility,
-         }
-      } else {
-         landmarks[34] = {
-            x: (landmarks[29].x + landmarks[30].x) / 2,
-            y: (landmarks[3].y + landmarks[6].y) / 2,
-            z: landmarks[29].z,
-            visibility: landmarks[29].visibility,
-         }
-
-         landmarks[35] = {
-            x: (landmarks[29].x + landmarks[30].x) / 2,
-            y: (landmarks[29].y + landmarks[30].y) / 2,
-            z: landmarks[29].z,
-            visibility: landmarks[29].visibility,
-         }
+   if (landmarks?.length) {
+      landmarks[33] = {
+         x: (landmarks[11].x + landmarks[12].x) / 2,
+         y: landmarks[11].y - (30 * (landmarks[11].y - landmarks[7].y)) / 100,
+         z: landmarks[29].z,
+         visibility: landmarks[29].visibility,
       }
 
+      if (drawPlubmLine) {
+         const currentSection = useAIStore.getState().currentSection;
+
+         // Direction of coordinates on side images have differences, so 'x' coordinate should be changed
+         if (currentSection?.name.toLowerCase().includes("side")) {
+            landmarks[34] = {
+               x: landmarks[29].x,
+               y: (landmarks[3].y + landmarks[6].y) / 2,
+               z: landmarks[29].z,
+               visibility: landmarks[29].visibility,
+            }
+
+            landmarks[35] = {
+               x: landmarks[29].x,
+               y: (landmarks[29].y + landmarks[30].y) / 2,
+               z: landmarks[29].z,
+               visibility: landmarks[29].visibility,
+            }
+         } else {
+            landmarks[34] = {
+               x: (landmarks[29].x + landmarks[30].x) / 2,
+               y: (landmarks[3].y + landmarks[6].y) / 2,
+               z: landmarks[29].z,
+               visibility: landmarks[29].visibility,
+            }
+
+            landmarks[35] = {
+               x: (landmarks[29].x + landmarks[30].x) / 2,
+               y: (landmarks[29].y + landmarks[30].y) / 2,
+               z: landmarks[29].z,
+               visibility: landmarks[29].visibility,
+            }
+         }
+      }
    }
 }
 
@@ -162,7 +164,7 @@ export const drawOnCanvas = (
          bodyLandmarks = [...bodyLandmarks, landmarks[33]];
          let bodyConnectors = [{ start: 0, end: 1 }, { start: 0, end: 2 }, { start: 2, end: 4 }, { start: 1, end: 3 }, { start: 3, end: 5 }, { start: 6, end: 0 }, { start: 6, end: 1 }]
          if (isSide) bodyConnectors = [{ start: 0, end: 1 }, { start: 1, end: 2 }, { start: 0, end: 3 }];
-         
+
          drawingUtils.drawLandmarks(bodyLandmarks, { color: '#000000', radius });
          drawingUtils.drawConnectors(bodyLandmarks, bodyConnectors, { color: '#000000', lineWidth: radius / 2 });
 
@@ -175,7 +177,7 @@ export const drawOnCanvas = (
          });
          let footConnectors = [{ start: 0, end: 1 }, { start: 0, end: 2 }, { start: 2, end: 4 }, { start: 4, end: 6 }, { start: 6, end: 8 }, { start: 1, end: 3 }, { start: 3, end: 5 }, { start: 5, end: 7 }, { start: 7, end: 9 }]
          if (isSide) footConnectors = [{ start: 0, end: 1 }, { start: 1, end: 2 }, { start: 2, end: 3 }, { start: 3, end: 4 }];
-         
+
          drawingUtils.drawLandmarks(footLandmarks, { color: '#000000', radius });
          drawingUtils.drawConnectors(footLandmarks, footConnectors, { color: '#000000', lineWidth: radius / 2 });
 
@@ -210,22 +212,22 @@ export const drawOnVideo = (
 
       if (landmarks?.length) {
          let drawingUtils = new DrawingUtils(ctx);
-   
+
          const headLandmarks = [landmarks[0], landmarks[7], landmarks[8]]
          const headConnectors = [{ start: 0, end: 1 }, { start: 0, end: 2 }, { start: 1, end: 2 }];
-   
+
          drawingUtils.drawLandmarks(headLandmarks, { color: '#000000', radius: 1.5 });
          drawingUtils.drawConnectors(headLandmarks, headConnectors, { color: '#000000', lineWidth: 0.8 });
-   
+
          const bodyLandmarks = landmarks.slice(11, 17);
          const bodyConnectors = [{ start: 0, end: 1 }, { start: 0, end: 2 }, { start: 2, end: 4 }, { start: 1, end: 3 }, { start: 3, end: 5 }, { start: 6, end: 0 }, { start: 6, end: 1 }]
-         
+
          drawingUtils.drawLandmarks(bodyLandmarks, { color: '#000000', radius: 1.5 });
          drawingUtils.drawConnectors(bodyLandmarks, bodyConnectors, { color: '#000000', lineWidth: 0.8 });
-   
+
          const footLandmarks = landmarks.slice(23, 33);
          const footConnectors = [{ start: 0, end: 1 }, { start: 0, end: 2 }, { start: 2, end: 4 }, { start: 4, end: 6 }, { start: 6, end: 8 }, { start: 1, end: 3 }, { start: 3, end: 5 }, { start: 5, end: 7 }, { start: 7, end: 9 }]
-         
+
          drawingUtils.drawLandmarks(footLandmarks, { color: '#000000', radius: 1.5 });
          drawingUtils.drawConnectors(footLandmarks, footConnectors, { color: '#000000', lineWidth: 0.8 });
       }
@@ -236,6 +238,61 @@ export const drawOnVideo = (
 
 let deltaX = 0;
 let deltaY = 0;
+export const circleDown = (
+   setIsClicked: React.Dispatch<React.SetStateAction<boolean>>,
+   offsetX: number,
+   offsetY: number
+) => {
+   const focusCircle = document.getElementById("focusCircle");
+   if (focusCircle) {
+      setIsClicked(true);
+      const rect = focusCircle.getBoundingClientRect();
+      const deltaXFromStart = rect.left - offsetX;
+      const deltaYFromTop = rect.top - offsetY;
+      console.log(deltaXFromStart, deltaYFromTop);
+      deltaX = deltaXFromStart - rect.width;
+      deltaY = deltaYFromTop - rect.height;
+   }
+}
+
+export const circleMove = (
+   isClicked: boolean,
+   offsetX: number,
+   offsetY: number,
+   canvas: HTMLCanvasElement,
+   landmarks: NormalizedLandmark[],
+   setLandmarks: (landmarks: NormalizedLandmark[]) => void,
+   selectedLandmark: number,
+) => {
+   if (isClicked) {
+      const focusCircle = document.getElementById("focusCircle");
+      if (focusCircle) {
+         const newX = offsetX - focusCircle.clientWidth / 2;
+         const newY = offsetY - focusCircle.clientHeight / 2;
+
+         focusCircle.style.left = `${newX}px`;
+         focusCircle.style.top = `${newY}px`;
+
+         landmarks[selectedLandmark].x = (offsetX - deltaX) / canvas.clientWidth;
+         landmarks[selectedLandmark].y = (offsetY - deltaY) / canvas.clientHeight;
+
+         setLandmarks(landmarks);
+      }
+      // const landmark = landmarks[selectedLandmark];
+
+      // console.log(offsetX, offsetY, selectedLandmark);
+      // const pixelX = Math.floor(landmark.x * canvas.clientWidth);
+      // const pixelY = Math.floor(landmark.y * canvas.clientHeight);
+      // deltaX = offsetX - pixelX;
+      // deltaY = offsetY - pixelY;
+
+      // landmarks[selectedLandmark].x = (offsetX - deltaX) / canvas.clientWidth;
+      // landmarks[selectedLandmark].y = (offsetY - deltaY) / canvas.clientHeight;
+
+      // setLandmarks(landmarks);
+   }
+}
+
 export const canvasDown = (
    landmarks: NormalizedLandmark[],
    setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>,
@@ -269,7 +326,7 @@ export const canvasDown = (
          const landmark = landmarks[i];
          const pixelX = Math.floor(landmark.x * canvas.clientWidth);
          const pixelY = Math.floor(landmark.y * canvas.clientHeight);
-         
+
          const isBetweenX = offsetX > pixelX - 8 && offsetX < pixelX + 8;
          const isBetweenY = offsetY > pixelY - 8 && offsetY < pixelY + 8;
 
@@ -330,6 +387,37 @@ export const executeVideoFn = (
          landmarksStatus.push(status);
       })
    }
+}
+
+export const getDeletedLandmarks = () => {
+   const landmarks = usePhotoStore.getState().landmarks;
+
+   if (landmarks?.length) {
+      const currentSection = useAIStore.getState().currentSection;
+      const isSide = currentSection?.name.toLowerCase().includes("side");
+
+      let isEven = true;
+      if (landmarks[11].z < landmarks[12].z) isEven = false;
+
+      let deletedLandmarks = [1, 2, 3, 4, 5, 6, 9, 10];
+      if (isSide) {
+         const filteredLandmarks: number[] = [];
+         landmarks.forEach((_value, index) => {
+            if (isEven && index % 2 !== 0) {
+               filteredLandmarks.push(index);
+            }
+
+            if (!isEven && index % 2 === 0) {
+               filteredLandmarks.push(index);
+            }
+         });
+         deletedLandmarks = deletedLandmarks.concat(filteredLandmarks).filter(value => value !== 0 && value !== 33 && value !== 34 && value !== 35);
+      }
+
+      return deletedLandmarks;
+   }
+
+   return [];
 }
 
 export const extractZip = async (fileContent: string) => {

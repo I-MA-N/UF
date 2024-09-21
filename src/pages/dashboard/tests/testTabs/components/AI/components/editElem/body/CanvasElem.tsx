@@ -1,7 +1,8 @@
-import { canvasDown, canvasMove, canvasUp, drawOnCanvas } from "../../../../../../../../../utils/AIFuncs";
+import { canvasMove, drawOnCanvas } from "../../../../../../../../../utils/AIFuncs";
 import { useEffect } from "react";
 import usePhotoStore from "../../../../../../store/photoStore";
 import useAIStore from "../../../../../../store/AIStore";
+import FocusCircle from "./FocusCircle";
 
 type CanvasElemProps = {
    canvasRef: React.MutableRefObject<HTMLCanvasElement | null>,
@@ -16,47 +17,39 @@ function CanvasElem({ canvasRef, selectedLandmark, setSelectedLandmark }: Canvas
    useEffect(() => {
       if (videoSize) {
          const isSide = currentSection?.name.toLowerCase().includes("side");
+
          drawOnCanvas(canvasRef, videoSize.width, videoSize.height, 1.5, undefined, landmarks, isSide);
       }
    }, [JSON.stringify(landmarks)])
 
    return (
-      <canvas
-         ref={canvasRef}
+      <>
+         <canvas
+            ref={canvasRef}
 
-         onMouseDown={(e) => {
-            const offsetX = e.nativeEvent.offsetX;
-            const offsetY = e.nativeEvent.offsetY;
-            canvasDown(landmarks!, setSelectedLandmark, canvasRef.current, offsetX, offsetY);
-         }}
-         onMouseMove={(e) => {
-            const offsetX = e.nativeEvent.offsetX;
-            const offsetY = e.nativeEvent.offsetY;
-            canvasMove(landmarks!, setLandmarks, selectedLandmark, canvasRef.current, offsetX, offsetY);
-         }}
-         onMouseUp={() => {
-            canvasUp(setSelectedLandmark)
-         }}
+            // onMouseMove={(e) => {
+            //    const offsetX = e.nativeEvent.offsetX;
+            //    const offsetY = e.nativeEvent.offsetY;
+            //    canvasMove(landmarks!, setLandmarks, selectedLandmark, canvasRef.current, offsetX, offsetY);
+            // }}
+            // onTouchMove={(e) => {
+            //    const rect = e.currentTarget.getBoundingClientRect();
+            //    const offsetX = e.changedTouches[0].pageX - rect.left;
+            //    const offsetY = e.changedTouches[0].pageY - rect.top;
+            //    canvasMove(landmarks!, setLandmarks, selectedLandmark, canvasRef.current, offsetX, offsetY);
+            // }}
 
-         onTouchStart={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const offsetX = e.changedTouches[0].pageX - rect.left;
-            const offsetY = e.changedTouches[0].pageY - rect.top;
-            canvasDown(landmarks!, setSelectedLandmark, canvasRef.current, offsetX, offsetY);
-         }}
-         onTouchMove={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const offsetX = e.changedTouches[0].pageX - rect.left;
-            const offsetY = e.changedTouches[0].pageY - rect.top;
-            canvasMove(landmarks!, setLandmarks, selectedLandmark, canvasRef.current, offsetX, offsetY);
-         }}
-         onTouchEnd={() => {
-            canvasUp(setSelectedLandmark)
-         }}
-
-         className="absolute top-0 left-0 w-full"
-         id="editCanvas"
-      />
+            className="absolute top-0 left-0 w-full"
+            id="editCanvas"
+         />
+         {
+            (typeof selectedLandmark === "number" && canvasRef.current) &&
+            <FocusCircle
+               canvas={canvasRef.current}
+               selectedLandmark={selectedLandmark}
+            />
+         }
+      </>
    );
 };
 

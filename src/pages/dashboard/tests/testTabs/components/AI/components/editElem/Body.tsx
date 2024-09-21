@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import CanvasElem from "./body/CanvasElem";
-import EditCursor from "./body/EditCursor";
 import usePhotoStore from "../../../../../store/photoStore";
 
 type BodyProps = {
@@ -26,8 +25,6 @@ function Body({ selectedLandmark, setSelectedLandmark }: BodyProps) {
                setSelectedLandmark={setSelectedLandmark}
             />
          }
-
-         <EditCursor />
 
          {!landmarks?.length &&
             <span className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 min-w-52 text-center text-sm lg:text-base font-Estedad-Black text-red bg-white px-4 py-2 rounded-full">

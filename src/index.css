@@ -166,6 +166,21 @@
             scale: 1;
         }
     }
+
+    .selectedLandmark-menu {
+        @apply absolute top-[calc(100%+8px)] left-0 w-full max-h-24 overflow-y-scroll flex flex-col border border-l-0 bg-primary text-white transition-all duration-300;
+    }
+    .selectedLandmark-menu::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    .selectedLandmark-menu::-webkit-scrollbar-track {
+        @apply bg-white;
+    }
+    
+    .selectedLandmark-menu::-webkit-scrollbar-thumb {
+        @apply bg-primary border-solid border border-white rounded-[4px];
+    }
 }
 
 @layer utilities {

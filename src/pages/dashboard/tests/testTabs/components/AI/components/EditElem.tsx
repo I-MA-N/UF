@@ -20,7 +20,10 @@ function EditElem() {
             setSelectedLandmark={setSelectedLandmark}
          />
 
-         <Footer />
+         <Footer
+            selectedLandmark={selectedLandmark}
+            setSelectedLandmark={setSelectedLandmark}
+         />
       </div>
    )
 };
