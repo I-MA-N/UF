@@ -149,8 +149,8 @@ export const drawOnCanvas = (
          headLandmarks = headLandmarks.concat(landmarks[0]);
          const headConnectors = [{ start: 0, end: 1 }, { start: 0, end: 2 }, { start: 1, end: 2 }];
 
-         drawingUtils.drawLandmarks(headLandmarks, { color: '#000000', radius });
-         drawingUtils.drawConnectors(headLandmarks, headConnectors, { color: '#000000', lineWidth: radius / 2 });
+         drawingUtils.drawLandmarks(headLandmarks, { color: '#4CB648', radius });
+         drawingUtils.drawConnectors(headLandmarks, headConnectors, { color: '#FCC72C', lineWidth: radius / 2 });
 
          let bodyLandmarks = landmarks.slice(11, 17).filter((_landmark, index) => {
             if (isSide) {
@@ -163,8 +163,8 @@ export const drawOnCanvas = (
          let bodyConnectors = [{ start: 0, end: 1 }, { start: 0, end: 2 }, { start: 2, end: 4 }, { start: 1, end: 3 }, { start: 3, end: 5 }, { start: 6, end: 0 }, { start: 6, end: 1 }]
          if (isSide) bodyConnectors = [{ start: 0, end: 1 }, { start: 1, end: 2 }, { start: 0, end: 3 }];
          
-         drawingUtils.drawLandmarks(bodyLandmarks, { color: '#000000', radius });
-         drawingUtils.drawConnectors(bodyLandmarks, bodyConnectors, { color: '#000000', lineWidth: radius / 2 });
+         drawingUtils.drawLandmarks(bodyLandmarks, { color: '#4CB648', radius });
+         drawingUtils.drawConnectors(bodyLandmarks, bodyConnectors, { color: '#FCC72C', lineWidth: radius / 2 });
 
          const footLandmarks = landmarks.slice(23, 33).filter((_landmark, index) => {
             if (isSide) {
@@ -176,14 +176,14 @@ export const drawOnCanvas = (
          let footConnectors = [{ start: 0, end: 1 }, { start: 0, end: 2 }, { start: 2, end: 4 }, { start: 4, end: 6 }, { start: 6, end: 8 }, { start: 1, end: 3 }, { start: 3, end: 5 }, { start: 5, end: 7 }, { start: 7, end: 9 }]
          if (isSide) footConnectors = [{ start: 0, end: 1 }, { start: 1, end: 2 }, { start: 2, end: 3 }, { start: 3, end: 4 }];
          
-         drawingUtils.drawLandmarks(footLandmarks, { color: '#000000', radius });
-         drawingUtils.drawConnectors(footLandmarks, footConnectors, { color: '#000000', lineWidth: radius / 2 });
+         drawingUtils.drawLandmarks(footLandmarks, { color: '#4CB648', radius });
+         drawingUtils.drawConnectors(footLandmarks, footConnectors, { color: '#FCC72C', lineWidth: radius / 2 });
 
          if (landmarks[34] && landmarks[35]) {
             const plumbLineLandmarks = [landmarks[34], landmarks[35]];
             const plumbLineConnectors = [{ start: 0, end: 1 }];
-            drawingUtils.drawLandmarks(plumbLineLandmarks, { color: '#000000', radius });
-            drawingUtils.drawConnectors(plumbLineLandmarks, plumbLineConnectors, { color: '#000000', lineWidth: radius / 2 });
+            drawingUtils.drawLandmarks(plumbLineLandmarks, { color: '#4CB648', radius });
+            drawingUtils.drawConnectors(plumbLineLandmarks, plumbLineConnectors, { color: '#FCC72C', lineWidth: radius / 2 });
          }
       }
 
@@ -214,20 +214,20 @@ export const drawOnVideo = (
          const headLandmarks = [landmarks[0], landmarks[7], landmarks[8]]
          const headConnectors = [{ start: 0, end: 1 }, { start: 0, end: 2 }, { start: 1, end: 2 }];
    
-         drawingUtils.drawLandmarks(headLandmarks, { color: '#000000', radius: 1.5 });
-         drawingUtils.drawConnectors(headLandmarks, headConnectors, { color: '#000000', lineWidth: 0.8 });
+         drawingUtils.drawLandmarks(headLandmarks, { color: '#4CB648', radius: 1.5 });
+         drawingUtils.drawConnectors(headLandmarks, headConnectors, { color: '#FCC72C', lineWidth: 0.8 });
    
          const bodyLandmarks = landmarks.slice(11, 17);
          const bodyConnectors = [{ start: 0, end: 1 }, { start: 0, end: 2 }, { start: 2, end: 4 }, { start: 1, end: 3 }, { start: 3, end: 5 }, { start: 6, end: 0 }, { start: 6, end: 1 }]
          
-         drawingUtils.drawLandmarks(bodyLandmarks, { color: '#000000', radius: 1.5 });
-         drawingUtils.drawConnectors(bodyLandmarks, bodyConnectors, { color: '#000000', lineWidth: 0.8 });
+         drawingUtils.drawLandmarks(bodyLandmarks, { color: '#4CB648', radius: 1.5 });
+         drawingUtils.drawConnectors(bodyLandmarks, bodyConnectors, { color: '#FCC72C', lineWidth: 0.8 });
    
          const footLandmarks = landmarks.slice(23, 33);
          const footConnectors = [{ start: 0, end: 1 }, { start: 0, end: 2 }, { start: 2, end: 4 }, { start: 4, end: 6 }, { start: 6, end: 8 }, { start: 1, end: 3 }, { start: 3, end: 5 }, { start: 5, end: 7 }, { start: 7, end: 9 }]
          
-         drawingUtils.drawLandmarks(footLandmarks, { color: '#000000', radius: 1.5 });
-         drawingUtils.drawConnectors(footLandmarks, footConnectors, { color: '#000000', lineWidth: 0.8 });
+         drawingUtils.drawLandmarks(footLandmarks, { color: '#4CB648', radius: 1.5 });
+         drawingUtils.drawConnectors(footLandmarks, footConnectors, { color: '#FCC72C', lineWidth: 0.8 });
       }
 
       ctx.restore();
