@@ -18,7 +18,7 @@ function Body({ selectedLandmark, setSelectedLandmark }: BodyProps) {
          <img src={image!} width={videoSize?.width} height={videoSize?.height} />
 
          {
-            landmarks?.length &&
+            landmarks?.length > 0 &&
             <CanvasElem
                canvasRef={canvasRef}
                selectedLandmark={selectedLandmark}
@@ -26,7 +26,7 @@ function Body({ selectedLandmark, setSelectedLandmark }: BodyProps) {
             />
          }
 
-         {!landmarks?.length &&
+         {landmarks?.length === undefined &&
             <span className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 min-w-52 text-center text-sm lg:text-base font-Estedad-Black text-red bg-white px-4 py-2 rounded-full">
                نقطه ای در عکس یافت نشد!
             </span>

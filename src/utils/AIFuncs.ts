@@ -240,25 +240,25 @@ let deltaX = 0;
 let deltaY = 0;
 export const circleDown = (
    setIsClicked: React.Dispatch<React.SetStateAction<boolean>>,
-   offsetX: number,
-   offsetY: number
+   pageX: number,
+   pageY: number
 ) => {
    const focusCircle = document.getElementById("focusCircle");
+
    if (focusCircle) {
       setIsClicked(true);
       const rect = focusCircle.getBoundingClientRect();
-      const deltaXFromStart = rect.left - offsetX;
-      const deltaYFromTop = rect.top - offsetY;
-      console.log(deltaXFromStart, deltaYFromTop);
-      deltaX = deltaXFromStart - rect.width;
-      deltaY = deltaYFromTop - rect.height;
+      const offsetX = pageX - rect.left;
+      const offsetY = pageY - rect.top;
+      deltaX = offsetX - (rect.width / 2);
+      deltaY = offsetY - (rect.height / 2);
    }
 }
 
 export const circleMove = (
    isClicked: boolean,
-   offsetX: number,
-   offsetY: number,
+   pageX: number,
+   pageY: number,
    canvas: HTMLCanvasElement,
    landmarks: NormalizedLandmark[],
    setLandmarks: (landmarks: NormalizedLandmark[]) => void,
@@ -267,29 +267,19 @@ export const circleMove = (
    if (isClicked) {
       const focusCircle = document.getElementById("focusCircle");
       if (focusCircle) {
-         const newX = offsetX - focusCircle.clientWidth / 2;
-         const newY = offsetY - focusCircle.clientHeight / 2;
+         const rect = canvas.getBoundingClientRect();
+         pageX = pageX - rect.left;
+         pageY = pageY - rect.top;
 
-         focusCircle.style.left = `${newX}px`;
-         focusCircle.style.top = `${newY}px`;
+         const circleRect = focusCircle.getBoundingClientRect();
+         focusCircle.style.left = `${pageX - deltaX - (circleRect.width / 2)}px`;
+         focusCircle.style.top = `${pageY - deltaY - (circleRect.height / 2)}px`;
 
-         landmarks[selectedLandmark].x = (offsetX - deltaX) / canvas.clientWidth;
-         landmarks[selectedLandmark].y = (offsetY - deltaY) / canvas.clientHeight;
+         landmarks[selectedLandmark].x = (pageX - deltaX) / canvas.clientWidth;
+         landmarks[selectedLandmark].y = (pageY - deltaY) / canvas.clientHeight;
 
          setLandmarks(landmarks);
       }
-      // const landmark = landmarks[selectedLandmark];
-
-      // console.log(offsetX, offsetY, selectedLandmark);
-      // const pixelX = Math.floor(landmark.x * canvas.clientWidth);
-      // const pixelY = Math.floor(landmark.y * canvas.clientHeight);
-      // deltaX = offsetX - pixelX;
-      // deltaY = offsetY - pixelY;
-
-      // landmarks[selectedLandmark].x = (offsetX - deltaX) / canvas.clientWidth;
-      // landmarks[selectedLandmark].y = (offsetY - deltaY) / canvas.clientHeight;
-
-      // setLandmarks(landmarks);
    }
 }
 
