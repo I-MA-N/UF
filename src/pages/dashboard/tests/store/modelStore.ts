@@ -23,9 +23,9 @@ const useModelStore = create<ModelState & ModelActions>()((set, get) => ({
             },
             runningMode: "VIDEO",
             numPoses: 1,
-            minPoseDetectionConfidence: 0.8,
-            minPosePresenceConfidence: 0.8,
-            minTrackingConfidence: 0.8,
+            minPoseDetectionConfidence: 0.6,
+            minPosePresenceConfidence: 0.6,
+            minTrackingConfidence: 0.6,
          });
          set(state => ({
             ...state,
