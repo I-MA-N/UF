@@ -8,7 +8,7 @@ import { PoseLandmarker } from "@mediapipe/tasks-vision";
 import Webcam from "react-webcam";
 import usePhotoStore from "../../../../store/photoStore";
 import DeviceOrientation from "./camera/DeviceOrientation";
-import { addExtraLandmarks } from "../../../../../../../utils/AIFuncs";
+import { addExtraLandmarks, drawOnVideo } from "../../../../../../../utils/AIFuncs";
 import HeightInputModal from "./camera/HeightInputModal";
 
 type CameraSimpleProps = {
@@ -21,6 +21,7 @@ function CameraSimple({ model }: CameraSimpleProps) {
       { setImage: state.setImage, setLandmarks: state.setLandmarks, setVideoSize: state.setVideoSize }
    ));
 
+   const canvasRef = useRef<HTMLCanvasElement>(null);
    const webcamRef = useRef<Webcam | null>(null);
    const isClickedRef = useRef(false);
 
@@ -43,6 +44,8 @@ function CameraSimple({ model }: CameraSimpleProps) {
          let startTimeMs = performance.now();
          const result = model.detectForVideo(video, startTimeMs);
          const landmarks = result.landmarks[0];
+
+         drawOnVideo(canvasRef, video, landmarks);
 
          if (isClickedRef.current) {
             const base64 = webcamRef.current?.getScreenshot();
@@ -80,14 +83,20 @@ function CameraSimple({ model }: CameraSimpleProps) {
                      <span>{coordinates?.gamma.toFixed(2)}</span>
                      <span>{coordinates?.beta.toFixed(2)}</span>
                   </div>
-                  <Webcam
-                     ref={webcamRef}
-                     videoConstraints={{
-                        facingMode,
-                        aspectRatio: 1600 / 1000,
-                     }}
-                     onLoadedData={proccessFrames}
-                  />
+                  <div className="relative">
+                     <Webcam
+                        ref={webcamRef}
+                        videoConstraints={{
+                           facingMode,
+                           aspectRatio: 1600 / 1000,
+                        }}
+                        onLoadedData={proccessFrames}
+                     />
+                     <canvas
+                        ref={canvasRef}
+                        className="absolute top-0 left-0"
+                     />
+                  </div>
 
                   <DeviceOrientation
                      isSupported={isSupported}
