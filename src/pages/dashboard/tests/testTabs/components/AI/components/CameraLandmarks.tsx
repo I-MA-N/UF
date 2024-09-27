@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import CameraModeBtn from "./camera/buttons/CameraModeBtn";
 import CapturePhotoBtn from "./camera/buttons/CapturePhotoBtn";
 import CloseBtn from "./camera/buttons/CloseBtn";
@@ -6,7 +6,7 @@ import useAIStore from "../../../../store/AIStore";
 import { PoseLandmarker } from "@mediapipe/tasks-vision";
 import Webcam from "react-webcam";
 import usePhotoStore from "../../../../store/photoStore";
-import { addExtraLandmarks, drawOnVideo, executeVideoFn, initMediaRecorder } from "../../../../../../../utils/AIFuncs";
+import { addExtraLandmarks, drawOnVideo, executeVideoFn } from "../../../../../../../utils/AIFuncs";
 
 type CameraLandmarksProps = {
    model: PoseLandmarker,
@@ -21,21 +21,8 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
    const [isCameraLoaded, setIsCameraLoaded] = useState(false);
 
    const webcamRef = useRef<Webcam | null>(null);
-   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
    const canvasRef = useRef<HTMLCanvasElement | null>(null);
    const isClickedRef = useRef(false);
-
-   const startRecording = useCallback(() => {
-      if (webcamRef.current?.stream) {
-         initMediaRecorder(mediaRecorderRef, webcamRef.current.stream, proccessFrames);
-      }
-   }, [])
-
-   const stopRecording = useCallback(() => {
-      if (mediaRecorderRef.current) {
-         mediaRecorderRef.current.stop();
-      }
-   }, [])
 
    const proccessFrames = useCallback(() => {
       if (!isCameraLoaded) setIsCameraLoaded(true);
@@ -59,12 +46,8 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
                setVideoSize(video.clientWidth - 32, video.clientHeight - 16);
             }
          }
-      }
-   }, [])
 
-   useEffect(() => {
-      return () => {
-         stopRecording();
+         requestAnimationFrame(proccessFrames);
       }
    }, [])
 
@@ -80,7 +63,7 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
                      facingMode: "environment",
                      aspectRatio: 1600 / 1000,
                   }}
-                  onLoadedData={() => startRecording()}
+                  onLoadedData={proccessFrames}
                />
                <canvas
                   ref={canvasRef}

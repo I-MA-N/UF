@@ -1,27 +1,10 @@
 import JSZip from "jszip";
 import { DrawingUtils, NormalizedLandmark, PoseLandmarker } from "@mediapipe/tasks-vision";
 import ExtractedZipType from "../types/ExtractedZipType";
-import useModelStore from "../pages/dashboard/tests/store/modelStore";
 import { staticEvaluationType } from "../pages/dashboard/tests/data/testsData/staticEvaluation";
 import { dynamicEvaluationType } from "../pages/dashboard/tests/data/testsData/dynamicEvaluation";
 import useAIStore from "../pages/dashboard/tests/store/AIStore";
 import usePhotoStore from "../pages/dashboard/tests/store/photoStore";
-
-export const initMediaRecorder = (
-   mediaRecorderRef: React.MutableRefObject<MediaRecorder | null>,
-   stream: MediaStream,
-   handleDataAvailable: () => void
-) => {
-   const model = useModelStore.getState().model;
-   mediaRecorderRef.current = new MediaRecorder(stream, {
-      mimeType: "video/webm"
-   });
-   model!.setOptions({
-      runningMode: "VIDEO"
-   });
-   mediaRecorderRef.current.addEventListener("dataavailable", handleDataAvailable);
-   mediaRecorderRef.current.start(5);
-}
 
 export const addExtraLandmarks = (
    landmarks: NormalizedLandmark[],
@@ -71,22 +54,6 @@ export const addExtraLandmarks = (
          z: isEven ? landmarks[28].z : landmarks[27].z,
          visibility: isEven ? landmarks[28].visibility : landmarks[27].visibility,
       }
-      // if (isSide) {
-      // } else {
-      //    landmarks[35] = {
-      //       x: (landmarks[29].x + landmarks[30].x) / 2,
-      //       y: (landmarks[3].y + landmarks[6].y) / 2,
-      //       z: landmarks[29].z,
-      //       visibility: landmarks[29].visibility,
-      //    }
-
-      //    landmarks[36] = {
-      //       x: (landmarks[29].x + landmarks[30].x) / 2,
-      //       y: (landmarks[29].y + landmarks[30].y) / 2,
-      //       z: landmarks[29].z,
-      //       visibility: landmarks[29].visibility,
-      //    }
-      // }
    }
 }
 
@@ -257,83 +224,6 @@ export const circleMove = (
    }
 }
 
-export const canvasDown = (
-   landmarks: NormalizedLandmark[],
-   setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>,
-   canvas: HTMLCanvasElement | null,
-   offsetX: number,
-   offsetY: number
-) => {
-   if (canvas) {
-      const currentSection = useAIStore.getState().currentSection;
-      const isSide = currentSection?.name.toLowerCase().includes("side");
-
-      let isEven = true;
-      if (landmarks[11].z < landmarks[12].z) isEven = false;
-
-      let deletedLandmarks = [1, 2, 3, 4, 5, 6, 9, 10];
-      if (isSide) {
-         const filteredLandmarks: number[] = [];
-         landmarks.forEach((_value, index) => {
-            if (isEven && index % 2 !== 0) {
-               filteredLandmarks.push(index);
-            }
-
-            if (!isEven && index % 2 === 0) {
-               filteredLandmarks.push(index);
-            }
-         });
-         deletedLandmarks = deletedLandmarks.concat(filteredLandmarks).filter(value => value !== 0 && value !== 33 && value !== 34 && value !== 35);
-      }
-
-      for (let i = 0; i < landmarks.length; i++) {
-         const landmark = landmarks[i];
-         const pixelX = Math.floor(landmark.x * canvas.clientWidth);
-         const pixelY = Math.floor(landmark.y * canvas.clientHeight);
-
-         const isBetweenX = offsetX > pixelX - 8 && offsetX < pixelX + 8;
-         const isBetweenY = offsetY > pixelY - 8 && offsetY < pixelY + 8;
-
-         if (isBetweenX && isBetweenY && !deletedLandmarks.includes(i)) {
-            deltaX = offsetX - pixelX;
-            deltaY = offsetY - pixelY;
-            setSelectedLandmark(i);
-            break;
-         };
-      }
-   }
-}
-
-export const canvasMove = (
-   landmarks: NormalizedLandmark[],
-   setLandmarks: (landmarks: NormalizedLandmark[]) => void,
-   selectedLandmark: number | null,
-   canvas: HTMLCanvasElement | null,
-   offsetX: number,
-   offsetY: number
-) => {
-   const circleElem = document.getElementById("circle");
-
-   if (typeof selectedLandmark === "number" && canvas && circleElem) {
-      circleElem.style.left = `${offsetX - circleElem.clientWidth / 2}px`;
-      circleElem.style.top = `${offsetY - circleElem.clientWidth / 2}px`;
-      circleElem.style.display = "flex";
-
-      landmarks[selectedLandmark].x = (offsetX - deltaX) / canvas.clientWidth;
-      landmarks[selectedLandmark].y = (offsetY - deltaY) / canvas.clientHeight;
-
-      setLandmarks(landmarks);
-   }
-}
-
-export const canvasUp = (
-   setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>,
-) => {
-   setSelectedLandmark(null);
-   const circleElem = document.getElementById("circle");
-   if (circleElem) circleElem.style.display = "none";
-}
-
 export const executeVideoFn = (
    canvasRef: React.MutableRefObject<HTMLCanvasElement | null>,
    currentSection: staticEvaluationType[0] | dynamicEvaluationType[0] | undefined,
@@ -361,7 +251,7 @@ export const getDeletedLandmarks = (
       let isEven = true;
       if (landmarks[11].z < landmarks[12].z) isEven = false;
 
-      let deletedLandmarks = [1, 2, 3, 4, 5, 6, 9, 10, 17, 18, 19, 20, 21, 22];
+      let deletedLandmarks = [1, 2, 3, 4, 5, 6, 9, 10, 17, 18, 19, 20, 21, 22, 35, 36];
       if (isSide) {
          const filteredLandmarks: number[] = [];
          landmarks.forEach((_value, index) => {
@@ -373,7 +263,7 @@ export const getDeletedLandmarks = (
                filteredLandmarks.push(index);
             }
          });
-         deletedLandmarks = deletedLandmarks.concat(filteredLandmarks).filter(value => value !== 0 && value !== 33 && value !== 34 && value !== 35 && value !== 36);
+         deletedLandmarks = deletedLandmarks.concat(filteredLandmarks).filter(value => value !== 0 && value !== 33 && value !== 34);
       }
 
       return deletedLandmarks;
