@@ -54,9 +54,9 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
             const base64 = webcamRef.current?.getScreenshot();
             if (base64) {
                setImage(base64);
-               addExtraLandmarks(landmarks, false);
+               if (landmarks?.length) addExtraLandmarks(landmarks);
                setLandmarks(landmarks);
-               setVideoSize(video.clientWidth, video.clientHeight);
+               setVideoSize(video.clientWidth - 32, video.clientHeight - 16);
             }
          }
       }

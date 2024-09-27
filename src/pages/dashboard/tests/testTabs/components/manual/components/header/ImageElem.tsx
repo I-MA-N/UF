@@ -19,7 +19,7 @@ function ImageElem({ sectionName, image, landmarks, isVisible, width, height }: 
       const isSide = sectionName.toLowerCase().includes("side");
 
       if (width && height) {
-         drawOnCanvas(canvasRef, width, height, width >= 1024 ? 2.5 : 1.5, undefined, landmarks, isSide);
+         drawOnCanvas(canvasRef, width, height, width >= 1024 ? 2.5 : 1.5, ["#fff", "#fff"], undefined, landmarks, isSide);
       }
    }, [landmarks, width, height])
 

@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import { circleDown, circleMove } from "../../../../../../../../../utils/AIFuncs";
 import usePhotoStore from "../../../../../../store/photoStore";
 
@@ -8,8 +8,8 @@ type FocusCircleProps = {
 }
 
 function FocusCircle({ canvas, selectedLandmark }: FocusCircleProps) {
-   const { landmarks, setLandmarks } = usePhotoStore(state => ({ landmarks: state.landmarks, setLandmarks: state.setLandmarks }));
-   const [isClicked, setIsClicked] = useState(false);
+   const { landmarks, setLandmarks, setIsMovingLandmark } = usePhotoStore(state => ({ landmarks: state.landmarks, setLandmarks: state.setLandmarks, setIsMovingLandmark: state.setIsMovingLandmark }));
+   const divRef = useRef<HTMLDivElement>(null);
 
    const initialCoordinates = useMemo(() => {
       const landmark = landmarks[selectedLandmark];
@@ -26,7 +26,7 @@ function FocusCircle({ canvas, selectedLandmark }: FocusCircleProps) {
    return (
       <>
          <div
-            id="focusCircle"
+            ref={divRef}
             className="absolute z-10 size-[108px] rounded-full
             bg-yellow/40 border border-secondary flex items-center justify-center"
             style={{
@@ -35,26 +35,26 @@ function FocusCircle({ canvas, selectedLandmark }: FocusCircleProps) {
             }}
 
             onMouseDown={(e) => {
-               circleDown(setIsClicked, e.pageX, e.pageY);
+               circleDown(e.pageX, e.pageY, divRef.current);
             }}
             onMouseMove={(e) => {
-               circleMove(isClicked, e.pageX, e.pageY, canvas, landmarks, setLandmarks, selectedLandmark)
+               circleMove(divRef.current, e.pageX, e.pageY, canvas, landmarks, setLandmarks, selectedLandmark);
             }}
-            onMouseUp={() => setIsClicked(false)}
+            onMouseUp={() => setIsMovingLandmark(false)}
 
             onTouchStart={(e) => {
                const rect = canvas.getBoundingClientRect();
                const offsetX = e.changedTouches[0].pageX - rect.left;
                const offsetY = e.changedTouches[0].pageY - rect.top;
-               circleDown(setIsClicked, offsetX, offsetY);
+               circleDown(offsetX, offsetY, divRef.current);
             }}
             onTouchMove={(e) => {
                const rect = canvas.getBoundingClientRect();
                const offsetX = e.changedTouches[0].pageX - rect.left;
                const offsetY = e.changedTouches[0].pageY - rect.top;
-               circleMove(isClicked, offsetX, offsetY, canvas, landmarks, setLandmarks, selectedLandmark);
+               circleMove(divRef.current, offsetX, offsetY, canvas, landmarks, setLandmarks, selectedLandmark);
             }}
-            onTouchEnd={() => setIsClicked(false)}
+            onTouchEnd={() => setIsMovingLandmark(false)}
          >
             <div className="size-2 bg-secondary rounded-full" />
          </div>

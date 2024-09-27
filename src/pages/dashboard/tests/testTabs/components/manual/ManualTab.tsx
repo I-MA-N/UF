@@ -9,7 +9,7 @@ function ManualTab({ setIsAIMethod }: ManualTabProps) {
    const activeTestData = useAIStore(state => state.activeTestData);
 
    return (
-      <div className="grid grid-cols-1 justify-center divide-y divide-y-white">
+      <div className="grid grid-cols-1 justify-center divide-y divide-y-white overflow-hidden">
          {
             activeTestData?.map(section => (
                <SectionElem
