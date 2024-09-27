@@ -28,15 +28,15 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number) {
    const editCanvas = document.getElementById("editCanvas");
    if (editCanvas && userHeight) {
       const distanceCentimeters = userHeight - 12;
-      const distancePixels = (landmarks[35].y - landmarks[34].y) * editCanvas.clientHeight;
+      const distancePixels = (landmarks[36].y - landmarks[35].y) * editCanvas.clientHeight;
 
-      const swayBackDistance = ((isEven ? landmarks[24].x : landmarks[23].x) - landmarks[35].x) * editCanvas.clientWidth;
+      const swayBackDistance = ((isEven ? landmarks[24].x : landmarks[23].x) - landmarks[36].x) * editCanvas.clientWidth;
       const swayBack = Math.abs((distanceCentimeters * swayBackDistance) / distancePixels);
 
       if (swayBack >= 5) resultObj["پشت تابدار"] = "3";
       if (swayBack >= 7.5) resultObj["پشت تابدار"] = "1";
 
-      const kneeDistance = ((isEven ? landmarks[26].x : landmarks[25].x) - landmarks[35].x) * editCanvas.clientWidth;
+      const kneeDistance = ((isEven ? landmarks[26].x : landmarks[25].x) - landmarks[36].x) * editCanvas.clientWidth;
       let knee = (distanceCentimeters * kneeDistance) / distancePixels;
       if (!isEven) knee = -knee;
 

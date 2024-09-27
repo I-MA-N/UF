@@ -166,6 +166,19 @@
             scale: 1;
         }
     }
+
+    .editlandmarks-menu {
+        @apply absolute bottom-[calc(100%+8px)] left-0 w-full max-h-24 overflow-y-scroll flex flex-col border border-l-0 bg-primary text-white transition-all duration-300;
+    }
+    .editlandmarks-menu::-webkit-scrollbar {
+        width: 8px;
+    }
+    .editlandmarks-menu::-webkit-scrollbar-track {
+        @apply bg-white;
+    }
+    .editlandmarks-menu::-webkit-scrollbar-thumb {
+        @apply bg-primary border-solid border border-white rounded-[4px];
+    }
 }
 
 @layer utilities {

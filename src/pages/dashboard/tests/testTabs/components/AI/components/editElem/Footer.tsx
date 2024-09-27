@@ -1,12 +1,20 @@
-import BackBtn from "./footerButtons/BackBtn";
-import NextBtn from "./footerButtons/NextBtn";
+import BottomBtns from "./footer/BottomBtns";
+import EditBtns from "./footer/EditBtns";
 
-function Footer() {
+type FooterProps = {
+   selectedLandmark: number | null,
+   setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>,
+}
+
+function Footer({ selectedLandmark, setSelectedLandmark }: FooterProps) {
    return (
-      <div className="flex items-center justify-between w-full h-12 lg:h-14 text-sm lg:text-base">
-         <BackBtn />
+      <div className="w-full space-y-2 flex-shrink-0 text-sm lg:text-base">
+         <EditBtns
+            selectedLandmark={selectedLandmark}
+            setSelectedLandmark={setSelectedLandmark}
+         />
 
-         <NextBtn />
+         <BottomBtns />
       </div>
    );
 };

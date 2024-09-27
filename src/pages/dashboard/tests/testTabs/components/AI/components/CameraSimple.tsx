@@ -51,9 +51,9 @@ function CameraSimple({ model }: CameraSimpleProps) {
             const base64 = webcamRef.current?.getScreenshot();
             if (base64) {
                setImage(base64);
-               addExtraLandmarks(landmarks, true);
+               if (landmarks?.length) addExtraLandmarks(landmarks);
                setLandmarks(landmarks);
-               setVideoSize(video.clientWidth, video.clientHeight);
+               setVideoSize(video.clientWidth - 32, video.clientHeight - 16);
             }
          }
 

@@ -19,7 +19,7 @@ function ImageBiggerModal({ isSide, landmarks, showLandmarks, sectionNameFA, src
         const img = imgRef.current;
         
         if (img) {
-            drawOnCanvas(canvasRef, img.clientWidth, img.clientHeight, img.clientWidth >= 600 ? 2 : 1, undefined, showLandmarks ? landmarks : undefined, isSide);
+            drawOnCanvas(canvasRef, img.clientWidth, img.clientHeight, img.clientWidth >= 600 ? 2 : 1, ["#fff", "#fff"], undefined, showLandmarks ? landmarks : undefined, isSide);
         }
     }, [isSide, showLandmarks, imgRef.current?.clientWidth])
 

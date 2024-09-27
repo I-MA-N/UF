@@ -19,7 +19,7 @@ function CardImage({ isSide, image, width, height, landmarks, showLandmarks }: C
       const img = imgRef.current;
 
       if (img) {
-         drawOnCanvas(canvasRef, img.clientWidth, img.clientHeight, 0.6, undefined, showLandmarks ? landmarks : undefined, isSide);
+         drawOnCanvas(canvasRef, img.clientWidth, img.clientHeight, 0.6, ["#fff", "#fff"], undefined, showLandmarks ? landmarks : undefined, isSide);
       }
    }, [isSide, showLandmarks, width])
 
