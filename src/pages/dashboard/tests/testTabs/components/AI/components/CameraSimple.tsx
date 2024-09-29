@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import CoordinatesType from "../../../../../../../types/CoordinatesType";
 import CloseBtn from "./camera/buttons/CloseBtn";
 import CapturePhotoBtn from "./camera/buttons/CapturePhotoBtn";
@@ -30,12 +30,6 @@ function CameraSimple({ model }: CameraSimpleProps) {
    const [isSupported, setIsSupported] = useState(true);
    const [coordinates, setCoordinates] = useState<CoordinatesType>(null);
 
-   useEffect(() => {
-      return () => {
-
-      }
-   }, [])
-
    const proccessFrames = useCallback(() => {
       if (!isCameraLoaded) setIsCameraLoaded(true);
 
@@ -51,9 +45,9 @@ function CameraSimple({ model }: CameraSimpleProps) {
             const base64 = webcamRef.current?.getScreenshot();
             if (base64) {
                setImage(base64);
-               addExtraLandmarks(landmarks, true);
+               if (landmarks?.length) addExtraLandmarks(landmarks);
                setLandmarks(landmarks);
-               setVideoSize(video.clientWidth, video.clientHeight);
+               setVideoSize(video.clientWidth - 32, video.clientHeight - 16);
             }
          }
 

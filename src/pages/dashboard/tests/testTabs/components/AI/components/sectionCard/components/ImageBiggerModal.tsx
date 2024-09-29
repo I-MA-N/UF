@@ -1,31 +1,15 @@
-import { useEffect, useRef } from "react";
-import { drawOnCanvas } from "../../../../../../../../../utils/AIFuncs";
-import { NormalizedLandmark } from "@mediapipe/tasks-vision";
+import ExtractedZipType from "../../../../../../../../../types/ExtractedZipType";
 
 type ImageBiggerModalProps = {
-    isSide: boolean,
-    landmarks: NormalizedLandmark[],
-    showLandmarks: boolean,
     sectionNameFA: string,
-    src: string,
+    src: ExtractedZipType["image"],
     setShowImageBigger: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function ImageBiggerModal({ isSide, landmarks, showLandmarks, sectionNameFA, src, setShowImageBigger }: ImageBiggerModalProps) {
-    const imgRef = useRef<HTMLImageElement>(null);
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-
-    useEffect(() => {
-        const img = imgRef.current;
-        
-        if (img) {
-            drawOnCanvas(canvasRef, img.clientWidth, img.clientHeight, img.clientWidth >= 600 ? 2 : 1, undefined, showLandmarks ? landmarks : undefined, isSide);
-        }
-    }, [isSide, showLandmarks, imgRef.current?.clientWidth])
-
+function ImageBiggerModal({ sectionNameFA, src, setShowImageBigger }: ImageBiggerModalProps) {
     return (
         <div className="modal">
-            <div className="w-full px-4 sm:px-0 sm:container md:!max-w-3xl">
+            <div className="w-full px-4">
                 <div className="w-full relative flex justify-center mb-4 lg:mb-6">
                     <button
                         type="button"
@@ -41,19 +25,11 @@ function ImageBiggerModal({ isSide, landmarks, showLandmarks, sectionNameFA, src
                 </div>
 
                 <div className="bg-primary px-4 py-9 rounded-[32px] border-2">
-                    <div className="relative">
-                        <img
-                            ref={imgRef}
-                            src={src}
-                            alt="sample image for this section"
-                            className="w-full mx-auto rounded-3xl"
-                        />
-
-                        <canvas
-                            ref={canvasRef}
-                            className="absolute top-0 left-0"
-                        />
-                    </div>
+                    <img
+                        src={src}
+                        alt="sample image for this section"
+                        className="mx-auto rounded-3xl"
+                    />
                 </div>
             </div>
         </div>

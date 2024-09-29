@@ -1,62 +1,50 @@
-import { canvasDown, canvasMove, canvasUp, drawOnCanvas } from "../../../../../../../../../utils/AIFuncs";
-import { useEffect } from "react";
+import { drawOnCanvas, getDeletedLandmarks, writeLandmarkIndexes } from "../../../../../../../../../utils/AIFuncs";
+import { useEffect, useMemo } from "react";
 import usePhotoStore from "../../../../../../store/photoStore";
 import useAIStore from "../../../../../../store/AIStore";
+import FocusCircle from "./FocusCircle";
 
 type CanvasElemProps = {
    canvasRef: React.MutableRefObject<HTMLCanvasElement | null>,
    selectedLandmark: number | null,
-   setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>,
+   selectedPalette: string[]
 }
 
-function CanvasElem({ canvasRef, selectedLandmark, setSelectedLandmark }: CanvasElemProps) {
-   const { landmarks, videoSize, setLandmarks } = usePhotoStore(state => ({ landmarks: state.landmarks, videoSize: state.videoSize, setLandmarks: state.setLandmarks }));
+function CanvasElem({ canvasRef, selectedLandmark, selectedPalette }: CanvasElemProps) {
+   const { landmarks, videoSize } = usePhotoStore(state => ({ landmarks: state.landmarks, videoSize: state.videoSize, setLandmarks: state.setLandmarks }));
    const currentSection = useAIStore(store => store.currentSection);
 
+   const isSide = useMemo(() => currentSection?.name.toLowerCase().includes("side"), [currentSection?.name]);
+
+   const deletedLandmarks = useMemo(() => {
+      if (isSide !== undefined) return (
+         getDeletedLandmarks(landmarks, isSide)
+      )
+      return [];
+   }, [isSide])
+
    useEffect(() => {
-      if (videoSize) {
-         const isSide = currentSection?.name.toLowerCase().includes("side");
-         drawOnCanvas(canvasRef, videoSize.width, videoSize.height, 1.5, undefined, landmarks, isSide);
+      if (videoSize && landmarks?.length) {
+         drawOnCanvas(canvasRef, videoSize.width, videoSize.height, 1.5, selectedPalette, undefined, landmarks, isSide);
+         writeLandmarkIndexes(landmarks, deletedLandmarks, canvasRef.current?.getContext("2d"), videoSize.width, videoSize.height, selectedPalette[2]);
       }
-   }, [JSON.stringify(landmarks)])
+   }, [JSON.stringify(landmarks), selectedPalette, deletedLandmarks])
 
    return (
-      <canvas
-         ref={canvasRef}
-
-         onMouseDown={(e) => {
-            const offsetX = e.nativeEvent.offsetX;
-            const offsetY = e.nativeEvent.offsetY;
-            canvasDown(landmarks!, setSelectedLandmark, canvasRef.current, offsetX, offsetY);
-         }}
-         onMouseMove={(e) => {
-            const offsetX = e.nativeEvent.offsetX;
-            const offsetY = e.nativeEvent.offsetY;
-            canvasMove(landmarks!, setLandmarks, selectedLandmark, canvasRef.current, offsetX, offsetY);
-         }}
-         onMouseUp={() => {
-            canvasUp(setSelectedLandmark)
-         }}
-
-         onTouchStart={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const offsetX = e.changedTouches[0].pageX - rect.left;
-            const offsetY = e.changedTouches[0].pageY - rect.top;
-            canvasDown(landmarks!, setSelectedLandmark, canvasRef.current, offsetX, offsetY);
-         }}
-         onTouchMove={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const offsetX = e.changedTouches[0].pageX - rect.left;
-            const offsetY = e.changedTouches[0].pageY - rect.top;
-            canvasMove(landmarks!, setLandmarks, selectedLandmark, canvasRef.current, offsetX, offsetY);
-         }}
-         onTouchEnd={() => {
-            canvasUp(setSelectedLandmark)
-         }}
-
-         className="absolute top-0 left-0 w-full"
-         id="editCanvas"
-      />
+      <>
+         <canvas
+            ref={canvasRef}
+            className="absolute top-0 left-0 size-full"
+            id="editCanvas"
+         />
+         {
+            (typeof selectedLandmark === "number" && canvasRef.current) &&
+            <FocusCircle
+               canvas={canvasRef.current}
+               selectedLandmark={selectedLandmark}
+            />
+         }
+      </>
    );
 };
 

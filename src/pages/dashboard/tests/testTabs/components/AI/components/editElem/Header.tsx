@@ -1,13 +1,15 @@
 import useAIStore from "../../../../../store/AIStore";
-import SampleCanvas from "./body/SampleCanvas";
+import PaletteBtns from "./header/PaletteBtns";
+import SampleImage from "./header/SampleImage";
+import ZoomElem from "./header/ZoomElem";
 
 type HeaderProps = {
-   showSample: boolean,
-   setShowSample: React.Dispatch<React.SetStateAction<boolean>>,
+   selectedPalette: string[],
+   setSelectedPalette: React.Dispatch<React.SetStateAction<string[]>>,
    selectedLandmark: number | null
 }
 
-function Header({ showSample, setShowSample, selectedLandmark }: HeaderProps) {
+function Header({ selectedPalette, setSelectedPalette, selectedLandmark }: HeaderProps) {
    const removeCurrentSection = useAIStore(state => state.removeCurrentSection);
 
    return (
@@ -24,9 +26,15 @@ function Header({ showSample, setShowSample, selectedLandmark }: HeaderProps) {
 
          <p className="text-center font-Estedad-Black leading-[2.75rem] lg:text-xl lg:leading-[3.5rem]">ویرایش نقاط</p>
 
-         <SampleCanvas
-            setShowSample={setShowSample}
-            showSample={showSample}
+         <PaletteBtns
+            selectedPalette={selectedPalette}
+            setSelectedPalette={setSelectedPalette}
+         />
+
+         {/* <ZoomElem
+            selectedLandmark={selectedLandmark}
+         /> */}
+         <SampleImage
             selectedLandmark={selectedLandmark}
          />
       </div>

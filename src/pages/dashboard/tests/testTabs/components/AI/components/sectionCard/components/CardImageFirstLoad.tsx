@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { extractZip } from "../../../../../../../../../utils/AIFuncs";
 import Loading from "../../../../../../../../common/Loading";
-import CardImage from "./CardImage";
 import ExtractedZipType from "../../../../../../../../../types/ExtractedZipType";
 import SectionNames from "../../../../../../../../../types/SectionNames";
 import CardMenu from "./CardMenu";
@@ -15,14 +14,11 @@ type CardImageFristLoadProps = {
 
 function CardImageFirstLoad({ sectionName, sectionNameFA, fileContent }: CardImageFristLoadProps) {
    const [files, setFiles] = useState<ExtractedZipType | null | undefined>(undefined);
-   const [showLandmarks, setShowLandmarks] = useState(true);
    const [showImageBigger, setShowImageBigger] = useState(false);
 
    const divRef = useRef<HTMLDivElement>(null);
    const [width, setWidth] = useState(divRef.current?.clientWidth);
    const height = useMemo(() => width && width * 1.6, [width]);
-
-   const isSide = useMemo(() => sectionName.toLowerCase().includes("side"), [sectionName]);
 
    useEffect(() => {
       setWidth(divRef.current?.clientWidth);
@@ -53,7 +49,6 @@ function CardImageFirstLoad({ sectionName, sectionNameFA, fileContent }: CardIma
       >
          <CardMenu
             sectionName={sectionName}
-            setShowLandmarks={setShowLandmarks}
             setShowImageBigger={setShowImageBigger}
             isImageBtnsDisabled={!files}
          />
@@ -70,20 +65,16 @@ function CardImageFirstLoad({ sectionName, sectionNameFA, fileContent }: CardIma
          {
             files &&
             <>
-               <CardImage
-                  isSide={isSide}
-                  image={files.image}
-                  landmarks={files.landmarks}
-                  showLandmarks={showLandmarks}
+               <img
+                  src={files.image}
+                  alt="captured photo for this section"
                   width={width}
                   height={height}
+                  className="rounded-3xl"
                />
                {
                   showImageBigger &&
                   <ImageBiggerModal
-                     isSide={isSide}
-                     landmarks={files.landmarks}
-                     showLandmarks={showLandmarks}
                      sectionNameFA={sectionNameFA}
                      src={files.image}
                      setShowImageBigger={setShowImageBigger}

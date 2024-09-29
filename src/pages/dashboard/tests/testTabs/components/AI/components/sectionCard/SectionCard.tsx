@@ -6,8 +6,6 @@ import { staticEvaluationType } from "../../../../../data/testsData/staticEvalua
 import { useEffect, useMemo, useState } from "react";
 import Loading from "../../../../../../../common/Loading";
 import CardBtn from "./components/CardBtn";
-import SampleImageModal from "./components/SampleImageModal";
-import CardFooter from "./components/CardFooter";
 import CardImageFirstLoad from "./components/CardImageFirstLoad";
 
 type SectionCardProps = {
@@ -18,7 +16,6 @@ function SectionCard({ section }: SectionCardProps) {
    const { getOrSetZipFile, nameFromManualTab, removeNameFromAITab } = useAIStore(state => ({ getOrSetZipFile: state.getOrSetZipFile, nameFromManualTab: state.nameFromManualTab, removeNameFromAITab: state.removeNameFromAITab }));
    const sectionName = useMemo(() => section.name, [section.name]);
 
-   const [showImage, setShowImage] = useState(false);
    const [isClicked, setIsClicked] = useState(false);
 
    const { formname, username } = useParams();
@@ -67,19 +64,9 @@ function SectionCard({ section }: SectionCardProps) {
                }
             </div>
 
-            <CardFooter
-               setShowImage={setShowImage}
-               nameFA={section.nameFA}
-            />
+            <span className="text-sm lg:text-base mt-4">{section.nameFA}</span>
          </div>
 
-         {
-            showImage &&
-            <SampleImageModal
-               src={section.AI.sampleImageSrc}
-               setShowImage={setShowImage}
-            />
-         }
       </>
    )
 };

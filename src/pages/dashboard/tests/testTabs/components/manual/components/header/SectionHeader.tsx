@@ -44,7 +44,6 @@ function SectionHeader({ setIsAIMethod, sectionName }: SectionHeaderProps) {
          {
             zipFile &&
             <SectionCardFirtLoad
-               sectionName={sectionName}
                zipFile={zipFile}
             />
          }

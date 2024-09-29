@@ -15,6 +15,8 @@ interface PhotoActions {
    setLandmarks: (landmarks: NormalizedLandmark[]) => void,
    removePhoto: () => void,
    setVideoSize: (width: number, height: number) => void,
+   isMovingLandmark: boolean,
+   setIsMovingLandmark: (isMoving: boolean) => void,
    reset: () => void,
 }
 
@@ -52,6 +54,13 @@ const usePhotoStore = create<PhotoState & PhotoActions>()((set) => ({
             width,
             height
          }
+      }))
+   },
+   isMovingLandmark: false,
+   setIsMovingLandmark: (movingLandmark) => {
+      set(state => ({
+         ...state,
+         isMovingLandmark: movingLandmark
       }))
    },
    reset: () => {
