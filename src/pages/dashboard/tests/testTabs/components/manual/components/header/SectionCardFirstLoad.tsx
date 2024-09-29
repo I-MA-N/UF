@@ -3,14 +3,12 @@ import { useEffect, useState } from "react";
 import ExtractedZipType from "../../../../../../../../types/ExtractedZipType";
 import { extractZip } from "../../../../../../../../utils/AIFuncs";
 import Loading from "../../../../../../../common/Loading";
-import SectionNames from "../../../../../../../../types/SectionNames";
 
 type SectionCardFirtLoadProps = {
-   sectionName: SectionNames,
    zipFile: string
 }
 
-function SectionCardFirtLoad({ sectionName, zipFile }: SectionCardFirtLoadProps) {
+function SectionCardFirtLoad({ zipFile }: SectionCardFirtLoadProps) {
    const [files, setFiles] = useState<ExtractedZipType | null | undefined>(undefined);
 
    useEffect(() => {
@@ -32,7 +30,6 @@ function SectionCardFirtLoad({ sectionName, zipFile }: SectionCardFirtLoadProps)
 
    return (
       <SectionCard
-         sectionName={sectionName}
          files={files}
       />
    )

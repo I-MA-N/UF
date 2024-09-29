@@ -22,7 +22,7 @@ function EditBtns({ selectedLandmark, setSelectedLandmark }: SelectedLandmarkBtn
          const isSide = currentSectionName.toLowerCase().includes("side");
          const deletedLandmarks = getDeletedLandmarks(landmarks, isSide);
 
-         landmarks.forEach((_landmark, index) => {
+         landmarks?.forEach((_landmark, index) => {
             if (!deletedLandmarks.includes(index)) {
                editableLandmarks.push(index)
             }

@@ -1,6 +1,9 @@
 import SectionNames from "../../../../../types/SectionNames";
+import Back_C from "../AIformulas/staticEvaluation/Back_C";
 import Back_P from "../AIformulas/staticEvaluation/Back_P";
+import Front_C from "../AIformulas/staticEvaluation/Front_C";
 import Front_P from "../AIformulas/staticEvaluation/Front_P";
+import Side_C from "../AIformulas/staticEvaluation/Side_C";
 import Side_P from "../AIformulas/staticEvaluation/Side_P";
 
 const staticEvaluation = [
@@ -88,6 +91,7 @@ const staticEvaluation = [
          },
       ],
       photoFn: Front_P,
+      cropFn: Front_C,
       zipFile: undefined as string | null | undefined,
       shouldAIShow: true,
    },
@@ -121,6 +125,7 @@ const staticEvaluation = [
          },
       ],
       photoFn: Back_P,
+      cropFn: Back_C,
       zipFile: undefined as string | null | undefined,
       shouldAIShow: true,
    },
@@ -190,6 +195,7 @@ const staticEvaluation = [
          },
       ],
       photoFn: Side_P,
+      cropFn: Side_C,
       zipFile: undefined as string | null | undefined,
       shouldAIShow: true,
    },
