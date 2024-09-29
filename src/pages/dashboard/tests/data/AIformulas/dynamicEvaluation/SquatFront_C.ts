@@ -8,9 +8,9 @@ function SquatFront_C(landmarks: NormalizedLandmark[], videoSize: { width: numbe
 
    return {
       left: left - 20,
-      top: top - 40,
+      top: top - 50,
       width: width + 70,
-      height: height + 80
+      height: height + 90
    }
 }
 
