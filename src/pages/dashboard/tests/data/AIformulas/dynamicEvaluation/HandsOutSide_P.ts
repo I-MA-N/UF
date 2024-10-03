@@ -1,11 +1,11 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 import degreeTwoPoints from "../../../../../../utils/degreeTwoPoints";
-import DegreesType from "../../../../../../types/DegreesType";
+import DegreeType from "../../../../../../types/DegreeType";
 
 function HandsOutSide_P(landmarks: NormalizedLandmark[]) {
     const values = {
     }
-    const degrees: DegreesType[] = [];
+    const degrees: DegreeType[] = [];
 
     return {
         values,

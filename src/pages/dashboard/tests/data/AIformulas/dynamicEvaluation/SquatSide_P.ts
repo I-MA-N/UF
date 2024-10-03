@@ -1,13 +1,13 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 import degreeTwoPoints from "../../../../../../utils/degreeTwoPoints";
-import DegreesType from "../../../../../../types/DegreesType";
+import DegreeType from "../../../../../../types/DegreeType";
 
 function SquatSide_P(landmarks: NormalizedLandmark[]) {
     const values = {
         'خمیدگی به جلو': "0",
         'دست ها در جلو': "0",
     }
-    const degrees: DegreesType[] = [];
+    const degrees: DegreeType[] = [];
 
     let isEven = true;
     if (landmarks[11].z < landmarks[12].z) isEven = false;
@@ -35,7 +35,7 @@ function SquatSide_P(landmarks: NormalizedLandmark[]) {
     let arms = degreeTwoPoints(landmarks[shoulderLandmark], landmarks[handLandmark]);
     if (!isEven) arms = 180 - arms;
     degrees.push({
-        landmarksUsed: [handLandmark],
+        landmarksUsed: [shoulderLandmark, handLandmark],
         degree: arms,
     })
 

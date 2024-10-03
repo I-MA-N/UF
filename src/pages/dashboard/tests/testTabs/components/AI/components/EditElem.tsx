@@ -12,8 +12,8 @@ function EditElem() {
       <div className="flex flex-col items-center justify-center gap-4 min-h-dvh relative">
          <Header
             selectedPalette={selectedPalette}
-            setSelectedPalette={setSelectedPalette}
             selectedLandmark={selectedLandmark}
+            setSelectedPalette={setSelectedPalette}
          />
 
          <Body

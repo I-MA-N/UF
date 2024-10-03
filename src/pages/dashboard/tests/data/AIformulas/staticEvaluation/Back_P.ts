@@ -1,13 +1,13 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 import degreeTwoPoints from "../../../../../../utils/degreeTwoPoints";
-import DegreesType from "../../../../../../types/DegreesType";
+import DegreeType from "../../../../../../types/DegreeType";
 
 function Back_P(landmarks: NormalizedLandmark[]) {
    const values = {
       'چرخش مچ پا به داخل': '5',
       'چرخش مچ پا به خارج': '5',
    }
-   const degrees: DegreesType[] = [];
+   const degrees: DegreeType[] = [];
 
    const ankle = Math.abs(degreeTwoPoints(landmarks[28], landmarks[30])) - 90;
    degrees.push({

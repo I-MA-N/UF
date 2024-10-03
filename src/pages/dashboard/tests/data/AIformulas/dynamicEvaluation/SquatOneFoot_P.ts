@@ -1,6 +1,6 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 import degreeTwoPoints from "../../../../../../utils/degreeTwoPoints";
-import DegreesType from "../../../../../../types/DegreesType";
+import DegreeType from "../../../../../../types/DegreeType";
 
 function SquatOneFoot_P(landmarks: NormalizedLandmark[]) {
     const values = {
@@ -10,7 +10,7 @@ function SquatOneFoot_P(landmarks: NormalizedLandmark[]) {
         'بالا آمدن ران': "0",
         'حرکت زانو به داخل': "0",
     }
-    const degrees: DegreesType[] = [];
+    const degrees: DegreeType[] = [];
 
     const shoulders = degreeTwoPoints(landmarks[11], landmarks[12]);
     degrees.push({

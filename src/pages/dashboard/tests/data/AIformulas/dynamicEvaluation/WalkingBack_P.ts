@@ -1,13 +1,13 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 import degreeTwoPoints from "../../../../../../utils/degreeTwoPoints";
-import DegreesType from "../../../../../../types/DegreesType";
+import DegreeType from "../../../../../../types/DegreeType";
 
 function WalkingBack_P(landmarks: NormalizedLandmark[]) {
     const values = {
         'بالا آمدن ران': "0",
         'صاف شدن و چرخش به خارج پاها': "0",
     }
-    const degrees: DegreesType[] = [];
+    const degrees: DegreeType[] = [];
 
     const asis = 180 - Math.abs(degreeTwoPoints(landmarks[23], landmarks[24]));
     degrees.push({

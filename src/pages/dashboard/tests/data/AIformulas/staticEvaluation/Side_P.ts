@@ -1,9 +1,9 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 import degreeTwoPoints from "../../../../../../utils/degreeTwoPoints";
-import DegreesType from "../../../../../../types/DegreesType";
+import DegreeType from "../../../../../../types/DegreeType";
 import DistanceType from "../../../../../../types/DistanceType";
 
-function Side_P(landmarks: NormalizedLandmark[], userHeight?: number) {
+function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas?: { width: number, height: number }) {
    const values = {
       'سر به جلو': '5',
       'شانه گرد': '5',
@@ -11,7 +11,7 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number) {
       'زانوی عقب رفته': '5',
       'زانوی خمیده': '5',
    }
-   const degrees: DegreesType[] = [];
+   const degrees: DegreeType[] = [];
    const distances: DistanceType[] = [];
 
    let isEven = true;
@@ -32,23 +32,23 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number) {
    let shoulderC7 = degreeTwoPoints(landmarks[shoulderLandmark], landmarks[33]);
    if (!isEven) shoulderC7 = 180 - shoulderC7;
    degrees.push({
-      landmarksUsed: [shoulderLandmark],
+      landmarksUsed: [shoulderLandmark, 33],
       degree: shoulderC7
    })
 
    if (shoulderC7 <= 50 && shoulderC7 >= 30) values["شانه گرد"] = "3";
    if (shoulderC7 < 30) values["شانه گرد"] = "1";
 
-   const editCanvas = document.getElementById("editCanvas");
+   console.log(editCanvas);
    if (editCanvas && userHeight) {
       const distanceCentimeters = userHeight - 12;
-      const distancePixels = (landmarks[36].y - landmarks[35].y) * editCanvas.clientHeight;
+      const distancePixels = (landmarks[36].y - landmarks[35].y) * editCanvas.height;
 
       const swayBackLandmark = isEven ? 24 : 23;
-      const swayBackDistance = (landmarks[swayBackLandmark].x - landmarks[36].x) * editCanvas.clientWidth;
+      const swayBackDistance = (landmarks[swayBackLandmark].x - landmarks[36].x) * editCanvas.width;
       const swayBack = Math.abs((distanceCentimeters * swayBackDistance) / distancePixels);
       distances.push({
-         landmarksUsed: [swayBackLandmark],
+         landmarksUsed: [swayBackLandmark, 36],
          distance: swayBack,
       })
 
@@ -56,11 +56,11 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number) {
       if (swayBack >= 7.5) values["پشت تابدار"] = "1";
 
       const kneeLandmark = isEven ? 26 : 25;
-      const kneeDistance = (landmarks[kneeLandmark].x - landmarks[36].x) * editCanvas.clientWidth;
+      const kneeDistance = (landmarks[kneeLandmark].x - landmarks[36].x) * editCanvas.width;
       let knee = (distanceCentimeters * kneeDistance) / distancePixels;
       if (!isEven) knee = -knee;
       distances.push({
-         landmarksUsed: [kneeLandmark],
+         landmarksUsed: [kneeLandmark, 36],
          distance: knee,
       })
 

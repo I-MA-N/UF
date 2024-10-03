@@ -1,6 +1,6 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 import degreeTwoPoints from "../../../../../../utils/degreeTwoPoints";
-import DegreesType from "../../../../../../types/DegreesType";
+import DegreeType from "../../../../../../types/DegreeType";
 
 function SquatFront_P(landmarks: NormalizedLandmark[]) {
     const values = {
@@ -11,7 +11,7 @@ function SquatFront_P(landmarks: NormalizedLandmark[]) {
         'چرخش پاها به خارج راست': "0",
         'چرخش پاها به خارج چپ': "0",
     }
-    const degrees: DegreesType[] = [];
+    const degrees: DegreeType[] = [];
 
     const kneeTopLeft = Math.abs(degreeTwoPoints(landmarks[23], landmarks[25]));
     const kneeBottomLeft = 180 - Math.abs(degreeTwoPoints(landmarks[25], landmarks[27]));

@@ -5,17 +5,12 @@ import { staticEvaluationType } from "../pages/dashboard/tests/data/testsData/st
 import { dynamicEvaluationType } from "../pages/dashboard/tests/data/testsData/dynamicEvaluation";
 import useAIStore from "../pages/dashboard/tests/store/AIStore";
 import usePhotoStore from "../pages/dashboard/tests/store/photoStore";
+import DegreeType from "../types/DegreeType";
+import DistanceType from "../types/DistanceType";
 
 export const addExtraLandmarks = (
    landmarks: NormalizedLandmark[],
 ) => {
-   landmarks[33] = {
-      x: (landmarks[11].x + landmarks[12].x) / 2,
-      y: landmarks[11].y - (30 * (landmarks[11].y - landmarks[7].y)) / 100,
-      z: landmarks[29].z,
-      visibility: landmarks[29].visibility,
-   }
-
    // Direction of coordinates on side images have differences, so 'x' coordinate should be changed
    const currentSection = useAIStore.getState().currentSection;
    const isFromSide = currentSection?.name.toLowerCase().includes("side");
@@ -24,6 +19,13 @@ export const addExtraLandmarks = (
    if (landmarks[11].z < landmarks[12].z) isEven = false;
 
    if (isFromSide) {
+      landmarks[33] = {
+         x: ((landmarks[11].x + landmarks[12].x) / 2) - (isEven ? 0.03 : -0.03),
+         y: landmarks[11].y - (30 * (landmarks[11].y - landmarks[7].y)) / 100,
+         z: landmarks[29].z,
+         visibility: landmarks[29].visibility,
+      }
+
       landmarks[34] = {
          x: (isEven ? landmarks[12].x : landmarks[11].x) - (isEven ? 0.05 : -0.05),
          y: (landmarks[11].y + landmarks[23].y) / 2,
@@ -31,6 +33,13 @@ export const addExtraLandmarks = (
          visibility: isEven ? landmarks[12].visibility : landmarks[11].visibility,
       }
    } else {
+      landmarks[33] = {
+         x: ((landmarks[11].x + landmarks[12].x) / 2),
+         y: landmarks[11].y - (30 * (landmarks[11].y - landmarks[7].y)) / 100,
+         z: landmarks[29].z,
+         visibility: landmarks[29].visibility,
+      }
+
       landmarks[34] = {
          x: (landmarks[11].x + landmarks[12].x) / 2,
          y: (landmarks[11].y + landmarks[23].y) / 2,
@@ -232,12 +241,20 @@ export const getEditableLandmarks = (
    if (currentSection && landmarks?.length) {
       let editableLandmarks: number[] = [];
       // Dont forget for adding 23, 24, 25, 26, 27, 28 landmarks for squatSide section
-      const photoData = currentSection.photoFn(landmarks);
+      const photoData = currentSection.photoFn(landmarks, 1, { width: 0, height: 0 });
       const cropData = currentSection.cropFn(landmarks, { width: 0, height: 0 });
 
       photoData.degrees.forEach(degree => {
          editableLandmarks = editableLandmarks.concat(degree.landmarksUsed)
       })
+
+      if ("distances" in photoData) {
+         const distances = photoData.distances as DistanceType[];
+         distances.forEach(distance => {
+            editableLandmarks = editableLandmarks.concat(distance.landmarksUsed[0])
+         })
+      }
+
       editableLandmarks = editableLandmarks.concat(cropData.landmarksUsed);
 
       editableLandmarks.sort((a, b) => a - b);
@@ -247,6 +264,97 @@ export const getEditableLandmarks = (
 
    return undefined;
 }
+
+export const drawDegree = (
+   landmarks: NormalizedLandmark[],
+   degree: DegreeType,
+   drawingUtils: DrawingUtils,
+   ctx: CanvasRenderingContext2D,
+   width: number,
+   height: number,
+) => {
+   const landmarksUsed: NormalizedLandmark[] = [];
+   degree.landmarksUsed.forEach(landmarkIndex => {
+      const landmark = landmarks[landmarkIndex];
+      if (landmark) landmarksUsed.push(landmark);
+   })
+
+   drawingUtils.drawLandmarks(landmarksUsed, { radius: 0.5, color: "#FF0000" });
+   drawingUtils.drawConnectors(landmarksUsed, [{ start: 0, end: 1 }, { start: 1, end: 2 }], { color: '#FF0000', lineWidth: 1.5 });
+
+   let x = 0;
+   let y = 0;
+   if (landmarksUsed.length <= 2) {
+      x = (landmarksUsed[0].x + landmarksUsed[1].x) / 2;
+      y = (landmarksUsed[0].y + landmarksUsed[1].y) / 2;
+   } else {
+      x = landmarksUsed[1].x;
+      y = landmarksUsed[1].y;
+   }
+   x *= width;
+   y *= height;
+
+   const text = degree.degree.toFixed(1) + '°';
+   drawText(ctx, text, x, y);
+}
+
+export const drawDistance = (
+   landmarks: NormalizedLandmark[],
+   distance: DistanceType,
+   drawingUtils: DrawingUtils,
+   ctx: CanvasRenderingContext2D,
+   width: number,
+   height: number,
+) => {
+   const firstLandmark = landmarks[distance.landmarksUsed[0]];
+   const secondLandmark = landmarks[distance.landmarksUsed[1]];
+   const landmarksUsed: NormalizedLandmark[] = [
+      firstLandmark,
+      {
+         x: secondLandmark.x,
+         y: firstLandmark.y,
+         z: firstLandmark.z,
+         visibility: firstLandmark.visibility,
+      }
+   ];
+
+   drawingUtils.drawLandmarks(landmarksUsed, { radius: 0.5, color: "#FF0000" });
+   drawingUtils.drawConnectors(landmarksUsed, [{ start: 0, end: 1 }, { start: 1, end: 2 }], { color: '#FF0000', lineWidth: 1.5 });
+
+   let x = (landmarksUsed[0].x + landmarksUsed[1].x) / 2;
+   let y = (landmarksUsed[0].y + landmarksUsed[1].y) / 2;
+   x *= width;
+   y *= height;
+   y -= 4;
+
+   const text = distance.distance.toFixed(1) + ' cm';
+   drawText(ctx, text, x, y);
+}
+
+const drawText = (
+   ctx: CanvasRenderingContext2D,
+   text: string,
+   x: number,
+   y: number
+) => {
+   ctx.font = "11px 'Estedad-Regular'";
+   ctx.textAlign = "center";
+   ctx.textBaseline = "bottom";
+   const padding = 4;
+
+   const metrics = ctx.measureText(text);
+   const boxX = x - metrics.actualBoundingBoxLeft - padding;
+   const boxY = y - metrics.actualBoundingBoxAscent - padding;
+   const textWidth = metrics.width + (padding * 2);
+   const textHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent + (padding * 2);
+
+   ctx.fillStyle = "#FFFFFF";
+   ctx.fillRect(boxX, boxY, textWidth, textHeight);
+
+   ctx.fillStyle = "#FF0000";
+   ctx.fillText(text, x, y);
+}
+
 export const extractZip = async (fileContent: string) => {
    const zip = new JSZip();
    await zip.loadAsync(fileContent, { base64: true });

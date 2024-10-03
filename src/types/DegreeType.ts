@@ -1,6 +1,6 @@
-type DegreesType = {
+type DegreeType = {
    degree: number,
    landmarksUsed: number[],
 }
 
-export default DegreesType;
+export default DegreeType;

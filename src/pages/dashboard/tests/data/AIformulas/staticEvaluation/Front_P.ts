@@ -1,5 +1,5 @@
 import degreeTwoPoints from "../../../../../../utils/degreeTwoPoints";
-import DegreesType from "../../../../../../types/DegreesType";
+import DegreeType from "../../../../../../types/DegreeType";
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 
 function Front_P(landmarks: NormalizedLandmark[]) {
@@ -12,7 +12,7 @@ function Front_P(landmarks: NormalizedLandmark[]) {
       'چرخش خارجی پا': '5',
       'چرخش داخلی پا': '5',
    };
-   const degrees: DegreesType[] = [];
+   const degrees: DegreeType[] = [];
 
    const ears = Math.abs(degreeTwoPoints(landmarks[7], landmarks[8]));
    degrees.push({
