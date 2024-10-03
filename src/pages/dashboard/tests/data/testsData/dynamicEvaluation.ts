@@ -22,9 +22,6 @@ import WalkingFront_P from "../AIformulas/dynamicEvaluation/WalkingFront_P";
 import WalkingFront_V from "../AIformulas/dynamicEvaluation/WalkingFront_V";
 import WalkingSide_C from "../AIformulas/dynamicEvaluation/WalkingSide_C";
 import WalkingSide_P from "../AIformulas/dynamicEvaluation/WalkingSide_P";
-import Back_C from "../AIformulas/staticEvaluation/Back_C";
-import Front_C from "../AIformulas/staticEvaluation/Front_C";
-import Side_C from "../AIformulas/staticEvaluation/Side_C";
 
 const dynamicEvaluation = [
    {
@@ -314,7 +311,7 @@ const dynamicEvaluation = [
       ],
       photoFn: WalkingFront_P,
       videoFn: WalkingFront_V,
-      cropFn: Front_C,
+      cropFn: WalkingFront_C,
       zipFile: undefined as string | null | undefined,
       shouldAIShow: true,
    },
@@ -343,7 +340,7 @@ const dynamicEvaluation = [
       ],
       photoFn: WalkingBack_P,
       videoFn: WalkingFront_V,
-      cropFn: Back_C,
+      cropFn: WalkingBack_C,
       zipFile: undefined as string | null | undefined,
       shouldAIShow: true,
    },

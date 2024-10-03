@@ -27,7 +27,7 @@ function CardMenu({ sectionName, setShowImageBigger, isImageBtnsDisabled }: Card
                flex justify-center items-center text-primary text-xs md:text-sm lg:text-base
             `}
          >
-            <div className="h-full flex flex-col gap-4 justify-center items-center">
+            <div className="h-full flex flex-col gap-6 justify-center items-center">
 
                <button
                   type="button"

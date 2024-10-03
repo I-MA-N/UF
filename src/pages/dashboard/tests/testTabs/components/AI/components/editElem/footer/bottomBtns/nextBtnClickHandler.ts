@@ -24,7 +24,7 @@ function nextBtnClickHandler(
          const ctx = canvas.getContext("2d");
 
          if (ctx) {
-            const { left, top, width, height } = currentSection.cropFn(landmarks, videoSize);
+            const { result: { left, width, top, height } } = currentSection.cropFn(landmarks, videoSize);
 
             canvas.style.margin = "auto";
             canvas.width = width;

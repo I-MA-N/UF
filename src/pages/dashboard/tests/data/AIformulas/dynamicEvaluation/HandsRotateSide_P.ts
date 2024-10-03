@@ -1,11 +1,16 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 import degreeTwoPoints from "../../../../../../utils/degreeTwoPoints";
+import DegreesType from "../../../../../../types/DegreesType";
 
 function HandsRotateSide_P(landmarks: NormalizedLandmark[]) {
-    const resultObj = {
+    const values = {
     }
+    const degrees: DegreesType[] = [];
 
-    return resultObj;
+    return {
+        values,
+        degrees
+    };
 }
 
 export default HandsRotateSide_P;

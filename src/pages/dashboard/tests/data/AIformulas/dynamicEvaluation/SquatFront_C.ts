@@ -1,16 +1,23 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 
 function SquatFront_C(landmarks: NormalizedLandmark[], videoSize: { width: number, height: number }) {
-   const left = landmarks[14].x * videoSize.width;
-   const top = landmarks[16].y * videoSize.height;
-   const width = (landmarks[13].x - landmarks[14].x) * videoSize.width;
-   const height = (landmarks[30].y - landmarks[16].y) * videoSize.height;
+   const leftLandmark = 14;
+   const left = landmarks[leftLandmark].x * videoSize.width;
+
+   const topLandmark = landmarks[0].y > landmarks[16].y ? 16 : 0;
+   const top = landmarks[topLandmark].y * videoSize.height;
+
+   const width = (landmarks[13].x - landmarks[leftLandmark].x) * videoSize.width;
+   const height = (landmarks[30].y - landmarks[topLandmark].y) * videoSize.height;
 
    return {
-      left: left - 20,
-      top: top - 50,
-      width: width + 70,
-      height: height + 90
+      landmarksUsed: [leftLandmark, topLandmark, 13, 30],
+      result: {
+         left: left - 30,
+         top: top - 60,
+         width: width + 90,
+         height: height + 110
+      }
    }
 }
 

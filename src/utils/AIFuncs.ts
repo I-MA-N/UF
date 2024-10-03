@@ -15,7 +15,7 @@ export const addExtraLandmarks = (
       z: landmarks[29].z,
       visibility: landmarks[29].visibility,
    }
-   
+
    // Direction of coordinates on side images have differences, so 'x' coordinate should be changed
    const currentSection = useAIStore.getState().currentSection;
    const isFromSide = currentSection?.name.toLowerCase().includes("side");
@@ -58,84 +58,66 @@ export const addExtraLandmarks = (
 }
 
 export const drawOnCanvas = (
-   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>,
-   width: number,
-   height: number,
-   radius: number,
+   canvas: HTMLCanvasElement,
    palette: string[],
-   image?: CanvasImageSource,
-   landmarks?: NormalizedLandmark[],
-   isSide?: boolean,
-) => {
-   const canvas = canvasRef.current;
-   const ctx = canvas?.getContext("2d");
-
-   if (canvas && ctx) {
-      ctx.save();
-
-      canvas.width = width;
-      canvas.height = height;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      if (image) {
-         ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-      }
-
-      if (landmarks?.length) {
-         let drawingUtils = new DrawingUtils(ctx);
-
-         let newLandmarks: NormalizedLandmark[] = [];
-         let newConnectors: { start: number, end: number }[] = [];
-
-         if (isSide) {
-            const deletedLandmarks = getDeletedLandmarks(landmarks, isSide);
-
-            newLandmarks = landmarks.filter((_landmark, index) => (
-               !deletedLandmarks.includes(index)
-            )).concat([landmarks[33], landmarks[34]]);
-            newConnectors = [{ start: 0, end: 1 }, { start: 1, end: 10 }, { start: 10, end: 2 }, { start: 2, end: 3 }, { start: 3, end: 4 }, { start: 2, end: 11 }, { start: 11, end: 5 }, { start: 5, end: 6 }, { start: 6, end: 7 }, { start: 7, end: 8 }, { start: 8, end: 9 }];
-         } else {
-            newLandmarks = landmarks;
-            const extraConnectors = [{ start: 33, end: 11 }, { start: 33, end: 12 }, { start: 34, end: 11 }, { start: 34, end: 12 }, { start: 34, end: 23 }, { start: 34, end: 24 }];
-            newConnectors = PoseLandmarker.POSE_CONNECTIONS.concat(extraConnectors);
-         }
-
-         drawingUtils.drawLandmarks(newLandmarks, { color: palette[0], radius });
-         drawingUtils.drawConnectors(newLandmarks, newConnectors, { color: palette[1], lineWidth: radius / 2 });
-
-         if (landmarks[35] && landmarks[36]) {
-            const plumbLineLandmarks = [landmarks[35], landmarks[36]];
-            const plumbLineConnectors = [{ start: 0, end: 1 }];
-            drawingUtils.drawLandmarks(plumbLineLandmarks, { color: palette[0], radius });
-            drawingUtils.drawConnectors(plumbLineLandmarks, plumbLineConnectors, { color: palette[1], lineWidth: radius / 2 });
-         }
-      }
-
-      ctx.restore();
-   }
-}
-
-export const writeLandmarkIndexes = (
    landmarks: NormalizedLandmark[],
-   deletedLandmarks: number[],
-   ctx: CanvasRenderingContext2D | null | undefined,
-   width: number,
-   height: number,
-   textColor: string
+   isSide: boolean,
+   editableLandmarks: number[]
 ) => {
+   const ctx = canvas.getContext("2d");
+
    if (ctx) {
       ctx.save();
 
-      ctx.font = "12px 'Estedad-Regular'";
-      if (width > 400) ctx.font = "14px 'Estedad-Regular'";
-      ctx.fillStyle = textColor;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      let newLandmarks: NormalizedLandmark[] = [];
+      let newConnectors: { start: number, end: number }[] = [];
+
+      if (isSide) {
+         let isEven = true;
+         if (landmarks[11].z < landmarks[12].z) isEven = false;
+
+         const deletedLandmarks = [1, 2, 3, 4, 5, 6, 9, 10, 17, 18, 19, 20, 21, 22, 33, 34, 35, 36];
+         const filteredLandmarks = landmarks.filter((_value, index) => {
+            if (index === 0) return true;
+            if (deletedLandmarks.includes(index)) return false;
+            if (isEven) return index % 2 === 0;
+            return index % 2 !== 0;
+         }).concat([landmarks[33], landmarks[34]]);
+         newLandmarks = [...new Set(filteredLandmarks)]
+         newConnectors = [{ start: 0, end: 1 }, { start: 1, end: 10 }, { start: 10, end: 2 }, { start: 2, end: 3 }, { start: 3, end: 4 }, { start: 2, end: 11 }, { start: 11, end: 5 }, { start: 5, end: 6 }, { start: 6, end: 7 }, { start: 7, end: 8 }, { start: 8, end: 9 }];
+      } else {
+         newLandmarks = landmarks;
+         const extraConnectors = [{ start: 33, end: 11 }, { start: 33, end: 12 }, { start: 34, end: 11 }, { start: 34, end: 12 }, { start: 34, end: 23 }, { start: 34, end: 24 }];
+         newConnectors = PoseLandmarker.POSE_CONNECTIONS.concat(extraConnectors);
+      }
+
+      const drawingUtils = new DrawingUtils(ctx);
+
+      drawingUtils.drawLandmarks(newLandmarks, { color: palette[0], radius: 1.5 });
+      drawingUtils.drawConnectors(newLandmarks, newConnectors, { color: palette[1], lineWidth: 0.8 });
+
+      if (landmarks[35] && landmarks[36]) {
+         const plumbLineLandmarks = [landmarks[35], landmarks[36]];
+         const plumbLineConnectors = [{ start: 0, end: 1 }];
+         drawingUtils.drawLandmarks(plumbLineLandmarks, { color: palette[0], radius: 1 });
+         drawingUtils.drawConnectors(plumbLineLandmarks, plumbLineConnectors, { color: palette[1], lineWidth: 0.5 });
+      }
+
+      let font = "12px 'Estedad-Regular'";
+      if (canvas.width > 400) font = "14px 'Estedad-Regular'";
+
+      ctx.font = font;
+      ctx.fillStyle = palette[2];
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      
-      landmarks.forEach((landmark, index) => {
-         if (!deletedLandmarks.includes(index)) {
-            const pixelX = landmark.x * width;
-            const pixelY = landmark.y * height;
+
+      editableLandmarks.forEach(index => {
+         const landmark = landmarks[index];
+         if (landmark) {
+            const pixelX = landmark.x * canvas.width;
+            const pixelY = landmark.y * canvas.height;
             ctx.fillText(index.toString(), pixelX, pixelY);
          }
       })
@@ -164,8 +146,8 @@ export const drawOnVideo = (
       if (landmarks?.length) {
          let drawingUtils = new DrawingUtils(ctx);
 
-         drawingUtils.drawLandmarks(landmarks, { color: '#fff', radius: 1.5 });
-         drawingUtils.drawConnectors(landmarks, PoseLandmarker.POSE_CONNECTIONS, { color: '#fff', lineWidth: 0.8 });
+         drawingUtils.drawLandmarks(landmarks, { color: '#fff', radius: 1 });
+         drawingUtils.drawConnectors(landmarks, PoseLandmarker.POSE_CONNECTIONS, { color: '#fff', lineWidth: 0.5 });
       }
 
       ctx.restore();
@@ -206,18 +188,18 @@ export const circleMove = (
       const rect = canvas.getBoundingClientRect();
       pageX = pageX - rect.left;
       pageY = pageY - rect.top;
-      
+
       const isOutOfCanvasX = pageX - deltaX >= canvas.clientWidth || pageX - deltaX <= 0;
       const isOutOfCanvasY = pageY - deltaY >= canvas.clientHeight || pageY - deltaY <= 0;
-      
+
       if (!isOutOfCanvasX && !isOutOfCanvasY) {
          const circleRect = circle.getBoundingClientRect();
          circle.style.left = `${pageX - deltaX - (circleRect.width / 2)}px`;
          circle.style.top = `${pageY - deltaY - (circleRect.height / 2)}px`;
-   
+
          landmarks[selectedLandmark].x = (pageX - deltaX) / canvas.clientWidth;
          landmarks[selectedLandmark].y = (pageY - deltaY) / canvas.clientHeight;
-   
+
          setLandmarks(landmarks);
       }
 
@@ -243,35 +225,28 @@ export const executeVideoFn = (
    }
 }
 
-export const getDeletedLandmarks = (
-   landmarks: NormalizedLandmark[],
-   isSide: boolean
+export const getEditableLandmarks = (
+   landmarks: NormalizedLandmark[]
 ) => {
-   if (landmarks?.length) {
-      let isEven = true;
-      if (landmarks[11].z < landmarks[12].z) isEven = false;
+   const currentSection = useAIStore.getState().currentSection;
+   if (currentSection && landmarks?.length) {
+      let editableLandmarks: number[] = [];
+      // Dont forget for adding 23, 24, 25, 26, 27, 28 landmarks for squatSide section
+      const photoData = currentSection.photoFn(landmarks);
+      const cropData = currentSection.cropFn(landmarks, { width: 0, height: 0 });
 
-      let deletedLandmarks = [1, 2, 3, 4, 5, 6, 9, 10, 17, 18, 19, 20, 21, 22, 35, 36];
-      if (isSide) {
-         const filteredLandmarks: number[] = [];
-         landmarks.forEach((_value, index) => {
-            if (isEven && index % 2 !== 0) {
-               filteredLandmarks.push(index);
-            }
+      photoData.degrees.forEach(degree => {
+         editableLandmarks = editableLandmarks.concat(degree.landmarksUsed)
+      })
+      editableLandmarks = editableLandmarks.concat(cropData.landmarksUsed);
 
-            if (!isEven && index % 2 === 0) {
-               filteredLandmarks.push(index);
-            }
-         });
-         deletedLandmarks = deletedLandmarks.concat(filteredLandmarks).filter(value => value !== 0 && value !== 33 && value !== 34);
-      }
+      editableLandmarks.sort((a, b) => a - b);
 
-      return deletedLandmarks;
+      return [...new Set(editableLandmarks)];
    }
 
-   return [];
+   return undefined;
 }
-
 export const extractZip = async (fileContent: string) => {
    const zip = new JSZip();
    await zip.loadAsync(fileContent, { base64: true });

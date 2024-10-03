@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import CanvasElem from "./body/CanvasElem";
 import usePhotoStore from "../../../../../store/photoStore";
 
@@ -9,7 +8,6 @@ type BodyProps = {
 
 function Body({ selectedLandmark, selectedPalette }: BodyProps) {
    const { image, landmarks, videoSize } = usePhotoStore(state => ({ image: state.image, landmarks: state.landmarks, videoSize: state.videoSize }));
-   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
    return (
       <div className="relative">
@@ -18,7 +16,6 @@ function Body({ selectedLandmark, selectedPalette }: BodyProps) {
          {
             landmarks?.length > 0 &&
             <CanvasElem
-               canvasRef={canvasRef}
                selectedLandmark={selectedLandmark}
                selectedPalette={selectedPalette}
             />

@@ -1,42 +1,55 @@
-import { drawOnCanvas, getDeletedLandmarks, writeLandmarkIndexes } from "../../../../../../../../../utils/AIFuncs";
-import { useEffect, useMemo } from "react";
+import { drawOnCanvas, getEditableLandmarks } from "../../../../../../../../../utils/AIFuncs";
+import { useEffect, useMemo, useRef } from "react";
 import usePhotoStore from "../../../../../../store/photoStore";
 import useAIStore from "../../../../../../store/AIStore";
 import FocusCircle from "./FocusCircle";
 
 type CanvasElemProps = {
-   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>,
    selectedLandmark: number | null,
    selectedPalette: string[]
 }
 
-function CanvasElem({ canvasRef, selectedLandmark, selectedPalette }: CanvasElemProps) {
-   const { landmarks, videoSize } = usePhotoStore(state => ({ landmarks: state.landmarks, videoSize: state.videoSize, setLandmarks: state.setLandmarks }));
+function CanvasElem({ selectedLandmark, selectedPalette }: CanvasElemProps) {
+   const { landmarks, videoSize } = usePhotoStore(state => ({ landmarks: state.landmarks, videoSize: state.videoSize }));
    const currentSection = useAIStore(store => store.currentSection);
 
-   const isSide = useMemo(() => currentSection?.name.toLowerCase().includes("side"), [currentSection?.name]);
+   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-   const deletedLandmarks = useMemo(() => {
-      if (isSide !== undefined) return (
-         getDeletedLandmarks(landmarks, isSide)
-      )
-      return [];
-   }, [isSide])
+   const { isSide, editableLandmarks } = useMemo(() => {
+      if (currentSection) {
+         const isSide = currentSection.name.toLowerCase().includes("side");
+
+         const editableLandmarks = getEditableLandmarks(landmarks);
+         return {
+            isSide,
+            editableLandmarks
+         }
+      }
+
+      return {
+         isSide: undefined,
+         editableLandmarks: undefined
+      }
+   }, [currentSection])
 
    useEffect(() => {
-      if (videoSize && landmarks?.length) {
-         drawOnCanvas(canvasRef, videoSize.width, videoSize.height, 1.5, selectedPalette, undefined, landmarks, isSide);
-         writeLandmarkIndexes(landmarks, deletedLandmarks, canvasRef.current?.getContext("2d"), videoSize.width, videoSize.height, selectedPalette[2]);
+      const canvas = canvasRef.current;
+
+      if (canvas && landmarks?.length && isSide !== undefined && editableLandmarks !== undefined) {
+         drawOnCanvas(canvas, selectedPalette, landmarks, isSide, editableLandmarks);
       }
-   }, [JSON.stringify(landmarks), selectedPalette, deletedLandmarks])
+   }, [selectedPalette, JSON.stringify(landmarks), isSide, editableLandmarks])
 
    return (
       <>
          <canvas
             ref={canvasRef}
-            className="absolute top-0 left-0 size-full"
             id="editCanvas"
+            className="absolute top-0 left-0 size-full"
+            width={videoSize?.width}
+            height={videoSize?.height}
          />
+
          {
             (typeof selectedLandmark === "number" && canvasRef.current) &&
             <FocusCircle

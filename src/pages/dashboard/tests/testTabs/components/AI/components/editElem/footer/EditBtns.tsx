@@ -1,10 +1,9 @@
 import { useMemo } from "react";
 import usePhotoStore from "../../../../../../store/photoStore";
-import { getDeletedLandmarks } from "../../../../../../../../../utils/AIFuncs";
-import useAIStore from "../../../../../../store/AIStore";
 import NextLandmarkBtn from "./editBtns/NextLandmarkBtn";
 import PrevLandmarksBtn from "./editBtns/PrevLandmarksBtn";
 import LandmarksMenu from "./editBtns/LandmarksMenu";
+import { getEditableLandmarks } from "../../../../../../../../../utils/AIFuncs";
 
 type SelectedLandmarkBtnsProps = {
    selectedLandmark: number | null,
@@ -13,25 +12,10 @@ type SelectedLandmarkBtnsProps = {
 
 function EditBtns({ selectedLandmark, setSelectedLandmark }: SelectedLandmarkBtnsProps) {
    const landmarks = usePhotoStore(state => state.landmarks);
-   const currentSectionName = useAIStore(state => state.currentSection?.name);
 
-   const editableLandmarks = useMemo(() => {
-      let editableLandmarks: number[] = [];
+   const editableLandmarks = useMemo(() => getEditableLandmarks(landmarks), []);
 
-      if (currentSectionName) {
-         const isSide = currentSectionName.toLowerCase().includes("side");
-         const deletedLandmarks = getDeletedLandmarks(landmarks, isSide);
-
-         landmarks?.forEach((_landmark, index) => {
-            if (!deletedLandmarks.includes(index)) {
-               editableLandmarks.push(index)
-            }
-         })
-      }
-      return editableLandmarks;
-   }, [currentSectionName]);
-
-   return (
+   if (editableLandmarks) return (
       <div className="w-full h-12 lg:h-14 flex gap-3 lg:gap-4 justify-center">
          <PrevLandmarksBtn
             editableLandmarks={editableLandmarks}
