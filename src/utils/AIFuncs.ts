@@ -272,6 +272,7 @@ export const drawDegree = (
    ctx: CanvasRenderingContext2D,
    width: number,
    height: number,
+   isSectionDynamic: boolean
 ) => {
    const landmarksUsed: NormalizedLandmark[] = [];
    degree.landmarksUsed.forEach(landmarkIndex => {
@@ -295,7 +296,7 @@ export const drawDegree = (
    y *= height;
 
    const text = degree.degree.toFixed(1) + '°';
-   drawText(ctx, text, x, y);
+   drawText(ctx, text, x, y, degree.value, isSectionDynamic);
 }
 
 export const drawDistance = (
@@ -305,6 +306,7 @@ export const drawDistance = (
    ctx: CanvasRenderingContext2D,
    width: number,
    height: number,
+   isSectionDynamic: boolean
 ) => {
    const firstLandmark = landmarks[distance.landmarksUsed[0]];
    const secondLandmark = landmarks[distance.landmarksUsed[1]];
@@ -328,14 +330,16 @@ export const drawDistance = (
    y -= 4;
 
    const text = distance.distance.toFixed(1) + ' cm';
-   drawText(ctx, text, x, y);
+   drawText(ctx, text, x, y, distance.value, isSectionDynamic);
 }
 
 const drawText = (
    ctx: CanvasRenderingContext2D,
    text: string,
    x: number,
-   y: number
+   y: number,
+   value: string,
+   isSectionDynamic: boolean
 ) => {
    ctx.font = "11px 'Estedad-Regular'";
    ctx.textAlign = "center";
@@ -348,10 +352,18 @@ const drawText = (
    const textWidth = metrics.width + (padding * 2);
    const textHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent + (padding * 2);
 
-   ctx.fillStyle = "#FFFFFF";
+   let color = "#4CB648";
+   if (isSectionDynamic) {
+      if (value === "1") color = "#FF0000"
+   } else {
+      if (value === "1") color = "#FF0000";
+      if (value === "3") color = "#FCC72C";
+   }
+
+   ctx.fillStyle = color;
    ctx.fillRect(boxX, boxY, textWidth, textHeight);
 
-   ctx.fillStyle = "#FF0000";
+   ctx.fillStyle = "#FFFFFF";
    ctx.fillText(text, x, y);
 }
 

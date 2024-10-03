@@ -14,12 +14,13 @@ function SwimSide_P(landmarks: NormalizedLandmark[]) {
     const shoulderLandmark = isEven ? 12 : 11;
     const earLandmark = isEven ? 8 : 7;
     const shoulderEar = degreeTwoPoints(landmarks[shoulderLandmark], landmarks[earLandmark]);
+    if (shoulderEar < -20) values["هایپراکستنشن گردن"] = "1";
+
     degrees.push({
         landmarksUsed: [shoulderLandmark, earLandmark],
         degree: shoulderEar,
+        value: values["هایپراکستنشن گردن"]
     })
-    
-    if (shoulderEar < -20) values["هایپراکستنشن گردن"] = "1";
 
     return {
         values,

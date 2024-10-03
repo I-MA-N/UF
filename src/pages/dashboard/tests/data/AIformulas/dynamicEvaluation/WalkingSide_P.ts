@@ -14,12 +14,13 @@ function WalkingSide_P(landmarks: NormalizedLandmark[]) {
     const earLandmark = isEven ? 8 : 7;
     let earC7 = Math.abs(degreeTwoPoints(landmarks[earLandmark], landmarks[33]));
     if (!isEven) earC7 = 180 - earC7;
+    if (earC7 <= 50) values["سر به جلو میرود"] = "1";
+
     degrees.push({
         landmarksUsed: [earLandmark, 33],
         degree: earC7,
+        value: values["سر به جلو میرود"]
     })
-    
-    if (earC7 <= 50) values["سر به جلو میرود"] = "1";
 
     return {
         values,

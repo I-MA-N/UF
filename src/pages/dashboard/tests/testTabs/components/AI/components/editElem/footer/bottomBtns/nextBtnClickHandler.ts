@@ -28,6 +28,7 @@ function nextBtnClickHandler(
             const editCanvas = document.getElementById("editCanvas") as HTMLCanvasElement;
             const result = currentSection.photoFn(landmarks, userHeight, { width: editCanvas.clientWidth, height: editCanvas.clientHeight });
             const { values, degrees } = result;
+            const isSectionDynamic = "src" in currentSection.questions[0];
             
             Object.entries(values).forEach(([key, value]) => {
                setValue(key, value);
@@ -40,10 +41,10 @@ function nextBtnClickHandler(
 
             const drawingUtils = new DrawingUtils(ctx);
 
-            degrees.forEach(degree => drawDegree(landmarks, degree, drawingUtils, ctx, canvas.width, canvas.height));
+            degrees.forEach(degree => drawDegree(landmarks, degree, drawingUtils, ctx, canvas.width, canvas.height, isSectionDynamic));
             if ("distances" in result) {
                const distances = result.distances as DistanceType[];
-               distances.forEach(distance => drawDistance(landmarks, distance, drawingUtils, ctx, canvas.width, canvas.height));
+               distances.forEach(distance => drawDistance(landmarks, distance, drawingUtils, ctx, canvas.width, canvas.height, isSectionDynamic));
             }
 
             const finalCanvas = document.createElement("canvas");

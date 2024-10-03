@@ -9,12 +9,13 @@ function SquatBack_P(landmarks: NormalizedLandmark[]) {
     const degrees: DegreeType[] = [];
 
     const asis = 180 - Math.abs(degreeTwoPoints(landmarks[23], landmarks[24]));
+    if (asis >= 2.5) values["انتقال نامتقارن"] = "1";
+
     degrees.push({
         landmarksUsed: [23, 24],
         degree: asis,
+        value: values["انتقال نامتقارن"]
     })
-
-    if (asis >= 2.5) values["انتقال نامتقارن"] = "1";
 
     return {
         values,
