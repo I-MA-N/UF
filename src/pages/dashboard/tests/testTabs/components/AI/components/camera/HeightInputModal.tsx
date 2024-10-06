@@ -18,7 +18,7 @@ function HeightInputModal() {
                 </button>
                 
                 <p className="text-center text-sm lg:text-base">
-                    برای ارزیابی از نمای جانب، نیاز به قد کاربر می باشد. لطفا فیلد زیر را پر کنید.
+                    برای ارزیابی از این نما، نیاز به قد کاربر می باشد. لطفا فیلد زیر را پر کنید.
                 </p>
 
                 <div className="flex justify-center mb-4 mt-8">

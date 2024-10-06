@@ -116,7 +116,6 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
                   (page === 'ناهنجاری ها' || page === 'ارزیابی پویا') ?
                      <TestTabsFirstLoad
                         key={page}
-                        testName={page}
                         initialData={formData[page]}
                         getValues={getValues}
                         setValue={setValue}

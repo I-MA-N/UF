@@ -5,7 +5,7 @@ import { staticEvaluationType } from "../../data/testsData/staticEvaluation";
 import { DataSlice } from "./dataSlice";
 
 interface SectionsState {
-   currentSection: staticEvaluationType[0] | dynamicEvaluationType[0] | undefined,
+   currentSection: staticEvaluationType[0][0] | dynamicEvaluationType[0][0] | undefined,
    nameFromManualTab: SectionNames | undefined,
    isTipShown: boolean,
    userHeight: number | undefined,
@@ -42,12 +42,15 @@ const createSectionsSlice: StateCreator<
    ...initialState,
    setCurrentSection: (name) => {
       set(state => {
-         const foundedSection = state.activeTestData?.find(section => section.name === name);
+         const foundedSections = state.activeTestData?.map(part => (
+            part.find(section => section.name === name)
+         ));
+         const foundedSection = foundedSections?.find(section => section !== undefined);
 
          return {
             ...state,
             currentSection: foundedSection,
-            showUserHeight: foundedSection?.name === "side"
+            showUserHeight: foundedSection?.name === "side" || foundedSection?.name === "squatBack"
          }
       })
    },

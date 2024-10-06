@@ -9,12 +9,24 @@ function NextBtn() {
    const landmarks = usePhotoStore(state => state.landmarks);
 
    const nextSection = useMemo(() => {
-      const sectionName = currentSection?.name;
-      const testData = activeTestData;
-      const sectionIndex = testData?.findIndex(section => section.name === sectionName);
+      const sectionName = currentSection?.name;     
+      let partIndex: number | undefined = undefined;
+      let sectionIndex: number | undefined = undefined;
 
-      if (testData && typeof sectionIndex === "number") {
-         const nextSection = testData[sectionIndex + 1];
+      activeTestData?.forEach((part, index) => {
+         const foundedIndex = part.findIndex(section => section.name === sectionName);
+         if (foundedIndex > -1) {
+            sectionIndex = foundedIndex;
+            partIndex = index;
+         };
+      });
+
+      if (activeTestData && typeof partIndex === "number" && typeof sectionIndex === "number") {
+         let nextSection = activeTestData[partIndex]?.[sectionIndex + 1];
+
+         if (nextSection === undefined) {
+            nextSection = activeTestData[partIndex + 1]?.[0];
+         }
 
          return nextSection;
       }

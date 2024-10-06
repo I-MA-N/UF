@@ -150,7 +150,7 @@
     }
 
     .clicked-animation {
-        animation: pulse-yellow 1.5s 1 forwards;
+        animation: pulse-yellow 2s 1 forwards;
     }
     @keyframes pulse-yellow {
         0% {

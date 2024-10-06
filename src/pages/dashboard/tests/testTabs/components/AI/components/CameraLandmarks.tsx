@@ -7,6 +7,7 @@ import { PoseLandmarker } from "@mediapipe/tasks-vision";
 import Webcam from "react-webcam";
 import usePhotoStore from "../../../../store/photoStore";
 import { addExtraLandmarks, drawOnVideo, executeVideoFn } from "../../../../../../../utils/AIFuncs";
+import HeightInputModal from "./camera/HeightInputModal";
 
 type CameraLandmarksProps = {
    model: PoseLandmarker,
@@ -15,7 +16,7 @@ type CameraLandmarksProps = {
 let landmarksStatus: boolean[] = [];
 
 function CameraLandmarks({ model }: CameraLandmarksProps) {
-   const currentSection = useAIStore(state => state.currentSection);
+   const { currentSection, showUserHeight } = useAIStore(state => ({ currentSection: state.currentSection, showUserHeight: state.showUserHeight }));
    const { setImage, setLandmarks, setVideoSize } = usePhotoStore(state => ({ setImage: state.setImage, setLandmarks: state.setLandmarks, setVideoSize: state.setVideoSize }));
 
    const [isCameraLoaded, setIsCameraLoaded] = useState(false);
@@ -52,39 +53,45 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
    }, [])
 
    return (
-      <div className="flex flex-col items-center justify-center gap-7 min-h-dvh">
-         <p className="text-center font-Estedad-Black lg:text-xl">{currentSection?.nameFA}</p>
+      <>
+         <div className="flex flex-col items-center justify-center gap-7 min-h-dvh">
+            <p className="text-center font-Estedad-Black lg:text-xl">{currentSection?.nameFA}</p>
 
-         <div className="w-full min-h-80 flex items-center justify-center">
-            <div className="relative">
-               <Webcam
-                  ref={webcamRef}
-                  videoConstraints={{
-                     facingMode: "environment",
-                     aspectRatio: 1600 / 1000,
-                  }}
-                  onLoadedData={proccessFrames}
-               />
-               <canvas
-                  ref={canvasRef}
-                  className="absolute top-0 left-0"
-               />
+            <div className="w-full min-h-80 flex items-center justify-center">
+               <div className="relative">
+                  <Webcam
+                     ref={webcamRef}
+                     videoConstraints={{
+                        facingMode: "environment",
+                        aspectRatio: 1600 / 1000,
+                     }}
+                     onLoadedData={proccessFrames}
+                  />
+                  <canvas
+                     ref={canvasRef}
+                     className="absolute top-0 left-0"
+                  />
+               </div>
+
             </div>
 
+            <div className="w-full flex justify-center items-center gap-8">
+               <CameraModeBtn isDisabled={true} />
+
+               <CapturePhotoBtn
+                  isLoading={!isCameraLoaded}
+                  isDisabled={landmarksStatus.includes(false)}
+                  isClickedRef={isClickedRef}
+               />
+
+               <CloseBtn />
+            </div>
          </div>
-
-         <div className="w-full flex justify-center items-center gap-8">
-            <CameraModeBtn isDisabled={true} />
-
-            <CapturePhotoBtn
-               isLoading={!isCameraLoaded}
-               isDisabled={landmarksStatus.includes(false)}
-               isClickedRef={isClickedRef}
-            />
-
-            <CloseBtn />
-         </div>
-      </div>
+         {
+            showUserHeight &&
+            <HeightInputModal />
+         }
+      </>
    );
 };
 

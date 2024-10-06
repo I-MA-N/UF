@@ -4,11 +4,11 @@ import ExtractedZipType from "../../../../../../../../types/ExtractedZipType";
 import { extractZip } from "../../../../../../../../utils/AIFuncs";
 import Loading from "../../../../../../../common/Loading";
 
-type SectionCardFirtLoadProps = {
+type SectionCardFirstLoadProps = {
    zipFile: string
 }
 
-function SectionCardFirtLoad({ zipFile }: SectionCardFirtLoadProps) {
+function SectionCardFirstLoad({ zipFile }: SectionCardFirstLoadProps) {
    const [files, setFiles] = useState<ExtractedZipType | null | undefined>(undefined);
 
    useEffect(() => {
@@ -35,4 +35,4 @@ function SectionCardFirtLoad({ zipFile }: SectionCardFirtLoadProps) {
    )
 };
 
-export default SectionCardFirtLoad;
+export default SectionCardFirstLoad;

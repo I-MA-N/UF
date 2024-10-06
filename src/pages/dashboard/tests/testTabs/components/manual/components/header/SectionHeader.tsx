@@ -1,5 +1,5 @@
 import Loading from "../../../../../../../common/Loading";
-import SectionCardFirtLoad from "./SectionCardFirstLoad";
+import SectionCardFirstLoad from "./SectionCardFirstLoad";
 import { useParams } from "react-router-dom";
 import GImage from "../../../../../../../../api/common/GImage";
 import { useEffect, useMemo } from "react";
@@ -29,7 +29,7 @@ function SectionHeader({ setIsAIMethod, sectionName }: SectionHeaderProps) {
    return (
       <>
          {
-            zipFile === undefined || isPending &&
+            (zipFile === undefined || isPending) &&
             <div className="pb-8">
                <Loading fullHeight={false} />
             </div>
@@ -43,7 +43,7 @@ function SectionHeader({ setIsAIMethod, sectionName }: SectionHeaderProps) {
          }
          {
             zipFile &&
-            <SectionCardFirtLoad
+            <SectionCardFirstLoad
                zipFile={zipFile}
             />
          }

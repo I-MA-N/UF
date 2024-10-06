@@ -27,24 +27,35 @@ function AITab() {
          )
 
          return (
-            <CameraFirstLoad model={model} activeTestData={activeTestData[0]} />
+            <CameraFirstLoad
+               model={model}
+               isDynamicEvaluationData={"src" in activeTestData[0][0].questions[0]}
+            />
          )
       }
    }, [model, activeTestData, currentSection])
 
    return (
       <>
-         <div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-5 md:gap-x-7 gap-y-6 md:gap-y-8 justify-center">
-               {
-                  activeTestData?.map(section => (
-                     section.shouldAIShow && <SectionCard
-                        key={`${section.name}_${section.zipFile?.slice(0, 30)}`}
-                        section={section}
-                     />
-                  ))
-               }
-            </div>
+         <div className="grid grid-cols-1 divide-y-2 divide-secondary">
+            {
+               activeTestData?.map((part, index) => (
+                  <div
+                     key={index}
+                     className="flex flex-wrap justify-center gap-x-5 lg:gap-x-12 gap-y-6 py-10"
+                  >
+                     {
+                        part.map(section => (
+                           section.shouldAIShow &&
+                           <SectionCard
+                              key={`${section.name}_${section.zipFile?.slice(0, 30)}`}
+                              section={section}
+                           />
+                        ))
+                     }
+                  </div>
+               ))
+            }
          </div>
 
          {generateJSX()}

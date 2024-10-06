@@ -14,9 +14,9 @@ function WalkingBack_C(landmarks: NormalizedLandmark[], videoSize: { width: numb
       landmarksUsed: [leftLandmark, topLandmark, 14, 30],
       result: {
          left: left - 20,
-         top: top - 50,
+         top: top - 40,
          width: width + 70,
-         height: height + 90
+         height: height + 100
       }
    }
 }

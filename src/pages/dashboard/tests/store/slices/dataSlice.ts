@@ -33,13 +33,20 @@ const createDataSlice: StateCreator<
    dynamicEvaluationData: dynamicEvaluation,
    activeTestData: undefined,
    getOrSetZipFile: (name, newZipFile) => {
-      const activeTestData = get().activeTestData;
-      const zipFile = activeTestData?.find(section => section.name === name)?.zipFile;
+      const activeTestData = get().activeTestData!;
+      const partIndex = activeTestData.findIndex(part => (
+         part.find(section => section.name === name)
+      ))
+      let sectionIndex = -1;
+      activeTestData?.forEach(part => {
+         const foundedIndex = part.findIndex(section => section.name === name);
+         if (foundedIndex > -1) sectionIndex = foundedIndex;
+      });
+      const zipFile = activeTestData[partIndex][sectionIndex]?.zipFile;
 
-      if (newZipFile !== undefined && activeTestData) {
-         const sectionIndex = activeTestData.findIndex(section => section.name === name);
+      if (newZipFile !== undefined) {
          if (sectionIndex > -1) {
-            activeTestData[sectionIndex].zipFile = newZipFile;
+            activeTestData[partIndex][sectionIndex].zipFile = newZipFile;
 
             set(state => ({
                ...state,
@@ -57,29 +64,36 @@ const createDataSlice: StateCreator<
       const dynamicEvaluationData = get().dynamicEvaluationData;
 
       const arr: ZipFileType[] = [];
+
       if (testData !== undefined) {
-         const isDynamicEvaluationData = "src" in testData[0].questions[0];
+         const isDynamicEvaluationData = "src" in testData[0][0].questions[0];
          if (isDynamicEvaluationData) {
-            staticEvaluationData.forEach(section =>
-               typeof section.zipFile === "string" && arr.push({
-                  name: section.name,
-                  value: section.zipFile
-               })
-            );
+            staticEvaluationData.forEach(part => {
+               part.forEach((section =>
+                  typeof section.zipFile === "string" && arr.push({
+                     name: section.name,
+                     value: section.zipFile
+                  })
+               ))
+            });
          } else {
-            dynamicEvaluationData.forEach(section =>
+            dynamicEvaluationData.forEach(part => {
+               part.forEach((section =>
+                  typeof section.zipFile === "string" && arr.push({
+                     name: section.name,
+                     value: section.zipFile
+                  })
+               ))
+            });
+         }
+         testData.forEach(part => {
+            part.forEach((section =>
                typeof section.zipFile === "string" && arr.push({
                   name: section.name,
                   value: section.zipFile
                })
-            );
-         }
-         testData.forEach(section =>
-            typeof section.zipFile === "string" && arr.push({
-               name: section.name,
-               value: section.zipFile
-            })
-         );
+            ))
+         });
       }
 
       return arr;
@@ -108,14 +122,18 @@ const createDataSlice: StateCreator<
       set(state => ({
          ...state,
          activeTestData: undefined,
-         staticEvaluationData: staticEvaluation.map(section => {
-            section.zipFile = undefined;
-            return section
-         }),
-         dynamicEvaluationData: dynamicEvaluation.map(section => {
-            section.zipFile = undefined;
-            return section
-         })
+         staticEvaluationData: staticEvaluation.map(part => (
+            part.map(section => {
+               section.zipFile = undefined;
+               return section
+            })
+         )),
+         dynamicEvaluationData: dynamicEvaluation.map(part => (
+            part.map(section => {
+               section.zipFile = undefined;
+               return section
+            })
+         ))
       }));
    }
 })

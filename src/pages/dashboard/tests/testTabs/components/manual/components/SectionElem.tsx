@@ -5,7 +5,7 @@ import SectionBody from "./body/SectionBody";
 
 type SectionElemProps = {
    setIsAIMethod: React.Dispatch<React.SetStateAction<boolean>>,
-   section: staticEvaluationType[0] | dynamicEvaluationType[0],
+   section: staticEvaluationType[0][0] | dynamicEvaluationType[0][0],
 }
 
 function SectionElem({ setIsAIMethod, section }: SectionElemProps) {

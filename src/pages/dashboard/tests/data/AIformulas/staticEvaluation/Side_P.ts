@@ -36,7 +36,7 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas
    if (shoulderC7 < 30) values["شانه گرد"] = "1";
 
    degrees.push({
-      landmarksUsed: [shoulderLandmark],
+      landmarksUsed: [shoulderLandmark, 33],
       degree: shoulderC7,
       value: values["شانه گرد"]
    })
@@ -52,7 +52,7 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas
       if (swayBack >= 7.5) values["پشت تابدار"] = "1";
 
       distances.push({
-         landmarksUsed: [swayBackLandmark],
+         landmarksUsed: [swayBackLandmark, 36],
          distance: swayBack,
          value: values["پشت تابدار"]
       })
@@ -74,7 +74,7 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas
          kneeValue = "3";
       }
       distances.push({
-         landmarksUsed: [kneeLandmark],
+         landmarksUsed: [kneeLandmark, 36],
          distance: knee,
          value: kneeValue
       })

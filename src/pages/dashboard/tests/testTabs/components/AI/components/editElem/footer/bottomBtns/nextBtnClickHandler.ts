@@ -5,7 +5,8 @@ import useFormStore from "../../../../../../../store/formStore";
 import usePhotoStore from "../../../../../../../store/photoStore";
 import { DrawingUtils, NormalizedLandmark } from "@mediapipe/tasks-vision";
 import DistanceType from "../../../../../../../../../../types/DistanceType";
-import { drawDegree, drawDistance } from "../../../../../../../../../../utils/AIFuncs";
+import { drawDegree, drawDegreeDistance, drawDistance } from "../../../../../../../../../../utils/AIFuncs";
+import DegreeDistanceType from "../../../../../../../../../../types/DegreeDistanceType";
 
 function nextBtnClickHandler(
    landmarks: NormalizedLandmark[],
@@ -45,6 +46,10 @@ function nextBtnClickHandler(
             if ("distances" in result) {
                const distances = result.distances as DistanceType[];
                distances.forEach(distance => drawDistance(landmarks, distance, drawingUtils, ctx, canvas.width, canvas.height, isSectionDynamic));
+            }
+            if ("degreesDistances" in result) {
+               const degreesDistances = result.degreesDistances as DegreeDistanceType[];
+               degreesDistances.forEach(degreeDistance => drawDegreeDistance(landmarks, degreeDistance, drawingUtils, ctx, canvas.width, canvas.height, isSectionDynamic));
             }
 
             const finalCanvas = document.createElement("canvas");

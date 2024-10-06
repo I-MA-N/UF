@@ -7,6 +7,7 @@ import useAIStore from "../pages/dashboard/tests/store/AIStore";
 import usePhotoStore from "../pages/dashboard/tests/store/photoStore";
 import DegreeType from "../types/DegreeType";
 import DistanceType from "../types/DistanceType";
+import DegreeDistanceType from "../types/DegreeDistanceType";
 
 export const addExtraLandmarks = (
    landmarks: NormalizedLandmark[],
@@ -104,18 +105,18 @@ export const drawOnCanvas = (
 
       const drawingUtils = new DrawingUtils(ctx);
 
-      drawingUtils.drawLandmarks(newLandmarks, { color: palette[0], radius: 1.5 });
-      drawingUtils.drawConnectors(newLandmarks, newConnectors, { color: palette[1], lineWidth: 0.8 });
+      drawingUtils.drawLandmarks(newLandmarks, { color: palette[0], radius: 1 });
+      drawingUtils.drawConnectors(newLandmarks, newConnectors, { color: palette[1], lineWidth: 0.5 });
 
       if (landmarks[35] && landmarks[36]) {
          const plumbLineLandmarks = [landmarks[35], landmarks[36]];
          const plumbLineConnectors = [{ start: 0, end: 1 }];
-         drawingUtils.drawLandmarks(plumbLineLandmarks, { color: palette[0], radius: 1 });
-         drawingUtils.drawConnectors(plumbLineLandmarks, plumbLineConnectors, { color: palette[1], lineWidth: 0.5 });
+         drawingUtils.drawLandmarks(plumbLineLandmarks, { color: palette[0], radius: 0.8 });
+         drawingUtils.drawConnectors(plumbLineLandmarks, plumbLineConnectors, { color: palette[1], lineWidth: 0.4 });
       }
 
-      let font = "12px 'Estedad-Regular'";
-      if (canvas.width > 400) font = "14px 'Estedad-Regular'";
+      let font = "10px 'Estedad-Regular'";
+      if (canvas.width > 400) font = "12px 'Estedad-Regular'";
 
       ctx.font = font;
       ctx.fillStyle = palette[2];
@@ -217,7 +218,7 @@ export const circleMove = (
 
 export const executeVideoFn = (
    canvasRef: React.MutableRefObject<HTMLCanvasElement | null>,
-   currentSection: staticEvaluationType[0] | dynamicEvaluationType[0] | undefined,
+   currentSection: staticEvaluationType[0][0] | dynamicEvaluationType[0][0] | undefined,
    landmarks: NormalizedLandmark[],
    landmarksStatus: boolean[]
 ) => {
@@ -226,8 +227,8 @@ export const executeVideoFn = (
       const videoStates = currentSection.videoFn(landmarks);
       videoStates.forEach(({ landmarks, status }) => {
          let drawingUtils = new DrawingUtils(ctx);
-         drawingUtils.drawLandmarks(landmarks, { color: status ? '#4CB648' : '#FF0000', radius: 1.5 });
-         drawingUtils.drawConnectors(landmarks, PoseLandmarker.POSE_CONNECTIONS, { color: status ? '#4CB648' : '#FF0000', lineWidth: 1 });
+         drawingUtils.drawLandmarks(landmarks, { color: status ? '#4CB648' : '#FF0000', radius: 1 });
+         drawingUtils.drawConnectors(landmarks, PoseLandmarker.POSE_CONNECTIONS, { color: status ? '#4CB648' : '#FF0000', lineWidth: 0.5 });
 
          landmarksStatus.push(status);
       })
@@ -251,12 +252,19 @@ export const getEditableLandmarks = (
       if ("distances" in photoData) {
          const distances = photoData.distances as DistanceType[];
          distances.forEach(distance => {
-            editableLandmarks = editableLandmarks.concat(distance.landmarksUsed[0])
+            editableLandmarks = editableLandmarks.concat(distance.landmarksUsed)
+         })
+      }
+      if ("degreesDistances" in photoData) {
+         const degreesDistances = photoData.degreesDistances as DegreeDistanceType[];
+         degreesDistances.forEach(degreeDistance => {
+            editableLandmarks = editableLandmarks.concat(degreeDistance.landmarksUsed)
          })
       }
 
       editableLandmarks = editableLandmarks.concat(cropData.landmarksUsed);
 
+      editableLandmarks = editableLandmarks.filter(index => index !== 35 && index !== 36)
       editableLandmarks.sort((a, b) => a - b);
 
       return [...new Set(editableLandmarks)];
@@ -312,12 +320,12 @@ export const drawDistance = (
    const secondLandmark = landmarks[distance.landmarksUsed[1]];
    const landmarksUsed: NormalizedLandmark[] = [
       firstLandmark,
-      {
+      distance.landmarksUsed[1] === 36 ? {
          x: secondLandmark.x,
          y: firstLandmark.y,
          z: firstLandmark.z,
          visibility: firstLandmark.visibility,
-      }
+      } : secondLandmark
    ];
 
    drawingUtils.drawLandmarks(landmarksUsed, { radius: 0.5, color: "#FF0000" });
@@ -333,17 +341,48 @@ export const drawDistance = (
    drawText(ctx, text, x, y, distance.value, isSectionDynamic);
 }
 
+export const drawDegreeDistance = (
+   landmarks: NormalizedLandmark[],
+   degreeDistance: DegreeDistanceType,
+   drawingUtils: DrawingUtils,
+   ctx: CanvasRenderingContext2D,
+   width: number,
+   height: number,
+   isSectionDynamic: boolean
+) => {
+   const landmarksUsed: NormalizedLandmark[] = [];
+   degreeDistance.landmarksUsed.forEach(landmarkIndex => {
+      const landmark = landmarks[landmarkIndex];
+      if (landmark) landmarksUsed.push(landmark);
+   })
+
+   drawingUtils.drawLandmarks(landmarksUsed, { radius: 0.5, color: "#FF0000" });
+   drawingUtils.drawConnectors(landmarksUsed, [{ start: 0, end: 1 }, { start: 1, end: 2 }], { color: '#FF0000', lineWidth: 1.5 });
+
+   let degreeX = (landmarksUsed[0].x + landmarksUsed[1].x) / 2;
+   let degreeY = (landmarksUsed[0].y + landmarksUsed[1].y) / 2;
+   degreeX *= width;
+   degreeY *= height;
+
+   const degreeText = degreeDistance.degreesDistances[0].toFixed(1) + '°';
+   drawText(ctx, degreeText, degreeX, degreeY - 8, degreeDistance.values[0], isSectionDynamic);
+
+   const distanceText = degreeDistance.degreesDistances[1].toFixed(1) + ' cm';
+   drawText(ctx, distanceText, degreeX, degreeY + 12, degreeDistance.values[1], isSectionDynamic, "top");
+}
+
 const drawText = (
    ctx: CanvasRenderingContext2D,
    text: string,
    x: number,
    y: number,
    value: string,
-   isSectionDynamic: boolean
+   isSectionDynamic: boolean,
+   textBaseline?: CanvasTextBaseline
 ) => {
    ctx.font = "11px 'Estedad-Regular'";
    ctx.textAlign = "center";
-   ctx.textBaseline = "bottom";
+   ctx.textBaseline = textBaseline || "bottom";
    const padding = 4;
 
    const metrics = ctx.measureText(text);
