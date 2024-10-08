@@ -6,11 +6,11 @@ import Container from "../../common/Container";
 import PrevBtn from "../../common/PrevBtn";
 import Loading from "../../common/Loading";
 import Tests from "./Tests";
-import replaceTestNames from "../../../utils/replaceTestNames";
 import usePhotoStore from "./store/photoStore";
 import useFormStore from "./store/formStore";
 import useAIStore from "./store/AIStore";
 import useModelStore from "./store/modelStore";
+import arrangeTestsArr from "../../../utils/arrangeTestsArr";
 
 function TestsFirstLoad() {
    const { role, formname, username } = useParams();
@@ -46,10 +46,10 @@ function TestsFirstLoad() {
       const testsArr = formObj?.formTests.filter(test => test.testAccess.includes(role));
 
       if (formObj && testsArr && formData?.access !== 'false') {
-         replaceTestNames(testsArr);
+         const arrangedArr = arrangeTestsArr(testsArr);
 
          return (
-            <Tests username={username} formname={formname} testsArr={testsArr} initialFormData={formData} />
+            <Tests username={username} formname={formname} testsArr={arrangedArr} initialFormData={formData} />
          )
       } else {
          return <Container>

@@ -113,7 +113,7 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
                }
 
                {
-                  (page === 'ناهنجاری ها' || page === 'ارزیابی پویا') ?
+                  (page === 'ناهنجاری ها' || page === 'ارزیابی پویا' || page === 'عملکردی وضعیت بدنی') ?
                      <TestTabsFirstLoad
                         key={page}
                         initialData={formData[page]}

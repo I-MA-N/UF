@@ -2,10 +2,11 @@ import { dynamicEvaluationType } from "../../../../data/testsData/dynamicEvaluat
 import { staticEvaluationType } from "../../../../data/testsData/staticEvaluation";
 import SectionHeader from "./header/SectionHeader";
 import SectionBody from "./body/SectionBody";
+import { FMSType } from "../../../../data/testsData/FMS";
 
 type SectionElemProps = {
    setIsAIMethod: React.Dispatch<React.SetStateAction<boolean>>,
-   section: staticEvaluationType[0][0] | dynamicEvaluationType[0][0],
+   section: staticEvaluationType[0][0] | dynamicEvaluationType[0][0] | FMSType[0][0],
 }
 
 function SectionElem({ setIsAIMethod, section }: SectionElemProps) {

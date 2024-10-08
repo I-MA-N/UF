@@ -34,7 +34,7 @@ function ImageInput({ setValue: setInputValue, title, image, direction, defaultV
       >
          <div className="relative w-full">
             <img
-               src={image}
+               src={`images/testsImages/dynamicEvaluation/${image}`}
                className="rounded-2xl w-full"
             />
             {

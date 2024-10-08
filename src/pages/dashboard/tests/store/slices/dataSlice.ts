@@ -1,14 +1,16 @@
 import { StateCreator } from "zustand";
-import dynamicEvaluation, { dynamicEvaluationType } from "../../data/testsData/dynamicEvaluation";
-import staticEvaluation, { staticEvaluationType } from "../../data/testsData/staticEvaluation";
 import { SectionsSlice } from "./sectionsSlice";
 import ZipFileType from "../../../../../types/ZipFileType";
 import SectionNames from "../../../../../types/SectionNames";
+import dynamicEvaluation, { dynamicEvaluationType } from "../../data/testsData/dynamicEvaluation";
+import staticEvaluation, { staticEvaluationType } from "../../data/testsData/staticEvaluation";
+import FMS, { FMSType } from "../../data/testsData/FMS";
 
 interface DataState {
    staticEvaluationData: staticEvaluationType,
    dynamicEvaluationData: dynamicEvaluationType,
-   activeTestData: staticEvaluationType | dynamicEvaluationType | undefined,
+   FMSData: FMSType,
+   activeTestData: DataState["staticEvaluationData"] | DataState["dynamicEvaluationData"] | DataState["FMSData"] | undefined,
 }
 
 interface DataActions {
@@ -23,6 +25,12 @@ interface DataActions {
 
 export type DataSlice = DataState & DataActions;
 
+const LAST_PAGE_KEYS = {
+   "ناهنجاری ها": "staticEvaluationData",
+   "ارزیابی پویا": "dynamicEvaluationData",
+   "عملکردی وضعیت بدنی": "FMSData"
+}
+
 const createDataSlice: StateCreator<
    DataSlice & SectionsSlice,
    [],
@@ -31,6 +39,7 @@ const createDataSlice: StateCreator<
 > = (set, get) => ({
    staticEvaluationData: staticEvaluation,
    dynamicEvaluationData: dynamicEvaluation,
+   FMSData: FMS,
    activeTestData: undefined,
    getOrSetZipFile: (name, newZipFile) => {
       const activeTestData = get().activeTestData!;
@@ -62,6 +71,7 @@ const createDataSlice: StateCreator<
       const testData = get().activeTestData;
       const staticEvaluationData = get().staticEvaluationData;
       const dynamicEvaluationData = get().dynamicEvaluationData;
+      const FMSData = get().FMSData;
 
       const arr: ZipFileType[] = [];
 
@@ -99,8 +109,8 @@ const createDataSlice: StateCreator<
       return arr;
    },
    updateTestsData: (lastPage, nextPage) => {
-      if (lastPage === "ناهنجاری ها" || lastPage === "ارزیابی پویا") {
-         const lastPageKey = lastPage === "ناهنجاری ها" ? "staticEvaluationData" : "dynamicEvaluationData";
+      if (lastPage === "ناهنجاری ها" || lastPage === "ارزیابی پویا" || lastPage === "عملکردی وضعیت بدنی") {
+         const lastPageKey = LAST_PAGE_KEYS[lastPage];
          set(state => {
             if (state.activeTestData !== undefined) {
                // @ts-ignore
@@ -110,9 +120,10 @@ const createDataSlice: StateCreator<
          })
       }
 
-      if (nextPage === "ناهنجاری ها" || nextPage === "ارزیابی پویا") {
-         const nextPageKey = nextPage === "ناهنجاری ها" ? "staticEvaluationData" : "dynamicEvaluationData";
+      if (nextPage === "ناهنجاری ها" || nextPage === "ارزیابی پویا" || nextPage === "عملکردی وضعیت بدنی") {
+         const nextPageKey = LAST_PAGE_KEYS[nextPage];
          set(state => {
+            // @ts-ignore
             state.activeTestData = state[nextPageKey];
             return state;
          })
@@ -129,6 +140,12 @@ const createDataSlice: StateCreator<
             })
          )),
          dynamicEvaluationData: dynamicEvaluation.map(part => (
+            part.map(section => {
+               section.zipFile = undefined;
+               return section
+            })
+         )),
+         FMSData: FMS.map(part => (
             part.map(section => {
                section.zipFile = undefined;
                return section
