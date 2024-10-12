@@ -3,10 +3,9 @@ import SectionNames from "../../../../../types/SectionNames";
 import { dynamicEvaluationType } from "../../data/testsData/dynamicEvaluation";
 import { staticEvaluationType } from "../../data/testsData/staticEvaluation";
 import { DataSlice } from "./dataSlice";
-import { FMSType } from "../../data/testsData/FMS";
 
 interface SectionsState {
-   currentSection: staticEvaluationType[0][0] | dynamicEvaluationType[0][0] | FMSType[0][0] | undefined,
+   currentSection: staticEvaluationType[0][0] | dynamicEvaluationType[0][0] | undefined,
    nameFromManualTab: SectionNames | undefined,
    isTipShown: boolean,
    userHeight: number | undefined,

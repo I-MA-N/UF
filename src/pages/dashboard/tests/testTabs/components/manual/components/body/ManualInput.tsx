@@ -54,8 +54,8 @@ function ManualInput({ id, title, keys, values, images, direction, setValue: set
             <div
                className="absolute top-0 z-10 bg-secondary rounded-3xl h-8 mt-0.5 transition-all duration-200 outer-shadow"
                style={{
-                  width: value ? btnWidth : 0,
-                  right: value ? (keys.indexOf(value) * btnWidth + 2 + 'px') : 0
+                  width: Number.isNaN(value) ? 0 : btnWidth,
+                  right: Number.isNaN(value) ? 0 : (keys.indexOf(value) * btnWidth + 2 + 'px')
                }}
             />
             <div className="flex items-center h-full relative z-20 p-0.5">

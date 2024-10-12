@@ -7,10 +7,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Loading from "../../../../../../../common/Loading";
 import CardBtn from "./components/CardBtn";
 import CardImageFirstLoad from "./components/CardImageFirstLoad";
-import { FMSType } from "../../../../../data/testsData/FMS";
 
 type SectionCardProps = {
-   section: dynamicEvaluationType[0][0] | staticEvaluationType[0][0] | FMSType[0][0]
+   section: dynamicEvaluationType[0][0] | staticEvaluationType[0][0]
 }
 
 function SectionCard({ section }: SectionCardProps) {

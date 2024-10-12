@@ -3,10 +3,9 @@ import ImageInput from "./ImageInput";
 import { staticEvaluationType } from "../../../../../data/testsData/staticEvaluation";
 import { dynamicEvaluationType } from "../../../../../data/testsData/dynamicEvaluation";
 import useFormStore from "../../../../../store/formStore";
-import { FMSType } from "../../../../../data/testsData/FMS";
 
 type SectionBodyProps = {
-   section: staticEvaluationType[0][0] | dynamicEvaluationType[0][0] | FMSType[0][0]
+   section: staticEvaluationType[0][0] | dynamicEvaluationType[0][0]
 }
 
 function SectionBody({ section }: SectionBodyProps) {
