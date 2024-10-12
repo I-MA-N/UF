@@ -7,7 +7,6 @@ function WalkingBack_P(landmarks: NormalizedLandmark[]) {
         'بالاآمدن ران': "0",
         'چرخش داخلی یا خارجی پا راست': '0',
         'چرخش داخلی یا خارجی پا چپ': '0',
-        'صاف شدن و چرخش به خارج پاها': "0",
     }
     const degrees: DegreeType[] = [];
 

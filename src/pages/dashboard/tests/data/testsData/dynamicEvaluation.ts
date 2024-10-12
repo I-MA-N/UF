@@ -362,7 +362,13 @@ const dynamicEvaluation = [
             {
                id: 40,
                src: 'img-1.png',
-               title: 'صاف شدن پاها و زانو به داخل',
+               title: 'چرخش به داخل یا خارج زانو راست',
+               direction: 'vertical'
+            },
+            {
+               id: 41,
+               src: 'img-1.png',
+               title: 'چرخش به داخل یا خارج زانو چپ',
                direction: 'vertical'
             },
          ],
@@ -377,25 +383,25 @@ const dynamicEvaluation = [
          nameFA: 'راه رفتن خلفی',
          questions: [
             {
-               id: 41,
+               id: 42,
                src: 'img-17.png',
                title: 'بالاآمدن ران',
                direction: 'vertical'
             },
             {
-               id: 42,
+               id: 43,
                src: 'img-18.png',
                title: 'چرخش بیش از حد لگن',
                direction: 'vertical'
             },
             {
-               id: 43,
+               id: 44,
                src: 'img-19.png',
                title: 'چرخش داخلی یا خارجی پا راست',
                direction: 'vertical'
             },
             {
-               id: 44,
+               id: 45,
                src: 'img-19.png',
                title: 'چرخش داخلی یا خارجی پا چپ',
                direction: 'vertical'
@@ -412,19 +418,19 @@ const dynamicEvaluation = [
          nameFA: 'راه رفتن جانبی',
          questions: [
             {
-               id: 45,
+               id: 46,
                src: 'img-14.png',
                title: 'سر به جلو میرود',
                direction: 'vertical'
             },
             {
-               id: 46,
+               id: 47,
                src: 'img-15.png',
                title: 'شانه ها گرد می شود',
                direction: 'vertical'
             },
             {
-               id: 47,
+               id: 48,
                src: 'img-16.png',
                title: 'کمر گود می شود',
                direction: 'vertical'
