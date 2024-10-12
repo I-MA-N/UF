@@ -71,7 +71,6 @@ export const drawOnCanvas = (
    canvas: HTMLCanvasElement,
    palette: string[],
    landmarks: NormalizedLandmark[],
-   isSide: boolean,
    editableLandmarks: number[]
 ) => {
    const ctx = canvas.getContext("2d");
@@ -81,45 +80,10 @@ export const drawOnCanvas = (
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      let newLandmarks: NormalizedLandmark[] = [];
-      let newConnectors: { start: number, end: number }[] = [];
-
-      if (isSide) {
-         let isEven = true;
-         if (landmarks[11].z < landmarks[12].z) isEven = false;
-
-         const deletedLandmarks = [1, 2, 3, 4, 5, 6, 9, 10, 17, 18, 19, 20, 21, 22, 33, 34, 35, 36];
-         const filteredLandmarks = landmarks.filter((_value, index) => {
-            if (index === 0) return true;
-            if (deletedLandmarks.includes(index)) return false;
-            if (isEven) return index % 2 === 0;
-            return index % 2 !== 0;
-         }).concat([landmarks[33], landmarks[34]]);
-         newLandmarks = [...new Set(filteredLandmarks)]
-         newConnectors = [{ start: 0, end: 1 }, { start: 1, end: 10 }, { start: 10, end: 2 }, { start: 2, end: 3 }, { start: 3, end: 4 }, { start: 2, end: 11 }, { start: 11, end: 5 }, { start: 5, end: 6 }, { start: 6, end: 7 }, { start: 7, end: 8 }, { start: 8, end: 9 }];
-      } else {
-         newLandmarks = landmarks;
-         const extraConnectors = [{ start: 33, end: 11 }, { start: 33, end: 12 }, { start: 34, end: 11 }, { start: 34, end: 12 }, { start: 34, end: 23 }, { start: 34, end: 24 }];
-         newConnectors = PoseLandmarker.POSE_CONNECTIONS.concat(extraConnectors);
-      }
-
-      const drawingUtils = new DrawingUtils(ctx);
-
-      drawingUtils.drawLandmarks(newLandmarks, { color: palette[0], radius: 1 });
-      drawingUtils.drawConnectors(newLandmarks, newConnectors, { color: palette[1], lineWidth: 0.5 });
-
-      if (landmarks[35] && landmarks[36]) {
-         const plumbLineLandmarks = [landmarks[35], landmarks[36]];
-         const plumbLineConnectors = [{ start: 0, end: 1 }];
-         drawingUtils.drawLandmarks(plumbLineLandmarks, { color: palette[0], radius: 0.8 });
-         drawingUtils.drawConnectors(plumbLineLandmarks, plumbLineConnectors, { color: palette[1], lineWidth: 0.4 });
-      }
-
       let font = "10px 'Estedad-Regular'";
       if (canvas.width > 400) font = "12px 'Estedad-Regular'";
 
       ctx.font = font;
-      ctx.fillStyle = palette[2];
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
@@ -128,7 +92,48 @@ export const drawOnCanvas = (
          if (landmark) {
             const pixelX = landmark.x * canvas.width;
             const pixelY = landmark.y * canvas.height;
+
+            ctx.beginPath();
+            ctx.arc(pixelX, pixelY, 2.5, 0, Math.PI * 2, true);
+            ctx.fillStyle = palette[0];
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.fillStyle = palette[2];
             ctx.fillText(index.toString(), pixelX, pixelY);
+         }
+      })
+
+      const connectors: { start: number, end: number }[] = [
+         ...PoseLandmarker.POSE_CONNECTIONS,
+         {start: 7, end: 33},
+         {start: 8, end: 33},
+         {start: 11, end: 33},
+         {start: 12, end: 33},
+         {start: 11, end: 34},
+         {start: 12, end: 34},
+         {start: 23, end: 34},
+         {start: 24, end: 34},
+         {start: 35, end: 36},
+      ];
+
+      connectors.forEach(connector => {
+         const startIndex = editableLandmarks.indexOf(connector.start);
+         const endIndex = editableLandmarks.indexOf(connector.end);
+
+         if (startIndex > -1 && endIndex > -1) {
+            const startPixelX = landmarks[connector.start].x * canvas.width;
+            const startPixelY = landmarks[connector.start].y * canvas.height;
+            const endPixelX = landmarks[connector.end].x * canvas.width;
+            const endPixelY = landmarks[connector.end].y * canvas.height;
+
+            ctx.beginPath();
+            ctx.moveTo(startPixelX, startPixelY);
+            ctx.lineTo(endPixelX, endPixelY);
+            ctx.strokeStyle = palette[1];
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.closePath();
          }
       })
 

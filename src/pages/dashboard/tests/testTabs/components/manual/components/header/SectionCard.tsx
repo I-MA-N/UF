@@ -1,13 +1,17 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ExtractedZipType from "../../../../../../../../types/ExtractedZipType";
 import ImageToggleBtn from "./ImageToggleBtn";
 
 type SectionCardProps = {
    files: ExtractedZipType,
+   sizes: {
+      imgWidth: number,
+      imgHeight: number,
+      parentWidth: number,
+   }
 }
 
-function SectionCard({ files }: SectionCardProps) {
-   const imgRef = useRef<HTMLImageElement>(null);
+function SectionCard({ files, sizes }: SectionCardProps) {
    const [size, setSize] = useState<{
       width: number,
       height: number
@@ -16,19 +20,13 @@ function SectionCard({ files }: SectionCardProps) {
    const [isVisible, setIsVisible] = useState(false);
 
    const handleResize = useCallback(() => {
-      const imgWidth = imgRef.current?.naturalWidth;
-      const imgHeight = imgRef.current?.naturalHeight;
-      const parentWidth = imgRef.current?.parentElement?.clientWidth;
+      const aspectRatio = sizes.imgWidth / sizes.imgHeight;
 
-      if (imgWidth && imgHeight && parentWidth) {
-         const aspectRatio = imgWidth / imgHeight;
-
-         setSize({
-            width: parentWidth,
-            height: parentWidth / aspectRatio
-         })
-      }
-   }, [imgRef.current])
+      setSize({
+         width: sizes.parentWidth,
+         height: sizes.parentWidth / aspectRatio
+      })
+   }, [])
 
    useEffect(() => {
       handleResize();
@@ -41,11 +39,6 @@ function SectionCard({ files }: SectionCardProps) {
 
    return (
       <div className="max-w-4xl relative mb-6 mx-auto">
-         <img
-            ref={imgRef}
-            src={files.image}
-            hidden
-         />
          {
             size &&
             <>

@@ -36,7 +36,7 @@ function CanvasElem({ selectedLandmark, selectedPalette }: CanvasElemProps) {
       const canvas = canvasRef.current;
 
       if (canvas && landmarks?.length && isSide !== undefined && editableLandmarks !== undefined) {
-         drawOnCanvas(canvas, selectedPalette, landmarks, isSide, editableLandmarks);
+         drawOnCanvas(canvas, selectedPalette, landmarks, editableLandmarks);
       }
    }, [selectedPalette, JSON.stringify(landmarks), isSide, editableLandmarks])
 
