@@ -1,11 +1,11 @@
 import profileImg from '/images/profile-img.png'
 import profileImgDesktop from '/images/profile-img-desktop.png'
 import { useState } from "react"
-import UserChangeModal from "./UserChangeModal"
-import GUserData from '../../../../../../../api/common/GUserData'
-import Btn from '../../../../../../common/Btn'
-import Link from '../../../../../../common/Link'
-import parseDate from '../../../../../../../utils/parseDate'
+import UserChangeModal from "./userModal/UserChangeModal"
+import GUserData from '../../../../../../api/common/GUserData'
+import Btn from '../../../../../common/Btn'
+import Link from '../../../../../common/Link'
+import parseDate from '../../../../../../utils/parseDate'
 
 type UserModalProps = {
    username: string,

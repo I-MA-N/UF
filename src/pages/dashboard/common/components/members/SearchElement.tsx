@@ -23,8 +23,9 @@ function SearchElement({ setSelectedUsers, users }: SearchElementPropsType) {
             placeholder="جستجو بر اساس نام کاربری یا نام و نام خانوادگی"
             onChange={(e) => setSelectedUsers(
                users.filter(user => 
-                  user.username.toLowerCase().startsWith(e.target.value.toLowerCase()) ||
-                  user.name.toLowerCase().startsWith(e.target.value.toLowerCase()))
+                  user.username.toLowerCase().includes(e.target.value.toLowerCase()) ||
+                  user.name.toLowerCase().includes(e.target.value.toLowerCase())
+               )
             )}
          />
       </li>
