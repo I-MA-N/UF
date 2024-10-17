@@ -302,10 +302,10 @@ export const drawDegree = (
          const landmark = landmarks[landmarkIndex];
          if (landmark) landmarksUsed.push(landmark);
       })
-   
+
       drawingUtils.drawLandmarks(landmarksUsed, { radius: 0.5, color: "#FF0000" });
       drawingUtils.drawConnectors(landmarksUsed, [{ start: 0, end: 1 }, { start: 1, end: 2 }], { color: '#FF0000', lineWidth: 1.5 });
-   
+
       let x = 0;
       let y = 0;
       if (landmarksUsed.length <= 2) {
@@ -317,7 +317,7 @@ export const drawDegree = (
       }
       x *= width;
       y *= height;
-   
+
       const text = degree.degree.toFixed(1) + '°';
       drawText(ctx, text, x, y, degree.value, isSectionDynamic);
    }
@@ -422,11 +422,56 @@ const drawText = (
    ctx.fillText(text, x, y);
 }
 
+export const blurImage = async (zipFile: string) => {
+   const promise = new Promise<string>(async (resolve, reject) => {
+      const zip = new JSZip();
+      await zip.loadAsync(zipFile, { base64: true });
+      const image = zip.file("image.png");
+   
+      if (image) {
+         const base64 = await image.async("string");
+
+         const img = new Image();
+         img.onload = () => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            if (ctx) {
+               canvas.width = img.width;
+               canvas.height = img.height;
+               ctx.filter = 'blur(5px)';
+               ctx.drawImage(img, 0, 0);
+
+               canvas.toBlob(blob => {
+                  if (blob) {
+                     const reader = new FileReader();
+                     reader.onload = () => {
+                        const result = reader.result;
+                        if (typeof result === "string") {
+                           console.log(result);
+                           zip.file("image.png", result);
+            
+                           zip.generateAsync({ type: 'base64' })
+                              .then(newZipFile => resolve(newZipFile))
+                              .catch(() => reject("ذخیره سازی عکس ها با مشکل مواجه شد!"))
+                        }
+                     };
+                     reader.readAsDataURL(blob);
+                  }
+               })
+            }
+         }
+         img.src = base64;
+      }
+   })
+
+   return promise;
+}
+
 export const extractZip = async (fileContent: string) => {
    const zip = new JSZip();
    await zip.loadAsync(fileContent, { base64: true });
 
-   const image = zip.file("image.jpeg");
+   const image = zip.file("image.png");
    const landmarksJson = zip.file("landmarks.json");
    const imageSizeJson = zip.file("imageSize.json");
 

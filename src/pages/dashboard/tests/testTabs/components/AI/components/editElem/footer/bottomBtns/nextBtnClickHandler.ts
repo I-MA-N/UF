@@ -16,8 +16,6 @@ function nextBtnClickHandler(
    const { updateFormData, setValue } = useFormStore.getState();
    const { image, removePhoto, videoSize } = usePhotoStore.getState();
 
-   const zip = new JSZip();
-
    if (image && currentSection && videoSize && setValue) {
       const img = new Image();
       img.src = image;
@@ -30,7 +28,7 @@ function nextBtnClickHandler(
             const result = currentSection.photoFn(landmarks, userHeight, { width: editCanvas.clientWidth, height: editCanvas.clientHeight });
             const { values, degrees } = result;
             const isSectionDynamic = "src" in currentSection.questions[0];
-            
+
             Object.entries(values).forEach(([key, value]) => {
                setValue(key, value);
             })
@@ -61,20 +59,32 @@ function nextBtnClickHandler(
                finalCanvas.height = height;
                finalCtx.drawImage(canvas, left, top, width, height, 0, 0, width, height);
 
-               const imageBase64 = finalCanvas.toDataURL("image/png");
-               zip.file('image.jpeg', imageBase64);
+               const zip = new JSZip();
 
-               const landmarksJson = JSON.stringify(landmarks);
-               zip.file('landmarks.json', landmarksJson);
-
-               const imageSizeJson = JSON.stringify(videoSize);
-               zip.file('imageSize.json', imageSizeJson);
-
-               const base64 = await zip.generateAsync({ type: 'base64' });
-               getOrSetZipFile(currentSection.name, base64);
-
-               setCurrentSection(nextSectionName);
-               removePhoto();
+               finalCanvas.toBlob(blob => {
+                  if (blob) {
+                     const reader = new FileReader();
+                     reader.onload = async () => {
+                        const result = reader.result;
+                        if (typeof result === "string") {
+                           zip.file('image.png', result);
+            
+                           const landmarksJson = JSON.stringify(landmarks);
+                           zip.file('landmarks.json', landmarksJson);
+            
+                           const imageSizeJson = JSON.stringify(videoSize);
+                           zip.file('imageSize.json', imageSizeJson);
+            
+                           const base64 = await zip.generateAsync({ type: 'base64' });
+                           getOrSetZipFile(currentSection.name, base64);
+            
+                           setCurrentSection(nextSectionName);
+                           removePhoto();
+                        }
+                     };
+                     reader.readAsDataURL(blob);
+                  }
+               })
             }
          }
       }

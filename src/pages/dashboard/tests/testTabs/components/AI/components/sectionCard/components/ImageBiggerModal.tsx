@@ -9,7 +9,7 @@ type ImageBiggerModalProps = {
 function ImageBiggerModal({ sectionNameFA, src, setShowImageBigger }: ImageBiggerModalProps) {
     return (
         <div className="modal">
-            <div className="w-full px-4">
+            <div className="w-full max-w-5xl px-4">
                 <div className="w-full relative flex justify-center mb-4 lg:mb-6">
                     <button
                         type="button"
@@ -24,11 +24,11 @@ function ImageBiggerModal({ sectionNameFA, src, setShowImageBigger }: ImageBigge
                     <span className="lg:text-xl">عکس {sectionNameFA}</span>
                 </div>
 
-                <div className="bg-primary px-4 py-9 rounded-[32px] border-2">
+                <div className="px-4 py-9 bg-primary rounded-[32px] border-2">
                     <img
                         src={src}
                         alt="sample image for this section"
-                        className="mx-auto rounded-3xl"
+                        className="max-h-[80vh] mx-auto rounded-3xl"
                     />
                 </div>
             </div>
