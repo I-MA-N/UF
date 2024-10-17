@@ -34,9 +34,12 @@ function Header({ selectedPalette, setSelectedPalette, selectedLandmark }: Heade
          {/* <ZoomElem
             selectedLandmark={selectedLandmark}
          /> */}
-         <SampleImage
-            selectedLandmark={selectedLandmark}
-         />
+         {
+            typeof selectedLandmark === "number" &&
+            <SampleImage
+               selectedLandmark={selectedLandmark}
+            />
+         }
       </div>
    );
 };

@@ -2,10 +2,12 @@ import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 import degreeTwoPoints from "../../../../../../utils/degreeTwoPoints";
 import DegreeType from "../../../../../../types/DegreeType";
 
-function SquatSide_P(landmarks: NormalizedLandmark[]) {
+function SquatSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvasSize?: { width: number, height: number }) {
     const values = {
         'خمیدگی به جلو': "0",
         'دست ها در جلو': "0",
+        'کمر صاف': "0",
+        'گود شدن کمر': "0",
     }
     const degrees: DegreeType[] = [];
 
@@ -34,7 +36,7 @@ function SquatSide_P(landmarks: NormalizedLandmark[]) {
 
     const handLandmark = isEven ? 16 : 15;
     let arms = degreeTwoPoints(landmarks[shoulderLandmark], landmarks[handLandmark]);
-    if (!isEven) arms = 180 - arms;   
+    if (!isEven) arms = 180 - arms;
     if (arms > 0) {
         const deltaArms = (45 - 15) - (180 - arms);
         if (deltaArms > 7.5) values["دست ها در جلو"] = "1";
@@ -45,6 +47,19 @@ function SquatSide_P(landmarks: NormalizedLandmark[]) {
         degree: arms,
         value: values["دست ها در جلو"]
     })
+
+    if (editCanvasSize && userHeight) {
+        const centimeters = userHeight - 12;
+        const bottomLandmark = isEven ? 32 : 31;
+        const pixels = (landmarks[bottomLandmark].y - landmarks[0].y) * editCanvasSize.height;
+        const ratio = centimeters / pixels;
+
+        degrees.push({
+            landmarksUsed: [bottomLandmark, 0],
+            degree: null,
+            value: null
+        })
+    }
 
     return {
         values,

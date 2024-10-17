@@ -28,6 +28,12 @@ function SquatBack_P(landmarks: NormalizedLandmark[], userHeight?: number, editC
         const pixels = (landmarks[32].y - landmarks[0].y) * editCanvasSize.height;
         const ratio = centimeters / pixels;
 
+        degrees.push({
+            landmarksUsed: [32, 0],
+            degree: null,
+            value: null
+        })
+
         const heelsPixelRight = (landmarks[32].y - landmarks[30].y) * editCanvasSize.height;
         const heelsCentimetersRight = heelsPixelRight * ratio;
         if (heelsCentimetersRight > 5) values["بلند شدن پاشنه راست"] = "1";

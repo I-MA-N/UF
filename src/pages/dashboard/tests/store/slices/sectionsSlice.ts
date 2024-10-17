@@ -50,7 +50,7 @@ const createSectionsSlice: StateCreator<
          return {
             ...state,
             currentSection: foundedSection,
-            showUserHeight: foundedSection?.name === "side" || foundedSection?.name === "squatBack"
+            showUserHeight: foundedSection?.name === "side" || foundedSection?.name === "squatBack" || foundedSection?.name === "swimSide"
          }
       })
    },

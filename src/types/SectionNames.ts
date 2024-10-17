@@ -7,7 +7,7 @@ type SectionNames =
    "squatBack" |
    "squatSide" |
    "squatOneFoot" |
-   "swim" |
+   "swimSide" |
    "handsOutSide" |
    "handsBendSide" |
    "handsRotateSide" | 

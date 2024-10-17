@@ -20,45 +20,57 @@ export const addExtraLandmarks = (
    if (landmarks[11].z < landmarks[12].z) isEven = false;
 
    if (isFromSide) {
+      // C7
       landmarks[33] = {
          x: ((landmarks[11].x + landmarks[12].x) / 2) - (isEven ? 0.03 : -0.03),
          y: landmarks[11].y - (30 * (landmarks[11].y - landmarks[7].y)) / 100,
-         z: landmarks[29].z,
-         visibility: landmarks[29].visibility,
+         z: landmarks[11].z,
+         visibility: landmarks[11].visibility,
       }
 
+      // T12
       landmarks[34] = {
-         x: (isEven ? landmarks[12].x : landmarks[11].x) - (isEven ? 0.05 : -0.05),
-         y: (landmarks[11].y + landmarks[23].y) / 2,
-         z: isEven ? landmarks[28].z : landmarks[29].z,
-         visibility: isEven ? landmarks[12].visibility : landmarks[11].visibility,
-      }
-   } else {
-      landmarks[33] = {
-         x: ((landmarks[11].x + landmarks[12].x) / 2),
-         y: landmarks[11].y - (30 * (landmarks[11].y - landmarks[7].y)) / 100,
-         z: landmarks[29].z,
-         visibility: landmarks[29].visibility,
+         x: ((landmarks[11].x + landmarks[12].x) / 2) - (isEven ? 0.03 : -0.03),
+         y: ((landmarks[11].y + landmarks[23].y) / 2) + 0.05,
+         z: landmarks[11].z,
+         visibility: landmarks[11].visibility,
       }
 
-      landmarks[34] = {
-         x: (landmarks[11].x + landmarks[12].x) / 2,
-         y: (landmarks[11].y + landmarks[23].y) / 2,
-         z: landmarks[29].z,
+      // L5
+      landmarks[35] = {
+         x: ((landmarks[11].x + landmarks[12].x) / 2) - (isEven ? 0.03 : -0.03),
+         y: ((landmarks[23].y + landmarks[24].y) / 2) - 0.02,
+         z: landmarks[11].z,
+         visibility: landmarks[11].visibility,
+      }
+
+      // H1
+      landmarks[36] = {
+         x: ((landmarks[11].x + landmarks[12].x) / 2) - (isEven ? 0.05 : -0.05),
+         y: ((landmarks[11].y + landmarks[23].y) / 2) - 0.05,
+         z: landmarks[11].z,
+         visibility: landmarks[11].visibility,
+      }
+
+      // H2
+      landmarks[37] = {
+         x: ((landmarks[11].x + landmarks[12].x) / 2) - (isEven ? 0.05 : -0.05),
+         y: ((landmarks[11].y + landmarks[23].y) / 2) + 0.05,
+         z: landmarks[11].z,
          visibility: landmarks[11].visibility,
       }
    }
 
    const isSide = currentSection?.name === "side";
    if (isSide) {
-      landmarks[35] = {
+      landmarks[38] = {
          x: isEven ? landmarks[28].x : landmarks[27].x,
          y: (landmarks[3].y + landmarks[6].y) / 2,
          z: isEven ? landmarks[28].z : landmarks[27].z,
          visibility: isEven ? landmarks[28].visibility : landmarks[27].visibility,
       }
 
-      landmarks[36] = {
+      landmarks[39] = {
          x: isEven ? landmarks[28].x : landmarks[27].x,
          y: isEven ? landmarks[30].y : landmarks[29].y,
          z: isEven ? landmarks[28].z : landmarks[27].z,
@@ -106,15 +118,14 @@ export const drawOnCanvas = (
 
       const connectors: { start: number, end: number }[] = [
          ...PoseLandmarker.POSE_CONNECTIONS,
-         {start: 7, end: 33},
-         {start: 8, end: 33},
-         {start: 11, end: 33},
-         {start: 12, end: 33},
-         {start: 11, end: 34},
-         {start: 12, end: 34},
-         {start: 23, end: 34},
-         {start: 24, end: 34},
-         {start: 35, end: 36},
+         { start: 7, end: 33 },
+         { start: 8, end: 33 },
+
+         { start: 11, end: 33 },
+         { start: 12, end: 33 },
+
+         { start: 33, end: 34 },
+         { start: 34, end: 35 },
       ];
 
       connectors.forEach(connector => {
@@ -246,7 +257,6 @@ export const getEditableLandmarks = (
    const currentSection = useAIStore.getState().currentSection;
    if (currentSection && landmarks?.length) {
       let editableLandmarks: number[] = [];
-      // Dont forget for adding 23, 24, 25, 26, 27, 28 landmarks for squatSide section
       const photoData = currentSection.photoFn(landmarks, 1, { width: 0, height: 0 });
       const cropData = currentSection.cropFn(landmarks, { width: 0, height: 0 });
 
@@ -269,7 +279,6 @@ export const getEditableLandmarks = (
 
       editableLandmarks = editableLandmarks.concat(cropData.landmarksUsed);
 
-      editableLandmarks = editableLandmarks.filter(index => index !== 35 && index !== 36)
       editableLandmarks.sort((a, b) => a - b);
 
       return [...new Set(editableLandmarks)];
@@ -287,29 +296,31 @@ export const drawDegree = (
    height: number,
    isSectionDynamic: boolean
 ) => {
-   const landmarksUsed: NormalizedLandmark[] = [];
-   degree.landmarksUsed.forEach(landmarkIndex => {
-      const landmark = landmarks[landmarkIndex];
-      if (landmark) landmarksUsed.push(landmark);
-   })
-
-   drawingUtils.drawLandmarks(landmarksUsed, { radius: 0.5, color: "#FF0000" });
-   drawingUtils.drawConnectors(landmarksUsed, [{ start: 0, end: 1 }, { start: 1, end: 2 }], { color: '#FF0000', lineWidth: 1.5 });
-
-   let x = 0;
-   let y = 0;
-   if (landmarksUsed.length <= 2) {
-      x = (landmarksUsed[0].x + landmarksUsed[1].x) / 2;
-      y = (landmarksUsed[0].y + landmarksUsed[1].y) / 2;
-   } else {
-      x = landmarksUsed[1].x;
-      y = landmarksUsed[1].y;
+   if (degree.value !== null && degree.degree !== null) {
+      const landmarksUsed: NormalizedLandmark[] = [];
+      degree.landmarksUsed.forEach(landmarkIndex => {
+         const landmark = landmarks[landmarkIndex];
+         if (landmark) landmarksUsed.push(landmark);
+      })
+   
+      drawingUtils.drawLandmarks(landmarksUsed, { radius: 0.5, color: "#FF0000" });
+      drawingUtils.drawConnectors(landmarksUsed, [{ start: 0, end: 1 }, { start: 1, end: 2 }], { color: '#FF0000', lineWidth: 1.5 });
+   
+      let x = 0;
+      let y = 0;
+      if (landmarksUsed.length <= 2) {
+         x = (landmarksUsed[0].x + landmarksUsed[1].x) / 2;
+         y = (landmarksUsed[0].y + landmarksUsed[1].y) / 2;
+      } else {
+         x = landmarksUsed[1].x;
+         y = landmarksUsed[1].y;
+      }
+      x *= width;
+      y *= height;
+   
+      const text = degree.degree.toFixed(1) + '°';
+      drawText(ctx, text, x, y, degree.value, isSectionDynamic);
    }
-   x *= width;
-   y *= height;
-
-   const text = degree.degree.toFixed(1) + '°';
-   drawText(ctx, text, x, y, degree.value, isSectionDynamic);
 }
 
 export const drawDistance = (
@@ -325,7 +336,7 @@ export const drawDistance = (
    const secondLandmark = landmarks[distance.landmarksUsed[1]];
    const landmarksUsed: NormalizedLandmark[] = [
       firstLandmark,
-      distance.landmarksUsed[1] === 36 ? {
+      distance.landmarksUsed[1] === 39 ? {
          x: secondLandmark.x,
          y: firstLandmark.y,
          z: firstLandmark.z,

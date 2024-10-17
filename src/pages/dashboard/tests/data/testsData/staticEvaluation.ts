@@ -151,6 +151,7 @@ const staticEvaluation = [
          ],
          photoFn: Front_P,
          cropFn: Front_C,
+         sampleImageSrc: '',
          zipFile: undefined as string | null | undefined,
          shouldAIShow: true,
       },

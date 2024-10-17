@@ -3,12 +3,19 @@ import useAIStore from "../../../../../../store/AIStore";
 import usePhotoStore from "../../../../../../store/photoStore";
 
 type SampleImageProps = {
-   selectedLandmark: number | null
+   selectedLandmark: number
 }
 
 function SampleImage({ selectedLandmark }: SampleImageProps) {
-   const isMovingLandmark = usePhotoStore(state => state.isMovingLandmark);
+   const { isMovingLandmark, landmarks } = usePhotoStore(state => ({ isMovingLandmark: state.isMovingLandmark, landmarks: state.landmarks }));
    const currentSection = useAIStore(state => state.currentSection);
+
+   const isEven = useMemo(() => {
+      let isEven = true;
+      if (landmarks[11].z < landmarks[12].z) isEven = false;
+      
+      return isEven;
+   }, [])
 
    const key = useMemo(() => {
       const name = currentSection?.name.toLowerCase();
@@ -20,8 +27,11 @@ function SampleImage({ selectedLandmark }: SampleImageProps) {
 
    if (isMovingLandmark) return (
       <img
+         src={`/images/editImages/${key}/${selectedLandmark}.png`}
+         style={{
+            transform: isEven ? "rotateY(180deg)" : "none"
+         }}
          className="absolute z-20 top-0 left-0"
-         src={`/images/sampleImages/${key}/${selectedLandmark}.png`}
          width={80}
          height={80}
       />

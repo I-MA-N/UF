@@ -1,14 +1,17 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 import degreeTwoPoints from "../../../../../../utils/degreeTwoPoints";
 import DegreeType from "../../../../../../types/DegreeType";
+import DistanceType from "../../../../../../types/DistanceType";
 
-function SwimSide_P(landmarks: NormalizedLandmark[]) {
+function SwimSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvasSize?: { width: number, height: number }) {
     const values = {
         'گود شدن  کمر': "0",
         'صاف شدن کمر': "0",
+        'بالا آمدن شانه': "0",
         'هایپراکستنشن گردن': "0"
     }
     const degrees: DegreeType[] = [];
+    const distances: DistanceType[] = [];
 
     let isEven = true;
     if (landmarks[11].z < landmarks[12].z) isEven = false;
@@ -29,6 +32,31 @@ function SwimSide_P(landmarks: NormalizedLandmark[]) {
         value: backValue.toString()
     })
 
+    if (editCanvasSize && userHeight) {
+        const centimeters = userHeight - 12;
+        const secondLandmark = isEven ? 30 : 29;
+        const pixels = Math.abs(landmarks[0].x - landmarks[secondLandmark].x) * editCanvasSize.width;
+        const ratio = centimeters / pixels;
+
+        degrees.push({
+            landmarksUsed: [0, secondLandmark],
+            degree: null,
+            value: null
+        })
+
+        const startLandmark = isEven ? 12 : 33;
+        const endLandmark = isEven ? 33 : 11;
+        const shoulderNeckPixels = (landmarks[startLandmark].x - landmarks[endLandmark].x) * editCanvasSize.width;
+        const shoulderNeck = shoulderNeckPixels * ratio;
+        if (shoulderNeck > 0) values["بالا آمدن شانه"] = "1";
+
+        distances.push({
+            landmarksUsed: [startLandmark, endLandmark],
+            distance: shoulderNeck,
+            value: values["بالا آمدن شانه"]
+        })
+    }
+
     const earLandmark = isEven ? 8 : 7;
     const shoulderEar = degreeTwoPoints(landmarks[shoulderLandmark], landmarks[earLandmark]);
     if (shoulderEar < -20) values["هایپراکستنشن گردن"] = "1";
@@ -41,7 +69,8 @@ function SwimSide_P(landmarks: NormalizedLandmark[]) {
 
     return {
         values,
-        degrees
+        degrees,
+        distances
     };
 }
 

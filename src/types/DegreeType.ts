@@ -1,7 +1,7 @@
 type DegreeType = {
-   degree: number,
+   degree: number | null,
    landmarksUsed: number[],
-   value: string
+   value: string | null
 }
 
 export default DegreeType;

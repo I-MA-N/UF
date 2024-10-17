@@ -285,7 +285,7 @@ const dynamicEvaluation = [
       },
       {
          name: 'handsBendSide' as SectionNames,
-         nameFA: 'خم شدن دست ها',
+         nameFA: 'بالا آوردن دست ها',
          questions: [
             {
                id: 32,

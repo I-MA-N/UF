@@ -18,13 +18,18 @@ function ManualInput({ id, title, keys, values, images, direction, setValue: set
       return (screenWidth < 380 ? 284 : screenWidth < 1024 ? 326 : 396) / keys.length
    }, [keys]);
    const [value, setValue] = useState(defaultValue);
-
+   
    useEffect(() => {
       setValue(defaultValue)
    }, [defaultValue])
 
    useEffect(() => {
       setInputValue(title, value);
+   }, [value])
+
+   const isValueValid = useMemo(() => {
+      if (keys.indexOf(0) > -1) return !Number.isNaN(value)
+      return value > 0;
    }, [value])
 
    return (
@@ -54,8 +59,8 @@ function ManualInput({ id, title, keys, values, images, direction, setValue: set
             <div
                className="absolute top-0 z-10 bg-secondary rounded-3xl h-8 mt-0.5 transition-all duration-200 outer-shadow"
                style={{
-                  width: Number.isNaN(value) ? 0 : btnWidth,
-                  right: Number.isNaN(value) ? 0 : (keys.indexOf(value) * btnWidth + 2 + 'px')
+                  width: isValueValid ? btnWidth : 0,
+                  right: isValueValid ? (keys.indexOf(value) * btnWidth + 2 + 'px') : 0
                }}
             />
             <div className="flex items-center h-full relative z-20 p-0.5">
