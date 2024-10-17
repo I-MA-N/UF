@@ -426,7 +426,7 @@ export const blurImage = async (zipFile: string) => {
    const promise = new Promise<string>(async (resolve, reject) => {
       const zip = new JSZip();
       await zip.loadAsync(zipFile, { base64: true });
-      const image = zip.file("image.png");
+      const image = zip.file('modifiedImage.png');
    
       if (image) {
          const base64 = await image.async("string");
@@ -447,8 +447,7 @@ export const blurImage = async (zipFile: string) => {
                      reader.onload = () => {
                         const result = reader.result;
                         if (typeof result === "string") {
-                           console.log(result);
-                           zip.file("image.png", result);
+                           zip.file('modifiedImage.png', result);
             
                            zip.generateAsync({ type: 'base64' })
                               .then(newZipFile => resolve(newZipFile))
@@ -471,7 +470,7 @@ export const extractZip = async (fileContent: string) => {
    const zip = new JSZip();
    await zip.loadAsync(fileContent, { base64: true });
 
-   const image = zip.file("image.png");
+   const image = zip.file('modifiedImage.png');
    const landmarksJson = zip.file("landmarks.json");
    const imageSizeJson = zip.file("imageSize.json");
 
