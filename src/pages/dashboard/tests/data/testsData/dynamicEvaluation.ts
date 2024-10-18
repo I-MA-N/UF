@@ -1,8 +1,8 @@
 import SectionNames from "../../../../../types/SectionNames";
 import HandsBendSide_C from "../AIformulas/dynamicEvaluation/HandsBendSide_C";
 import HandsBendSide_P from "../AIformulas/dynamicEvaluation/HandsBendSide_P";
-import HandsOutSide_C from "../AIformulas/dynamicEvaluation/HandsOutSide_C";
-import HandsOutSide_P from "../AIformulas/dynamicEvaluation/HandsOutSide_P";
+import HandsOut_C from "../AIformulas/dynamicEvaluation/HandsOut_C";
+import HandsOut_P from "../AIformulas/dynamicEvaluation/HandsOut_P";
 import HandsRotate_C from "../AIformulas/dynamicEvaluation/HandsRotateSide_C";
 import HandsRotate_P from "../AIformulas/dynamicEvaluation/HandsRotateSide_P";
 import SquatBack_C from "../AIformulas/dynamicEvaluation/SquatBack_C";
@@ -249,43 +249,55 @@ const dynamicEvaluation = [
    ],
    [
       {
-         name: 'handsOutSide' as SectionNames,
-         nameFA: 'دور شدن دست ها',
+         name: 'handsOut' as SectionNames,
+         nameFA: 'دور شدن افقی دست ها',
          questions: [
             {
                id: 28,
-               src: 'img-29.png',
-               title: 'بالاآمدن شانه',
+               src: 'img-30.png',
+               title: 'پروتکشن شانه راست',
                direction: 'horizental'
             },
             {
                id: 29,
                src: 'img-30.png',
-               title: 'پروتکشن شانه',
+               title: 'پروتکشن شانه چپ',
                direction: 'horizental'
             },
             {
                id: 30,
+               src: 'img-29.png',
+               title: 'بالاآمدن شانه راست',
+               direction: 'horizental'
+            },
+            {
+               id: 31,
+               src: 'img-29.png',
+               title: 'بالاآمدن شانه چپ',
+               direction: 'horizental'
+            },
+            {
+               id: 32,
                src: 'img-31.png',
                title: 'خم شدن آرنج راست',
                direction: 'horizental'
             },
             {
-               id: 31,
+               id: 33,
                src: 'img-31.png',
                title: 'خم شدن آرنج چپ',
                direction: 'horizental'
             },
          ],
-         photoFn: HandsOutSide_P,
+         photoFn: HandsOut_P,
          videoFn: WalkingFront_V,
-         cropFn: HandsOutSide_C,
+         cropFn: HandsOut_C,
          zipFile: undefined as string | null | undefined,
          shouldAIShow: true,
       },
       {
          name: 'handsBendSide' as SectionNames,
-         nameFA: 'بالا آوردن دست ها',
+         nameFA: 'بالا آوردن عمودی دست ها',
          questions: [
             {
                id: 32,
