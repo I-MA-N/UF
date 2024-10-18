@@ -1,6 +1,6 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 
-function HandsBendSide_C(landmarks: NormalizedLandmark[], videoSize: { width: number, height: number }) {
+function HandsUp_C(landmarks: NormalizedLandmark[], videoSize: { width: number, height: number }) {
    let isEven = true;
    if (landmarks[11].z < landmarks[12].z) isEven = false;
    
@@ -27,4 +27,4 @@ function HandsBendSide_C(landmarks: NormalizedLandmark[], videoSize: { width: nu
    }
 }
 
-export default HandsBendSide_C;
+export default HandsUp_C;

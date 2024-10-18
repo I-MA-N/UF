@@ -1,6 +1,6 @@
 import SectionNames from "../../../../../types/SectionNames";
-import HandsBendSide_C from "../AIformulas/dynamicEvaluation/HandsBendSide_C";
-import HandsBendSide_P from "../AIformulas/dynamicEvaluation/HandsBendSide_P";
+import HandsUp_C from "../AIformulas/dynamicEvaluation/HandsUp_C";
+import HandsUp_P from "../AIformulas/dynamicEvaluation/HandsUp_P";
 import HandsOut_C from "../AIformulas/dynamicEvaluation/HandsOut_C";
 import HandsOut_P from "../AIformulas/dynamicEvaluation/HandsOut_P";
 import HandsRotate_C from "../AIformulas/dynamicEvaluation/HandsRotateSide_C";
@@ -296,39 +296,45 @@ const dynamicEvaluation = [
          shouldAIShow: true,
       },
       {
-         name: 'handsBendSide' as SectionNames,
+         name: 'handsUp' as SectionNames,
          nameFA: 'بالا آوردن عمودی دست ها',
          questions: [
             {
-               id: 32,
-               src: 'img-32.png',
-               title: 'بالا آمدن  شانه',
-               direction: 'horizental'
-            },
-            {
-               id: 33,
-               src: 'img-33.png',
-               title: 'گودشدن کمر',
-               direction: 'horizental'
-            },
-            {
                id: 34,
+               src: 'img-32.png',
+               title: 'بالا آمدن شانه راست',
+               direction: 'horizental'
+            },
+            {
+               id: 35,
+               src: 'img-32.png',
+               title: 'بالا آمدن شانه چپ',
+               direction: 'horizental'
+            },
+            {
+               id: 36,
                src: 'img-34.png',
                title: 'خم شدن آرنج ها راست',
                direction: 'horizental'
             },
             {
-               id: 35,
+               id: 37,
                src: 'img-34.png',
                title: 'خم شدن آرنج ها چپ',
                direction: 'horizental'
             },
+            {
+               id: 38,
+               src: 'img-33.png',
+               title: 'گودشدن کمر',
+               direction: 'horizental'
+            },
          ],
-         photoFn: HandsBendSide_P,
+         photoFn: HandsUp_P,
          videoFn: WalkingFront_V,
-         cropFn: HandsBendSide_C,
+         cropFn: HandsUp_C,
          zipFile: undefined as string | null | undefined,
-         shouldAIShow: true,
+         shouldAIShow: false,
       },
       {
          name: 'handsRotateSide' as SectionNames,
