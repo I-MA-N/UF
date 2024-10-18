@@ -10,7 +10,7 @@ type SectionNames =
    "swimSide" |
    "handsOut" |
    "handsUp" |
-   "handsRotateSide" | 
+   "handsRotate" | 
    "walkingFront" |
    "walkingBack" |
    "walkingSide" |

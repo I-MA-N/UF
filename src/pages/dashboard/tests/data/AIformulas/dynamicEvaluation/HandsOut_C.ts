@@ -1,9 +1,6 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 
 function HandsOut_C(landmarks: NormalizedLandmark[], videoSize: { width: number, height: number }) {
-   let isEven = true;
-   if (landmarks[11].z < landmarks[12].z) isEven = false;
-
    const left = landmarks[16].x * videoSize.width;
 
    const top = landmarks[0].y * videoSize.height;

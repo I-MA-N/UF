@@ -11,39 +11,39 @@ function HandsOut_P(landmarks: NormalizedLandmark[]) {
     }
     const degrees: DegreeType[] = [];
 
-    const shoulderUpRight = Math.abs(degreeTwoPoints(landmarks[12], landmarks[14]));
-    if (shoulderUpRight > 8) values['بالاآمدن شانه راست'] = "1";
+    const shoulderUpRight = degreeTwoPoints(landmarks[12], landmarks[14]);
+    if (shoulderUpRight < -5) values['بالاآمدن شانه راست'] = "1";
 
     degrees.push({
         landmarksUsed: [12, 14],
-        degree: shoulderUpRight,
+        degree: Math.abs(shoulderUpRight),
         value: values['بالاآمدن شانه راست']
     })
 
-    const shoulderUpLeft = 180 - Math.abs(degreeTwoPoints(landmarks[11], landmarks[13]));
-    if (shoulderUpLeft > 8) values['بالاآمدن شانه چپ'] = "1";
+    const shoulderUpLeft = degreeTwoPoints(landmarks[11], landmarks[13]);
+    if (shoulderUpLeft > -175 && shoulderUpLeft < 0) values['بالاآمدن شانه چپ'] = "1";
 
     degrees.push({
         landmarksUsed: [11, 13],
-        degree: shoulderUpLeft,
+        degree: 180 - Math.abs(shoulderUpLeft),
         value: values['بالاآمدن شانه چپ']
     })
 
-    const elbowRight = Math.abs(degreeTwoPoints(landmarks[14], landmarks[16]));
+    const elbowRight = degreeTwoPoints(landmarks[14], landmarks[16]);
     if (elbowRight > 15) values['خم شدن آرنج راست'] = "1";
 
     degrees.push({
         landmarksUsed: [14, 16],
-        degree: elbowRight,
+        degree: Math.abs(elbowRight),
         value: values['خم شدن آرنج راست']
     })
 
-    const elbowLeft = 180 - Math.abs(degreeTwoPoints(landmarks[13], landmarks[15]));
-    if (elbowLeft > 15) values['خم شدن آرنج چپ'] = "1";
+    const elbowLeft = degreeTwoPoints(landmarks[13], landmarks[15]);
+    if (elbowLeft < 175 && elbowLeft > 0) values['خم شدن آرنج چپ'] = "1";
 
     degrees.push({
         landmarksUsed: [13, 15],
-        degree: elbowLeft,
+        degree: 180 - Math.abs(elbowLeft),
         value: values['خم شدن آرنج چپ']
     })
 

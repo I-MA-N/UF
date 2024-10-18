@@ -3,8 +3,8 @@ import HandsUp_C from "../AIformulas/dynamicEvaluation/HandsUp_C";
 import HandsUp_P from "../AIformulas/dynamicEvaluation/HandsUp_P";
 import HandsOut_C from "../AIformulas/dynamicEvaluation/HandsOut_C";
 import HandsOut_P from "../AIformulas/dynamicEvaluation/HandsOut_P";
-import HandsRotate_C from "../AIformulas/dynamicEvaluation/HandsRotateSide_C";
-import HandsRotate_P from "../AIformulas/dynamicEvaluation/HandsRotateSide_P";
+import HandsRotate_C from "../AIformulas/dynamicEvaluation/HandsRotate_C";
+import HandsRotate_P from "../AIformulas/dynamicEvaluation/HandsRotate_P";
 import SquatBack_C from "../AIformulas/dynamicEvaluation/SquatBack_C";
 import SquatBack_P from "../AIformulas/dynamicEvaluation/SquatBack_P";
 import SquatFront_C from "../AIformulas/dynamicEvaluation/SquatFront_C";
@@ -82,7 +82,6 @@ const dynamicEvaluation = [
          videoFn: WalkingFront_V,
          cropFn: SquatFront_C,
          zipFile: undefined as string | null | undefined,
-         shouldAIShow: true,
       },
       {
          name: 'squatBack' as SectionNames,
@@ -123,7 +122,6 @@ const dynamicEvaluation = [
          videoFn: WalkingFront_V,
          cropFn: SquatBack_C,
          zipFile: undefined as string | null | undefined,
-         shouldAIShow: true,
       },
       {
          name: 'squatSide' as SectionNames,
@@ -158,7 +156,6 @@ const dynamicEvaluation = [
          videoFn: WalkingFront_V,
          cropFn: SquatSide_C,
          zipFile: undefined as string | null | undefined,
-         shouldAIShow: true,
       },
    ],
    [
@@ -201,7 +198,6 @@ const dynamicEvaluation = [
          videoFn: WalkingFront_V,
          cropFn: SquatOneFoot_C,
          zipFile: undefined as string | null | undefined,
-         shouldAIShow: true,
       },
    ],
    [
@@ -244,7 +240,6 @@ const dynamicEvaluation = [
          videoFn: WalkingFront_V,
          cropFn: SwimSide_C,
          zipFile: undefined as string | null | undefined,
-         shouldAIShow: true,
       },
    ],
    [
@@ -293,7 +288,6 @@ const dynamicEvaluation = [
          videoFn: WalkingFront_V,
          cropFn: HandsOut_C,
          zipFile: undefined as string | null | undefined,
-         shouldAIShow: true,
       },
       {
          name: 'handsUp' as SectionNames,
@@ -301,26 +295,26 @@ const dynamicEvaluation = [
          questions: [
             {
                id: 34,
-               src: 'img-32.png',
-               title: 'بالا آمدن شانه راست',
-               direction: 'horizental'
-            },
-            {
-               id: 35,
-               src: 'img-32.png',
-               title: 'بالا آمدن شانه چپ',
-               direction: 'horizental'
-            },
-            {
-               id: 36,
                src: 'img-34.png',
                title: 'خم شدن آرنج ها راست',
                direction: 'horizental'
             },
             {
-               id: 37,
+               id: 35,
                src: 'img-34.png',
                title: 'خم شدن آرنج ها چپ',
+               direction: 'horizental'
+            },
+            {
+               id: 36,
+               src: 'img-32.png',
+               title: 'بالا آمدن شانه راست',
+               direction: 'horizental'
+            },
+            {
+               id: 37,
+               src: 'img-32.png',
+               title: 'بالا آمدن شانه چپ',
                direction: 'horizental'
             },
             {
@@ -334,32 +328,37 @@ const dynamicEvaluation = [
          videoFn: WalkingFront_V,
          cropFn: HandsUp_C,
          zipFile: undefined as string | null | undefined,
-         shouldAIShow: false,
       },
       {
-         name: 'handsRotateSide' as SectionNames,
+         name: 'handsRotate' as SectionNames,
          nameFA: 'چرخش دست ها',
          questions: [
             {
-               id: 36,
+               id: 39,
                src: 'img-26.png',
-               title: 'چرخش دست ها بالاآمدن شانه ها',
+               title: 'چرخش دست ها بالا آمدن شانه راست',
                direction: 'horizental'
             },
             {
-               id: 37,
+               id: 40,
+               src: 'img-26.png',
+               title: 'چرخش دست ها بالا آمدن شانه چپ',
+               direction: 'horizental'
+            },
+            {
+               id: 41,
                src: 'img-27.png',
                title: 'چرخش دست ها پروترکشن شانه ها',
                direction: 'horizental'
             },
             {
-               id: 38,
+               id: 42,
                src: 'img-28.png',
                title: 'چرخش داخلی دست ها فاصله از دیوار',
                direction: 'horizental'
             },
             {
-               id: 39,
+               id: 43,
                src: 'img-25.png',
                title: 'چرخش خارجی دست ها فاصله از دیوار',
                direction: 'horizental'
@@ -369,7 +368,6 @@ const dynamicEvaluation = [
          videoFn: WalkingFront_V,
          cropFn: HandsRotate_C,
          zipFile: undefined as string | null | undefined,
-         shouldAIShow: false,
       },
    ],
    [
@@ -378,13 +376,13 @@ const dynamicEvaluation = [
          nameFA: 'راه رفتن قدامی',
          questions: [
             {
-               id: 40,
+               id: 44,
                src: 'img-1.png',
                title: 'چرخش به داخل یا خارج زانو راست',
                direction: 'vertical'
             },
             {
-               id: 41,
+               id: 45,
                src: 'img-1.png',
                title: 'چرخش به داخل یا خارج زانو چپ',
                direction: 'vertical'
@@ -394,32 +392,31 @@ const dynamicEvaluation = [
          videoFn: WalkingFront_V,
          cropFn: WalkingFront_C,
          zipFile: undefined as string | null | undefined,
-         shouldAIShow: true,
       },
       {
          name: 'walkingBack' as SectionNames,
          nameFA: 'راه رفتن خلفی',
          questions: [
             {
-               id: 42,
+               id: 46,
                src: 'img-17.png',
                title: 'بالاآمدن ران',
                direction: 'vertical'
             },
             {
-               id: 43,
+               id: 47,
                src: 'img-18.png',
                title: 'چرخش بیش از حد لگن',
                direction: 'vertical'
             },
             {
-               id: 44,
+               id: 48,
                src: 'img-19.png',
                title: 'چرخش داخلی یا خارجی پا راست',
                direction: 'vertical'
             },
             {
-               id: 45,
+               id: 49,
                src: 'img-19.png',
                title: 'چرخش داخلی یا خارجی پا چپ',
                direction: 'vertical'
@@ -429,26 +426,25 @@ const dynamicEvaluation = [
          videoFn: WalkingFront_V,
          cropFn: WalkingBack_C,
          zipFile: undefined as string | null | undefined,
-         shouldAIShow: true,
       },
       {
          name: 'walkingSide' as SectionNames,
          nameFA: 'راه رفتن جانبی',
          questions: [
             {
-               id: 46,
+               id: 50,
                src: 'img-14.png',
                title: 'سر به جلو میرود',
                direction: 'vertical'
             },
             {
-               id: 47,
+               id: 51,
                src: 'img-15.png',
                title: 'شانه ها گرد می شود',
                direction: 'vertical'
             },
             {
-               id: 48,
+               id: 52,
                src: 'img-16.png',
                title: 'کمر گود می شود',
                direction: 'vertical'
@@ -458,7 +454,6 @@ const dynamicEvaluation = [
          videoFn: WalkingFront_V,
          cropFn: WalkingSide_C,
          zipFile: undefined as string | null | undefined,
-         shouldAIShow: true,
       },
    ],
 ]

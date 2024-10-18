@@ -46,7 +46,6 @@ function AITab() {
                   >
                      {
                         part.map(section => (
-                           section.shouldAIShow &&
                            <SectionCard
                               key={`${section.name}_${section.zipFile?.slice(0, 30)}`}
                               section={section}
