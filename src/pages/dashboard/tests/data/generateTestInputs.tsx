@@ -2,6 +2,7 @@ import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import MultipleChoiceInput from "../components/inputs/MultipleChoiceInput";
 import ChoiceInput from "../components/inputs/ChoiceInput";
 import ChoiceImage from "../components/inputs/ChoiceImage";
+import ManualInput from "../testTabs/components/manual/components/body/ManualInput";
 
 export type testPatternTypes = "MultipleChoice" | "Choice" | "ChoiceWithDivide" | "Radio" | "Text" | "ImageWithDivide" | "ChoiceImage";
 
@@ -119,6 +120,19 @@ function generateTestInputs({ initialData, testPattern, testData, register, setV
             const defaultValue = initialData?.[input.title as keyof typeof initialData];
 
             const defaultValueIndex = input.keys.indexOf(defaultValue);
+            return (
+               <ManualInput
+                  key={input.id}
+                  id={input.id}
+                  title={input.title}
+                  keys={input.keys}
+                  values={input.values}
+                  images={input.images}
+                  direction={input.direction}
+                  setValue={setValue}
+                  defaultValue={Number(defaultValue)}
+               />
+            )
             return <ChoiceImage
                key={input.title}
                register={register}

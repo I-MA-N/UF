@@ -29,7 +29,7 @@ function CameraSimple({ model }: CameraSimpleProps) {
    const [isCameraLoaded, setIsCameraLoaded] = useState(false);
    const [isSupported, setIsSupported] = useState(true);
    const [coordinates, setCoordinates] = useState<CoordinatesType>(null);
-
+   
    const proccessFrames = useCallback(() => {
       if (!isCameraLoaded) setIsCameraLoaded(true);
 

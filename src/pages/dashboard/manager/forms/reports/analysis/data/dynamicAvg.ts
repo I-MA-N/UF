@@ -4,14 +4,16 @@ import dynamicEvaluation from "../../../../../tests/data/testsData/dynamicEvalua
 function dynamicAvg(usersData: any) {
    const resultArr: DynamicEvaluationReportObj[] = [];
 
-   dynamicEvaluation.forEach(section => {
-      resultArr.push({
-         title: section.name,
-         data: section.questions.map(question => ({
-            name: question.title,
-            src: question.src,
-            value: 0
-         }))
+   dynamicEvaluation.forEach(part => {
+      part.forEach(section => {
+         resultArr.push({
+            title: section.name,
+            data: section.questions.map(question => ({
+               name: question.title,
+               src: question.src,
+               value: 0
+            }))
+         })
       })
    })
 

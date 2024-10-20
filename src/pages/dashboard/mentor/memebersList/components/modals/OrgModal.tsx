@@ -1,4 +1,5 @@
-import Btn from "../../../../../common/Btn";
+import { useState } from "react";
+import TopElems from "./orgModal/TopElems";
 
 type OrgModalProps = {
    orgSelected: string,
@@ -8,10 +9,7 @@ type OrgModalProps = {
 }
 
 function OrgModal({ orgSelected, setOrgSelected, setOrgModal, orgNames }: OrgModalProps) {
-   const clickHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      setOrgSelected((e.target as HTMLButtonElement).textContent!);
-      setOrgModal(false);
-   }
+   const [selectedOrgs, setSelectedOrgs] = useState(orgNames);
 
    return (
       <div className="modal">
@@ -21,20 +19,27 @@ function OrgModal({ orgSelected, setOrgSelected, setOrgModal, orgNames }: OrgMod
             </svg>
             خروج
          </button>
-         <div className="w-[300px] lg:w-96 bg-white text-primary text-xs lg:text-sm rounded-[32px]">
-            <Btn
-               text={orgSelected}
-               type="button"
-               icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 8" fill="none" className="w-3.5">
-                  <path d="M0.999999 7L7 1L13 7" stroke="#E4F4FD" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-               </svg>}
-               className="w-full shadow"
-               onClick={clickHandler}
+         
+         <div className="w-[300px] lg:w-96 bg-white text-primary rounded-[32px] relative">
+            <TopElems
+               orgNames={orgNames}
+               orgSelected={orgSelected}
+               setSelectedOrgs={setSelectedOrgs}
             />
-            <div className="mt-3.5">
+
+            <div className="flex flex-col items-center mt-3.5 max-h-60 overflow-y-scroll divide-y divide-primary">
                {
-                  orgNames.map(orgName => (
-                     <button key={orgName} className="org-modal-item" onClick={clickHandler}>{orgName}</button>
+                  selectedOrgs.map(orgName => (
+                     <button
+                        key={orgName}
+                        className="w-[150px] py-3.5 hover:bg-secondary hover:text-white text-sm lg:text-base break-words"
+                        onClick={e => {
+                           setOrgSelected(e.currentTarget.innerText);
+                           setOrgModal(false);
+                        }}
+                     >
+                        {orgName}
+                     </button>
                   ))
                }
             </div>

@@ -3,60 +3,153 @@ import SectionNames from "../../../../../../../../../../types/SectionNames";
 import useAIStore from "../../../../../../../store/AIStore";
 import useFormStore from "../../../../../../../store/formStore";
 import usePhotoStore from "../../../../../../../store/photoStore";
-import { NormalizedLandmark } from "@mediapipe/tasks-vision";
+import { DrawingUtils, NormalizedLandmark } from "@mediapipe/tasks-vision";
+import DistanceType from "../../../../../../../../../../types/DistanceType";
+import { drawDegree, drawDegreeDistance, drawDistance } from "../../../../../../../../../../utils/AIFuncs";
+import DegreeDistanceType from "../../../../../../../../../../types/DegreeDistanceType";
+import DegreeType from "../../../../../../../../../../types/DegreeType";
 
 function nextBtnClickHandler(
    landmarks: NormalizedLandmark[],
    nextSectionName: SectionNames | undefined,
 ) {
-   const { currentSection, setCurrentSection, getOrSetZipFile, userHeight } = useAIStore.getState();
-   const { updateFormData, setValue } = useFormStore.getState();
-   const { image, removePhoto, videoSize } = usePhotoStore.getState();
+   const { currentSection, setCurrentSection, userHeight } = useAIStore.getState();
+   const { image, removePhoto } = usePhotoStore.getState();
 
-   // Add "landmarks" & "imageSize" string & "image" base64 to store
-   const zip = new JSZip();
-
-   if (image && currentSection && videoSize && setValue) {
+   if (image && currentSection) {
       const img = new Image();
-      img.src = image;
       img.onload = async () => {
+         const editCanvas = document.getElementById("editCanvas") as HTMLCanvasElement;
+         const photoResult = currentSection.photoFn(landmarks, userHeight, { width: editCanvas.clientWidth, height: editCanvas.clientHeight });
+
          const canvas = document.createElement("canvas");
-         const ctx = canvas.getContext("2d");
+         const finalCanvas = document.createElement("canvas");
+         const isSectionDynamic = "src" in currentSection.questions[0];
 
-         if (ctx) {
-            const { left, top, width, height } = currentSection.cropFn(landmarks, videoSize);
+         setInputValues(photoResult.values);
+         
+         drawResultsOnCanvas(canvas, img, photoResult, isSectionDynamic, landmarks);
 
-            canvas.style.margin = "auto";
-            canvas.width = width;
-            canvas.height = height;
-            ctx.drawImage(img, left, top, width, height, 0, 0, width, height);
+         cropCanvas(landmarks, finalCanvas, canvas);
 
-            const imageBase64 = canvas.toDataURL("image/png");
-            zip.file('image.jpeg', imageBase64);
+         finalCanvasToBase64(finalCanvas, imageBase64 => {
+            createAndSetZipFile(imageBase64, image, photoResult.values, landmarks, currentSection.name);
+         });
 
-            const landmarksJson = JSON.stringify(landmarks);
-            zip.file('landmarks.json', landmarksJson);
-
-            const imageSizeJson = JSON.stringify(videoSize);
-            zip.file('imageSize.json', imageSizeJson);
-
-            const base64 = await zip.generateAsync({ type: 'base64' });
-            getOrSetZipFile(currentSection.name, base64);
-
-            // Call "photoFn" function to evalutate based on "landmarks"
-            const resultObj = currentSection.photoFn(landmarks, userHeight);
-            Object.entries(resultObj).forEach(([key, value]) => {
-               setValue(key, value);
-            })
-
-            updateFormData();
-
-            // Update current section & hide canvas
-            setCurrentSection(nextSectionName);
-            removePhoto();
-         }
-
+         setCurrentSection(nextSectionName);
+         removePhoto();
       }
+      img.src = image;
+   }
+}
+
+function setInputValues(values: {}) {
+   const { updateFormData, setValue } = useFormStore.getState();
+   if (setValue) {
+      Object.entries(values).forEach(([key, value]) => {
+         setValue(key, value);
+      })
+      updateFormData();
+   }
+}
+
+function drawResultsOnCanvas(
+   canvas: HTMLCanvasElement,
+   img: HTMLImageElement,
+   result: {
+      values: {};
+      degrees: DegreeType[];
+   },
+   isSectionDynamic: boolean,
+   landmarks: NormalizedLandmark[]
+) {
+   const ctx = canvas.getContext("2d");
+
+   if (ctx) {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      const drawingUtils = new DrawingUtils(ctx);
+
+      result.degrees.forEach(degree => drawDegree(landmarks, degree, drawingUtils, ctx, canvas.width, canvas.height, isSectionDynamic));
+      if ("distances" in result) {
+         const distances = result.distances as DistanceType[];
+         distances.forEach(distance => drawDistance(landmarks, distance, drawingUtils, ctx, canvas.width, canvas.height, isSectionDynamic));
+      }
+      if ("degreesDistances" in result) {
+         const degreesDistances = result.degreesDistances as DegreeDistanceType[];
+         degreesDistances.forEach(degreeDistance => drawDegreeDistance(landmarks, degreeDistance, drawingUtils, ctx, canvas.width, canvas.height, isSectionDynamic));
+      }
+   }
+
+}
+
+function cropCanvas(
+   landmarks: NormalizedLandmark[],
+   finalCanvas: HTMLCanvasElement,
+   canvas: HTMLCanvasElement,
+) {
+   const currentSection = useAIStore.getState().currentSection;
+   const videoSize = usePhotoStore.getState().videoSize;
+
+   if (videoSize) {
+      const { result: { left, width, top, height } } = currentSection!.cropFn(landmarks, videoSize);
+
+      const finalCtx = finalCanvas.getContext("2d");
+
+      if (finalCtx) {
+         finalCanvas.width = width;
+         finalCanvas.height = height;
+         finalCtx.drawImage(canvas, left, top, width, height, 0, 0, width, height);
+      }
+   }
+}
+
+function finalCanvasToBase64(
+   finalCanvas: HTMLCanvasElement,
+   callback: (base64: string) => void
+) {
+   finalCanvas.toBlob(blob => {
+      if (blob) {
+         const reader = new FileReader();
+         reader.onload = async () => {
+            if (typeof reader.result === "string") callback(reader.result);
+         };
+         reader.readAsDataURL(blob);
+      }
+   })
+}
+
+async function createAndSetZipFile(
+   imageBase64: string,
+   image: string,
+   values: {},
+   landmarks: NormalizedLandmark[],
+   currentSectionName: SectionNames
+) {
+   const videoSize = usePhotoStore.getState().videoSize;
+
+   if (videoSize) {
+      const getOrSetZipFile = useAIStore.getState().getOrSetZipFile;
+
+      const zip = new JSZip();
+
+      zip.file('modifiedImage.png', imageBase64);
+
+      zip.file('pureImage.png', image);
+
+      const valuesJson = JSON.stringify(values);
+      zip.file('values.json', valuesJson);
+
+      const landmarksJson = JSON.stringify(landmarks);
+      zip.file('landmarks.json', landmarksJson);
+
+      const imageSizeJson = JSON.stringify(videoSize);
+      zip.file('imageSize.json', imageSizeJson);
+
+      const base64 = await zip.generateAsync({ type: 'base64' });
+      getOrSetZipFile(currentSectionName, base64);
    }
 }
 

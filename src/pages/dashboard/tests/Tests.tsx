@@ -12,6 +12,7 @@ import ErrorModal from "./components/ErrorModal";
 import ProgressModal from "./components/ProgressModal";
 import TestTabsFirstLoad from "./testTabs/TestTabsFirstLoad";
 import useAIStore from "./store/AIStore";
+import { blurImage } from "../../../utils/AIFuncs";
 
 type TestsProps = {
    username: string,
@@ -46,13 +47,20 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
       if (progress !== null && progress > 0 && filesToSave.length) {
          const file = filesToSave[progress - 1];
          if (file) {
-            imageMutate({
-               imgKey: file.name,
-               imgValue: file.value,
-            })
+            blurImage(file.value)
                .then(res => {
-                  if (res?.msg) setProgress(prevValue => typeof prevValue === "number" ? prevValue += 1 : null);
-                  if (res?.error) setError(res.error);
+                  imageMutate({
+                     imgKey: file.name,
+                     imgValue: res,
+                  })
+                     .then(res => {
+                        if (res?.msg) setProgress(prevValue => typeof prevValue === "number" ? prevValue += 1 : null);
+                        if (res?.error) setError(res.error);
+                     })
+               })
+               .catch(err => {
+                  setProgress(null);
+                  setError(err);
                })
          }
       }
@@ -116,7 +124,6 @@ function Tests({ username, formname, testsArr, initialFormData }: TestsProps) {
                   (page === 'ناهنجاری ها' || page === 'ارزیابی پویا') ?
                      <TestTabsFirstLoad
                         key={page}
-                        testName={page}
                         initialData={formData[page]}
                         getValues={getValues}
                         setValue={setValue}

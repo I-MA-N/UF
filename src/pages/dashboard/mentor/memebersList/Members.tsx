@@ -6,7 +6,7 @@ import Btn from "../../../common/Btn";
 import ListElement from "./components/MembersListElem";
 import { UserData2 } from "../../../../types/UserData";
 import OrgModal from "./components/modals/OrgModal";
-import UserModal from "./components/modals/user/UserModal";
+import UserModal from "./components/modals/UserModal";
 
 type MembersProps = {
    orgSelected: string,

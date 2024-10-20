@@ -5,7 +5,7 @@ import { dynamicEvaluationType } from "../../../../../data/testsData/dynamicEval
 import useFormStore from "../../../../../store/formStore";
 
 type SectionBodyProps = {
-   section: staticEvaluationType[0] | dynamicEvaluationType[1]
+   section: staticEvaluationType[0][0] | dynamicEvaluationType[0][0]
 }
 
 function SectionBody({ section }: SectionBodyProps) {
@@ -19,11 +19,13 @@ function SectionBody({ section }: SectionBodyProps) {
 
                if ("keys" in input) return (
                   <ManualInput
-                     key={input.id + defaultValue}
+                     key={input.id}
+                     id={input.id}
                      title={input.title}
                      keys={input.keys}
                      values={input.values}
-                     index={input.id}
+                     images={input.images}
+                     direction={input.direction}
                      setValue={setValue}
                      defaultValue={Number(defaultValue)}
                   />
@@ -31,7 +33,7 @@ function SectionBody({ section }: SectionBodyProps) {
 
                return (
                   <ImageInput
-                     key={input.id + defaultValue}
+                     key={input.id}
                      title={input.title}
                      image={input.src}
                      direction={input.direction}

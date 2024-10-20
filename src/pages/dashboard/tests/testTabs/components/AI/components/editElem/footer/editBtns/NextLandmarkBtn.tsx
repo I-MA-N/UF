@@ -20,7 +20,7 @@ function NextLandmarkBtn({ editableLandmarks, selectedLandmark, setSelectedLandm
          }
       }
 
-      return 0;
+      return editableLandmarks[0];
    }, [selectedLandmark])
 
    return (

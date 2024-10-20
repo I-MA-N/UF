@@ -4,16 +4,26 @@ function SquatSide_C(landmarks: NormalizedLandmark[], videoSize: { width: number
    let isEven = true;
    if (landmarks[11].z < landmarks[12].z) isEven = false;
 
-   const left = (isEven ? landmarks[24].x : landmarks[23].x) * videoSize.width;
-   const top = (isEven ? landmarks[16].y : landmarks[15].y) * videoSize.height;
-   const width = ((isEven ? landmarks[20].x : landmarks[19].x) - (isEven ? landmarks[24].x : landmarks[23].x)) * videoSize.width;
-   const height = ((isEven ? landmarks[30].y : landmarks[29].y) - (isEven ? landmarks[16].y : landmarks[15].y)) * videoSize.height;
+   const leftLandmark = isEven ? 24 : 15;
+   const left = landmarks[leftLandmark].x * videoSize.width;
+
+   const topLandmark = landmarks[8].y > landmarks[16].y ? 16 : 8;
+   const top = landmarks[topLandmark].y * videoSize.height;
+
+   const width1 = isEven ? 16 : 23;
+   const width = (landmarks[width1].x - landmarks[leftLandmark].x) * videoSize.width;
+
+   const height1 = isEven ? 30 : 29;
+   const height = (landmarks[height1].y - landmarks[topLandmark].y) * videoSize.height;
 
    return {
-      left: left - 40,
-      top: top - 50,
-      width: width + 120,
-      height: height + 100
+      landmarksUsed: [leftLandmark, topLandmark, width1, height1],
+      result: {
+         left: left - 50,
+         top: top - 60,
+         width: width + 130,
+         height: height + 110
+      }
    }
 }
 

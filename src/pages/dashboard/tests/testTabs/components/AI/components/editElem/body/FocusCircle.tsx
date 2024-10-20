@@ -56,7 +56,7 @@ function FocusCircle({ canvas, selectedLandmark }: FocusCircleProps) {
             }}
             onTouchEnd={() => setIsMovingLandmark(false)}
          >
-            <div className="size-2 bg-secondary rounded-full" />
+            <div className="size-[5px] bg-secondary rounded-full" />
          </div>
 
          <div

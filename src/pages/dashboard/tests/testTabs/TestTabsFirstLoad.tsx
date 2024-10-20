@@ -5,14 +5,13 @@ import TestTabs from "./TestTabs";
 import useFormStore from "../store/formStore";
 
 type TestTabsFirstLoadProps = {
-   testName: 'ناهنجاری ها' | 'ارزیابی پویا',
    initialData: any,
    getValues: UseFormGetValues<FieldValues>,
    setValue: UseFormSetValue<FieldValues>,
    register: UseFormRegister<FieldValues>,
 }
 
-function TestTabsFirstLoad({ testName, initialData, getValues, setValue, register }: TestTabsFirstLoadProps) {
+function TestTabsFirstLoad({ initialData, getValues, setValue, register }: TestTabsFirstLoadProps) {
    const setFormState = useFormStore(state => state.setFormState);
 
    useEffect(() => {
@@ -26,9 +25,7 @@ function TestTabsFirstLoad({ testName, initialData, getValues, setValue, registe
 
    return (
       <>
-         <HiddenInputs
-            testName={testName}
-         />
+         <HiddenInputs />
 
          <TestTabs
             defaultIsAIMethod={localStorage.getItem("AIMethod") ? true : false}

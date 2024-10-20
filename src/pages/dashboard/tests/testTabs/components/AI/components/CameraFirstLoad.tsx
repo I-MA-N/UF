@@ -3,18 +3,16 @@ import usePhotoStore from "../../../../store/photoStore";
 import CameraLandmarks from "./CameraLandmarks";
 import EditElem from "./EditElem";
 import CameraSimple from "./CameraSimple";
-import { dynamicEvaluationType } from "../../../../data/testsData/dynamicEvaluation";
-import { staticEvaluationType } from "../../../../data/testsData/staticEvaluation";
 import { useEffect } from "react";
 import useAIStore from "../../../../store/AIStore";
 import TipModal from "./camera/TipModal";
 
 type CameraFirstLoadProps = {
    model: PoseLandmarker,
-   activeTestData: dynamicEvaluationType[0] | staticEvaluationType[0]
+   isDynamicEvaluationData: boolean
 }
 
-function CameraFirstLoad({ model, activeTestData }: CameraFirstLoadProps) {
+function CameraFirstLoad({ model, isDynamicEvaluationData }: CameraFirstLoadProps) {
    const isTipShown = useAIStore(state => state.isTipShown);
    const { image, removePhoto } = usePhotoStore(state => ({ image: state.image, removePhoto: state.removePhoto }));
 
@@ -45,7 +43,7 @@ function CameraFirstLoad({ model, activeTestData }: CameraFirstLoadProps) {
                   ?
                   <EditElem />
                   :
-                  "src" in activeTestData.questions[0]
+                  isDynamicEvaluationData
                      ?
                      <CameraLandmarks model={model} />
                      :

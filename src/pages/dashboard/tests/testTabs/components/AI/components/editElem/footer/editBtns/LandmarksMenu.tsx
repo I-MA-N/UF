@@ -29,7 +29,7 @@ function LandmarksMenu({ editableLandmarks, selectedLandmark, setSelectedLandmar
          <div className={`editlandmarks-menu ${showMenu ? "opacity-100 z-10" : "opacity-0 -z-10"}`}>
             <button
                type="button"
-               className=""
+               className="py-0.5"
                onClick={() => {
                   setSelectedLandmark(null);
                   setShowMenu(false);
@@ -42,7 +42,7 @@ function LandmarksMenu({ editableLandmarks, selectedLandmark, setSelectedLandmar
                   <button
                      key={number}
                      type="button"
-                     className=""
+                     className="py-0.5"
                      onClick={() => {
                         setSelectedLandmark(number);
                         setShowMenu(false);

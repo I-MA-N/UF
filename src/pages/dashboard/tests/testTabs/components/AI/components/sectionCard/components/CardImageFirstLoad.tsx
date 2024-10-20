@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { extractZip } from "../../../../../../../../../utils/AIFuncs";
 import Loading from "../../../../../../../../common/Loading";
 import ExtractedZipType from "../../../../../../../../../types/ExtractedZipType";
@@ -16,23 +16,6 @@ function CardImageFirstLoad({ sectionName, sectionNameFA, fileContent }: CardIma
    const [files, setFiles] = useState<ExtractedZipType | null | undefined>(undefined);
    const [showImageBigger, setShowImageBigger] = useState(false);
 
-   const divRef = useRef<HTMLDivElement>(null);
-   const [width, setWidth] = useState(divRef.current?.clientWidth);
-   const height = useMemo(() => width && width * 1.6, [width]);
-
-   useEffect(() => {
-      setWidth(divRef.current?.clientWidth);
-
-      const handleResize = () => {
-         setWidth(divRef.current?.clientWidth);
-      }
-
-      window.addEventListener("resize", handleResize);
-      return () => {
-         window.removeEventListener("resize", handleResize);
-      }
-   }, [divRef.current])
-
    useEffect(() => {
       const extractFiles = async () => {
          const files = await extractZip(fileContent);
@@ -42,9 +25,45 @@ function CardImageFirstLoad({ sectionName, sectionNameFA, fileContent }: CardIma
       extractFiles();
    }, [fileContent])
 
+   // const imgRef = useRef<HTMLImageElement>(null);
+   // const [size, setSize] = useState<{
+   //    width: number,
+   //    height: number
+   // } | null>(null);
+
+   // const handleResize = useCallback(() => {
+   //    const imgWidth = imgRef.current?.naturalWidth;
+   //    const imgHeight = imgRef.current?.naturalHeight;
+   //    const parentWidth = imgRef.current?.parentElement?.clientWidth;
+
+   //    if (imgWidth && imgHeight && parentWidth) {
+   //       const aspectRatio = imgWidth / imgHeight;
+
+   //       if (parentWidth / aspectRatio > 500) {
+   //          setSize({
+   //             width: parentWidth - 30,
+   //             height: (parentWidth - 30) / aspectRatio
+   //          })
+   //       } 
+
+   //       setSize({
+   //          width: parentWidth,
+   //          height: parentWidth / aspectRatio
+   //       })
+   //    }
+   // }, [imgRef.current])
+
+   // useEffect(() => {
+   //    handleResize();
+   //    window.addEventListener("resize", handleResize);
+
+   //    return () => {
+   //       window.removeEventListener("resize", handleResize);
+   //    }
+   // }, [])
+
    return (
       <div
-         ref={divRef}
          className="size-full flex items-center justify-center border-4 lg:border-[5px] rounded-3xl lg:rounded-[48px] relative p-2"
       >
          <CardMenu
@@ -68,9 +87,9 @@ function CardImageFirstLoad({ sectionName, sectionNameFA, fileContent }: CardIma
                <img
                   src={files.image}
                   alt="captured photo for this section"
-                  width={width}
-                  height={height}
-                  className="rounded-3xl"
+                  className="rounded-3xl max-h-80"
+                  // width={size.width}
+                  // height={size.height}
                />
                {
                   showImageBigger &&
