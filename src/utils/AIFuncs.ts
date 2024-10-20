@@ -126,6 +126,8 @@ export const drawOnCanvas = (
 
          { start: 33, end: 34 },
          { start: 34, end: 35 },
+
+         { start: 38, end: 39 },
       ];
 
       connectors.forEach(connector => {
@@ -220,11 +222,21 @@ export const circleMove = (
 
       if (!isOutOfCanvasX && !isOutOfCanvasY) {
          const circleRect = circle.getBoundingClientRect();
-         circle.style.left = `${pageX - deltaX - (circleRect.width / 2)}px`;
-         circle.style.top = `${pageY - deltaY - (circleRect.height / 2)}px`;
 
-         landmarks[selectedLandmark].x = (pageX - deltaX) / canvas.clientWidth;
-         landmarks[selectedLandmark].y = (pageY - deltaY) / canvas.clientHeight;
+         if (selectedLandmark === 38) {
+            circle.style.top = `${pageY - deltaY - (circleRect.height / 2)}px`;
+            landmarks[selectedLandmark].y = (pageY - deltaY) / canvas.clientHeight;
+         } else {
+            circle.style.left = `${pageX - deltaX - (circleRect.width / 2)}px`;
+            circle.style.top = `${pageY - deltaY - (circleRect.height / 2)}px`;
+
+            landmarks[selectedLandmark].x = (pageX - deltaX) / canvas.clientWidth;
+            landmarks[selectedLandmark].y = (pageY - deltaY) / canvas.clientHeight;
+   
+            if (selectedLandmark === 39) {
+               landmarks[38].x = (pageX - deltaX) / canvas.clientWidth;
+            }
+         }
 
          setLandmarks(landmarks);
       }
@@ -278,7 +290,7 @@ export const getEditableLandmarks = (
       }
 
       editableLandmarks = editableLandmarks.concat(cropData.landmarksUsed);
-
+      
       editableLandmarks.sort((a, b) => a - b);
 
       return [...new Set(editableLandmarks)];

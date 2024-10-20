@@ -25,7 +25,7 @@ function SampleImage({ selectedLandmark }: SampleImageProps) {
       return "front"
    }, [currentSection?.name]);
 
-   if (isMovingLandmark) return (
+   if (isMovingLandmark && selectedLandmark !== 38) return (
       <img
          src={`/images/editImages/${key}/${selectedLandmark}.png`}
          style={{
