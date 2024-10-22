@@ -2,7 +2,6 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import CoordinatesType from "../../../../../../../types/CoordinatesType";
 import CloseBtn from "./camera/buttons/CloseBtn";
 import CapturePhotoBtn from "./camera/buttons/CapturePhotoBtn";
-import CameraModeBtn from "./camera/buttons/CameraModeBtn";
 import useAIStore from "../../../../store/AIStore";
 import { PoseLandmarker } from "@mediapipe/tasks-vision";
 import Webcam from "react-webcam";
@@ -25,15 +24,15 @@ function CameraSimple({ model }: CameraSimpleProps) {
    const webcamRef = useRef<Webcam | null>(null);
    const isClickedRef = useRef(false);
 
-   const [facingMode, setFacingMode] = useState<"environment" | "user">("environment");
-   const [isCameraLoaded, setIsCameraLoaded] = useState(false);
+   const [isWebcamLoaded, setIsWebcamLoaded] = useState(false);
+   const [isMediaError, setIsMediaError] = useState(false);
+
    const [isSupported, setIsSupported] = useState(true);
    const [coordinates, setCoordinates] = useState<CoordinatesType>(null);
-   
-   const proccessFrames = useCallback(() => {
-      if (!isCameraLoaded) setIsCameraLoaded(true);
 
+   const proccessFrames = useCallback(() => {
       const video = webcamRef.current?.video;
+
       if (video) {
          let startTimeMs = performance.now();
          const result = model.detectForVideo(video, startTimeMs);
@@ -73,18 +72,20 @@ function CameraSimple({ model }: CameraSimpleProps) {
 
             <div className="w-full min-h-80 flex items-center justify-center">
                <div className="relative">
-                  <div className="absolute flex flex-col gap-1">
-                     <span>{coordinates?.gamma.toFixed(2)}</span>
-                     <span>{coordinates?.beta.toFixed(2)}</span>
-                  </div>
                   <div className="relative">
                      <Webcam
                         ref={webcamRef}
                         videoConstraints={{
-                           facingMode,
+                           facingMode: { exact: "environment" },
                            aspectRatio: 1600 / 1000,
                         }}
-                        onLoadedData={proccessFrames}
+                        onLoadedData={() => {
+                           proccessFrames();
+                           setIsWebcamLoaded(true);
+                        }}
+                        onUserMediaError={() => {
+                           setIsMediaError(true);
+                        }}
                      />
                      <canvas
                         ref={canvasRef}
@@ -98,17 +99,24 @@ function CameraSimple({ model }: CameraSimpleProps) {
                      coordinates={coordinates}
                      setCoordinates={setCoordinates}
                   />
+
+                  {isMediaError &&
+                     <p className="w-full absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-center text-sm lg:text-base font-Estedad-Black text-red bg-white px-4 py-2 rounded-full">
+                        دریافت دوربین با مشکل مواجه شد!
+                     </p>
+                  }
                </div>
             </div>
 
             <div className="w-full flex justify-center items-center gap-8">
-               <CameraModeBtn
-                  isDisabled={!isCameraLoaded}
+               {/* <CameraModeBtn
+                  isDisabled={isMediaError}
+                  setIsWebcamLoaded={setIsWebcamLoaded}
                   setFacingMode={setFacingMode}
-               />
+               /> */}
 
                <CapturePhotoBtn
-                  isLoading={!isCameraLoaded}
+                  isLoading={!isWebcamLoaded}
                   isDisabled={isDisabled}
                   isClickedRef={isClickedRef}
                />
