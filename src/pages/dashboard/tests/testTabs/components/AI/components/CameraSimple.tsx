@@ -76,7 +76,7 @@ function CameraSimple({ model }: CameraSimpleProps) {
                      <Webcam
                         ref={webcamRef}
                         videoConstraints={{
-                           facingMode: { exact: "environment" },
+                           facingMode: "environment",
                            aspectRatio: 1600 / 1000,
                         }}
                         onLoadedData={() => {
@@ -103,6 +103,8 @@ function CameraSimple({ model }: CameraSimpleProps) {
                   {isMediaError &&
                      <p className="w-full absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-center text-sm lg:text-base font-Estedad-Black text-red bg-white px-4 py-2 rounded-full">
                         دریافت دوربین با مشکل مواجه شد!
+                        <br />
+                        لطفا دسترسی دوربین مرورگر خود را چک کنید.
                      </p>
                   }
                </div>
@@ -114,6 +116,7 @@ function CameraSimple({ model }: CameraSimpleProps) {
                   setIsWebcamLoaded={setIsWebcamLoaded}
                   setFacingMode={setFacingMode}
                /> */}
+               <div className="size-11 lg:size-14"></div>
 
                <CapturePhotoBtn
                   isLoading={!isWebcamLoaded}

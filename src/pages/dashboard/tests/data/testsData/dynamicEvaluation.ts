@@ -32,49 +32,49 @@ const dynamicEvaluation = [
             {
                id: 1,
                src: 'img-2.png',
-               title: 'حرکت زانو به خارج راست',
+               title: 'حرکت زانوی راست به خارج',
                direction: 'vertical'
             },
             {
                id: 2,
-               src: 'img-2.png',
-               title: 'حرکت زانو به خارج چپ',
+               src: 'img-4.png',
+               title: 'حرکت زانوی راست به داخل',
                direction: 'vertical'
             },
             {
                id: 3,
-               src: 'img-4.png',
-               title: 'حرکت زانو به داخل راست',
+               src: 'img-2.png',
+               title: 'حرکت زانوی چپ به خارج',
                direction: 'vertical'
             },
             {
                id: 4,
                src: 'img-4.png',
-               title: 'حرکت زانو به داخل چپ',
+               title: 'حرکت زانوی چپ به داخل',
                direction: 'vertical'
             },
             {
                id: 5,
                src: 'img-5.png',
-               title: 'چرخش پا به خارج راست',
+               title: 'چرخش پای راست به خارج',
                direction: 'vertical'
             },
             {
                id: 6,
-               src: 'img-5.png',
-               title: 'چرخش پا به خارج چپ',
+               src: 'img-3.png',
+               title: 'چرخش پای راست به داخل',
                direction: 'vertical'
             },
             {
                id: 7,
-               src: 'img-3.png',
-               title: 'چرخش پا به داخل راست',
+               src: 'img-5.png',
+               title: 'چرخش پای چپ به خارج',
                direction: 'vertical'
             },
             {
                id: 8,
                src: 'img-3.png',
-               title: 'چرخش پا به داخل چپ',
+               title: 'چرخش پای چپ به داخل',
                direction: 'vertical'
             },
          ],
@@ -108,13 +108,13 @@ const dynamicEvaluation = [
             {
                id: 12,
                src: 'img-13.png',
-               title: 'چرخش پا به خارج راست',
+               title: 'چرخش پای راست به خارج',
                direction: 'vertical'
             },
             {
                id: 13,
                src: 'img-13.png',
-               title: 'چرخش پا به خارج چپ',
+               title: 'چرخش پای چپ به خارج',
                direction: 'vertical'
             },
          ],
@@ -148,7 +148,7 @@ const dynamicEvaluation = [
             {
                id: 17,
                src: 'img-10.png',
-               title: 'گود شدن کمر',
+               title: 'کمر گود',
                direction: 'vertical'
             },
          ],
@@ -208,13 +208,13 @@ const dynamicEvaluation = [
             {
                id: 23,
                src: 'img-35.png',
-               title: 'گود شدن  کمر',
+               title: 'کمر گود',
                direction: 'horizental'
             },
             {
                id: 24,
                src: 'img-36.png',
-               title: 'صاف شدن کمر',
+               title: 'کمر صاف',
                direction: 'horizental'
             },
             {
@@ -225,14 +225,14 @@ const dynamicEvaluation = [
             },
             {
                id: 26,
-               src: 'img-38.png',
-               title: 'بالی شدن کتف',
+               src: 'img-39.png',
+               title: 'هایپراکستنشن گردن',
                direction: 'horizental'
             },
             {
                id: 27,
-               src: 'img-39.png',
-               title: 'هایپراکستنشن گردن',
+               src: 'img-38.png',
+               title: 'بالی شدن کتف',
                direction: 'horizental'
             },
          ],
@@ -249,38 +249,38 @@ const dynamicEvaluation = [
          questions: [
             {
                id: 28,
-               src: 'img-30.png',
-               title: 'پروتکشن شانه راست',
+               src: 'img-29.png',
+               title: 'بالا آمدن شانه راست',
                direction: 'horizental'
             },
             {
                id: 29,
-               src: 'img-30.png',
-               title: 'پروتکشن شانه چپ',
+               src: 'img-29.png',
+               title: 'بالا آمدن شانه چپ',
                direction: 'horizental'
             },
             {
                id: 30,
-               src: 'img-29.png',
-               title: 'بالاآمدن شانه راست',
-               direction: 'horizental'
-            },
-            {
-               id: 31,
-               src: 'img-29.png',
-               title: 'بالاآمدن شانه چپ',
-               direction: 'horizental'
-            },
-            {
-               id: 32,
                src: 'img-31.png',
                title: 'خم شدن آرنج راست',
                direction: 'horizental'
             },
             {
-               id: 33,
+               id: 31,
                src: 'img-31.png',
                title: 'خم شدن آرنج چپ',
+               direction: 'horizental'
+            },
+            {
+               id: 32,
+               src: 'img-30.png',
+               title: 'پروتکشن شانه راست',
+               direction: 'horizental'
+            },
+            {
+               id: 33,
+               src: 'img-30.png',
+               title: 'پروتکشن شانه چپ',
                direction: 'horizental'
             },
          ],
@@ -296,13 +296,13 @@ const dynamicEvaluation = [
             {
                id: 34,
                src: 'img-34.png',
-               title: 'خم شدن آرنج ها راست',
+               title: 'خم شدن آرنج راست',
                direction: 'horizental'
             },
             {
                id: 35,
                src: 'img-34.png',
-               title: 'خم شدن آرنج ها چپ',
+               title: 'خم شدن آرنج چپ',
                direction: 'horizental'
             },
             {
@@ -320,7 +320,7 @@ const dynamicEvaluation = [
             {
                id: 38,
                src: 'img-33.png',
-               title: 'گودشدن کمر',
+               title: 'کمر گود',
                direction: 'horizental'
             },
          ],
@@ -336,19 +336,19 @@ const dynamicEvaluation = [
             {
                id: 39,
                src: 'img-26.png',
-               title: 'چرخش دست ها بالا آمدن شانه راست',
+               title: 'بالا آمدن شانه راست',
                direction: 'horizental'
             },
             {
                id: 40,
                src: 'img-26.png',
-               title: 'چرخش دست ها بالا آمدن شانه چپ',
+               title: 'بالا آمدن شانه چپ',
                direction: 'horizental'
             },
             {
                id: 41,
                src: 'img-27.png',
-               title: 'چرخش دست ها پروترکشن شانه ها',
+               title: 'پروترکشن شانه ها',
                direction: 'horizental'
             },
             {
@@ -400,25 +400,25 @@ const dynamicEvaluation = [
             {
                id: 46,
                src: 'img-17.png',
-               title: 'بالاآمدن ران',
+               title: 'بالا آمدن ران',
                direction: 'vertical'
             },
             {
                id: 47,
-               src: 'img-18.png',
-               title: 'چرخش بیش از حد لگن',
-               direction: 'vertical'
-            },
-            {
-               id: 48,
                src: 'img-19.png',
                title: 'چرخش داخلی یا خارجی پا راست',
                direction: 'vertical'
             },
             {
-               id: 49,
+               id: 48,
                src: 'img-19.png',
                title: 'چرخش داخلی یا خارجی پا چپ',
+               direction: 'vertical'
+            },
+            {
+               id: 49,
+               src: 'img-18.png',
+               title: 'چرخش بیش از حد لگن',
                direction: 'vertical'
             },
          ],
@@ -434,19 +434,19 @@ const dynamicEvaluation = [
             {
                id: 50,
                src: 'img-14.png',
-               title: 'سر به جلو میرود',
+               title: 'سر به جلو',
                direction: 'vertical'
             },
             {
                id: 51,
                src: 'img-15.png',
-               title: 'شانه ها گرد می شود',
+               title: 'شانه گرد',
                direction: 'vertical'
             },
             {
                id: 52,
                src: 'img-16.png',
-               title: 'کمر گود می شود',
+               title: 'کمر گود',
                direction: 'vertical'
             },
          ],

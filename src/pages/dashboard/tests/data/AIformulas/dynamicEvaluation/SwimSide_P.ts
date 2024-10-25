@@ -5,8 +5,8 @@ import DistanceType from "../../../../../../types/DistanceType";
 
 function SwimSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvasSize?: { width: number, height: number }) {
     const values = {
-        'گود شدن  کمر': "0",
-        'صاف شدن کمر': "0",
+        'کمر گود': "0",
+        'کمر صاف': "0",
         'بالا آمدن شانه': "0",
         'هایپراکستنشن گردن': "0"
     }
@@ -22,10 +22,10 @@ function SwimSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editCa
     const shoulderAsisLandmark = 180 - Math.abs(degreeTwoPoints(landmarks[shoulderLandmark], landmarks[asisLandmark]));
     const asisKneeLandmark = Math.abs(degreeTwoPoints(landmarks[asisLandmark], landmarks[kneeLandmark]));
     const back = shoulderAsisLandmark + asisKneeLandmark;
-    if (back < 150) values["صاف شدن کمر"] = "1";
-    if (back > 180) values["گود شدن  کمر"] = "1";
+    if (back < 150) values["کمر صاف"] = "1";
+    if (back > 180) values["کمر گود"] = "1";
 
-    const backValue = Number(values["صاف شدن کمر"]) || Number(values["گود شدن  کمر"]);
+    const backValue = Number(values["کمر صاف"]) || Number(values["کمر گود"]);
     degrees.push({
         landmarksUsed: [shoulderLandmark, asisLandmark, kneeLandmark],
         degree: back,

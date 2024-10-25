@@ -1,18 +1,25 @@
 import { Tab, Tabs, tabsClasses } from "@mui/material";
 import { TestObj } from "../../../../types/TestsTypes";
-import { FieldValues, UseFormSetValue } from "react-hook-form";
+import useAIStore from "../store/AIStore";
+import useFormDataStore from "../store/formDataStore";
 
 type BottomBtnsProps = {
    testsArr: TestObj[],
-   page: string,
-   setValue: UseFormSetValue<FieldValues>
 }
 
-function BottomBtns({ testsArr, page, setValue }: BottomBtnsProps) {
+function BottomBtns({ testsArr }: BottomBtnsProps) {
+   const { currentTestName, setCurrentTestName } = useFormDataStore(state => ({ currentTestName: state.currentTestName, setCurrentTestName: state.setCurrentTestName }));
+   const updateTestsData = useAIStore(state => state.updateTestsData);
+
+   const clickHandler = (testName: string) => {
+      updateTestsData(currentTestName!, testName);
+      setCurrentTestName(testName);
+   };
+
    return (
       <div className="w-full px-4 sm:container fixed z-20 bottom-4 left-1/2 -translate-x-1/2 bg-primary">
          <Tabs
-            value={page}
+            value={currentTestName}
             variant="scrollable"
             scrollButtons
             allowScrollButtonsMobile
@@ -32,7 +39,7 @@ function BottomBtns({ testsArr, page, setValue }: BottomBtnsProps) {
                      label={test.testName}
                      type="submit"
                      href=""
-                     onClick={() => setValue("nextPage", test.testName)}
+                     onClick={() => clickHandler(test.testName)}
                      className="!text-sm lg:!text-base"
                   />
                ))

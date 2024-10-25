@@ -33,7 +33,8 @@ function GFormNames(username: string | undefined) {
          })
 
          return formsArr
-      }
+      },
+      refetchOnWindowFocus: false
    })
 
    return { data, isError, isPending }

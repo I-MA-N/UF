@@ -29,19 +29,19 @@ const testsData = {
    },
    'سابقه بیماری': {
       testSubTitle: 'آیا سابقه بیماری دارید؟',
-      testPattern: "MultipleChoice" as testPatternTypes,
+      testPattern: "CheckBox" as testPatternTypes,
       testData: diseaseBackgroundData,
       testClassName: 'grid grid-cols-3 lg:grid-cols-4 gap-6'
    },
    'درد و اختلال': {
       testSubTitle: 'آیا در یک سال گذشته درد و اختلالی در بدن خود داشته اید؟',
-      testPattern: "MultipleChoice" as testPatternTypes,
+      testPattern: "CheckBox" as testPatternTypes,
       testData: hasPainData,
       testClassName: 'grid grid-cols-3 lg:grid-cols-4 gap-6'
    },
    'آمادگی فعالیت': {
       testSubTitle: '',
-      testPattern: "MultipleChoice" as testPatternTypes,
+      testPattern: "CheckBox" as testPatternTypes,
       testData: activityReadinessData,
       testClassName: 'grid grid-cols-1 gap-8'
    },
