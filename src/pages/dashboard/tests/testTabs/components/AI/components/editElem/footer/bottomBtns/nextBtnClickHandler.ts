@@ -1,13 +1,13 @@
 import JSZip from "jszip";
 import SectionNames from "../../../../../../../../../../types/SectionNames";
 import useAIStore from "../../../../../../../store/AIStore";
-import useFormStore from "../../../../../../../store/formStore";
 import usePhotoStore from "../../../../../../../store/photoStore";
 import { DrawingUtils, NormalizedLandmark } from "@mediapipe/tasks-vision";
 import DistanceType from "../../../../../../../../../../types/DistanceType";
 import { drawDegree, drawDegreeDistance, drawDistance } from "../../../../../../../../../../utils/AIFuncs";
 import DegreeDistanceType from "../../../../../../../../../../types/DegreeDistanceType";
 import DegreeType from "../../../../../../../../../../types/DegreeType";
+import useFormDataStore from "../../../../../../../store/formDataStore";
 
 function nextBtnClickHandler(
    landmarks: NormalizedLandmark[],
@@ -24,11 +24,11 @@ function nextBtnClickHandler(
 
          const canvas = document.createElement("canvas");
          const finalCanvas = document.createElement("canvas");
-         const isSectionDynamic = "src" in currentSection.questions[0];
+         const isDynamicEvaluation = "src" in currentSection.questions[0];
 
-         setInputValues(photoResult.values);
-         
-         drawResultsOnCanvas(canvas, img, photoResult, isSectionDynamic, landmarks);
+         setInputValues(photoResult.values, currentSection.nameFA, isDynamicEvaluation);
+
+         drawResultsOnCanvas(canvas, img, photoResult, isDynamicEvaluation, landmarks);
 
          cropCanvas(landmarks, finalCanvas, canvas);
 
@@ -43,14 +43,14 @@ function nextBtnClickHandler(
    }
 }
 
-function setInputValues(values: {}) {
-   const { updateFormData, setValue } = useFormStore.getState();
-   if (setValue) {
-      Object.entries(values).forEach(([key, value]) => {
-         setValue(key, value);
-      })
-      updateFormData();
-   }
+function setInputValues(
+   values: { [k: string]: string },
+   sectionNameFA: string,
+   isDynamicEvaluation: boolean
+) {
+   const setAIValues = useFormDataStore.getState().setAIValues;
+
+   setAIValues(values, sectionNameFA, isDynamicEvaluation);
 }
 
 function drawResultsOnCanvas(
@@ -60,7 +60,7 @@ function drawResultsOnCanvas(
       values: {};
       degrees: DegreeType[];
    },
-   isSectionDynamic: boolean,
+   isDynamicEvaluation: boolean,
    landmarks: NormalizedLandmark[]
 ) {
    const ctx = canvas.getContext("2d");
@@ -72,14 +72,14 @@ function drawResultsOnCanvas(
 
       const drawingUtils = new DrawingUtils(ctx);
 
-      result.degrees.forEach(degree => drawDegree(landmarks, degree, drawingUtils, ctx, canvas.width, canvas.height, isSectionDynamic));
+      result.degrees.forEach(degree => drawDegree(landmarks, degree, drawingUtils, ctx, canvas.width, canvas.height, isDynamicEvaluation));
       if ("distances" in result) {
          const distances = result.distances as DistanceType[];
-         distances.forEach(distance => drawDistance(landmarks, distance, drawingUtils, ctx, canvas.width, canvas.height, isSectionDynamic));
+         distances.forEach(distance => drawDistance(landmarks, distance, drawingUtils, ctx, canvas.width, canvas.height, isDynamicEvaluation));
       }
       if ("degreesDistances" in result) {
          const degreesDistances = result.degreesDistances as DegreeDistanceType[];
-         degreesDistances.forEach(degreeDistance => drawDegreeDistance(landmarks, degreeDistance, drawingUtils, ctx, canvas.width, canvas.height, isSectionDynamic));
+         degreesDistances.forEach(degreeDistance => drawDegreeDistance(landmarks, degreeDistance, drawingUtils, ctx, canvas.width, canvas.height, isDynamicEvaluation));
       }
    }
 

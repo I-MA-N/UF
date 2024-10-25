@@ -151,7 +151,6 @@ const staticEvaluation = [
          ],
          photoFn: Front_P,
          cropFn: Front_C,
-         sampleImageSrc: '',
          zipFile: undefined as string | null | undefined,
       },
       {
@@ -160,22 +159,6 @@ const staticEvaluation = [
          questions: [
             {
                id: 18,
-               title: 'انحراف جانبی ستون فقرات',
-               keys: [5, 3, 1],
-               values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/18-5.png', '/staticEvaluation/18-3.png', '/staticEvaluation/18-1.png'],
-               direction: 'horizental'
-            },
-            {
-               id: 19,
-               title: 'کتف بالدار',
-               keys: [5, 3, 1],
-               values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/19-5.png', '/staticEvaluation/19-3.png', '/staticEvaluation/19-1.png'],
-               direction: 'vertical'
-            },
-            {
-               id: 20,
                title: 'چرخش داخلی مچ پا راست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
@@ -183,7 +166,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               id: 21,
+               id: 19,
                title: 'چرخش خارجی مچ پا راست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
@@ -191,7 +174,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               id: 22,
+               id: 20,
                title: 'چرخش داخلی مچ پا چپ',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
@@ -199,11 +182,27 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               id: 23,
+               id: 21,
                title: 'چرخش خارجی مچ پا چپ',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/21-5.png', '/staticEvaluation/21-3.png', '/staticEvaluation/21-1.png'],
+               direction: 'vertical'
+            },
+            {
+               id: 22,
+               title: 'انحراف جانبی ستون فقرات',
+               keys: [5, 3, 1],
+               values: ['طبیعی', 'خفیف', 'شدید'],
+               images: ['/staticEvaluation/18-5.png', '/staticEvaluation/18-3.png', '/staticEvaluation/18-1.png'],
+               direction: 'horizental'
+            },
+            {
+               id: 23,
+               title: 'کتف بالدار',
+               keys: [5, 3, 1],
+               values: ['طبیعی', 'خفیف', 'شدید'],
+               images: ['/staticEvaluation/19-5.png', '/staticEvaluation/19-3.png', '/staticEvaluation/19-1.png'],
                direction: 'vertical'
             },
          ],
@@ -265,22 +264,6 @@ const staticEvaluation = [
             },
             {
                id: 30,
-               title: 'شکم برآمده',
-               keys: [5, 3, 1],
-               values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/30-5.png', '/staticEvaluation/30-3.png', '/staticEvaluation/30-1.png'],
-               direction: 'vertical'
-            },
-            {
-               id: 31,
-               title: 'پشت تابدار',
-               keys: [5, 3, 1],
-               values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/31-5.png', '/staticEvaluation/31-3.png', '/staticEvaluation/31-1.png'],
-               direction: 'vertical'
-            },
-            {
-               id: 32,
                title: 'زانوی عقب رفته',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
@@ -288,11 +271,27 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               id: 33,
+               id: 31,
                title: 'زانوی خمیده',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/33-5.png', '/staticEvaluation/33-3.png', '/staticEvaluation/33-1.png'],
+               direction: 'vertical'
+            },
+            {
+               id: 32,
+               title: 'پشت تابدار',
+               keys: [5, 3, 1],
+               values: ['طبیعی', 'خفیف', 'شدید'],
+               images: ['/staticEvaluation/31-5.png', '/staticEvaluation/31-3.png', '/staticEvaluation/31-1.png'],
+               direction: 'vertical'
+            },
+            {
+               id: 33,
+               title: 'شکم برآمده',
+               keys: [5, 3, 1],
+               values: ['طبیعی', 'خفیف', 'شدید'],
+               images: ['/staticEvaluation/30-5.png', '/staticEvaluation/30-3.png', '/staticEvaluation/30-1.png'],
                direction: 'vertical'
             },
          ],

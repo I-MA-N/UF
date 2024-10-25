@@ -4,19 +4,19 @@ import DegreeType from "../../../../../../types/DegreeType";
 
 function WalkingBack_P(landmarks: NormalizedLandmark[]) {
     const values = {
-        'بالاآمدن ران': "0",
+        'بالا آمدن ران': "0",
         'چرخش داخلی یا خارجی پا راست': '0',
         'چرخش داخلی یا خارجی پا چپ': '0',
     }
     const degrees: DegreeType[] = [];
 
     const asis = 180 - Math.abs(degreeTwoPoints(landmarks[23], landmarks[24]));
-    if (asis >= 2.5) values["بالاآمدن ران"] = "1";
+    if (asis >= 2.5) values["بالا آمدن ران"] = "1";
 
     degrees.push({
         landmarksUsed: [23, 24],
         degree: asis,
-        value: values["بالاآمدن ران"]
+        value: values["بالا آمدن ران"]
     })
 
     const footRight = Math.abs(degreeTwoPoints(landmarks[30], landmarks[32]));

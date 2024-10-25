@@ -463,7 +463,7 @@ export const blurImage = async (zipFile: string) => {
             
                            zip.generateAsync({ type: 'base64' })
                               .then(newZipFile => resolve(newZipFile))
-                              .catch(() => reject("ذخیره سازی عکس ها با مشکل مواجه شد!"))
+                              .catch(() => reject())
                         }
                      };
                      reader.readAsDataURL(blob);

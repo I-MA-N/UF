@@ -7,7 +7,7 @@ function SquatSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editC
         'خمیدگی به جلو': "0",
         'دست ها در جلو': "0",
         'کمر صاف': "0",
-        'گود شدن کمر': "0",
+        'کمر گود': "0",
     }
     const degrees: DegreeType[] = [];
 

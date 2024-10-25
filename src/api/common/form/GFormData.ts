@@ -10,7 +10,8 @@ function GFormData(username: string | undefined, formname: string | undefined) {
          const req = await axios.post(`${import.meta.env.VITE_ENDPOINT}/form-info/${username}`, formData);
 
          return req.data
-      }
+      },
+      refetchOnWindowFocus: false,
    })
 
    return { data, isError, isPending }
