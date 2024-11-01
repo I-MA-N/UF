@@ -23,7 +23,7 @@ function TestsFirstLoad() {
    const { resetData, resetSections } = useAIStore(state => ({ resetData: state.resetData, resetSections: state.resetSections }));
    const resetPhotoStore = usePhotoStore(state => state.reset);
    const { setFormData, setMessage } = useFormDataStore(state => ({ setFormData: state.setFormData, setMessage: state.setMessage }));
-   
+
    useEffect(() => {
       setModel();
 
@@ -36,31 +36,44 @@ function TestsFirstLoad() {
    }, [])
 
    useEffect(() => {
-      setFormData(formData);
+      if (formData && typeof formData !== "string") setFormData(formData);
    }, [formData])
 
-   if (formNamesPending && formDataPending) return <Loading />
+   if (formNamesPending && formDataPending) {
+      return <Loading />
+   }
 
-   if (typeof formNames === "string") return <Container>
-      <h1 className="mb-6 lg:text-lg text-center">{formNames}</h1>
-      <PrevBtn type="button" onClick={() => navigate(-1)} />
-   </Container>
+   if (typeof formNames === "string") {
+      return <Container>
+         <h1 className="mb-6 lg:text-lg text-center">{formNames}</h1>
+         <PrevBtn type="button" onClick={() => navigate(-1)} />
+      </Container>
+   }
+
+   if (typeof formData === "string") {
+      return <Container>
+         <h1 className="mb-6 lg:text-lg text-center">{formData}</h1>
+         <PrevBtn type="button" onClick={() => navigate(-1)} />
+      </Container>
+   }
 
    if (role && username && formname && formData && formNames) {
       const formObj = formNames?.find(form => form.formName === formname);
       const testsArr = formObj?.formTests.filter(test => test.testAccess.includes(role));
 
-      if (formObj && testsArr && formData?.access !== 'false') {
+      if (formObj && testsArr) {
          const arrangedArr = arrangeTestsArr(testsArr);
 
          return (
-            <Tests username={username} formname={formname} testsArr={arrangedArr} />
+            <Tests testsArr={arrangedArr} />
          )
       } else {
-         return <Container>
-            <h1 className="mb-6 lg:text-lg text-center">اطلاعاتی برای این فرم پیدا نشد!</h1>
-            <PrevBtn type="button" onClick={() => navigate('/simpleuser/dashboard/forms')} />
-         </Container>
+         return (
+            <Container>
+               <h1 className="mb-6 lg:text-lg text-center">اطلاعاتی برای این فرم پیدا نشد!</h1>
+               <PrevBtn type="button" onClick={() => navigate('/simpleuser/dashboard/forms')} />
+            </Container>
+         )
       }
    }
 }

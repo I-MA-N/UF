@@ -1,4 +1,4 @@
-const physicalPreparationData = [
+const physicalReadinessData = [
    {
       id: 1,
       title: 'در آمادگی بدنی خوبی به سر می برم',
@@ -73,4 +73,4 @@ const physicalPreparationData = [
    },
 ]
 
-export default physicalPreparationData;
+export default physicalReadinessData;

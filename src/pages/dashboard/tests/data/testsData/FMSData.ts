@@ -1,4 +1,4 @@
-const FMS = [
+const FMSData = [
    {
       id: 1,
       title: 'اسکات کامل',
@@ -97,4 +97,4 @@ const FMS = [
    },
 ]
 
-export default FMS;
+export default FMSData;

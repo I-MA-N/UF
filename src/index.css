@@ -112,24 +112,14 @@
         @apply fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-transparent backdrop-blur-md z-50;
     }
 
-    .exit-btn {
-        @apply flex items-center text-sm lg:text-lg border border-yellow rounded-[48px] transition-all duration-500 z-30;
+    .header-section-btn {
+        @apply flex items-center text-sm lg:text-lg border rounded-[48px] transition-all duration-500 z-30;
     }
-    .exit-btn-ellipse {
-        @apply h-12 lg:h-14 gap-2 px-8 lg:px-12 text-yellow;
+    .header-section-btn-ellipse {
+        @apply h-12 lg:h-14 gap-2 px-4 xs:px-8 lg:px-12;
     }
-    .exit-btn-circle {
-        @apply fixed top-6 right-4 justify-center border-2 bg-primary text-yellow size-12 lg:size-14;
-    }
-
-    .save-btn {
-        @apply flex items-center text-sm lg:text-lg bg-secondary text-white border border-secondary rounded-[48px] transition-all duration-500 z-30;
-    }
-    .save-btn-ellipse {
-        @apply h-12 lg:h-14 gap-2 px-8 lg:px-12;
-    }
-    .save-btn-circle {
-        @apply fixed top-20 lg:top-[5.5rem] right-4 justify-center size-12 lg:size-14;
+    .header-section-btn-circle {
+        @apply fixed top-6 right-4 justify-center size-12 lg:size-14 border-2;
     }
 
     .clicked-animation {

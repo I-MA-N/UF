@@ -1,45 +1,53 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom";
-import ReportsMainInfo from "./components/ReportsMainInfo";
-import ReportsButtons from "./components/ReportsButtons";
+import { useCallback, useMemo, useState } from "react"
 import UserData from "../../../types/UserData";
-
-type ReportObj = {
-   reportName: string;
-   reportJsx: JSX.Element;
-}
+import FormDataType from "../../../types/FormDataType";
+import { REPORTS_ARR_Type } from "./analysis/REPORTS_ARR";
+import HeaderSection from "../common/components/headerSection/HeaderSection";
+import FooterSection from "../common/components/footerSection/FooterSection";
 
 type ReportsProps = {
+   reportsArr: REPORTS_ARR_Type,
    userData: UserData,
-   reportsArr: ReportObj[],
-   formData: any
+   formData: FormDataType
 }
 
-function Reports({ userData, reportsArr, formData }: ReportsProps) {
-   const navigate = useNavigate();
+function Reports({ reportsArr, userData, formData }: ReportsProps) {
+   const [currentReportName, setCurrentReportName] = useState(reportsArr[0].name);
 
-   const [page, setPage] = useState(reportsArr[0]);
+   const currentReport = useMemo(() => (
+      reportsArr.find(report => report.name === currentReportName)
+   ), [currentReportName])
 
-   return (
-      <div className="pt-32 lg:pt-36">
-         <button
-            className="btn w-fit h-auto p-3 gap-3 mx-auto"
-            onClick={() => navigate(-1)}
-         >
-            برگشت
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="11" viewBox="0 0 16 11" fill="none">
-               <path d="M5.375 9.75L1 5.375M1 5.375L15 5.375M1 5.375L5.375 1" stroke="#083C5A" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-         </button>
+   const clickHandler = useCallback((page: string) => {
+      setCurrentReportName(page);
+   }, [])
 
-         <section className="container my-10 space-y-6">
-            <ReportsMainInfo userData={userData} statusBodyInfo={formData['وضعیت بدنی']} />
-            <ReportsButtons reportsArr={reportsArr} page={page} setPage={setPage} />
+   if (currentReport) return (
+      <div className="container pt-24 lg:pt-32 pb-16 lg:pb-24">
+         <HeaderSection>
+            <HeaderSection.ExitBtn exitModalText="آیا از خروج مطمئنید؟" />
+            <HeaderSection.Title text={currentReportName} />
+            <HeaderSection.ActionBtn hidden />
+         </HeaderSection>
+
+         <section className="overflow-x-auto overflow-y-hidden text-xs/6 lg:text-base mt-16 lg:mt-20">
+            <div className="min-w-[600px]">
+               <div className="flex justify-center mb-6">
+                  <span className="text-yellow text-sm lg:text-base border-b pb-1">
+                     <span className="font-Estedad-Black">نکته: </span>
+                     مکان هایی که با ' - ' پر شده اند، داده مورد نیاز آنها وجود ندارد.
+                  </span>
+               </div>
+
+               {currentReport.generateReport(formData, userData.gender === 'male' ? 2 : 1).jsx}
+            </div>
          </section>
 
-         <section className="container mx-auto min-w-[600px] text-xs/6 lg:text-base pl-4 pb-12">
-            {page?.reportJsx}
-         </section>
+         <FooterSection
+            pages={reportsArr.map(report => report.name)}
+            currentPage={currentReportName}
+            clickHandler={clickHandler}
+         />
       </div>
    )
 }

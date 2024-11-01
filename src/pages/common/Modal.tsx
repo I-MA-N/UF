@@ -1,8 +1,12 @@
 import { PropsWithChildren } from "react";
 
-function Modal({ children }: PropsWithChildren) {
+type ModalProps = PropsWithChildren & {
+   className?: string
+}
+
+function Modal({ children, className }: ModalProps) {
    return (
-      <div className="fixed top-0 left-0 size-full flex flex-col justify-center items-center bg-transparent backdrop-blur-md z-50">
+      <div className={`fixed top-0 left-0 size-full flex flex-col justify-center items-center bg-transparent backdrop-blur-md z-50 ${className || ""}`}>
          <div className="min-w-72 xs:min-w-80">
             {children}
          </div>

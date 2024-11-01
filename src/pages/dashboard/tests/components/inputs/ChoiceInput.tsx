@@ -7,9 +7,10 @@ type ChoiceInputProps = {
    value: string | undefined,
    keys: number[],
    values: string[],
+   inputKey?: string
 }
 
-function ChoiceInput({ index, title, value, keys, values }: ChoiceInputProps) {   
+function ChoiceInput({ index, title, value, keys, values, inputKey }: ChoiceInputProps) {   
    const setInputValue = useFormDataStore(state => state.setInputValue);
 
    const btnWidth = useMemo(() => {  
@@ -45,7 +46,10 @@ function ChoiceInput({ index, title, value, keys, values }: ChoiceInputProps) {
                         type="button"
                         className={`text-[8px] lg:text-[10px]/[17px] lg:text-balance transition-colors duration-200 whitespace-nowrap overflow-x-auto ${value === key.toString() ? 'text-white' : ''}`}
                         style={{ width: btnWidth }}
-                        onClick={() => setInputValue(title, key.toString())}
+                        onClick={() => {
+                           // 'inputKey' prop used for 'lifeQuality' test, I use id for each input on that test
+                           setInputValue(inputKey || title, key.toString())
+                        }}
                      >
                         {values[index]}
                      </button>

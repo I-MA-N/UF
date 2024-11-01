@@ -22,11 +22,13 @@ import calorieAmountData from "../../common/analysis/data/calorieAmountData";
 import calorieAmountJsx from "../../common/analysis/jsx/calorieAmountJsx";
 import questionariesData from "../../common/analysis/data/questionariesData";
 import questionariesJsx from "./jsx/questionariesJsx";
+import FormDataType from "../../../../types/FormDataType";
 
-function generateReportsArr(formData: any, gender: string) {
+function generateReportsArr(formData: FormDataType, gender: string) {
    const reportsArr = [];
 
    if (formData['وضعیت بدنی'] && !Object.values(formData['وضعیت بدنی']).filter(value => value === "").length) {
+      const test = formData['وضعیت بدنی']
       const reportData = physicalIndexData(formData['وضعیت بدنی'], gender === 'male' ? 2 : 1);
       const reportJsx = physicalIndexJsx(reportData, formData['وضعیت بدنی'])
 

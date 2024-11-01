@@ -65,13 +65,14 @@ function generateTestInputs({ formData, testPattern, testData }: generateTestInp
                <h3 className="mb-3 text-center text-sm lg:text-base">{section.sectionTitle}</h3>
                <div className="flex gap-x-8 gap-y-4 lg:gap-y-8 items-center justify-center flex-wrap">
                   {
-                     section.sectionQuestions.map((input: any, index: number) => (
+                     section.sectionQuestions.map((input: any) => (
                         <ChoiceInput
-                           index={index + 1}
+                           index={input.id}
                            title={input.title}
-                           value={formData?.[input.title]?.value}
+                           value={formData?.[input.id]?.value}
                            keys={input.keys}
                            values={input.values}
+                           inputKey={input.id}
                         />
                      ))
                   }

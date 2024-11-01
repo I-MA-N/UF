@@ -1,4 +1,4 @@
-const jobPerformance = [
+const jobPerformanceData = [
    {
       id: 1,
       title: 'انضباط و مقررات اداری را رعایت می کنم',
@@ -91,4 +91,4 @@ const jobPerformance = [
    }
 ]
 
-export default jobPerformance;
+export default jobPerformanceData;

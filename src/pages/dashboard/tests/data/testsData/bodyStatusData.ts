@@ -1,4 +1,4 @@
-const bodyStatus = {
+const bodyStatusData = {
    'سن': 'به عدد',
    'وزن': 'KG',
    'قد': 'Cm',
@@ -11,4 +11,4 @@ const bodyStatus = {
    'دور بازو': 'Cm',
 };
 
-export default bodyStatus;
+export default bodyStatusData;

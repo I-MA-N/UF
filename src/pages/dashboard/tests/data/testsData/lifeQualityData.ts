@@ -1,4 +1,4 @@
-const lifeQuality = [
+const lifeQualityData = [
    {
       sectionTitle: 'سوالات زیر به منظور بررسی نظر شما در مورد وضعیت سلامتی خودتان طراحی شده است',
       sectionQuestions: [
@@ -247,4 +247,4 @@ const lifeQuality = [
    }
 ]
 
-export default lifeQuality;
+export default lifeQualityData;

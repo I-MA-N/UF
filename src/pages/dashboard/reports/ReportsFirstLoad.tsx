@@ -3,23 +3,20 @@ import Loading from "../../common/Loading";
 import PrevBtn from "../../common/PrevBtn";
 import Reports from "./Reports";
 import GUserData from "../../../api/common/GUserData";
-import generateReportsArr from "./analysis/generateReportsArr";
 import GFormData from "../../../api/common/form/GFormData";
 import Container from "../../common/Container";
+import GFormNames from "../../../api/common/form/GFormNames";
+import filterReportsArr from "../../../utils/filterReportsArr";
 
 function ReportsFirstLoad() {
    const { formname, username } = useParams();
-   const { data: formData, isError: formDataErr, isPending: formDataPending } = GFormData(username, formname);
-   const { data, isError, isPending } = GUserData(username);
+   const { data: formData, isPending: formDataPending } = GFormData(username, formname);
+   const { data: formNames, isPending: formNamesPending } = GFormNames(username);
+   const { data: userData, isPending: userDataPending } = GUserData(username);
    const navigate = useNavigate();
 
-   if (isPending || formDataPending) return <Loading />;
-
-   if (isError || formDataErr || !data || !formData) {
-      return <Container>
-         <h1 className="mb-6 lg:text-lg text-center">در ارتباط با سرور مشکلی رخ داده است!</h1>
-         <PrevBtn type="button" onClick={() => navigate(-1)} />
-      </Container>
+   if (userDataPending || formDataPending || formNamesPending) {
+      return <Loading />
    }
 
    if (typeof formData === "string") {
@@ -29,17 +26,32 @@ function ReportsFirstLoad() {
       </Container>
    }
 
-   const reportsArr = generateReportsArr(formData, data.gender);
-   if (!reportsArr.length) {
+   if (typeof formNames === "string") {
       return <Container>
-         <h1 className="mb-6 lg:text-lg text-center">اطلاعاتی برای این فرم پیدا نشد!</h1>
+         <h1 className="mb-6 lg:text-lg text-center">{formNames}</h1>
          <PrevBtn type="button" onClick={() => navigate(-1)} />
       </Container>
    }
 
-   return (
-      <Reports userData={data} reportsArr={reportsArr} formData={formData} />
-   );
+   if (formData && formNames && userData?.access === 'true') {
+      const filteredReports = filterReportsArr(formNames, formname);
+
+      if (filteredReports && filteredReports.length > 0) return (
+         <Reports reportsArr={filteredReports} userData={userData} formData={formData} />
+      )
+
+      return (
+         <Container>
+            <h1 className="mb-6 lg:text-lg text-center">تست های مورد نیاز برای تهیه گزارش در این فرم وجود ندارند!</h1>
+            <PrevBtn type="button" onClick={() => navigate(-1)} />
+         </Container>
+      )
+   } else {
+      return <Container>
+         <h1 className="mb-6 lg:text-lg text-center">در ارتباط با سرور مشکلی رخ داده است!</h1>
+         <PrevBtn type="button" onClick={() => navigate(-1)} />
+      </Container>
+   }
 }
 
 export default ReportsFirstLoad;

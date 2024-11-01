@@ -1,4 +1,4 @@
-const activityRate = [
+const activityRateData = [
    {
       id: 1,
       text1: 'بدون تحرک',
@@ -26,4 +26,4 @@ const activityRate = [
    },
 ]
 
-export default activityRate;
+export default activityRateData;

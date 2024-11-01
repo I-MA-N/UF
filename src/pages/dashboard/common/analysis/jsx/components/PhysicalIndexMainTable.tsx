@@ -1,43 +1,62 @@
+import { useCallback } from "react";
+import FormDataType from "../../../../../../types/FormDataType";
 import img from "/images/reportsImages/physicalndex/mainInfo.png"
 
 type PhysicalIndexMainTableProps = {
-   statusBody: any
+   statusBody: FormDataType[""]
 }
 
 function PhysicalIndexMainTable({ statusBody }: PhysicalIndexMainTableProps) {
+   const generateValue = useCallback((value: string | undefined) => {
+      if (value) return Number(value);
+      return '-';
+   }, [])
+
    return (
       <table className="w-full text-center border border-white" cellPadding="6px">
          <tbody>
             <tr>
-               <td>دور گردن</td>
-               <td>{Number(statusBody['دور گردن']).toFixed(2)}</td>
-               <th rowSpan={8} className="w-[180px] p-0.5 bg-[#fff]">
+               <th colSpan={2}>سن</th>
+               <td>{generateValue(statusBody?.['سن']?.value)}</td>
+            </tr>
+            <tr>
+               <th colSpan={2}>قد</th>
+               <td>{generateValue(statusBody?.['قد']?.value)}</td>
+            </tr>
+            <tr>
+               <th colSpan={2}>وزن</th>
+               <td>{generateValue(statusBody?.['وزن']?.value)}</td>
+            </tr>
+            <tr>
+               <th>دور گردن</th>
+               <td>{generateValue(statusBody?.['دور گردن']?.value)}</td>
+               <td rowSpan={8} className="w-[180px] p-0.5 bg-[#fff]">
                   <img src={img} className="w-full" alt="report-img" />
-               </th>
+               </td>
             </tr>
             <tr>
-               <td>عرض شانه</td>
-               <td>{Number(statusBody['عرض شانه']).toFixed(2)}</td>
+               <th>عرض شانه</th>
+               <td>{generateValue(statusBody?.['عرض شانه']?.value)}</td>
             </tr>
             <tr>
-               <td>دور سینه</td>
-               <td>{Number(statusBody['دور سینه']).toFixed(2)}</td>
+               <th>دور سینه</th>
+               <td>{generateValue(statusBody?.['دور سینه']?.value)}</td>
             </tr>
             <tr>
-               <td>دور کمر</td>
-               <td>{Number(statusBody['دور کمر']).toFixed(2)}</td>
+               <th>دور کمر</th>
+               <td>{generateValue(statusBody?.['دور کمر']?.value)}</td>
             </tr>
             <tr>
-               <td>دور باسن</td>
-               <td>{Number(statusBody['دور باسن']).toFixed(2)}</td>
+               <th>دور باسن</th>
+               <td>{generateValue(statusBody?.['دور باسن']?.value)}</td>
             </tr>
             <tr>
-               <td>دور بازو</td>
-               <td>{Number(statusBody['دور بازو']).toFixed(2)}</td>
+               <th>دور بازو</th>
+               <td>{generateValue(statusBody?.['دور بازو']?.value)}</td>
             </tr>
             <tr>
-               <td>دور ران</td>
-               <td>{Number(statusBody['دور ران']).toFixed(2)}</td>
+               <th>دور ران</th>
+               <td>{generateValue(statusBody?.['دور ران']?.value)}</td>
             </tr>
          </tbody>
       </table>

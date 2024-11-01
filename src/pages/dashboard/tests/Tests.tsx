@@ -1,35 +1,42 @@
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import { TestObj } from "../../../types/TestsTypes";
-import TopBtns from "./components/TopBtns";
+import HeaderSection from "../common/components/headerSection/HeaderSection";
 import testsData from "./data/testsData";
 import generateTestInputs from "./data/generateTestInputs";
-import BottomBtns from "./components/BottomBtns";
 import MessageModal from "./components/MessageModal";
 import TestTabs from "./testTabs/TestTabs";
 import useFormDataStore from "./store/formDataStore";
+import SaveBtn from "./components/saveBtn/SaveBtn";
+import FooterSection from "../common/components/footerSection/FooterSection";
+import useAIStore from "./store/AIStore";
 
 type TestsProps = {
-   username: string,
-   formname: string,
    testsArr: TestObj[],
 }
 
-function Tests({ username, formname, testsArr }: TestsProps) {
+function Tests({ testsArr }: TestsProps) {
    const { data, currentTestName, setCurrentTestName } = useFormDataStore(state => ({ data: state.data, currentTestName: state.currentTestName, setCurrentTestName: state.setCurrentTestName }));
-   
+   const updateTestsData = useAIStore(state => state.updateTestsData);
+
    useEffect(() => {
       setCurrentTestName(testsArr[0].testName);
    }, [])
 
+   const clickHandler = useCallback((page: string) => {
+      updateTestsData(currentTestName!, page);
+      setCurrentTestName(page);
+   }, [])
+
    if (currentTestName) return (
       <>
-         <div className="px-4 sm:container pt-24 lg:pt-32">
-            <div className="w-full relative pt-24 lg:pt-32 pb-16 lg:pb-24">
-               <TopBtns
-                  username={username}
-                  formname={formname}
-               />
+         <div className="px-4 sm:container pt-24 lg:pt-32 pb-16 lg:pb-24">
+            <HeaderSection>
+               <HeaderSection.ExitBtn exitModalText="آیا از خروج مطمئنید؟ (اگر ذخیره نکرده باشید، تغییرات شما اعمال نمی شود)" />
+               <HeaderSection.Title text={currentTestName} />
+               <SaveBtn />
+            </HeaderSection>
 
+            <section className="mt-16 lg:mt-20">
                {
                   testsData[currentTestName as keyof typeof testsData].testSubTitle &&
                   <div className="relative">
@@ -55,9 +62,13 @@ function Tests({ username, formname, testsArr }: TestsProps) {
                         }
                      </div>
                }
+            </section>
 
-               <BottomBtns testsArr={testsArr} />
-            </div>
+            <FooterSection
+               pages={testsArr.map(test => test.testName)}
+               currentPage={currentTestName}
+               clickHandler={clickHandler}
+            />
          </div>
 
          <MessageModal />
