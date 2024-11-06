@@ -9,16 +9,15 @@ function physicalIndex(formData: FormDataType, gender: number) {
    let compositionData = null;
 
    if (physicalData.fatPercentage !== null && physicalData.bestWeight !== null && statusBodyData?.["وزن"]?.value) {
-      compositionData = bodyCompositionData(physicalData.fatPercentage, physicalData.bestWeight, Number(statusBodyData["وزن"].value), gender);
+      compositionData = bodyCompositionData(
+         physicalData.fatPercentage, physicalData.bestWeight,
+         Number(statusBodyData["وزن"].value), gender
+      );
    }
 
-   return {
-      jsx: physicalIndexJsx(statusBodyData, physicalData, compositionData),
-      data: {
-         physicalIndexData: physicalData,
-         bodyCompositionData: compositionData
-      }
-   }
+   return (
+      physicalIndexJsx(statusBodyData, physicalData, compositionData)
+   );
 }
 
 export default physicalIndex;

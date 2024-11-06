@@ -5,10 +5,7 @@ import calorieAmountAvgJsx from "./calorieAmountAvgJsx";
 function calorieAmount(usersData: OrgMemberData[]) {
    const data = calorieAmountAvg(usersData);
 
-   return {
-      jsx: calorieAmountAvgJsx(data),
-      data
-   }
+   return calorieAmountAvgJsx(data);
 }
 
 export default calorieAmount;

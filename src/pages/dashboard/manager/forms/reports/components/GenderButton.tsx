@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
-import HeaderSection from "../../../../../common/components/headerSection/HeaderSection";
+import HeaderSection from "../../../../common/components/headerSection/HeaderSection";
 import GenderModal from "./GenderModal";
-import GenderStrings from "../../../../../../../types/GenderStrings";
+import GenderStrings from "../../../../../../types/GenderStrings";
 
 type GenderButtonProps = {
    gender: GenderStrings,

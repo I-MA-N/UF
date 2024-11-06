@@ -5,10 +5,7 @@ import questionariesAvgJsx from "./questionariesAvgJsx";
 function questionaries(usersData: OrgMemberData[]) {
    const data = questionariesAvg(usersData);
 
-   return {
-      jsx: questionariesAvgJsx(data),
-      data
-   }
+   return questionariesAvgJsx(data);
 }
 
 export default questionaries;

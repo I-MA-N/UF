@@ -39,7 +39,7 @@ function Reports({ reportsArr, userData, formData }: ReportsProps) {
                   </span>
                </div>
 
-               {currentReport.generateReport(formData, userData.gender === 'male' ? 2 : 1).jsx}
+               {currentReport.generateReport(formData, userData.gender === 'male' ? 2 : 1)}
             </div>
          </section>
 

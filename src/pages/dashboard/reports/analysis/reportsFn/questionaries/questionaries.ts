@@ -5,10 +5,7 @@ import questionariesJsx from "./questionariesJsx";
 function questionaries(formData: FormDataType) {
    const data = questionariesData(formData);
 
-   return {
-      jsx: questionariesJsx(data),
-      data
-   }
+   return questionariesJsx(data);
 }
 
 export default questionaries;

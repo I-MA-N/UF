@@ -1,5 +1,5 @@
-import GenderStrings from "../../../../../../../types/GenderStrings";
-import Modal from "../../../../../../common/Modal";
+import GenderStrings from "../../../../../../types/GenderStrings";
+import Modal from "../../../../../common/Modal";
 
 type GenderModalProps = {
    gender: GenderStrings,

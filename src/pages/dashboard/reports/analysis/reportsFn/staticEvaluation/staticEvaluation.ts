@@ -5,10 +5,7 @@ import staticEvaluationJsx from "./staticEvaluationJsx";
 function staticEvaluation(formData: FormDataType) {
    const data = staticEvaluationData(formData["ناهنجاری ها"]);
 
-   return {
-      jsx: staticEvaluationJsx(data),
-      data
-   }
+   return staticEvaluationJsx(data);
 }
 
 export default staticEvaluation;

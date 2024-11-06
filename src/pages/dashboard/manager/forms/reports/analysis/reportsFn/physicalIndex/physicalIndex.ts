@@ -9,10 +9,9 @@ function physicalIndex(usersData: OrgMemberData[]) {
    const physicalIndex = physicalIndexAvg(usersData);
    const bodyComposition = bodyCompositionAvg(usersData);
 
-   return {
-      jsx: physicalIndexAvgJsx(bodyStatus, physicalIndex, bodyComposition),
-      data: { bodyStatus }
-   }
+   return (
+      physicalIndexAvgJsx(bodyStatus, physicalIndex, bodyComposition)
+   );
 }
 
 export default physicalIndex;

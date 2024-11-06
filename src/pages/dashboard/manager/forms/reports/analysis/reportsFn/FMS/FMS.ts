@@ -5,10 +5,7 @@ import FMSAvgJsx from "./FMSAvgJsx";
 function FMS(usersData: OrgMemberData[]) {
    const data = FMSAvg(usersData);
 
-   return {
-      jsx: FMSAvgJsx(data),
-      data
-   }
+   return FMSAvgJsx(data);
 }
 
 export default FMS;

@@ -1,15 +1,11 @@
-import { useState, useEffect, useMemo, useCallback } from "react"
-import ReportsMainInfo from "./components/ReportsMainInfo";
-import ReportsButtons from "./components/ReportsButtons";
-import ReportsTopBtns from "./components/ReportsTopBtns";
+import { useState, useMemo, useCallback } from "react"
 import GenderStrings from "../../../../../types/GenderStrings";
 import filterUsersData from "./analysis/filterUsersData";
-import NoDataElem from "./components/NoDataElem";
 import OrgMemberData from "../../../../../types/OrgMemberData";
 import { REPORTS_ARR_Type } from "./analysis/REPORTS_ARR";
 import HeaderSection from "../../../common/components/headerSection/HeaderSection";
 import FooterSection from "../../../common/components/footerSection/FooterSection";
-import GenderButton from "./components/GenderButton/GenderButton";
+import GenderButton from "./components/GenderButton";
 
 type ReportsProps = {
    reportsArr: REPORTS_ARR_Type,
@@ -35,7 +31,6 @@ function Reports({ reportsArr, data }: ReportsProps) {
 
       return null;
    }, [data, currentReport, gender])
-   console.log(filteredData);
 
    if (currentReport && filteredData) return (
       <div className="px-4 sm:container pt-24 lg:pt-32 pb-16 lg:pb-24">
@@ -54,7 +49,7 @@ function Reports({ reportsArr, data }: ReportsProps) {
                   </span>
                </div>
 
-               {currentReport.generateReport(filteredData).jsx}
+               {currentReport.generateReport(filteredData)}
             </div>
          </section>
 
@@ -65,36 +60,6 @@ function Reports({ reportsArr, data }: ReportsProps) {
          />
       </div>
    )
-
-   // const usersData = useMemo(() => {
-   //    if (gender === "whole") return filterUsersData(data)
-   //    return filterUsersData(data, gender)
-   // }, [gender])
-
-   // const [page, setPage] = useState(reportsArr[0]);
-
-   // useEffect(() => {
-   //    setPage(prevPage => {
-   //       const foundedPage = reportsArr.findIndex(page => page.reportName === prevPage.reportName);
-   //       return reportsArr[foundedPage];
-   //    })
-   // }, [reportsArr])
-
-   // if (!usersData.length) return <NoDataElem />
-
-   // return (
-   //    <>
-   //       <section className="container my-10">
-   //          <ReportsTopBtns setGender={setGender} />
-   //          <ReportsMainInfo usersData={usersData} />
-   //          <ReportsButtons reportsArr={reportsArr} page={page} setPage={setPage} />
-   //       </section>
-
-   //       <section className="container mx-auto min-w-[600px] max-w-[1200px] pl-4 pb-12 text-xs lg:text-base">
-   //          {page?.reportJsx}
-   //       </section>
-   //    </>
-   // )
 }
 
 export default Reports

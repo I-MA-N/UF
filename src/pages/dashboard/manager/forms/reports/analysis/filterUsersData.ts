@@ -14,7 +14,6 @@ function filterUsersData(usersData: OrgMemberData[], testNamesNeeded: string[], 
    return usersData.filter(userData => {
       const filteredTestNames = testNamesNeeded.filter(testName => testName in userData.formData);
       const userGender = userData.userData.gender;
-      console.log(gender);
 
       if (filteredTestNames.length === testNamesNeeded.length && userGender === gender) return true;
       return false;

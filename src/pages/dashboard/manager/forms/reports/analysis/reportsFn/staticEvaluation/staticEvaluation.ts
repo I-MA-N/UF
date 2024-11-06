@@ -5,10 +5,7 @@ import staticEvaluationAvgJsx from "./staticEvaluationAvgJsx";
 function staticEvaluation(usersData: OrgMemberData[]) {
    const data = staticEvaluationAvg(usersData);
 
-   return {
-      jsx: staticEvaluationAvgJsx(data),
-      data
-   }
+   return staticEvaluationAvgJsx(data);
 }
 
 export default staticEvaluation;

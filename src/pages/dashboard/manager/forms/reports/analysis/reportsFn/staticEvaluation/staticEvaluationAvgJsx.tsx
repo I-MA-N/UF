@@ -3,7 +3,6 @@ import { axisClasses } from "@mui/x-charts";
 import { staticEvaluationAvgType } from "./staticEvaluationAvg";
 
 function staticEvaluationAvgJsx(reportData: staticEvaluationAvgType) {
-   console.log(reportData);
    return (
       <div className="w-[500px] h-[1100px] lg:w-[600px] lg:h-[1200px] mx-auto pb-8">
          <BarChart
