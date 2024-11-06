@@ -1,4 +1,7 @@
-import FormDataInputType from "./FormDataInputType";
+export type FormDataInputType = {
+   value: string | undefined,
+   isLastValueByAI?: boolean
+} | undefined
 
 type FormDataType = {
    [k: string]: {

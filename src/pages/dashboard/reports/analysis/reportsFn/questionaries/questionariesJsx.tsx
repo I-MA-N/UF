@@ -1,6 +1,15 @@
 import { questionariesType } from "./questionariesData"
 
 function questionariesJsx(data: questionariesType) {
+   const generateClassName = (value: string | null) => {
+      if (value) {
+         if (value.includes("بهتر")) return "text-secondary";
+         return "text-red";
+      }
+
+      return ""
+   }
+
    return (
       <table className="w-full text-center border border-white" cellPadding="6px">
          <thead>
@@ -60,13 +69,13 @@ function questionariesJsx(data: questionariesType) {
             </tr>
             <tr>
                <td>تفسیر</td>
-               <td>{data.generalHealthResult || '-'}</td>
-               <td>{data.physicalReadinessResult || '-'}</td>
-               <td>{data.salamatJesmiResult || '-'}</td>
-               <td>{data.salamatRavaniResult || '-'}</td>
-               <td>{data.happinnessResult || '-'}</td>
-               <td>{data.jobSatisfactionResult || '-'}</td>
-               <td>{data.jobPerformanceResult || '-'}</td>
+               <td className={generateClassName(data.generalHealthResult)}>{data.generalHealthResult || '-'}</td>
+               <td className={generateClassName(data.physicalReadinessResult)}>{data.physicalReadinessResult || '-'}</td>
+               <td className={generateClassName(data.salamatJesmiResult)}>{data.salamatJesmiResult || '-'}</td>
+               <td className={generateClassName(data.salamatRavaniResult)}>{data.salamatRavaniResult || '-'}</td>
+               <td className={generateClassName(data.happinnessResult)}>{data.happinnessResult || '-'}</td>
+               <td className={generateClassName(data.jobSatisfactionResult)}>{data.jobSatisfactionResult || '-'}</td>
+               <td className={generateClassName(data.jobPerformanceResult)}>{data.jobPerformanceResult || '-'}</td>
             </tr>
             <tr>
                <td>تذکر:</td>

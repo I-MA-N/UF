@@ -15,12 +15,15 @@ function UserHeader() {
    const { pathname } = useLocation();
    const isFixedHeader = useMemo(() => {
       const secondParam = pathname.split('/')[2];
+      const fourthParam = pathname.split('/')[4];
       if (
          secondParam === 'tests' || 
          secondParam === 'fitness' || 
          secondParam === 'corrective' || 
-         secondParam === 'reports'
+         secondParam === 'reports' ||
+         fourthParam === 'reports'
       ) return false;
+
       return true;
    }, [pathname])
    const navigate = useNavigate();

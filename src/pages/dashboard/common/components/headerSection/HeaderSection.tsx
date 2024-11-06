@@ -4,7 +4,7 @@ import ExitModal from "./ExitModal";
 
 function HeaderSection({ children }: PropsWithChildren) {
    return (
-      <section className="w-full flex items-center justify-between relative">
+      <section className="w-full flex items-center justify-between gap-1 relative">
          <HeaderSectionContextProvider>
             {children}
          </HeaderSectionContextProvider>

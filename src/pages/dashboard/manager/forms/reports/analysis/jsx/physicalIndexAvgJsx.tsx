@@ -43,8 +43,8 @@ function physicalIndexAvgJsx(data: any, statusBody: any, chartData: dataPhysical
                   </tbody>
                </table>
                <p className="text-[10px] lg:text-xs leading-4 text-yellow">
-                  BMI = نسبت کمر به لگن |
-                  WHR = شاخص توده بدن
+                  WHR = نسبت کمر به لگن |
+                  درصد چربی = شاخص توده بدن
                </p>
             </div>
          </div>

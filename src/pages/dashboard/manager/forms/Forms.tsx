@@ -25,7 +25,7 @@ function Forms({ formNames }: FormsProps) {
                   formNames?.map(form => (
                      <Link
                         text={`گزارش ${form}`}
-                        url={`reports?formName=${form}`}
+                        url={`reports?formname=${form}`}
                         key={form}
                         className="w-full"
                      />

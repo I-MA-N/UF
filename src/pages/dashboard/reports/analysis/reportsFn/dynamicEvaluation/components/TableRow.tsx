@@ -1,4 +1,4 @@
-import FormDataInputType from "../../../../../../../types/FormDataInputType";
+import { FormDataInputType } from "../../../../../../../types/FormDataType";
 
 type TableRowProps = {
    title: string,

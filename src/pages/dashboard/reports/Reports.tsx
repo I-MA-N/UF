@@ -23,7 +23,7 @@ function Reports({ reportsArr, userData, formData }: ReportsProps) {
    }, [])
 
    if (currentReport) return (
-      <div className="container pt-24 lg:pt-32 pb-16 lg:pb-24">
+      <div className="px-4 sm:container pt-24 lg:pt-32 pb-16 lg:pb-24">
          <HeaderSection>
             <HeaderSection.ExitBtn exitModalText="آیا از خروج مطمئنید؟" />
             <HeaderSection.Title text={currentReportName} />

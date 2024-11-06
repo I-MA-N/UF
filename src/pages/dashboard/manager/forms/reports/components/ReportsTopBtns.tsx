@@ -13,7 +13,7 @@ function ReportsTopBtns({ setGender }: ReportsTopBtnsProps) {
             defaultValue="whole"
             onChange={e => setGender(e.target.value as GenderStrings)}
          >
-            <option value="whole">میانگین کل</option>
+            <option value="whole">مجموع</option>
             <option value="male">آقایان</option>
             <option value="female">بانوان</option>
          </select>
