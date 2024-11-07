@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 import CircularProgressWithLabel from "./CircularProgressWithLabel";
 import useAIStore from "../../store/AIStore";
 import useFormDataStore from "../../store/formDataStore";
+import Modal from "../../../../common/Modal";
 
 function ProgressModal() {
    const { progress, clearProgress, setMessage } = useFormDataStore(state => ({ progress: state.progress, clearProgress: state.clearProgress, setMessage: state.setMessage }));
@@ -30,9 +31,11 @@ function ProgressModal() {
    }, [percentage])
 
    if (progress !== null) return (
-      <div className="modal">
-         <CircularProgressWithLabel value={percentage} />
-      </div>
+      <Modal>
+         <Modal.Body className="flex items-center justify-center" noBackground>
+            <CircularProgressWithLabel value={percentage} />
+         </Modal.Body>
+      </Modal>
    )
 };
 

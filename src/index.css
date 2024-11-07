@@ -78,20 +78,6 @@
         @apply opacity-100;
     }
 
-    .profile-box {
-        @apply bg-white text-primary text-sm lg:text-base rounded-[32px] p-4 lg:px-6 space-y-4 absolute top-9 lg:top-11 left-1/2 -translate-x-1/2;
-    }
-
-    .profile-box::before {
-        content: '';
-        clip-path: polygon(52% 39%, 0% 100%, 100% 100%);
-        @apply w-12 h-7 lg:w-16 lg:h-9 bg-white absolute -top-6 lg:-top-8 left-1/2 -translate-x-1/2;
-    }
-
-    .login-header-underline {
-        @apply h-0.5 md:h-1 bg-white mt-1 md:mt-2;
-    }
-
     .custom-input {
         @apply w-full h-12 lg:h-14 border border-white rounded-full bg-transparent p-3.5 mt-3 outline-none placeholder:text-xs lg:placeholder:text-sm;
     }
@@ -106,10 +92,6 @@
 
     .btn-disabled div {
         @apply bg-gray border border-white;
-    }
-
-    .modal {
-        @apply fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-transparent backdrop-blur-md z-50;
     }
 
     .header-section-btn {
@@ -161,16 +143,6 @@
 
     .outer-shadow {
         box-shadow: 0 0 8px -2px #083C5A;
-    }
-
-    .show-less-text {
-        white-space: nowrap;
-        overflow: scroll;
-        text-overflow: clip;
-    }
-
-    .touch-action-none {
-        touch-action: none;
     }
 
     /* For MUI Gauge chart */

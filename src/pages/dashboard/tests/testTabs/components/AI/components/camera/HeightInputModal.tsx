@@ -1,3 +1,4 @@
+import Modal from "../../../../../../../common/Modal";
 import useAIStore from "../../../../../store/AIStore";
 
 function HeightInputModal() {
@@ -5,18 +6,12 @@ function HeightInputModal() {
     const removeCurrentSection = useAIStore(state => state.removeCurrentSection);
 
     return (
-        <div className="modal z-40">
-            <div className="bg-primary border-2 rounded-[32px] p-8 max-w-72 xs:max-w-80 lg:max-w-[420px] relative">
-                <button
-                    type="button"
-                    onClick={removeCurrentSection}
-                    className="flex items-center justify-center size-11 lg:size-14 border-2 border-yellow bg-primary text-yellow rounded-full absolute right-0 bottom-[calc(100%+16px)]"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" className="size-5 lg:size-7">
-                        <path d="M13 3L8 8M8 8L3 13M8 8L13 13M8 8L3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                </button>
-                
+        <Modal>
+            <Modal.Header>
+                <Modal.CloseBtn setShowModal={removeCurrentSection} />
+                <Modal.Title text="قد کاربر" />
+            </Modal.Header>
+            <Modal.Body className="max-w-72 xs:max-w-80 lg:max-w-[420px]">
                 <p className="text-center text-sm lg:text-base">
                     برای ارزیابی از این نما، نیاز به قد کاربر می باشد. لطفا فیلد زیر را پر کنید.
                 </p>
@@ -42,8 +37,8 @@ function HeightInputModal() {
                         تایید
                     </button>
                 </div>
-            </div>
-        </div>
+            </Modal.Body>
+        </Modal>
     );
 };
 

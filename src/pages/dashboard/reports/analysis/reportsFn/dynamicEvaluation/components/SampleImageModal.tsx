@@ -30,7 +30,7 @@ function SampleImageModal({ sectionName, sectionNameFA }: SampleImageModalProps)
                   <Modal.CloseBtn setShowModal={setShowImage} />
                   <Modal.Title text={sectionNameFA} />
                </Modal.Header>
-               <Modal.Body>
+               <Modal.Body className="flex items-center justify-center">
                   <img
                      src={`/images/sampleImages/${sectionName}.png`}
                      className="rounded-lg max-h-[500px]"

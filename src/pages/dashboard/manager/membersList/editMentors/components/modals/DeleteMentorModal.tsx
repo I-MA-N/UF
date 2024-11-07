@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import managerPDeleteMentor from "../../../../../../../api/manager/managerPDeleteMentor";
 import { useQueryClient } from "@tanstack/react-query";
+import Modal from "../../../../../../common/Modal";
 
 type DeleteMentorModalPropsType = {
    deleteUsername: any,
@@ -25,23 +26,35 @@ function DeleteMentorModal({ deleteUsername, setDeleteUsername, setMentorData }:
    }, [data])
 
    return (
-      <div className="w-72 lg:w-96 absolute top-1/2 left-1/2 -translate-x-1/2 px-10 py-8 rounded-[32px] bg-primary text-white text-center text-xs lg:text-base z-20">
-         {
-            data?.error &&
-            <p className="text-yellow text-[10px] lg:text-xs mb-4">در انجام عملیات مشکلی پیش آمده است!</p>
-         }
-         <p>
-            آیا از حذف کردن این مربی اطمینان دارید؟
-         </p>
-         <div className="flex justify-between items-center mt-6 px-10">
-            <button className="text-secondary" onClick={() => mutate(deleteUsername)}>
-               بله
-            </button>
-            <button className="text-yellow" onClick={() => setDeleteUsername(null)}>
-               خیر
-            </button>
-         </div>
-      </div>
+      <Modal>
+         <Modal.Header>
+            <Modal.CloseBtn setShowModal={setDeleteUsername} />
+         </Modal.Header>
+         <Modal.Body>
+            {
+               data?.error &&
+               <p className="text-yellow text-[10px] lg:text-xs mb-4">در انجام عملیات مشکلی پیش آمده است!</p>
+            }
+            <p>
+               آیا از حذف کردن این مربی اطمینان دارید؟
+            </p>
+
+            <div className="flex justify-between items-center mt-4 px-10">
+               <button
+                  className="text-secondary underline underline-offset-[6px]"
+                  onClick={() => mutate(deleteUsername)}
+               >
+                  بله
+               </button>
+               <button
+                  className="text-red underline underline-offset-[6px]"
+                  onClick={() => setDeleteUsername(null)}
+               >
+                  خیر
+               </button>
+            </div>
+         </Modal.Body>
+      </Modal>
    )
 }
 

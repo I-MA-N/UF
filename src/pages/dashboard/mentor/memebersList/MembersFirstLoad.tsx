@@ -24,7 +24,7 @@ function MembersFirstLoad() {
    }
 
    return <Container>
-      <h1 className="mb-6 lg:text-lg text-center">اطلاعات کاربری اشتباه است. دریافت نام فرم ها با خطا مواجه شد!</h1>
+      <h1 className="mb-6 lg:text-lg text-center">دریافت نام کاربران با مشکل مواجه شد!</h1>
       <PrevBtn type="button" onClick={() => navigate('/mentor/dashboard')} />
    </Container>
 }

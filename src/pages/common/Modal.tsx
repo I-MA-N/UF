@@ -51,12 +51,19 @@ Modal.Title = function ({ text }: TitleProps) {
 }
 
 type BodyProps = {
-   className?: string
+   className?: string,
+   noBackground?: boolean
 } & PropsWithChildren
 
-Modal.Body = function ({ children, className }: BodyProps) {
+Modal.Body = function ({ children, className, noBackground }: BodyProps) {
    return (
-      <div className={`w-full p-8 bg-primary rounded-[32px] border lg:border-2 border-white ${className || ""}`}>
+      <div
+         className={`
+            w-full p-8 rounded-[32px] border lg:border-2
+            ${!noBackground ? "bg-primary text-white border-white" : "bg-transparent border-transparent"}
+            ${className || ""}
+         `}
+      >
          {children}
       </div>
    )

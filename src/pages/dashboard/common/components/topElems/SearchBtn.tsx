@@ -6,8 +6,8 @@ type SearchBtnProps = {
 function SearchBtn({ isSearching, setIsSearching }: SearchBtnProps) {
    return (
       <button
-         type="submit"
-         className="flex items-center justify-center flex-shrink-0 size-12 lg:size-14 rounded-tl-[32px] bg-secondary text-white"
+         type="button"
+         className="flex items-center justify-center flex-shrink-0 size-12 lg:size-14 bg-secondary text-white"
          onClick={() => setIsSearching(prevValue => !prevValue)}
       >
          {

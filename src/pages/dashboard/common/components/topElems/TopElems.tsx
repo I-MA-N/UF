@@ -2,23 +2,27 @@ import { useEffect, useRef, useState } from "react";
 import SearchBtn from "./SearchBtn";
 
 type TopElemsProps = {
-   orgNames: string[],
-   orgSelected: string,
-   setSelectedOrgs: React.Dispatch<React.SetStateAction<string[]>>,
+   items: string[],
+   selectedItem: string,
+   setFilteredItems: React.Dispatch<React.SetStateAction<string[]>>,
+   inputPlaceholder: string
 }
 
-function TopElems({ orgNames, orgSelected, setSelectedOrgs }: TopElemsProps) {
+function TopElems({ items, selectedItem, setFilteredItems, inputPlaceholder }: TopElemsProps) {
    const [isSearching, setIsSearching] = useState(false);
    const inputRef = useRef<HTMLInputElement>(null);
 
    useEffect(() => {
       if (isSearching) inputRef.current?.select();
-      if (!isSearching) setSelectedOrgs(orgNames);
+      if (!isSearching) setFilteredItems(items);
    }, [isSearching])
 
    return (
-      <div className="flex items-end h-12 lg:h-14 overflow-x-hidden shadow">
-         <div className={`size-full lg:text-lg border-b ${isSearching ? "border-secondary" : "border-white"} transition-all`}>
+      <div className="flex items-end h-12 lg:h-14 shadow-lg">
+         <div
+            className={`size-full lg:text-lg border-b lg:border-b-2 ${isSearching ? "border-secondary" : "border-primary"} transition-all`}
+            onClick={() => setIsSearching(true)}
+         >
             {
                isSearching ?
                   <input
@@ -26,11 +30,11 @@ function TopElems({ orgNames, orgSelected, setSelectedOrgs }: TopElemsProps) {
                      type="text"
                      dir="ltr"
                      className="size-full bg-transparent outline-none text-center placeholder:text-xs lg:placeholder:text-sm"
-                     placeholder="جستجوی نام سازمان"
-                     defaultValue={orgSelected}
+                     placeholder={inputPlaceholder}
+                     defaultValue={selectedItem}
                      onChange={e => {
-                        setSelectedOrgs(() => (
-                           orgNames.filter(orgName => (
+                        setFilteredItems(() => (
+                           items.filter(orgName => (
                               orgName.toLowerCase().includes(e.target.value.toLowerCase())
                            ))
                         ))
@@ -38,7 +42,7 @@ function TopElems({ orgNames, orgSelected, setSelectedOrgs }: TopElemsProps) {
                   />
                   :
                   <div className="size-full flex items-center justify-center">
-                     {orgSelected}
+                     {selectedItem}
                   </div>
             }
          </div>

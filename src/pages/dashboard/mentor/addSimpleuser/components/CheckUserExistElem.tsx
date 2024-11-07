@@ -33,7 +33,9 @@ function CheckUserExistElem({ orgName, setUserStatus }: CheckUserExistElemProps)
                </svg>
             </Link>
          </div>
+         
          <p className="text-sm lg:text-base font-Estedad-ExtraLight text-center mx-auto mb-4 mt-2 lg:mt-6">نام سازمان: {orgName}</p>
+         
          <form onSubmit={handleSubmit(submitHandler)} className="flex items-end gap-1 h-12 lg:h-14">
             <input
                id="username"
@@ -53,6 +55,7 @@ function CheckUserExistElem({ orgName, setUserStatus }: CheckUserExistElemProps)
                </svg>
             </button>
          </form>
+         
          {
             <p className="text-center text-xs lg:text-sm text-yellow mt-3">
                {errors.username?.type === "validate" && 'باید فقط شامل حروف، اعداد یا "_" باشد!'}
