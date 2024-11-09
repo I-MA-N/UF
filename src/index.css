@@ -31,6 +31,7 @@
     }
 
     /* Avoid setting style on autofill */
+
     input:-webkit-autofill,
     input:-webkit-autofill:focus {
         transition: background-color 0s 600000s, color 0s 600000s !important;
@@ -53,6 +54,14 @@
     th,
     td {
         @apply border border-white;
+    }
+
+    img {
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        user-select: none;
     }
 
     html {
@@ -97,9 +106,11 @@
     .header-section-btn {
         @apply flex items-center text-sm lg:text-lg border rounded-[48px] transition-all duration-500 z-30;
     }
+
     .header-section-btn-ellipse {
         @apply h-12 lg:h-14 gap-2 px-4 xs:px-8 lg:px-12;
     }
+
     .header-section-btn-circle {
         @apply fixed top-6 right-4 justify-center size-12 lg:size-14 border-2;
     }
@@ -107,15 +118,18 @@
     .clicked-animation {
         animation: pulse-yellow 2s 1 forwards;
     }
+
     @keyframes pulse-yellow {
         0% {
             color: #E4F4FD;
             scale: 1;
         }
+
         50% {
             color: #FCC72C;
             scale: 1.05;
         }
+
         100% {
             color: #E4F4FD;
             scale: 1;
@@ -125,12 +139,15 @@
     .editlandmarks-menu {
         @apply absolute bottom-[calc(100%+8px)] left-0 w-full max-h-24 overflow-y-scroll flex flex-col border border-l-0 bg-primary text-white transition-all duration-300;
     }
+
     .editlandmarks-menu::-webkit-scrollbar {
         width: 8px;
     }
+
     .editlandmarks-menu::-webkit-scrollbar-track {
         @apply bg-white;
     }
+
     .editlandmarks-menu::-webkit-scrollbar-thumb {
         @apply bg-primary border-solid border border-white rounded-[4px];
     }

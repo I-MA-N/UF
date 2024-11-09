@@ -38,7 +38,7 @@ const staticEvaluation = [
             },
             {
                id: 4,
-               title: 'زانو راست پرانتزی',
+               title: 'زانو پرانتزی - راست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/4-5.png', '/staticEvaluation/4-3.png', '/staticEvaluation/4-1.png'],
@@ -46,7 +46,7 @@ const staticEvaluation = [
             },
             {
                id: 5,
-               title: 'زانو راست ضربدری',
+               title: 'زانو ضربدری - راست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/5-5.png', '/staticEvaluation/5-3.png', '/staticEvaluation/5-1.png'],
@@ -54,7 +54,7 @@ const staticEvaluation = [
             },
             {
                id: 6,
-               title: 'زانو چپ پرانتزی',
+               title: 'زانو پرانتزی - چپ',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/4-5.png', '/staticEvaluation/4-3.png', '/staticEvaluation/4-1.png'],
@@ -62,7 +62,7 @@ const staticEvaluation = [
             },
             {
                id: 7,
-               title: 'زانو چپ ضربدری',
+               title: 'زانو ضربدری - چپ',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/5-5.png', '/staticEvaluation/5-3.png', '/staticEvaluation/5-1.png'],
@@ -70,7 +70,7 @@ const staticEvaluation = [
             },
             {
                id: 8,
-               title: 'چرخش خارجی پا راست',
+               title: 'چرخش خارجی پا - راست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/8-5.png', '/staticEvaluation/8-3.png', '/staticEvaluation/8-1.png'],
@@ -78,7 +78,7 @@ const staticEvaluation = [
             },
             {
                id: 9,
-               title: 'چرخش داخلی پا راست',
+               title: 'چرخش داخلی پا - راست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/9-5.png', '/staticEvaluation/9-3.png', '/staticEvaluation/9-1.png'],
@@ -86,7 +86,7 @@ const staticEvaluation = [
             },
             {
                id: 10,
-               title: 'چرخش خارجی پا چپ',
+               title: 'چرخش خارجی پا - چپ',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/8-5.png', '/staticEvaluation/8-3.png', '/staticEvaluation/8-1.png'],
@@ -94,7 +94,7 @@ const staticEvaluation = [
             },
             {
                id: 11,
-               title: 'چرخش داخلی پا چپ',
+               title: 'چرخش داخلی پا - چپ',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/9-5.png', '/staticEvaluation/9-3.png', '/staticEvaluation/9-1.png'],
@@ -159,7 +159,7 @@ const staticEvaluation = [
          questions: [
             {
                id: 18,
-               title: 'چرخش داخلی مچ پا راست',
+               title: 'چرخش داخلی مچ پا - راست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/20-5.png', '/staticEvaluation/20-3.png', '/staticEvaluation/20-1.png'],
@@ -167,7 +167,7 @@ const staticEvaluation = [
             },
             {
                id: 19,
-               title: 'چرخش خارجی مچ پا راست',
+               title: 'چرخش خارجی مچ پا - راست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/21-5.png', '/staticEvaluation/21-3.png', '/staticEvaluation/21-1.png'],
@@ -175,7 +175,7 @@ const staticEvaluation = [
             },
             {
                id: 20,
-               title: 'چرخش داخلی مچ پا چپ',
+               title: 'چرخش داخلی مچ پا - چپ',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/20-5.png', '/staticEvaluation/20-3.png', '/staticEvaluation/20-1.png'],
@@ -183,7 +183,7 @@ const staticEvaluation = [
             },
             {
                id: 21,
-               title: 'چرخش خارجی مچ پا چپ',
+               title: 'چرخش خارجی مچ پا - چپ',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/21-5.png', '/staticEvaluation/21-3.png', '/staticEvaluation/21-1.png'],

@@ -1,7 +1,6 @@
 import { TestObj } from "../types/TestsTypes";
 
 function arrangeTestsArr(testsArr: TestObj[]) {
-   console.log(testsArr);
    const oneTwo = testsArr.filter(test => test.testName === 'مقدار تحرک' || test.testName === 'وضعیت بدنی');
    if (oneTwo.length < 2) {
       const otherTests = testsArr.filter(test => test.testName !== 'ارزیابی پویا' && test.testName !== 'عملکردی وضعیت بدنی' && test.testName !== 'ناهنجاری ها' && test.testName !== 'مقدار تحرک' && test.testName !== 'وضعیت بدنی');
@@ -11,8 +10,6 @@ function arrangeTestsArr(testsArr: TestObj[]) {
 
    const threeFourFive = testsArr.filter(test => test.testName === 'ارزیابی پویا' || test.testName === 'عملکردی وضعیت بدنی' || test.testName === 'ناهنجاری ها');
    
-   console.log(oneTwo);
-   console.log(threeFourFive);
    const arrangedTests = [...oneTwo, ...threeFourFive];
    const remainedTests = [...testsArr];
 

@@ -7,14 +7,14 @@ function Front_P(landmarks: NormalizedLandmark[]) {
       'گردن کج': '5',
       'شانه نابرابر': '5',
       'انحراف جانبی لگن': '5',
-      'زانو راست پرانتزی': '5',
-      'زانو راست ضربدری': '5',
-      'زانو چپ پرانتزی': '5',
-      'زانو چپ ضربدری': '5',
-      'چرخش خارجی پا راست': '5',
-      'چرخش داخلی پا راست': '5',
-      'چرخش خارجی پا چپ': '5',
-      'چرخش داخلی پا چپ': '5',
+      'زانو پرانتزی - راست': '5',
+      'زانو ضربدری - راست': '5',
+      'زانو پرانتزی - چپ': '5',
+      'زانو ضربدری - چپ': '5',
+      'چرخش خارجی پا - راست': '5',
+      'چرخش داخلی پا - راست': '5',
+      'چرخش خارجی پا - چپ': '5',
+      'چرخش داخلی پا - چپ': '5',
    };
    const degrees: DegreeType[] = [];
 
@@ -51,16 +51,16 @@ function Front_P(landmarks: NormalizedLandmark[]) {
    const kneeTopRight = 180 - Math.abs(degreeTwoPoints(landmarks[24], landmarks[26]));
    const kneeBottomRight = Math.abs(degreeTwoPoints(landmarks[26], landmarks[28]));
    const kneeSumRight = kneeTopRight + kneeBottomRight;
-   if (kneeSumRight >= 160 && kneeSumRight <= 173) values["زانو راست ضربدری"] = "3";
-   if (kneeSumRight < 160) values["زانو راست ضربدری"] = "1";
-   if (kneeSumRight >= 180 && kneeSumRight <= 190) values["زانو راست پرانتزی"] = "3";
-   if (kneeSumRight > 190) values["زانو راست پرانتزی"] = "1";
+   if (kneeSumRight >= 160 && kneeSumRight <= 173) values["زانو ضربدری - راست"] = "3";
+   if (kneeSumRight < 160) values["زانو ضربدری - راست"] = "1";
+   if (kneeSumRight >= 180 && kneeSumRight <= 190) values["زانو پرانتزی - راست"] = "3";
+   if (kneeSumRight > 190) values["زانو پرانتزی - راست"] = "1";
 
    let kneeSumRightValue = "5";
-   if (values["زانو راست ضربدری"] === "1" || values["زانو راست پرانتزی"] === "1") {
+   if (values["زانو ضربدری - راست"] === "1" || values["زانو پرانتزی - راست"] === "1") {
       kneeSumRightValue = "1";
    }
-   if (values["زانو راست ضربدری"] === "3" || values["زانو راست پرانتزی"] === "3") {
+   if (values["زانو ضربدری - راست"] === "3" || values["زانو پرانتزی - راست"] === "3") {
       kneeSumRightValue = "3";
    }
    degrees.push({
@@ -72,16 +72,16 @@ function Front_P(landmarks: NormalizedLandmark[]) {
    const kneeTopLeft = Math.abs(degreeTwoPoints(landmarks[23], landmarks[25]));
    const kneeBottomLeft = 180 - Math.abs(degreeTwoPoints(landmarks[25], landmarks[27]));
    const kneeSumLeft = kneeTopLeft + kneeBottomLeft;
-   if (kneeSumLeft >= 160 && kneeSumLeft <= 173) values["زانو چپ ضربدری"] = "3";
-   if (kneeSumLeft < 160) values["زانو چپ ضربدری"] = "1";
-   if (kneeSumLeft >= 180 && kneeSumLeft <= 190) values["زانو چپ پرانتزی"] = "3";
-   if (kneeSumLeft > 190) values["زانو چپ پرانتزی"] = "1";
+   if (kneeSumLeft >= 160 && kneeSumLeft <= 173) values["زانو ضربدری - چپ"] = "3";
+   if (kneeSumLeft < 160) values["زانو ضربدری - چپ"] = "1";
+   if (kneeSumLeft >= 180 && kneeSumLeft <= 190) values["زانو پرانتزی - چپ"] = "3";
+   if (kneeSumLeft > 190) values["زانو پرانتزی - چپ"] = "1";
 
    let kneeSumLeftValue = "5";
-   if (values["زانو چپ ضربدری"] === "1" || values["زانو چپ پرانتزی"] === "1") {
+   if (values["زانو ضربدری - چپ"] === "1" || values["زانو پرانتزی - چپ"] === "1") {
       kneeSumLeftValue = "1";
    }
-   if (values["زانو چپ ضربدری"] === "3" || values["زانو چپ پرانتزی"] === "3") {
+   if (values["زانو ضربدری - چپ"] === "3" || values["زانو پرانتزی - چپ"] === "3") {
       kneeSumLeftValue = "3";
    }
    degrees.push({
@@ -92,16 +92,16 @@ function Front_P(landmarks: NormalizedLandmark[]) {
 
 
    const footRight = Math.abs(degreeTwoPoints(landmarks[30], landmarks[32]));
-   if (footRight < 75 && footRight >= 65) values["چرخش خارجی پا راست"] = "3";
-   if (footRight < 65) values["چرخش خارجی پا راست"] = "1";
-   if (footRight >= 95 && footRight <= 110) values["چرخش داخلی پا راست"] = "3";
-   if (footRight > 110) values["چرخش داخلی پا راست"] = "1";
+   if (footRight < 75 && footRight >= 65) values["چرخش خارجی پا - راست"] = "3";
+   if (footRight < 65) values["چرخش خارجی پا - راست"] = "1";
+   if (footRight >= 95 && footRight <= 110) values["چرخش داخلی پا - راست"] = "3";
+   if (footRight > 110) values["چرخش داخلی پا - راست"] = "1";
 
    let footRightValue = "5";
-   if (values["چرخش خارجی پا راست"] === "1" || values["چرخش داخلی پا راست"] === "1") {
+   if (values["چرخش خارجی پا - راست"] === "1" || values["چرخش داخلی پا - راست"] === "1") {
       footRightValue = "1";
    }
-   if (values["چرخش خارجی پا راست"] === "3" || values["چرخش داخلی پا راست"] === "3") {
+   if (values["چرخش خارجی پا - راست"] === "3" || values["چرخش داخلی پا - راست"] === "3") {
       footRightValue = "3";
    }
    degrees.push({
@@ -111,16 +111,16 @@ function Front_P(landmarks: NormalizedLandmark[]) {
    })
 
    const footLeft = Math.abs(degreeTwoPoints(landmarks[29], landmarks[31])) - 90;
-   if (footLeft >= 15 && footLeft <= 25) values["چرخش خارجی پا چپ"] = "3";
-   if (footLeft > 25) values["چرخش خارجی پا چپ"] = "1";
-   if (footLeft >= -10 && footLeft <= 5) values["چرخش داخلی پا چپ"] = "3";
-   if (footLeft < -10) values["چرخش داخلی پا چپ"] = "1";
+   if (footLeft >= 15 && footLeft <= 25) values["چرخش خارجی پا - چپ"] = "3";
+   if (footLeft > 25) values["چرخش خارجی پا - چپ"] = "1";
+   if (footLeft >= -10 && footLeft <= 5) values["چرخش داخلی پا - چپ"] = "3";
+   if (footLeft < -10) values["چرخش داخلی پا - چپ"] = "1";
 
    let footLeftValue = "5";
-   if (values["چرخش خارجی پا چپ"] === "1" || values["چرخش داخلی پا چپ"] === "1") {
+   if (values["چرخش خارجی پا - چپ"] === "1" || values["چرخش داخلی پا - چپ"] === "1") {
       footLeftValue = "1";
    }
-   if (values["چرخش خارجی پا چپ"] === "3" || values["چرخش داخلی پا چپ"] === "3") {
+   if (values["چرخش خارجی پا - چپ"] === "3" || values["چرخش داخلی پا - چپ"] === "3") {
       footLeftValue = "3";
    }
    degrees.push({

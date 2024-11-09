@@ -4,7 +4,7 @@ function getInputKey(
    inputTitle: string
 ) {
    if (isDynamicEvaluation) {
-      return `${sectionNameFA} - ${inputTitle}`;
+      return `${sectionNameFA} ${inputTitle}`;
    }
 
    return inputTitle;

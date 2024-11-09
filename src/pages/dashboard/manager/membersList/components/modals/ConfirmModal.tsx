@@ -11,7 +11,6 @@ type ConfirmModalPropsType = {
 function ConfirmModal({ action, setAction, username }: ConfirmModalPropsType) {
    const [showModal, setShowModal] = useState(true);
    const { mutate, data } = managerPManageSimpleuser(username);
-   console.log(showModal, action);
 
    useEffect(() => {
       if (data || !showModal) {
