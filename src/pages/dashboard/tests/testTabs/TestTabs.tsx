@@ -1,20 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TabButtons from "./components/TabButtons";
 import AITab from "./components/AI/AITab";
 import ManualTab from "./components/manual/ManualTab";
-import useFormStore from "../store/formStore";
 
-type TestTabsProps = {
-   defaultIsAIMethod: boolean,
-}
-
-function TestTabs({ defaultIsAIMethod }: TestTabsProps) {
-   const updateFormData = useFormStore(state => state.updateFormData);
-   const [isAIMethod, setIsAIMethod] = useState(defaultIsAIMethod);
-
-   useEffect(() => {
-      updateFormData();
-   }, [isAIMethod, updateFormData])
+function TestTabs() {
+   const [isAIMethod, setIsAIMethod] = useState(localStorage.getItem("AIMethod") ? true : false);
 
    return (
       <>

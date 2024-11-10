@@ -4,7 +4,6 @@ import ExtractedZipType from "../types/ExtractedZipType";
 import { staticEvaluationType } from "../pages/dashboard/tests/data/testsData/staticEvaluation";
 import { dynamicEvaluationType } from "../pages/dashboard/tests/data/testsData/dynamicEvaluation";
 import useAIStore from "../pages/dashboard/tests/store/AIStore";
-import usePhotoStore from "../pages/dashboard/tests/store/photoStore";
 import DegreeType from "../types/DegreeType";
 import DistanceType from "../types/DistanceType";
 import DegreeDistanceType from "../types/DegreeDistanceType";
@@ -126,6 +125,8 @@ export const drawOnCanvas = (
 
          { start: 33, end: 34 },
          { start: 34, end: 35 },
+
+         { start: 38, end: 39 },
       ];
 
       connectors.forEach(connector => {
@@ -177,58 +178,6 @@ export const drawOnVideo = (
       }
 
       ctx.restore();
-   }
-}
-
-let deltaX = 0;
-let deltaY = 0;
-export const circleDown = (
-   pageX: number,
-   pageY: number,
-   circle: HTMLDivElement | null
-) => {
-   const setIsMovingLandmark = usePhotoStore.getState().setIsMovingLandmark;
-
-   if (circle) {
-      setIsMovingLandmark(true);
-      const rect = circle.getBoundingClientRect();
-      const offsetX = pageX - rect.left;
-      const offsetY = pageY - rect.top;
-      deltaX = offsetX - (rect.width / 2);
-      deltaY = offsetY - (rect.height / 2);
-   }
-}
-
-export const circleMove = (
-   circle: HTMLDivElement | null,
-   pageX: number,
-   pageY: number,
-   canvas: HTMLCanvasElement,
-   landmarks: NormalizedLandmark[],
-   setLandmarks: (landmarks: NormalizedLandmark[]) => void,
-   selectedLandmark: number,
-) => {
-   const isMovingLandmark = usePhotoStore.getState().isMovingLandmark;
-
-   if (isMovingLandmark && circle) {
-      const rect = canvas.getBoundingClientRect();
-      pageX = pageX - rect.left;
-      pageY = pageY - rect.top;
-
-      const isOutOfCanvasX = pageX - deltaX >= canvas.clientWidth || pageX - deltaX <= 0;
-      const isOutOfCanvasY = pageY - deltaY >= canvas.clientHeight || pageY - deltaY <= 0;
-
-      if (!isOutOfCanvasX && !isOutOfCanvasY) {
-         const circleRect = circle.getBoundingClientRect();
-         circle.style.left = `${pageX - deltaX - (circleRect.width / 2)}px`;
-         circle.style.top = `${pageY - deltaY - (circleRect.height / 2)}px`;
-
-         landmarks[selectedLandmark].x = (pageX - deltaX) / canvas.clientWidth;
-         landmarks[selectedLandmark].y = (pageY - deltaY) / canvas.clientHeight;
-
-         setLandmarks(landmarks);
-      }
-
    }
 }
 
@@ -336,12 +285,16 @@ export const drawDistance = (
    const secondLandmark = landmarks[distance.landmarksUsed[1]];
    const landmarksUsed: NormalizedLandmark[] = [
       firstLandmark,
-      distance.landmarksUsed[1] === 39 ? {
-         x: secondLandmark.x,
-         y: firstLandmark.y,
-         z: firstLandmark.z,
-         visibility: firstLandmark.visibility,
-      } : secondLandmark
+      distance.landmarksUsed[1] === 39
+         ?
+         {
+            x: secondLandmark.x,
+            y: firstLandmark.y,
+            z: firstLandmark.z,
+            visibility: firstLandmark.visibility,
+         }
+         :
+         secondLandmark
    ];
 
    drawingUtils.drawLandmarks(landmarksUsed, { radius: 0.5, color: "#FF0000" });
@@ -427,7 +380,7 @@ export const blurImage = async (zipFile: string) => {
       const zip = new JSZip();
       await zip.loadAsync(zipFile, { base64: true });
       const image = zip.file('modifiedImage.png');
-   
+
       if (image) {
          const base64 = await image.async("string");
 
@@ -448,10 +401,10 @@ export const blurImage = async (zipFile: string) => {
                         const result = reader.result;
                         if (typeof result === "string") {
                            zip.file('modifiedImage.png', result);
-            
+
                            zip.generateAsync({ type: 'base64' })
                               .then(newZipFile => resolve(newZipFile))
-                              .catch(() => reject("ذخیره سازی عکس ها با مشکل مواجه شد!"))
+                              .catch(() => reject())
                         }
                      };
                      reader.readAsDataURL(blob);

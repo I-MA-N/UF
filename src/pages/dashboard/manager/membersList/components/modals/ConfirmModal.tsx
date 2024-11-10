@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import managerPManageSimpleuser from "../../../../../../api/manager/managerPManageSimpleuser"
+import Modal from "../../../../../common/Modal";
 
 type ConfirmModalPropsType = {
    action: string,
@@ -8,34 +9,47 @@ type ConfirmModalPropsType = {
 }
 
 function ConfirmModal({ action, setAction, username }: ConfirmModalPropsType) {
+   const [showModal, setShowModal] = useState(true);
    const { mutate, data } = managerPManageSimpleuser(username);
 
    useEffect(() => {
-      if (data) {
+      if (data || !showModal) {
          setAction(null);
       }
-   }, [data])
+   }, [showModal, data])
 
    return (
-      <div className="w-72 absolute top-1/2 left-1/2 -translate-x-1/2 px-10 py-4 rounded-[32px] bg-primary text-white text-xs z-20">
-         <p className="text-center">
-            آیا از 
-            <span>
-               {
-                  action === 'enable' ? ' فعال کردن ' : action === 'disable' ? ' غیر فعال کردن ' : ' حذف کردن '
-               }
-            </span>
-            این کاربر اطمینان دارید؟
-         </p>
-         <div className="flex justify-between items-center mt-4 px-10">
-            <button className="text-secondary" onClick={() => mutate(action)}>
-               بله
-            </button>
-            <button className="text-yellow" onClick={() => setAction(null)}>
-               خیر
-            </button>
-         </div>
-      </div>
+      <Modal>
+         <Modal.Header>
+            <Modal.CloseBtn setShowModal={setShowModal} />
+         </Modal.Header>
+         <Modal.Body>
+            <p className="text-center">
+               آیا از
+               <span className={action === 'enable' ? 'text-secondary' : action === 'disable' ? 'text-yellow' : 'text-red'}>
+                  {
+                     action === 'enable' ? ' فعال کردن ' : action === 'disable' ? ' غیر فعال کردن ' : ' حذف کردن '
+                  }
+               </span>
+               این کاربر اطمینان دارید؟
+            </p>
+
+            <div className="flex justify-between items-center mt-4 px-10">
+               <button
+                  className="text-secondary underline underline-offset-[6px]"
+                  onClick={() => mutate(action)}
+               >
+                  بله
+               </button>
+               <button
+                  className="text-red underline underline-offset-[6px]"
+                  onClick={() => setAction(null)}
+               >
+                  خیر
+               </button>
+            </div>
+         </Modal.Body>
+      </Modal>
    )
 }
 

@@ -19,10 +19,10 @@ function Side_C(landmarks: NormalizedLandmark[], videoSize: { width: number, hei
    return {
       landmarksUsed: [leftLandmark, topLandmark, width1, height1],
       result: {
-         left: left - 10,
-         top: top - 40,
-         width: width + 60,
-         height: height + 80
+         left: left - 30,
+         top: top - 50,
+         width: width + 90,
+         height: height + 90
       }
    }
 }

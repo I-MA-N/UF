@@ -38,7 +38,7 @@ const staticEvaluation = [
             },
             {
                id: 4,
-               title: 'زانو راست پرانتزی',
+               title: 'زانو پرانتزی - راست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/4-5.png', '/staticEvaluation/4-3.png', '/staticEvaluation/4-1.png'],
@@ -46,7 +46,7 @@ const staticEvaluation = [
             },
             {
                id: 5,
-               title: 'زانو راست ضربدری',
+               title: 'زانو ضربدری - راست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/5-5.png', '/staticEvaluation/5-3.png', '/staticEvaluation/5-1.png'],
@@ -54,7 +54,7 @@ const staticEvaluation = [
             },
             {
                id: 6,
-               title: 'زانو چپ پرانتزی',
+               title: 'زانو پرانتزی - چپ',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/4-5.png', '/staticEvaluation/4-3.png', '/staticEvaluation/4-1.png'],
@@ -62,7 +62,7 @@ const staticEvaluation = [
             },
             {
                id: 7,
-               title: 'زانو چپ ضربدری',
+               title: 'زانو ضربدری - چپ',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/5-5.png', '/staticEvaluation/5-3.png', '/staticEvaluation/5-1.png'],
@@ -70,7 +70,7 @@ const staticEvaluation = [
             },
             {
                id: 8,
-               title: 'چرخش خارجی پا راست',
+               title: 'چرخش خارجی پا - راست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/8-5.png', '/staticEvaluation/8-3.png', '/staticEvaluation/8-1.png'],
@@ -78,7 +78,7 @@ const staticEvaluation = [
             },
             {
                id: 9,
-               title: 'چرخش داخلی پا راست',
+               title: 'چرخش داخلی پا - راست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/9-5.png', '/staticEvaluation/9-3.png', '/staticEvaluation/9-1.png'],
@@ -86,7 +86,7 @@ const staticEvaluation = [
             },
             {
                id: 10,
-               title: 'چرخش خارجی پا چپ',
+               title: 'چرخش خارجی پا - چپ',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/8-5.png', '/staticEvaluation/8-3.png', '/staticEvaluation/8-1.png'],
@@ -94,7 +94,7 @@ const staticEvaluation = [
             },
             {
                id: 11,
-               title: 'چرخش داخلی پا چپ',
+               title: 'چرخش داخلی پا - چپ',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/9-5.png', '/staticEvaluation/9-3.png', '/staticEvaluation/9-1.png'],
@@ -105,7 +105,7 @@ const staticEvaluation = [
                title: 'سینه فرو رفته',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/1-5.png', '/staticEvaluation/1-3.png', '/staticEvaluation/1-1.png'],
+               images: ['/staticEvaluation/10-5.png', '/staticEvaluation/10-3.png', '/staticEvaluation/10-1.png'],
                direction: 'vertical'
             },
             {
@@ -113,7 +113,7 @@ const staticEvaluation = [
                title: 'سینه کبوتری',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/1-5.png', '/staticEvaluation/1-3.png', '/staticEvaluation/1-1.png'],
+               images: ['/staticEvaluation/11-5.png', '/staticEvaluation/11-3.png', '/staticEvaluation/11-1.png'],
                direction: 'vertical'
             },
             {
@@ -121,7 +121,7 @@ const staticEvaluation = [
                title: 'بدشکلی انگشتان دست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/1-5.png', '/staticEvaluation/1-3.png', '/staticEvaluation/1-1.png'],
+               images: ['/staticEvaluation/12-5.png', '/staticEvaluation/12-3.png', '/staticEvaluation/12-1.png'],
                direction: 'vertical'
             },
             {
@@ -129,7 +129,7 @@ const staticEvaluation = [
                title: 'بدشکلی انگشتان پا',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/1-5.png', '/staticEvaluation/1-3.png', '/staticEvaluation/1-1.png'],
+               images: ['/staticEvaluation/13-5.png', '/staticEvaluation/13-3.png', '/staticEvaluation/13-1.png'],
                direction: 'vertical'
             },
             {
@@ -137,7 +137,7 @@ const staticEvaluation = [
                title: 'کف پای صاف',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/1-5.png', '/staticEvaluation/1-3.png', '/staticEvaluation/1-1.png'],
+               images: ['/staticEvaluation/14-5.png', '/staticEvaluation/14-3.png', '/staticEvaluation/14-1.png'],
                direction: 'vertical'
             },
             {
@@ -145,13 +145,12 @@ const staticEvaluation = [
                title: 'کف پای گود',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/1-5.png', '/staticEvaluation/1-3.png', '/staticEvaluation/1-1.png'],
+               images: ['/staticEvaluation/15-5.png', '/staticEvaluation/15-3.png', '/staticEvaluation/15-1.png'],
                direction: 'vertical'
             },
          ],
          photoFn: Front_P,
          cropFn: Front_C,
-         sampleImageSrc: '',
          zipFile: undefined as string | null | undefined,
       },
       {
@@ -160,23 +159,23 @@ const staticEvaluation = [
          questions: [
             {
                id: 18,
-               title: 'انحراف جانبی ستون فقرات',
+               title: 'چرخش داخلی مچ پا - راست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/18-5.png', '/staticEvaluation/18-3.png', '/staticEvaluation/18-1.png'],
-               direction: 'horizental'
+               images: ['/staticEvaluation/20-5.png', '/staticEvaluation/20-3.png', '/staticEvaluation/20-1.png'],
+               direction: 'vertical'
             },
             {
                id: 19,
-               title: 'کتف بالدار',
+               title: 'چرخش خارجی مچ پا - راست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/19-5.png', '/staticEvaluation/19-3.png', '/staticEvaluation/19-1.png'],
+               images: ['/staticEvaluation/21-5.png', '/staticEvaluation/21-3.png', '/staticEvaluation/21-1.png'],
                direction: 'vertical'
             },
             {
                id: 20,
-               title: 'چرخش داخلی مچ پا راست',
+               title: 'چرخش داخلی مچ پا - چپ',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/20-5.png', '/staticEvaluation/20-3.png', '/staticEvaluation/20-1.png'],
@@ -184,7 +183,7 @@ const staticEvaluation = [
             },
             {
                id: 21,
-               title: 'چرخش خارجی مچ پا راست',
+               title: 'چرخش خارجی مچ پا - چپ',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/21-5.png', '/staticEvaluation/21-3.png', '/staticEvaluation/21-1.png'],
@@ -192,18 +191,18 @@ const staticEvaluation = [
             },
             {
                id: 22,
-               title: 'چرخش داخلی مچ پا چپ',
+               title: 'انحراف جانبی ستون فقرات',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/20-5.png', '/staticEvaluation/20-3.png', '/staticEvaluation/20-1.png'],
-               direction: 'vertical'
+               images: ['/staticEvaluation/18-5.png', '/staticEvaluation/18-3.png', '/staticEvaluation/18-1.png'],
+               direction: 'horizental'
             },
             {
                id: 23,
-               title: 'چرخش خارجی مچ پا چپ',
+               title: 'کتف بالدار',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/21-5.png', '/staticEvaluation/21-3.png', '/staticEvaluation/21-1.png'],
+               images: ['/staticEvaluation/19-5.png', '/staticEvaluation/19-3.png', '/staticEvaluation/19-1.png'],
                direction: 'vertical'
             },
          ],
@@ -265,22 +264,6 @@ const staticEvaluation = [
             },
             {
                id: 30,
-               title: 'شکم برآمده',
-               keys: [5, 3, 1],
-               values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/30-5.png', '/staticEvaluation/30-3.png', '/staticEvaluation/30-1.png'],
-               direction: 'vertical'
-            },
-            {
-               id: 31,
-               title: 'پشت تابدار',
-               keys: [5, 3, 1],
-               values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/31-5.png', '/staticEvaluation/31-3.png', '/staticEvaluation/31-1.png'],
-               direction: 'vertical'
-            },
-            {
-               id: 32,
                title: 'زانوی عقب رفته',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
@@ -288,11 +271,27 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               id: 33,
+               id: 31,
                title: 'زانوی خمیده',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
                images: ['/staticEvaluation/33-5.png', '/staticEvaluation/33-3.png', '/staticEvaluation/33-1.png'],
+               direction: 'vertical'
+            },
+            {
+               id: 32,
+               title: 'پشت تابدار',
+               keys: [5, 3, 1],
+               values: ['طبیعی', 'خفیف', 'شدید'],
+               images: ['/staticEvaluation/31-5.png', '/staticEvaluation/31-3.png', '/staticEvaluation/31-1.png'],
+               direction: 'vertical'
+            },
+            {
+               id: 33,
+               title: 'شکم برآمده',
+               keys: [5, 3, 1],
+               values: ['طبیعی', 'خفیف', 'شدید'],
+               images: ['/staticEvaluation/30-5.png', '/staticEvaluation/30-3.png', '/staticEvaluation/30-1.png'],
                direction: 'vertical'
             },
          ],

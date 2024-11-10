@@ -1,47 +1,47 @@
 import { testPatternTypes } from "./generateTestInputs";
-import activityRate from "./testsData/activityRate";
+import activityRateData from "./testsData/activityRateData";
 import activityReadinessData from "./testsData/activityReadinessData";
-import bodyStatus from "./testsData/bodyStatus";
+import bodyStatusData from "./testsData/bodyStatusData";
 import diseaseBackgroundData from "./testsData/diseaseBackgroundData";
 import dynamicEvaluation from "./testsData/dynamicEvaluation";
-import FMS from "./testsData/FMS";
+import FMSData from "./testsData/FMSData";
 import generalHealthData from "./testsData/generalHealthData";
 import happinessData from "./testsData/happinessData";
 import hasPainData from "./testsData/hasPainData";
-import jobPerformance from "./testsData/jobPerformance";
+import jobPerformanceData from "./testsData/jobPerformanceData";
 import jobSatisfactionData from "./testsData/jobSatisfactionData";
-import lifeQuality from "./testsData/lifeQuality";
+import lifeQualityData from "./testsData/lifeQualityData";
 import staticEvaluation from "./testsData/staticEvaluation";
-import physicalPreparationData from "./testsData/physicalPreparationData";
+import physicalReadinessData from "./testsData/physicalReadinessData";
 
 const testsData = {
    'مقدار تحرک': {
       testSubTitle: '',
       testPattern: "Radio" as testPatternTypes,
-      testData: activityRate,
+      testData: activityRateData,
       testClassName: 'grid grid-cols-1 gap-8'
    },
    'کیفیت زندگی': {
       testSubTitle: '',
       testPattern: "ChoiceWithDivide" as testPatternTypes,
-      testData: lifeQuality,
+      testData: lifeQualityData,
       testClassName: 'flex flex-col gap-8 lg:gap-10'
    },
    'سابقه بیماری': {
       testSubTitle: 'آیا سابقه بیماری دارید؟',
-      testPattern: "MultipleChoice" as testPatternTypes,
+      testPattern: "CheckBox" as testPatternTypes,
       testData: diseaseBackgroundData,
       testClassName: 'grid grid-cols-3 lg:grid-cols-4 gap-6'
    },
    'درد و اختلال': {
       testSubTitle: 'آیا در یک سال گذشته درد و اختلالی در بدن خود داشته اید؟',
-      testPattern: "MultipleChoice" as testPatternTypes,
+      testPattern: "CheckBox" as testPatternTypes,
       testData: hasPainData,
       testClassName: 'grid grid-cols-3 lg:grid-cols-4 gap-6'
    },
    'آمادگی فعالیت': {
       testSubTitle: '',
-      testPattern: "MultipleChoice" as testPatternTypes,
+      testPattern: "CheckBox" as testPatternTypes,
       testData: activityReadinessData,
       testClassName: 'grid grid-cols-1 gap-8'
    },
@@ -60,7 +60,7 @@ const testsData = {
    'آمادگی بدنی': {
       testSubTitle: '',
       testPattern: "Choice" as testPatternTypes,
-      testData: physicalPreparationData,
+      testData: physicalReadinessData,
       testClassName: 'flex gap-x-8 gap-y-4 lg:gap-y-8 items-center justify-center flex-wrap'
    },
    'شادکامی': {
@@ -72,13 +72,13 @@ const testsData = {
    'عملکرد شغلی': {
       testSubTitle: '',
       testPattern: "Choice" as testPatternTypes,
-      testData: jobPerformance,
+      testData: jobPerformanceData,
       testClassName: 'flex gap-x-8 gap-y-4 lg:gap-y-8 items-center justify-center flex-wrap'
    },
    'وضعیت بدنی': {
       testSubTitle: '',
       testPattern: "Text" as testPatternTypes,
-      testData: bodyStatus,
+      testData: bodyStatusData,
       testClassName: 'flex gap-4 lg:gap-8 items-center justify-center flex-wrap'
    },
    'ناهنجاری ها': {
@@ -96,7 +96,7 @@ const testsData = {
    'عملکردی وضعیت بدنی': {
       testSubTitle: '',
       testPattern: "ChoiceImage" as testPatternTypes,
-      testData: FMS,
+      testData: FMSData,
       testClassName: 'flex gap-x-8 gap-y-4 lg:gap-y-8 items-center justify-center flex-wrap'
    },
 }

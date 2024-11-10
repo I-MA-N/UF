@@ -13,10 +13,13 @@ function FormNamesList({ formNames, role, username }: FormNamesList) {
    )
 
    return formNames?.map(form => {
-      const testsLength = form.formTests.filter((test: any) => test.testAccess.includes(role)).length;
+      const testsLength = form.formTests.filter(test => test.testAccess.includes(role)).length;
 
       return (
-         <div key={form.formName} className="bg-white rounded-[32px] w-64 lg:w-80 px-12 py-2 lg:py-4 divide-y divide-primary divide-dashed">
+         <div
+            key={form.formName}
+            className="bg-white rounded-[32px] w-64 lg:w-80 px-12 py-2 lg:py-4 divide-y divide-primary divide-dashed"
+         >
             <button className="w-full text-xs lg:text-base text-primary py-3.5 text-center">
                {form.formName} | {testsLength} تست
             </button>

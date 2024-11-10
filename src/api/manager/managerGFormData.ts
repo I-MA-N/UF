@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import getFormData from "../../utils/getFormData";
+import FormDataType from "../../types/FormDataType";
+import OrgMemberData from "../../types/OrgMemberData";
 
 function managerGFormData(formname: string | null) {
    const { data, isError, isPending } = useQuery({
@@ -11,19 +13,22 @@ function managerGFormData(formname: string | null) {
          return req.data
       },
       select: (data) => {
-         if (data?.error) return data;
+         if (data?.error) return data as string;
 
-         return data.map((userData: any) => {
-            const otherInfo = {
-               age: userData['age'],
-               gender: userData['gender'],
+         const orgMembersData: OrgMemberData[] = data.map((d: any) => {
+            const userData = {
+               age: d['age'] as number,
+               gender: d['gender'] as 'male' | 'female',
             }
+            const formData = d[formname!] as FormDataType;
 
             return {
-               ...userData[formname!],
-               ...otherInfo
+               userData,
+               formData
             }
          })
+
+         return orgMembersData;
       }
    })
 

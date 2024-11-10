@@ -31,6 +31,7 @@
     }
 
     /* Avoid setting style on autofill */
+
     input:-webkit-autofill,
     input:-webkit-autofill:focus {
         transition: background-color 0s 600000s, color 0s 600000s !important;
@@ -53,6 +54,14 @@
     th,
     td {
         @apply border border-white;
+    }
+
+    img {
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        user-select: none;
     }
 
     html {
@@ -78,20 +87,6 @@
         @apply opacity-100;
     }
 
-    .profile-box {
-        @apply bg-white text-primary text-sm lg:text-base rounded-[32px] p-4 lg:px-6 space-y-4 absolute top-9 lg:top-11 left-1/2 -translate-x-1/2;
-    }
-
-    .profile-box::before {
-        content: '';
-        clip-path: polygon(52% 39%, 0% 100%, 100% 100%);
-        @apply w-12 h-7 lg:w-16 lg:h-9 bg-white absolute -top-6 lg:-top-8 left-1/2 -translate-x-1/2;
-    }
-
-    .login-header-underline {
-        @apply h-0.5 md:h-1 bg-white mt-1 md:mt-2;
-    }
-
     .custom-input {
         @apply w-full h-12 lg:h-14 border border-white rounded-full bg-transparent p-3.5 mt-3 outline-none placeholder:text-xs lg:placeholder:text-sm;
     }
@@ -108,42 +103,33 @@
         @apply bg-gray border border-white;
     }
 
-    .modal {
-        @apply fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-transparent backdrop-blur-md z-50;
+    .header-section-btn {
+        @apply flex items-center text-sm lg:text-lg border rounded-[48px] transition-all duration-500 z-30;
     }
 
-    .exit-btn {
-        @apply flex items-center text-sm lg:text-lg border border-yellow rounded-[48px] transition-all duration-500 z-30;
-    }
-    .exit-btn-ellipse {
-        @apply h-12 lg:h-14 gap-2 px-8 lg:px-12 text-yellow;
-    }
-    .exit-btn-circle {
-        @apply fixed top-6 right-4 justify-center border-2 bg-primary text-yellow size-12 lg:size-14;
+    .header-section-btn-ellipse {
+        @apply h-12 lg:h-14 gap-2 px-4 xs:px-8 lg:px-12;
     }
 
-    .save-btn {
-        @apply flex items-center text-sm lg:text-lg bg-secondary text-white border border-secondary rounded-[48px] transition-all duration-500 z-30;
-    }
-    .save-btn-ellipse {
-        @apply h-12 lg:h-14 gap-2 px-8 lg:px-12;
-    }
-    .save-btn-circle {
-        @apply fixed top-20 lg:top-[5.5rem] right-4 justify-center size-12 lg:size-14;
+    .header-section-btn-circle {
+        @apply fixed top-6 right-4 justify-center size-12 lg:size-14 border-2;
     }
 
     .clicked-animation {
         animation: pulse-yellow 2s 1 forwards;
     }
+
     @keyframes pulse-yellow {
         0% {
             color: #E4F4FD;
             scale: 1;
         }
+
         50% {
             color: #FCC72C;
             scale: 1.05;
         }
+
         100% {
             color: #E4F4FD;
             scale: 1;
@@ -153,12 +139,15 @@
     .editlandmarks-menu {
         @apply absolute bottom-[calc(100%+8px)] left-0 w-full max-h-24 overflow-y-scroll flex flex-col border border-l-0 bg-primary text-white transition-all duration-300;
     }
+
     .editlandmarks-menu::-webkit-scrollbar {
         width: 8px;
     }
+
     .editlandmarks-menu::-webkit-scrollbar-track {
         @apply bg-white;
     }
+
     .editlandmarks-menu::-webkit-scrollbar-thumb {
         @apply bg-primary border-solid border border-white rounded-[4px];
     }
@@ -171,16 +160,6 @@
 
     .outer-shadow {
         box-shadow: 0 0 8px -2px #083C5A;
-    }
-
-    .show-less-text {
-        white-space: nowrap;
-        overflow: scroll;
-        text-overflow: clip;
-    }
-
-    .touch-action-none {
-        touch-action: none;
     }
 
     /* For MUI Gauge chart */

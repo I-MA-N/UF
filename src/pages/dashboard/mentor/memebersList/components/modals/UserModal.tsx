@@ -1,11 +1,12 @@
 import profileImg from '/images/profile-img.png'
 import profileImgDesktop from '/images/profile-img-desktop.png'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import UserChangeModal from "./userModal/UserChangeModal"
 import GUserData from '../../../../../../api/common/GUserData'
 import Btn from '../../../../../common/Btn'
 import Link from '../../../../../common/Link'
 import parseDate from '../../../../../../utils/parseDate'
+import Modal from '../../../../../common/Modal'
 
 type UserModalProps = {
    username: string,
@@ -14,56 +15,59 @@ type UserModalProps = {
 }
 
 function UserModal({ username, setUsername, orgSelected }: UserModalProps) {
+   const [showModal, setShowModal] = useState(true);
    const [changeModalUsername, setChangeModalUsername] = useState<string | null>(null);
    const { data } = GUserData(username);
 
+   useEffect(() => {
+      if (!showModal) setUsername(null);
+   }, [showModal])
+
    return (
       <>
-         <div className="modal">
-            <button onClick={() => setUsername(null)} className="flex gap-0.5 items-center mb-4.5 bg-primary text-yellow lg:text-lg py-2 px-4 lg:px-5 rounded-[32px]">
-               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" className="w-4 lg:w-5">
-                  <path d="M13 3L8 8M8 8L3 13M8 8L13 13M8 8L3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-               </svg>
-               خروج
-            </button>
-
-            <div className="w-[298px] xs:w-80 lg:w-[424px] p-12 bg-white text-primary rounded-[32px]">
-               <div className="flex gap-3.5 items-center border-b border-primary pb-4 relative">
-                  <img src={profileImg} alt="profile-image" className='lg:hidden' />
-                  <img src={profileImgDesktop} alt="profile-image" className='hidden lg:block' />
-                  <div>
-                     <p className="text-sm lg:text-lg mb-1">
-                        {data?.name || data?.username || 'مشکلی در دریافت اطلاعات این کاربر رخ داده است!'}
-                     </p>
-                     <p className="font-Estedad-ExtraLight text-xs lg:text-base">{data?.email}</p>
+         <Modal>
+            <Modal.Header>
+               <Modal.CloseBtn setShowModal={setShowModal} />
+               <Modal.Title text='پروفایل کاربر' />
+            </Modal.Header>
+            <Modal.Body className='!p-0'>
+               <div className="w-[298px] xs:w-80 lg:w-[424px] p-12 rounded-[32px]">
+                  <div className="flex gap-3.5 items-center border-b border-white pb-4 relative">
+                     <img src={profileImg} alt="profile-image" className='lg:hidden' />
+                     <img src={profileImgDesktop} alt="profile-image" className='hidden lg:block' />
+                     <div>
+                        <p className="text-sm lg:text-lg mb-1">
+                           {data?.name || data?.username || 'مشکلی در دریافت اطلاعات این کاربر رخ داده است!'}
+                        </p>
+                        <p className="font-Estedad-ExtraLight text-xs lg:text-base">{data?.email}</p>
+                     </div>
                   </div>
-               </div>
 
-               <div className='flex items-center justify-center gap-4 my-6'>
-                  {
-                     data?.username &&
-                     <>
-                        <Link
-                           text='ارزیابی'
-                           className='inline-blcok bg-secondary text-white w-auto h-8 lg:h-10 px-6'
-                           url={`/mentor/dashboard/members/${orgSelected}/${data?.username}`}
-                        />
-                        <Btn
-                           text='ویرایش'
-                           type='button'
-                           className='bg-secondary text-white w-auto h-8 lg:h-10 px-6'
-                           onClick={() => setChangeModalUsername(data?.username)}
-                        />
-                     </>
-                  }
-               </div>
+                  <div className='flex items-center justify-center gap-4 my-6'>
+                     {
+                        data?.username &&
+                        <>
+                           <Link
+                              text='ارزیابی'
+                              className='inline-blcok bg-secondary text-white w-auto h-8 lg:h-10 px-6'
+                              url={`/mentor/dashboard/members/${orgSelected}/${data?.username}`}
+                           />
+                           <Btn
+                              text='ویرایش'
+                              type='button'
+                              className='bg-secondary text-white w-auto h-8 lg:h-10 px-6'
+                              onClick={() => setChangeModalUsername(data?.username)}
+                           />
+                        </>
+                     }
+                  </div>
 
-               <p className="text-[10px] lg:text-sm font-Estedad-ExtraLight text-center">
-                  تاریخ ایجاد کاربر:
-                  {data?.datejoined && parseDate(data.datejoined)}
-               </p>
+                  <p className="text-[10px] lg:text-sm font-Estedad-ExtraLight text-center">
+                     تاریخ ایجاد کاربر:
+                     {data?.datejoined && parseDate(data.datejoined)}
+                  </p>
 
-               {/* <div className="flex flex-col gap-4 pt-6">
+                  {/* <div className="flex flex-col gap-4 pt-6">
                   <ModalStatusItem
                      icon={<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" className="w-[25px]">
                         <path d="M10.5 5.25H12.75" stroke="#083C5A" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
@@ -93,8 +97,10 @@ function UserModal({ username, setUsername, orgSelected }: UserModalProps) {
                      eyeIcon={true}
                   />
                </div> */}
-            </div>
-         </div>
+               </div>
+            </Modal.Body>
+         </Modal>
+         
          {
             changeModalUsername && data &&
             <UserChangeModal userData={data} setUsername={setChangeModalUsername} />

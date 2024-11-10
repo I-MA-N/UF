@@ -1,5 +1,4 @@
 import { useCallback, useRef, useState } from "react";
-import CameraModeBtn from "./camera/buttons/CameraModeBtn";
 import CapturePhotoBtn from "./camera/buttons/CapturePhotoBtn";
 import CloseBtn from "./camera/buttons/CloseBtn";
 import useAIStore from "../../../../store/AIStore";
@@ -19,16 +18,16 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
    const { currentSection, showUserHeight } = useAIStore(state => ({ currentSection: state.currentSection, showUserHeight: state.showUserHeight }));
    const { setImage, setLandmarks, setVideoSize } = usePhotoStore(state => ({ setImage: state.setImage, setLandmarks: state.setLandmarks, setVideoSize: state.setVideoSize }));
 
-   const [isCameraLoaded, setIsCameraLoaded] = useState(false);
+   const [isWebcamLoaded, setIsWebcamLoaded] = useState(false);
+   const [isMediaError, setIsMediaError] = useState(false);
 
    const webcamRef = useRef<Webcam | null>(null);
    const canvasRef = useRef<HTMLCanvasElement | null>(null);
    const isClickedRef = useRef(false);
 
    const proccessFrames = useCallback(() => {
-      if (!isCameraLoaded) setIsCameraLoaded(true);
-
       const video = webcamRef.current?.video;
+
       if (video) {
          let startTimeMs = performance.now();
          const result = model.detectForVideo(video, startTimeMs);
@@ -65,21 +64,39 @@ function CameraLandmarks({ model }: CameraLandmarksProps) {
                         facingMode: "environment",
                         aspectRatio: 1600 / 1000,
                      }}
-                     onLoadedData={proccessFrames}
+                     onLoadedData={() => {
+                        proccessFrames();
+                        setIsWebcamLoaded(true);
+                     }}
+                     onUserMediaError={() => {
+                        setIsMediaError(true);
+                     }}
                   />
                   <canvas
                      ref={canvasRef}
                      className="absolute top-0 left-0"
                   />
-               </div>
 
+                  {isMediaError &&
+                     <p className="w-full absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-center text-sm lg:text-base font-Estedad-Black text-red bg-white px-4 py-2 rounded-full">
+                        دریافت دوربین با مشکل مواجه شد!
+                        <br />
+                        لطفا دسترسی دوربین مرورگر خود را چک کنید.
+                     </p>
+                  }
+               </div>
             </div>
 
             <div className="w-full flex justify-center items-center gap-8">
-               <CameraModeBtn isDisabled={true} />
+               {/* <CameraModeBtn
+                  isDisabled={isMediaError}
+                  setIsWebcamLoaded={setIsWebcamLoaded}
+                  setFacingMode={setFacingMode}
+               /> */}
+               <div className="size-11 lg:size-14"></div>
 
                <CapturePhotoBtn
-                  isLoading={!isCameraLoaded}
+                  isLoading={!isWebcamLoaded}
                   isDisabled={landmarksStatus.includes(false)}
                   isClickedRef={isClickedRef}
                />

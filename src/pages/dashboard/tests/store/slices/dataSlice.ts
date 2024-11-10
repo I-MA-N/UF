@@ -49,16 +49,15 @@ const createDataSlice: StateCreator<
       });
       const zipFile = activeTestData[partIndex][sectionIndex]?.zipFile;
 
-      if (newZipFile !== undefined) {
-         if (sectionIndex > -1) {
-            activeTestData[partIndex][sectionIndex].zipFile = newZipFile;
+      if (newZipFile !== undefined && partIndex > -1 && sectionIndex > -1) {
+         activeTestData[partIndex][sectionIndex].zipFile = newZipFile;
 
-            set(state => ({
-               ...state,
-               activeTestData
-            }))
-            return newZipFile;
-         }
+         set(state => ({
+            ...state,
+            activeTestData
+         }))
+         
+         return newZipFile;
       }
 
       return zipFile;

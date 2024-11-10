@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import getFormData from "../../utils/getFormData";
 import axios from "axios";
 
-type VaraiblesType = {
+export type VaraiblesType = {
    imgKey: string,
    imgValue: string
 }

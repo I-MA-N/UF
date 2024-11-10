@@ -1,9 +1,10 @@
 type CameraModeBtnProps = {
    isDisabled: boolean,
-   setFacingMode?: React.Dispatch<React.SetStateAction<"environment" | "user">>,
+   setIsWebcamLoaded: React.Dispatch<React.SetStateAction<boolean>>,
+   setFacingMode: React.Dispatch<React.SetStateAction<"environment" | "user">>,
 }
 
-function CameraModeBtn({ isDisabled, setFacingMode }: CameraModeBtnProps) {
+function CameraModeBtn({ isDisabled, setIsWebcamLoaded, setFacingMode }: CameraModeBtnProps) {
    return (
       <button
          type="button"
@@ -13,6 +14,8 @@ function CameraModeBtn({ isDisabled, setFacingMode }: CameraModeBtnProps) {
                setFacingMode(
                   prevValue => prevValue === "environment" ? "user" : "environment"
                );
+               setIsWebcamLoaded(false);
+
                const transfrom = e.currentTarget.style.transform;
                let lastDeg = 0;
    

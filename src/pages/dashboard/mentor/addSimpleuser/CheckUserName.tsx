@@ -14,10 +14,18 @@ function CheckUserName({ orgName }: CheckUserNameProps) {
    return (
       <Container>
          <div className="w-64 xs:w-[300px] lg:w-80">
-            <CheckUserExistElem orgName={orgName} setUserStatus={setUserStatus} />
+            <CheckUserExistElem
+               orgName={orgName}
+               setUserStatus={setUserStatus}
+            />
+
             {
                userStatus?.status &&
-               <UserExistResult status={userStatus?.status} username={userStatus?.username} orgName={orgName} />
+               <UserExistResult
+                  status={userStatus?.status}
+                  username={userStatus?.username}
+                  orgName={orgName}
+               />
             }
          </div>
       </Container>
