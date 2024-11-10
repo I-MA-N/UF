@@ -105,7 +105,7 @@ const staticEvaluation = [
                title: 'سینه فرو رفته',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/1-5.png', '/staticEvaluation/1-3.png', '/staticEvaluation/1-1.png'],
+               images: ['/staticEvaluation/10-5.png', '/staticEvaluation/10-3.png', '/staticEvaluation/10-1.png'],
                direction: 'vertical'
             },
             {
@@ -113,7 +113,7 @@ const staticEvaluation = [
                title: 'سینه کبوتری',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/1-5.png', '/staticEvaluation/1-3.png', '/staticEvaluation/1-1.png'],
+               images: ['/staticEvaluation/11-5.png', '/staticEvaluation/11-3.png', '/staticEvaluation/11-1.png'],
                direction: 'vertical'
             },
             {
@@ -121,7 +121,7 @@ const staticEvaluation = [
                title: 'بدشکلی انگشتان دست',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/1-5.png', '/staticEvaluation/1-3.png', '/staticEvaluation/1-1.png'],
+               images: ['/staticEvaluation/12-5.png', '/staticEvaluation/12-3.png', '/staticEvaluation/12-1.png'],
                direction: 'vertical'
             },
             {
@@ -129,7 +129,7 @@ const staticEvaluation = [
                title: 'بدشکلی انگشتان پا',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/1-5.png', '/staticEvaluation/1-3.png', '/staticEvaluation/1-1.png'],
+               images: ['/staticEvaluation/13-5.png', '/staticEvaluation/13-3.png', '/staticEvaluation/13-1.png'],
                direction: 'vertical'
             },
             {
@@ -137,7 +137,7 @@ const staticEvaluation = [
                title: 'کف پای صاف',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/1-5.png', '/staticEvaluation/1-3.png', '/staticEvaluation/1-1.png'],
+               images: ['/staticEvaluation/14-5.png', '/staticEvaluation/14-3.png', '/staticEvaluation/14-1.png'],
                direction: 'vertical'
             },
             {
@@ -145,7 +145,7 @@ const staticEvaluation = [
                title: 'کف پای گود',
                keys: [5, 3, 1],
                values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/1-5.png', '/staticEvaluation/1-3.png', '/staticEvaluation/1-1.png'],
+               images: ['/staticEvaluation/15-5.png', '/staticEvaluation/15-3.png', '/staticEvaluation/15-1.png'],
                direction: 'vertical'
             },
          ],

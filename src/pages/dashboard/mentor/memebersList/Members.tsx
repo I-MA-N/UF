@@ -7,6 +7,7 @@ import ListElement from "./components/MembersListElem";
 import { UserData2 } from "../../../../types/UserData";
 import OrgModal from "./components/modals/OrgModal";
 import UserModal from "./components/modals/UserModal";
+import { Link as RouterLink } from "react-router-dom";
 
 type MembersProps = {
    orgSelected: string,
@@ -72,11 +73,22 @@ function Members({ orgSelected, setOrgSelected, orgNames, users }: MembersProps)
                <path d="M3.62693 3.5C3.62693 5.10189 5.0057 6.45 6.76924 6.45C8.53278 6.45 9.91155 5.10189 9.91155 3.5C9.91155 1.89811 8.53278 0.55 6.76924 0.55C5.0057 0.55 3.62693 1.89811 3.62693 3.5Z" stroke="#E4F4FD" strokeWidth="1.1" />
                <path d="M13.5384 4.08325V5.83325M13.5384 7.58325V5.83325M13.5384 5.83325H15.3846H11.6923" stroke="#E4F4FD" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
             </svg>}
-            className="mt-0.5"
+            className="mt-0.5 mb-16"
             onClick={() => {
                navigate(`/mentor/dashboard/members/${orgSelected}`)
             }}
          />
+
+         <RouterLink
+            to="/mentor/dashboard"
+            className="relative w-64 lg:w-80 h-14 flex items-center justify-center bg-transparent text-white text-sm lg:text-base rounded-[48px] border-2 border-white"
+         >
+            <span className="text-yellow">برگشت</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 11" fill="none" className="w-4.5 lg:w-5 absolute left-6 top-1/2 -translate-y-1/2">
+               <path d="M5.375 9.75L1 5.375M1 5.375L15 5.375M1 5.375L5.375 1" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+         </RouterLink>
+
 
          {
             orgModal &&
