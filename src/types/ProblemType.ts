@@ -1,6 +1,6 @@
 type ProblemType = {
    title: string,
-   status: number,
+   status: number | null,
    isLastValueByAI: boolean | undefined
 }
 

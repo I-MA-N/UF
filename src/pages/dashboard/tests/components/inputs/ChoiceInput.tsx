@@ -29,7 +29,7 @@ function ChoiceInput({ index, title, value, keys, values, inputKey }: ChoiceInpu
 
    return (
       <div className="flex flex-col justify-between bg-white text-primary rounded-[18px] w-72 xs:w-[330px] lg:w-[400px] h-40">
-         <p className="h-full flex justify-center items-center px-4 text-sm text-center leading-7">
+         <p className={`h-full flex justify-center items-center px-4 text-sm text-center leading-7 transition-colors duration-300 ${value ? "text-primary" : "text-red/80"}`}>
             {index}- {title}
          </p>
 

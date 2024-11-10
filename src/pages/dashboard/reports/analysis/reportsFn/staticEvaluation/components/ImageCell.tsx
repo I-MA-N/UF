@@ -32,7 +32,7 @@ function ImageCell({ sectionName }: ImageCellProps) {
    }, [data])
 
    return (
-      <td rowSpan={50} className="p-1">
+      <td rowSpan={50} className="p-1 w-[200px] lg:w-[400px]">
          {
             isPending
                ?

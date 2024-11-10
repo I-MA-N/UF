@@ -10,7 +10,11 @@ function staticEvaluationData(formData: FormDataType[""]) {
 
          return {
             title,
-            status: value === '5' ? 0 : value === '3' ? 1 : 2,
+            status: 
+            value === '5' ? 0 :
+            value === '3' ? 1 :
+            value === '1' ? 2 :
+            null,
             isLastValueByAI
          }
       });

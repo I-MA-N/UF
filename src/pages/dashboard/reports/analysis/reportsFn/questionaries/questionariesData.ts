@@ -123,8 +123,8 @@ function questionariesData(data: FormDataType) {
          const start = 3;
          const end = 12;
          for (let i = start; i <= end; i++) {
-            const value = lifeQuality[i]!.value!;
-            questionaries.karcardJesmi += Number(value);
+            const value = lifeQuality[i]?.value;
+            if (value) questionaries.karcardJesmi += Number(value);
          }
          questionaries.karcardJesmi /= end - start + 1;
       }
@@ -134,8 +134,8 @@ function questionariesData(data: FormDataType) {
          const start = 13;
          const end = 16;
          for (let i = start; i <= end; i++) {
-            const value = lifeQuality[i]!.value!;
-            questionaries.ekhtelalNaghshJesmi += Number(value);
+            const value = lifeQuality[i]?.value;
+            if (value) questionaries.ekhtelalNaghshJesmi += Number(value);
          }
          questionaries.ekhtelalNaghshJesmi /= end - start + 1;
       }
@@ -145,8 +145,8 @@ function questionariesData(data: FormDataType) {
          const start = 17;
          const end = 19;
          for (let i = start; i <= end; i++) {
-            const value = lifeQuality[i]!.value!;
-            questionaries.ekhtelalNaghshHayajani += Number(value);
+            const value = lifeQuality[i]?.value;
+            if (value) questionaries.ekhtelalNaghshHayajani += Number(value);
          }
          questionaries.ekhtelalNaghshHayajani /= end - start + 1;
       }
@@ -156,8 +156,8 @@ function questionariesData(data: FormDataType) {
          const indexes = [23, 27, 29, 31];
          for (let i = 0; i < indexes.length; i++) {
             const index = indexes[i];
-            const value = lifeQuality[index]!.value!;
-            questionaries.energiKhastegi += Number(value);
+            const value = lifeQuality[index]?.value;
+            if (value) questionaries.energiKhastegi += Number(value);
          }
          questionaries.energiKhastegi /= indexes.length;
       }
@@ -167,8 +167,8 @@ function questionariesData(data: FormDataType) {
          const indexes = [21, 22];
          for (let i = 0; i < indexes.length; i++) {
             const index = indexes[i];
-            const value = lifeQuality[index]!.value!;
-            questionaries.dardP += Number(value);
+            const value = lifeQuality[index]?.value;
+            if (value) questionaries.dardP += Number(value);
          }
          questionaries.dardP /= indexes.length;
       }
@@ -178,8 +178,8 @@ function questionariesData(data: FormDataType) {
          const indexes = [1, 33, 34, 35, 36];
          for (let i = 0; i < indexes.length; i++) {
             const index = indexes[i];
-            const value = lifeQuality[index]!.value!;
-            questionaries.salamatOmomi += Number(value);
+            const value = lifeQuality[index]?.value;
+            if (value) questionaries.salamatOmomi += Number(value);
          }
          questionaries.salamatOmomi /= indexes.length;
       }

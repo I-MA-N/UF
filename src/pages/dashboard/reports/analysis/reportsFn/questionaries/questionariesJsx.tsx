@@ -79,7 +79,7 @@ function questionariesJsx(data: questionariesType) {
             </tr>
             <tr>
                <td>تذکر:</td>
-               <td colSpan={7}>{data.activityReadinessResult}</td>
+               <td colSpan={7}>{data.activityReadinessResult || '-'}</td>
             </tr>
          </tbody>
       </table>

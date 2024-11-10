@@ -27,7 +27,7 @@ function TableRow({ title, images, imgDirection, problem }: TableRowProps) {
             images.map((image, index) => (
                <td key={index}>
                   {
-                     problem?.status === undefined ?
+                     typeof problem?.status !== "number" ?
                         '-'
                         :
                         <div className="relative size-fit mx-auto">
@@ -36,7 +36,7 @@ function TableRow({ title, images, imgDirection, problem }: TableRowProps) {
                               src={`/images/testsImages/${image}`}
                               className={imgDirection === 'vertical' ? 'w-16 lg:w-20' : 'h-16 lg:h-16'}
                            />
-                           {problem?.status === index &&
+                           {problem.status === index &&
                               <div
                                  className="absolute top-0 left-0 flex items-center justify-center size-full bg-yellow/50 text-primary"
                               >
