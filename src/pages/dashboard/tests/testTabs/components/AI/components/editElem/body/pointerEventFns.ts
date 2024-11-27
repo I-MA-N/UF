@@ -48,39 +48,11 @@ export const circleMove = (
       const isOutOfCanvasY = imageTop >= imageHeight || imageTop <= 0;
 
       if (!isOutOfCanvasX && !isOutOfCanvasY) {
-         const circleRect = circleElem.getBoundingClientRect();
+         setZoomElemImage(isFirstMove, imageWidth, imageHeight);
 
-         const circleLeft = imageLeft - (circleRect.width / 2);
-         const circleTop = imageTop - (circleRect.height / 2);
+         setLandmarksPositions(selectedLandmark, imageLeft, imageTop, zoomElem, circleElem);
 
-         const ratioX = zoomElem.clientWidth / circleRect.width;
-         const ratioY = zoomElem.clientHeight / circleRect.height;
-
-         setZoomElemImage(isFirstMove, imageWidth, imageHeight, ratioX, ratioY);
-
-         if (selectedLandmark === 38) {
-            // Set 'x' position of 'zoomElem' only once when editing '38' landmark
-            if (isFirstMove) {
-               zoomElem.style.backgroundPositionX = `-${circleLeft * ratioX}px`;
-            }
-            zoomElem.style.backgroundPositionY = `-${circleTop * ratioY}px`;
-
-            circleElem.style.top = `${circleTop}px`;
-         } else {
-            // If we move out of 'left' or 'top' edge of image, we should change values
-            if (circleLeft * ratioX < 0) {
-               zoomElem.style.backgroundPosition = `${-(circleLeft * ratioX)}px -${circleTop * ratioY}px`;
-            } else if (circleTop * ratioY < 0) {
-               zoomElem.style.backgroundPosition = `-${circleLeft * ratioX}px ${-(circleTop * ratioY)}px`;
-            } else {
-               zoomElem.style.backgroundPosition = `-${circleLeft * ratioX}px -${circleTop * ratioY}px`;
-            }
-
-            circleElem.style.left = `${circleLeft}px`;
-            circleElem.style.top = `${circleTop}px`;
-         }
-
-         setLandmarksPositions(selectedLandmark, imageLeft, imageTop, imageWidth, imageHeight);
+         updateStoreLandmarks(selectedLandmark, imageLeft, imageTop, imageWidth, imageHeight);
 
          if (isFirstMove) isFirstMove = false;
       }
@@ -88,7 +60,57 @@ export const circleMove = (
 }
 
 // Used in 'circleMove' function
+function setZoomElemImage(
+   isFirstMove: boolean,
+   imageWidth: number, imageHeight: number,
+) {
+   if (isFirstMove) {
+      const imgElem = document.getElementById("editImage") as HTMLImageElement | null;
+      const zoomElem = document.getElementById("zoomElem") as HTMLDivElement | null;
+   
+      if (imgElem && zoomElem) {
+         zoomElem.style.backgroundImage = `url(${imgElem.src})`;
+         zoomElem.style.backgroundSize = `${imageWidth}px ${imageHeight}px`;
+      }
+   }
+}
+
 function setLandmarksPositions(
+   selectedLandmark: number,
+   imageLeft: number, imageTop: number,
+   zoomElem: HTMLDivElement, circleElem: HTMLDivElement,
+) {
+   const circleRect = circleElem.getBoundingClientRect();
+   const circleLeft = imageLeft - (circleRect.width / 2);
+   const circleTop = imageTop - (circleRect.height / 2);
+
+   const zoomElemX = imageLeft - (zoomElem.clientWidth / 2);
+   const zoomElemY = imageTop - (zoomElem.clientHeight / 2);
+   
+   if (selectedLandmark === 38) {
+      // Set 'x' position of 'zoomElem' only once when editing '38' landmark
+      if (isFirstMove) {
+         zoomElem.style.backgroundPositionX = `-${zoomElemX}px`;
+      }
+      zoomElem.style.backgroundPositionY = `-${zoomElemY}px`;
+
+      circleElem.style.top = `${circleTop}px`;
+   } else {
+      // If we move out of 'left' or 'top' edge of image, we should change values
+      if (zoomElemX < 0) {
+         zoomElem.style.backgroundPosition = `${-zoomElemX}px -${zoomElemY}px`;
+      } else if (zoomElemY < 0) {
+         zoomElem.style.backgroundPosition = `-${zoomElemX}px ${-zoomElemY}px`;
+      } else {
+         zoomElem.style.backgroundPosition = `-${zoomElemX}px -${zoomElemY}px`;
+      }
+
+      circleElem.style.left = `${circleLeft}px`;
+      circleElem.style.top = `${circleTop}px`;
+   }
+}
+
+function updateStoreLandmarks(
    selectedLandmark: number,
    imageLeft: number, imageTop: number,
    imageWidth: number, imageHeight: number
@@ -107,21 +129,4 @@ function setLandmarksPositions(
    }
 
    setLandmarks(landmarks);
-}
-
-// Used in 'circleMove' function
-function setZoomElemImage(
-   isFirstMove: boolean,
-   imageWidth: number, imageHeight: number,
-   ratioX: number, ratioY: number
-) {
-   if (isFirstMove) {
-      const imgElem = document.getElementById("editImage") as HTMLImageElement | null;
-      const zoomElem = document.getElementById("zoomElem") as HTMLDivElement | null;
-   
-      if (imgElem && zoomElem) {
-         zoomElem.style.backgroundImage = `url(${imgElem.src})`;
-         zoomElem.style.backgroundSize = `${imageWidth * ratioX}px ${imageHeight * ratioY}px`;
-      }
-   }
 }
