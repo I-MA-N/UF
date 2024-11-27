@@ -391,7 +391,7 @@ export const blurImage = async (zipFile: string) => {
             if (ctx) {
                canvas.width = img.width;
                canvas.height = img.height;
-               ctx.filter = 'blur(5px)';
+               ctx.filter = 'blur(3px)';
                ctx.drawImage(img, 0, 0);
 
                canvas.toBlob(blob => {

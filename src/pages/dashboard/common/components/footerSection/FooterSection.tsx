@@ -1,12 +1,16 @@
 import { Tab, Tabs, tabsClasses } from "@mui/material";
+import useFormDataStore from "../../../tests/store/formDataStore";
+import useAIStore from "../../../tests/store/AIStore";
 
 type FooterSectionProps = {
    pages: string[],
    currentPage: string,
-   clickHandler: (page: string) => void,
 }
 
-function FooterSection({ pages, currentPage, clickHandler }: FooterSectionProps) {
+function FooterSection({ pages, currentPage }: FooterSectionProps) {
+   const setCurrentTestName = useFormDataStore(state => state.setCurrentTestName);
+   const updateTestsData = useAIStore(state => state.updateTestsData);
+
    return (
       <section className="w-full px-4 sm:container fixed z-20 bottom-4 left-1/2 -translate-x-1/2 bg-primary">
          <Tabs
@@ -32,7 +36,10 @@ function FooterSection({ pages, currentPage, clickHandler }: FooterSectionProps)
                      label={page}
                      type="submit"
                      href=""
-                     onClick={() => clickHandler(page)}
+                     onClick={() => {
+                        updateTestsData(currentPage, page);
+                        setCurrentTestName(page);
+                     }}
                      className="!text-sm lg:!text-base"
                   />
                ))
