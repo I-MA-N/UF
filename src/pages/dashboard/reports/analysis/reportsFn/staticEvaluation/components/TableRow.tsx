@@ -1,19 +1,28 @@
-import ProblemType from "../../../../../../../types/ProblemType";
+import { useCallback } from "react";
+import { FormDataInputType } from "../../../../../../../types/FormDataType";
 
 type TableRowProps = {
    title: string,
    images: string[],
    imgDirection: string,
-   problem: ProblemType | undefined
+   inputData: FormDataInputType
 }
 
-function TableRow({ title, images, imgDirection, problem }: TableRowProps) {
+function TableRow({ title, images, imgDirection, inputData }: TableRowProps) {
+   const getValue = useCallback((value: string) => {
+      if (value === '5') return 0;
+      if (value === '3') return 1;
+      if (value === '1') return 2;
+
+      return null;
+   }, [])
+
    return (
       <>
          <td className="relative p-2">
             {title}
             {
-               problem?.isLastValueByAI &&
+               inputData?.isLastValueByAI &&
                <div className="absolute top-1 right-1 lg:top-2 lg:right-2">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="none" className="size-4 lg:size-5">
                      <path d="M9 11C9 11.5948 9.03318 12.0045 9.09752 12.294C9.15934 12.5722 9.23587 12.6745 9.28067 12.7193C9.32547 12.7641 9.42779 12.8407 9.70596 12.9025C9.99547 12.9668 10.4052 13 11 13C11.5948 13 12.0045 12.9668 12.294 12.9025C12.5722 12.8407 12.6745 12.7641 12.7193 12.7193C12.7641 12.6745 12.8407 12.5722 12.9025 12.294C12.9668 12.0045 13 11.5948 13 11C13 10.4052 12.9668 9.99547 12.9025 9.70596C12.8407 9.42779 12.7641 9.32547 12.7193 9.28067C12.6745 9.23587 12.5722 9.15934 12.294 9.09752C12.0045 9.03318 11.5948 9 11 9C10.4052 9 9.99547 9.03318 9.70596 9.09752C9.42779 9.15934 9.32547 9.23587 9.28067 9.28067C9.23587 9.32547 9.15934 9.42779 9.09752 9.70596C9.03318 9.99547 9 10.4052 9 11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -27,16 +36,17 @@ function TableRow({ title, images, imgDirection, problem }: TableRowProps) {
             images.map((image, index) => (
                <td key={index}>
                   {
-                     typeof problem?.status !== "number" ?
-                        '-'
-                        :
+                     inputData?.value
+                        ?
                         <div className="relative size-fit mx-auto">
                            <img
                               alt="report-img"
                               src={`/images/testsImages/${image}`}
                               className={imgDirection === 'vertical' ? 'w-16 lg:w-20' : 'h-16 lg:h-16'}
                            />
-                           {problem.status === index &&
+
+                           {
+                              getValue(inputData.value) === index &&
                               <div
                                  className="absolute top-0 left-0 flex items-center justify-center size-full bg-yellow/50 text-primary"
                               >
@@ -47,6 +57,8 @@ function TableRow({ title, images, imgDirection, problem }: TableRowProps) {
                               </div>
                            }
                         </div>
+                        :
+                        '-'
                   }
                </td>
             ))

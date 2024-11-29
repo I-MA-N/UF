@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import { TestObj } from "../../../types/TestsTypes";
 import HeaderSection from "../common/components/headerSection/HeaderSection";
 import testsData from "./data/testsData";
@@ -8,6 +8,7 @@ import TestTabs from "./testTabs/TestTabs";
 import useFormDataStore from "./store/formDataStore";
 import SaveBtn from "./components/saveBtn/SaveBtn";
 import FooterSection from "../common/components/footerSection/FooterSection";
+import useAIStore from "./store/AIStore";
 
 type TestsProps = {
    testsArr: TestObj[],
@@ -15,10 +16,16 @@ type TestsProps = {
 
 function Tests({ testsArr }: TestsProps) {
    const { data, currentTestName, setCurrentTestName } = useFormDataStore(state => ({ data: state.data, currentTestName: state.currentTestName, setCurrentTestName: state.setCurrentTestName }));
-
+   const updateTestsData = useAIStore(state => state.updateTestsData);
+   
    useEffect(() => {
       setCurrentTestName(testsArr[0].testName);
    }, [])
+
+   const clickHandler = useCallback((page: string) => {
+      updateTestsData(currentTestName!, page);
+      setCurrentTestName(page);
+   }, [currentTestName])
 
    if (currentTestName) return (
       <>
@@ -60,6 +67,7 @@ function Tests({ testsArr }: TestsProps) {
             <FooterSection
                pages={testsArr.map(test => test.testName)}
                currentPage={currentTestName}
+               clickHandler={clickHandler}
             />
          </div>
 

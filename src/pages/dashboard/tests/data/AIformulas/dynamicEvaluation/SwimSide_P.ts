@@ -5,10 +5,10 @@ import DistanceType from "../../../../../../types/DistanceType";
 
 function SwimSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvasSize?: { width: number, height: number }) {
     const values = {
-        'کمر گود': "0",
-        'کمر صاف': "0",
-        'بالا آمدن شانه': "0",
-        'هایپراکستنشن گردن': "0"
+        'شنا گود شدن کمر': "0",
+        'شنا صاف شدن کمر': "0",
+        'شنا بالا آمدن شانه': "0",
+        'شنا هایپراکستنشن گردن': "0"
     }
     const degrees: DegreeType[] = [];
     const distances: DistanceType[] = [];
@@ -19,18 +19,21 @@ function SwimSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editCa
     const shoulderLandmark = isEven ? 12 : 11;
     const asisLandmark = isEven ? 24 : 23;
     const kneeLandmark = isEven ? 26 : 25;
-    const shoulderAsisLandmark = 180 - Math.abs(degreeTwoPoints(landmarks[shoulderLandmark], landmarks[asisLandmark]));
-    const asisKneeLandmark = Math.abs(degreeTwoPoints(landmarks[asisLandmark], landmarks[kneeLandmark]));
-    const back = shoulderAsisLandmark + asisKneeLandmark;
-    if (back < 150) values["کمر صاف"] = "1";
-    if (back > 180) values["کمر گود"] = "1";
 
-    const backValue = Number(values["کمر صاف"]) || Number(values["کمر گود"]);
-    degrees.push({
-        landmarksUsed: [shoulderLandmark, asisLandmark, kneeLandmark],
-        degree: back,
-        value: backValue.toString()
-    })
+    {
+        const shoulderAsisLandmark = 180 - Math.abs(degreeTwoPoints(landmarks[shoulderLandmark], landmarks[asisLandmark]));
+        const asisKneeLandmark = Math.abs(degreeTwoPoints(landmarks[asisLandmark], landmarks[kneeLandmark]));
+        const back = shoulderAsisLandmark + asisKneeLandmark;
+        if (back < 150) values["شنا صاف شدن کمر"] = "1";
+        if (back > 180) values["شنا گود شدن کمر"] = "1";
+
+        const backValue = Number(values["شنا صاف شدن کمر"]) || Number(values["شنا گود شدن کمر"]);
+        degrees.push({
+            landmarksUsed: [shoulderLandmark, asisLandmark, kneeLandmark],
+            degree: back,
+            value: backValue.toString()
+        })
+    }
 
     if (editCanvasSize && userHeight) {
         const centimeters = userHeight - 12;
@@ -44,28 +47,32 @@ function SwimSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editCa
             value: null
         })
 
-        const startLandmark = isEven ? 12 : 33;
-        const endLandmark = isEven ? 33 : 11;
-        const shoulderNeckPixels = (landmarks[startLandmark].x - landmarks[endLandmark].x) * editCanvasSize.width;
-        const shoulderNeck = shoulderNeckPixels * ratio;
-        if (shoulderNeck > 0) values["بالا آمدن شانه"] = "1";
+        {
+            const startLandmark = isEven ? 12 : 33;
+            const endLandmark = isEven ? 33 : 11;
+            const shoulderNeckPixels = (landmarks[startLandmark].x - landmarks[endLandmark].x) * editCanvasSize.width;
+            const shoulderNeck = shoulderNeckPixels * ratio;
+            if (shoulderNeck > 0) values["شنا بالا آمدن شانه"] = "1";
 
-        distances.push({
-            landmarksUsed: [startLandmark, endLandmark],
-            distance: shoulderNeck,
-            value: values["بالا آمدن شانه"]
-        })
+            distances.push({
+                landmarksUsed: [startLandmark, endLandmark],
+                distance: shoulderNeck,
+                value: values["شنا بالا آمدن شانه"]
+            })
+        }
     }
 
-    const earLandmark = isEven ? 8 : 7;
-    const shoulderEar = degreeTwoPoints(landmarks[shoulderLandmark], landmarks[earLandmark]);
-    if (shoulderEar < -20) values["هایپراکستنشن گردن"] = "1";
+    {
+        const earLandmark = isEven ? 8 : 7;
+        const shoulderEar = degreeTwoPoints(landmarks[shoulderLandmark], landmarks[earLandmark]);
+        if (shoulderEar < -20) values["شنا هایپراکستنشن گردن"] = "1";
 
-    degrees.push({
-        landmarksUsed: [shoulderLandmark, earLandmark],
-        degree: shoulderEar,
-        value: values["هایپراکستنشن گردن"]
-    })
+        degrees.push({
+            landmarksUsed: [shoulderLandmark, earLandmark],
+            degree: shoulderEar,
+            value: values["شنا هایپراکستنشن گردن"]
+        })
+    }
 
     return {
         values,

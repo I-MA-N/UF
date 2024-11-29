@@ -2,16 +2,16 @@ import { useMemo } from "react";
 import useFormDataStore from "../../store/formDataStore";
 
 type ImageInputProps = {
-   id: number,
+   number: number,
+   serverID: string,
    title: string,
    image: string,
    direction: string,
    value: string | undefined,
    isLastValueByAI: boolean | undefined,
-   inputKey: string
 }
 
-function ImageInput({ id, title, image, direction, value, isLastValueByAI, inputKey }: ImageInputProps) {
+function ImageInput({ number, serverID, title, image, direction, value, isLastValueByAI }: ImageInputProps) {
    const setInputValue = useFormDataStore(state => state.setInputValue);
 
    const nextValue = useMemo(() => {
@@ -24,7 +24,7 @@ function ImageInput({ id, title, image, direction, value, isLastValueByAI, input
          className={`flex flex-col gap-1 lg:gap-2 items-center text-center cursor-pointer
             ${direction === "vertical" ? 'w-[100px] lg:w-32' : 'w-[158px] lg:w-48'}
          `}
-         onClick={() => setInputValue(inputKey, nextValue)}
+         onClick={() => setInputValue(serverID, nextValue)}
       >
          <div className="relative w-full">
             <img
@@ -59,7 +59,7 @@ function ImageInput({ id, title, image, direction, value, isLastValueByAI, input
                </div>
             }
          </div>
-         <p className="text-[10px] lg:text-sm">{id}- {title}</p>
+         <p className="text-[10px] lg:text-sm">{number}- {title}</p>
       </div>
    )
 }

@@ -1,5 +1,4 @@
 import OrgMemberData from "../../../../../../../../types/OrgMemberData";
-import getInputKey from "../../../../../../../../utils/getInputKey";
 import { dynamicEvaluationType } from "../../../../../../tests/data/testsData/dynamicEvaluation";
 
 function generateReportData(usersData: OrgMemberData[], section: dynamicEvaluationType[0][0]) {
@@ -11,8 +10,7 @@ function generateReportData(usersData: OrgMemberData[], section: dynamicEvaluati
          const formData = userData.formData['ارزیابی پویا'];
 
          if (formData) {
-            const key = getInputKey(true, section.nameFA, input.title);
-            const value = formData[key]?.value;
+            const value = formData[input.serverID]?.value;
 
             if (value) {
                inputCount++;

@@ -4,28 +4,33 @@ import DegreeType from "../../../../../../types/DegreeType";
 
 function HandsUp_P(landmarks: NormalizedLandmark[]) {
     const values = {
-        'خم شدن آرنج - راست': '0',
-        'خم شدن آرنج - چپ': '0',
+        'خم شدن دست ها خم شدن آرنج': '0',
     }
     const degrees: DegreeType[] = [];
 
-    const elbowRight = Math.abs(degreeTwoPoints(landmarks[14], landmarks[16]));
-    if (elbowRight > 100) values['خم شدن آرنج - راست'] = "1";
+    {
+        const elbowRight = Math.abs(degreeTwoPoints(landmarks[14], landmarks[16]));
+        let elbowRightValue = 0;
+        if (elbowRight > 100) elbowRightValue = 1;
 
-    degrees.push({
-        landmarksUsed: [14, 16],
-        degree: elbowRight,
-        value: values['خم شدن آرنج - راست']
-    })
+        const elbowLeft = 180 - Math.abs(degreeTwoPoints(landmarks[13], landmarks[15]));
+        let elbowLeftValue = 0;
+        if (elbowLeft > 100) elbowLeftValue = 1;
 
-    const elbowLeft = 180 - Math.abs(degreeTwoPoints(landmarks[13], landmarks[15]));
-    if (elbowLeft > 100) values['خم شدن آرنج - چپ'] = "1";
+        values["خم شدن دست ها خم شدن آرنج"] = Math.max(elbowRightValue, elbowLeftValue).toString();
 
-    degrees.push({
-        landmarksUsed: [13, 15],
-        degree: elbowLeft,
-        value: values['خم شدن آرنج - چپ']
-    })
+        degrees.push({
+            landmarksUsed: [14, 16],
+            degree: elbowRight,
+            value: elbowRightValue.toString()
+        })
+
+        degrees.push({
+            landmarksUsed: [13, 15],
+            degree: elbowLeft,
+            value: elbowLeftValue.toString()
+        })
+    }
 
     return {
         values,

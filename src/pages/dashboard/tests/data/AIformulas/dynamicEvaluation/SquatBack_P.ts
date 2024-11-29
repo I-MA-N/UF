@@ -5,23 +5,23 @@ import DegreeDistanceType from "../../../../../../types/DegreeDistanceType";
 
 function SquatBack_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvasSize?: { width: number, height: number }) {
     const values = {
-        'انتقال نامتقارن': '0',
-        'بلند شدن پاشنه - راست': '0',
-        'بلند شدن پاشنه - چپ': '0',
-        'چرخش پا به خارج - راست': '0',
-        'چرخش پا به خارج - چپ': '0',
+        'اسکات خلفی انتقال نامتقارن': '0',
+        'اسکات خلفی بلند شدن پاشنه': '0',
+        'اسکات خلفی صاف شدن پا': '0',
     }
     const degrees: DegreeType[] = [];
     const degreesDistances: DegreeDistanceType[] = [];
 
-    const asis = 180 - Math.abs(degreeTwoPoints(landmarks[23], landmarks[24]));
-    if (asis >= 2.5) values["انتقال نامتقارن"] = "1";
+    {
+        const asis = 180 - Math.abs(degreeTwoPoints(landmarks[23], landmarks[24]));
+        if (asis >= 2.5) values["اسکات خلفی انتقال نامتقارن"] = "1";
 
-    degrees.push({
-        landmarksUsed: [23, 24],
-        degree: asis,
-        value: values["انتقال نامتقارن"]
-    })
+        degrees.push({
+            landmarksUsed: [23, 24],
+            degree: asis,
+            value: values["اسکات خلفی انتقال نامتقارن"]
+        })
+    }
 
     if (editCanvasSize && userHeight) {
         const centimeters = userHeight - 12;
@@ -34,31 +34,41 @@ function SquatBack_P(landmarks: NormalizedLandmark[], userHeight?: number, editC
             value: null
         })
 
-        const heelsPixelRight = (landmarks[32].y - landmarks[30].y) * editCanvasSize.height;
-        const heelsCentimetersRight = heelsPixelRight * ratio;
-        if (heelsCentimetersRight > 5) values["بلند شدن پاشنه - راست"] = "1";
+        {
+            const heelsPixelRight = (landmarks[32].y - landmarks[30].y) * editCanvasSize.height;
+            const heelsCentimetersRight = heelsPixelRight * ratio;
+            let heelsRight = 0;
+            if (heelsCentimetersRight > 5) heelsRight = 1;
 
-        const footRight = 180 - Math.abs(degreeTwoPoints(landmarks[30], landmarks[32]));
-        if (footRight < 75) values["چرخش پا به خارج - راست"] = "1";
+            const heelsPixelLeft = (landmarks[31].y - landmarks[29].y) * editCanvasSize.height;
+            const heelsCentimetersLeft = heelsPixelLeft * ratio;
+            let heelsLeft = 0;
+            if (heelsCentimetersLeft > 5) heelsLeft = 1;
 
-        degreesDistances.push({
-            landmarksUsed: [32, 30],
-            degreesDistances: [footRight, heelsCentimetersRight],
-            values: [values["چرخش پا به خارج - راست"], values["بلند شدن پاشنه - راست"]]
-        })
+            values["اسکات خلفی بلند شدن پاشنه"] = Math.max(heelsRight, heelsLeft).toString();
 
-        const heelsPixelLeft = (landmarks[31].y - landmarks[29].y) * editCanvasSize.height;
-        const heelsCentimetersLeft = heelsPixelLeft * ratio;
-        if (heelsCentimetersLeft > 5) values["بلند شدن پاشنه - چپ"] = "1";
+            const footRight = 180 - Math.abs(degreeTwoPoints(landmarks[30], landmarks[32]));
+            let footRightS = 0;
+            if (footRight < 75) footRightS = 1;
 
-        const footLeft = Math.abs(degreeTwoPoints(landmarks[29], landmarks[31]));
-        if (footLeft < 75) values["چرخش پا به خارج - چپ"] = "1";
+            const footLeft = Math.abs(degreeTwoPoints(landmarks[29], landmarks[31]));
+            let footLeftS = 0;
+            if (footLeft < 75) footLeftS = 1;
 
-        degreesDistances.push({
-            landmarksUsed: [31, 29],
-            degreesDistances: [footLeft, heelsCentimetersLeft],
-            values: [values["چرخش پا به خارج - چپ"], values["بلند شدن پاشنه - چپ"]]
-        })
+            values["اسکات خلفی صاف شدن پا"] = Math.max(footRightS, footLeftS).toString();
+
+            degreesDistances.push({
+                landmarksUsed: [32, 30],
+                degreesDistances: [footRight, heelsCentimetersRight],
+                values: [footRightS.toString(), heelsRight.toString()]
+            })
+
+            degreesDistances.push({
+                landmarksUsed: [31, 29],
+                degreesDistances: [footLeft, heelsCentimetersLeft],
+                values: [footLeft.toString(), heelsLeft.toString()]
+            })
+        }
     }
 
     return {

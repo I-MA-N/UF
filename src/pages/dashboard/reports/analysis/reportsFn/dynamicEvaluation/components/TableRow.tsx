@@ -55,7 +55,7 @@ function TableRow({ title, image, imgDirection, description, inputData }: TableR
                      {
                         inputData?.value === "1" &&
                         <div
-                           className="absolute top-0 left-0 flex items-center justify-center size-full bg-yellow/50 text-primary"
+                           className="absolute top-0 left-0 flex items-center justify-center size-full bg-red/40 text-primary"
                         >
                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className="w-4 lg:w-6">
                               <path fillRule="evenodd" clipRule="evenodd" d="M16.7071 9.70711C17.0976 9.31658 17.0976 8.68342 16.7071 8.29289C16.3166 7.90237 15.6834 7.90237 15.2929 8.29289L11 12.5858L9.20711 10.7929C8.81658 10.4024 8.18342 10.4024 7.79289 10.7929C7.40237 11.1834 7.40237 11.8166 7.79289 12.2071L10.2929 14.7071C10.6834 15.0976 11.3166 15.0976 11.7071 14.7071L16.7071 9.70711Z" fill="currentColor" />

@@ -15,7 +15,7 @@ function ImageToggleBtn({ isVisible, setIsVisible }: ImageToggleBtnProps) {
             عکس
          </div>
 
-         <div className="relative">
+         <div className="relative -mt-px">
             <img src="/images/section-rectangle-mobile.png" className="-mt-px lg:hidden" />
             <img src="/images/section-rectangle-desktop.png" className="-mt-px hidden lg:block" />
 

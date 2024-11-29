@@ -1,9 +1,9 @@
+import FormDataType from "../../../../../../types/FormDataType";
 import staticEvaluationData from "../../../../tests/data/testsData/staticEvaluation";
 import ImageCell from "./components/ImageCell";
 import TableRow from "./components/TableRow";
-import { staticEvaluationType } from "./staticEvaluationData";
 
-function staticEvaluationJsx(data: staticEvaluationType) {
+function staticEvaluationJsx(data: FormDataType[""]) {
    return (
       <div className="grid grid-cols-1 divide-y-2 divide-secondary">
          {
@@ -30,14 +30,15 @@ function staticEvaluationJsx(data: staticEvaluationType) {
                            <tbody>
                               {
                                  section.questions.map((input, index) => {
-                                    const foundProblem = data?.find(problem => problem.title === input.title);
+                                    const inputData = data?.[input.serverID];
+                                    
                                     return (
-                                       <tr key={input.id}>
+                                       <tr key={input.serverID}>
                                           <TableRow
                                              title={input.title}
                                              images={input.images}
                                              imgDirection={input.direction}
-                                             problem={foundProblem}
+                                             inputData={inputData}
                                           />
                                           {index === 0 &&
                                              <ImageCell sectionName={section.name} />

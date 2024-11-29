@@ -26,7 +26,7 @@ function nextBtnClickHandler(
          const finalCanvas = document.createElement("canvas");
          const isDynamicEvaluation = "src" in currentSection.questions[0];
 
-         setInputValues(photoResult.values, currentSection.nameFA, isDynamicEvaluation);
+         setInputValues(photoResult.values);
 
          drawResultsOnCanvas(canvas, img, photoResult, isDynamicEvaluation, landmarks);
 
@@ -44,13 +44,11 @@ function nextBtnClickHandler(
 }
 
 function setInputValues(
-   values: { [k: string]: string },
-   sectionNameFA: string,
-   isDynamicEvaluation: boolean
+   values: { [k: string]: string }
 ) {
    const setAIValues = useFormDataStore.getState().setAIValues;
 
-   setAIValues(values, sectionNameFA, isDynamicEvaluation);
+   setAIValues(values);
 }
 
 function drawResultsOnCanvas(
