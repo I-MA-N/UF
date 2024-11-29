@@ -36,7 +36,7 @@ function staticEvaluationAvg(usersData: OrgMemberData[]) {
             const foundedKey = resultArr.findIndex(obj => obj.serverID === key);
             const value = inputData?.value;
 
-            if (value) {
+            if (foundedKey > -1 && value) {
                resultArr[foundedKey].count++;
 
                if (value === "5") {
