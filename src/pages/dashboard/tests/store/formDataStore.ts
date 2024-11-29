@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import FormDataType from "../../../../types/FormDataType";
-import getInputKey from "../../../../utils/getInputKey";
 
 interface FormDataState {
    data: FormDataType,
@@ -13,7 +12,7 @@ interface FormDataActions {
    setCurrentTestName: (currentTestName: string) => void,
    setFormData: (data: FormDataState["data"]) => void,
    setInputValue: (inputName: string, newValue: string, isLastValueByAI?: boolean) => void,
-   setAIValues: (values: { [k: string]: string }, sectionNameFA: string, isDynamicEvaluation: boolean) => void,
+   setAIValues: (values: { [k: string]: string }) => void,
    setMessage: (message: FormDataState["message"]) => void,
    increaseProgress: () => void,
    clearProgress: () => void
@@ -44,27 +43,27 @@ const useFormDataStore = create<FormDataState & FormDataActions>()((set, get) =>
             if (state.data[currentTestName] === undefined) {
                state.data[currentTestName] = {}
             }
+
             state.data[currentTestName][inputName] = {
                value: newValue,
                isLastValueByAI: false
             }
+
             return { ...state };
          })
       }
    },
-   setAIValues: (values, sectionNameFA, isDynamicEvaluation) => {
+   setAIValues: (values) => {
       const currentTestName = get().currentTestName;
 
       if (currentTestName) {
          set(state => {
-            Object.entries(values).forEach(([title, value]) => {
+            Object.entries(values).forEach(([serverID, value]) => {
                if (state.data[currentTestName] === undefined) {
                   state.data[currentTestName] = {}
                }
 
-               const inputKey = getInputKey(isDynamicEvaluation, sectionNameFA, title);
-
-               state.data[currentTestName][inputKey] = {
+               state.data[currentTestName][serverID] = {
                   value,
                   isLastValueByAI: true
                }

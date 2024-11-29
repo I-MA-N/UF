@@ -21,48 +21,50 @@ function Program({ programData, username }: ProgramProps) {
 
    let textsCounter = 0;
    let imagesCounter = 0;
-   
+
    return (
-      <section className="program-section">
-         <TopInfo />
+      <div className='overflow-x-auto'>
+         <section className="program-section">
+            <TopInfo />
 
-         <UserDataTable isError={isError} name={data?.name} age={data?.age} />
+            <UserDataTable isError={isError} name={data?.name} age={data?.age} />
 
-         {
-            programData.map((day, index) => (
-               <div key={index} className='mt-6'>
-                  {/* Table Only Texts */}
-                  <table className="mx-auto text-center w-full" cellPadding={8}>
-                     <TextsHeader index={index} length={day.length} />
+            {
+               programData.map((day, index) => (
+                  <div key={index} className='mt-6'>
+                     {/* Table Only Texts */}
+                     <table className="mx-auto text-center w-full" cellPadding={8}>
+                        <TextsHeader index={index} length={day.length} />
 
-                     <tbody>
-                        {
-                           day.map(exercise => {
-                              textsCounter++;
-                              return <TextsRow row={exercise} key={textsCounter} rowId={textsCounter} />
-                           })
-                        }
-                     </tbody>
-                  </table>
+                        <tbody>
+                           {
+                              day.map(exercise => {
+                                 textsCounter++;
+                                 return <TextsRow row={exercise} key={textsCounter} rowId={textsCounter} />
+                              })
+                           }
+                        </tbody>
+                     </table>
 
-                  {/* Table Only Pictures */}
-                  <table className="mx-auto text-center w-full" cellPadding={8}>
-                     <ImagesHeader index={index} length={day.length} />
+                     {/* Table Only Pictures */}
+                     <table className="mx-auto text-center w-full" cellPadding={8}>
+                        <ImagesHeader index={index} length={day.length} />
 
-                     <tbody>
-                        {
-                           day.map(exercise => {
-                              imagesCounter++;
-                              return <ImagesRow row={exercise} key={`${imagesCounter}-image`} rowId={imagesCounter} type='Fitness' />;
-                           })
-                        }
-                     </tbody>
-                  </table>
-               </div>
-            ))
-         }
+                        <tbody>
+                           {
+                              day.map(exercise => {
+                                 imagesCounter++;
+                                 return <ImagesRow row={exercise} key={`${imagesCounter}-image`} rowId={imagesCounter} type='Fitness' />;
+                              })
+                           }
+                        </tbody>
+                     </table>
+                  </div>
+               ))
+            }
 
-      </section>
+         </section>
+      </div>
    )
 }
 

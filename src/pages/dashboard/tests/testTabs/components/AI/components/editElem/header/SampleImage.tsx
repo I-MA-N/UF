@@ -10,13 +10,6 @@ function SampleImage({ selectedLandmark }: SampleImageProps) {
    const { isMovingLandmark, landmarks } = usePhotoStore(state => ({ isMovingLandmark: state.isMovingLandmark, landmarks: state.landmarks }));
    const currentSection = useAIStore(state => state.currentSection);
 
-   const isEven = useMemo(() => {
-      let isEven = true;
-      if (landmarks[11].z < landmarks[12].z) isEven = false;
-      
-      return isEven;
-   }, [])
-
    const key = useMemo(() => {
       const name = currentSection?.name.toLowerCase();
 
@@ -24,6 +17,17 @@ function SampleImage({ selectedLandmark }: SampleImageProps) {
       else if (name?.includes("back")) return "back";
       return "front"
    }, [currentSection?.name]);
+
+   const isEven = useMemo(() => {
+      if (key === "side") {
+         let isEven = true;
+         if (landmarks[11].z < landmarks[12].z) isEven = false;
+         
+         return isEven;
+      }
+
+      return false;
+   }, [key])
 
    if (isMovingLandmark && selectedLandmark !== 38) return (
       <img

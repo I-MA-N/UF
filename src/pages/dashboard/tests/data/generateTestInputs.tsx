@@ -84,7 +84,8 @@ function generateTestInputs({ formData, testPattern, testData }: generateTestInp
          return testData.map((input: any) => (
             <ChoiceInputWithImage
                key={input.id}
-               id={input.id}
+               number={input.id}
+               serverID={input.title}
                title={input.title}
                keys={input.keys}
                values={input.values}

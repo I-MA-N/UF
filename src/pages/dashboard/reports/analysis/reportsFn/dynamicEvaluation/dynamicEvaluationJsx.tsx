@@ -1,5 +1,4 @@
 import FormDataType from "../../../../../../types/FormDataType";
-import getInputKey from "../../../../../../utils/getInputKey";
 import dynamicEvaluationData from "../../../../tests/data/testsData/dynamicEvaluation";
 import ImageCell from "../staticEvaluation/components/ImageCell";
 import SampleImageModal from "./components/SampleImageModal";
@@ -38,10 +37,10 @@ function dynamicEvaluationJsx(data: FormDataType[""]) {
                            <tbody>
                               {
                                  section.questions.map((input, index) => {
-                                    const inputKey = getInputKey(true, section.nameFA, input.title);
-                                    const inputData = data?.[inputKey];
+                                    const inputData = data?.[input.serverID];
+                                    
                                     return (
-                                       <tr key={input.id}>
+                                       <tr key={input.serverID}>
                                           <TableRow
                                              title={input.title}
                                              image={input.src}

@@ -4,32 +4,39 @@ import DegreeType from "../../../../../../types/DegreeType";
 
 function WalkingFront_P(landmarks: NormalizedLandmark[]) {
    const values = {
-      'چرخش به داخل یا خارج زانو - راست': "0",
-      'چرخش به داخل یا خارج زانو - چپ': "0",
+      'راه رفتن صاف شدن پاها و چرخش زانو به داخل': "0",
    }
    const degrees: DegreeType[] = [];
 
-   const kneeRightTop = Math.abs(degreeTwoPoints(landmarks[24], landmarks[26]));
-   const kneeRightBottom = 180 - Math.abs(degreeTwoPoints(landmarks[26], landmarks[28]));
-   const kneeRightSum = kneeRightTop + kneeRightBottom;
-   if (kneeRightSum <= 173) values["چرخش به داخل یا خارج زانو - راست"] = "1";
+   {
+      const kneeTopRight = 180 - Math.abs(degreeTwoPoints(landmarks[24], landmarks[26]));
+      const kneeBottomRight = Math.abs(degreeTwoPoints(landmarks[26], landmarks[28]));
+      const kneeRight = kneeTopRight + kneeBottomRight;
 
-   degrees.push({
-      landmarksUsed: [24, 26, 28],
-      degree: kneeRightSum,
-      value: values["چرخش به داخل یا خارج زانو - راست"]
-   })
+      let kneeRightValue = 0;
+      if (kneeRight <= 173) kneeRightValue = 1;
 
-   const kneeLeftTop = Math.abs(degreeTwoPoints(landmarks[23], landmarks[25]));
-   const kneeLeftBottom = 180 - Math.abs(degreeTwoPoints(landmarks[25], landmarks[27]));
-   const kneeLeftSum = kneeLeftTop + kneeLeftBottom;
-   if (kneeLeftSum <= 173) values["چرخش به داخل یا خارج زانو - چپ"] = "1";
+      const kneeTopLeft = Math.abs(degreeTwoPoints(landmarks[23], landmarks[25]));
+      const kneeBottomLeft = 180 - Math.abs(degreeTwoPoints(landmarks[25], landmarks[27]));
+      const kneeLeft = kneeTopLeft + kneeBottomLeft;
 
-   degrees.push({
-      landmarksUsed: [23, 25, 27],
-      degree: kneeLeftSum,
-      value: values["چرخش به داخل یا خارج زانو - چپ"]
-   })
+      let kneeLeftValue = 0;
+      if (kneeLeft <= 173) kneeLeftValue = 1;
+
+      values["راه رفتن صاف شدن پاها و چرخش زانو به داخل"] = Math.max(kneeRightValue, kneeLeftValue).toString();
+
+      degrees.push({
+         landmarksUsed: [24, 26, 28],
+         degree: kneeRight,
+         value: kneeRightValue.toString()
+      })
+
+      degrees.push({
+         landmarksUsed: [23, 25, 27],
+         degree: kneeLeft,
+         value: kneeLeftValue.toString()
+      })
+   }
 
    return {
       values,

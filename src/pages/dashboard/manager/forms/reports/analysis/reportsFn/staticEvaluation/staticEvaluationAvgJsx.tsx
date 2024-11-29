@@ -8,7 +8,7 @@ function staticEvaluationAvgJsx(reportData: staticEvaluationAvgType) {
          <BarChart
             dataset={reportData}
             yAxis={[
-               { scaleType: "band", dataKey: "name", tickSize: 10 }
+               { scaleType: "band", dataKey: "title", tickSize: 10 }
             ]}
             series={[
                { dataKey: "five", color: "#4CB648", label: 'طبیعی' },

@@ -101,9 +101,4 @@ const testsData = {
    },
 }
 
-const testsNames = Object.keys(testsData);
-const emptyTestsObj: any = {};
-testsNames.map(testName => emptyTestsObj[testName as keyof typeof emptyTestsObj] = {});
-
 export default testsData;
-export { emptyTestsObj };

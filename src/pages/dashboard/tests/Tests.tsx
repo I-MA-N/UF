@@ -17,7 +17,7 @@ type TestsProps = {
 function Tests({ testsArr }: TestsProps) {
    const { data, currentTestName, setCurrentTestName } = useFormDataStore(state => ({ data: state.data, currentTestName: state.currentTestName, setCurrentTestName: state.setCurrentTestName }));
    const updateTestsData = useAIStore(state => state.updateTestsData);
-
+   
    useEffect(() => {
       setCurrentTestName(testsArr[0].testName);
    }, [])
@@ -25,7 +25,7 @@ function Tests({ testsArr }: TestsProps) {
    const clickHandler = useCallback((page: string) => {
       updateTestsData(currentTestName!, page);
       setCurrentTestName(page);
-   }, [])
+   }, [currentTestName])
 
    if (currentTestName) return (
       <>

@@ -2,7 +2,8 @@ import { useMemo } from "react";
 import useFormDataStore from "../../store/formDataStore";
 
 type ChoiceInputWithImageProps = {
-   id: number,
+   number: number,
+   serverID: string,
    title: string,
    keys: number[],
    values: string[] | number[],
@@ -12,7 +13,7 @@ type ChoiceInputWithImageProps = {
    isLastValueByAI: boolean | undefined
 }
 
-function ChoiceInputWithImage({ id, title, keys, values, images, direction, value, isLastValueByAI }: ChoiceInputWithImageProps) {
+function ChoiceInputWithImage({ number, serverID, title, keys, values, images, direction, value, isLastValueByAI }: ChoiceInputWithImageProps) {
    const setInputValue = useFormDataStore(state => state.setInputValue);
 
    const btnWidth = useMemo(() => {
@@ -34,7 +35,7 @@ function ChoiceInputWithImage({ id, title, keys, values, images, direction, valu
          <div className="py-3 px-4 h-full flex flex-col items-center gap-4">
             <div className="relative w-full">
                <p className="text-sm leading-7 text-primary text-center">
-                  {id}- {title}
+                  {number}- {title}
                </p>
                {
                   isLastValueByAI &&
@@ -76,7 +77,7 @@ function ChoiceInputWithImage({ id, title, keys, values, images, direction, valu
                         type="button"
                         className={`text-[8px] lg:text-[10px]/[17px] lg:text-balance transition-colors duration-200 whitespace-nowrap overflow-x-auto ${value === key.toString() ? 'text-white' : ''}`}
                         style={{ width: btnWidth }}
-                        onClick={() => setInputValue(title, key.toString())}
+                        onClick={() => setInputValue(serverID, key.toString())}
                      >
                         {values[index]}
                      </button>

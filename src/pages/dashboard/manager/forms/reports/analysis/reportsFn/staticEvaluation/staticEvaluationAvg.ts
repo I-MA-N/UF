@@ -2,7 +2,8 @@ import OrgMemberData from "../../../../../../../../types/OrgMemberData";
 import staticEvaluation from "../../../../../../tests/data/testsData/staticEvaluation";
 
 type StaticEvaluationReportObj = {
-   name: string,
+   serverID: string,
+   title: string,
    count: number,
    five: number,
    three: number,
@@ -16,7 +17,8 @@ function staticEvaluationAvg(usersData: OrgMemberData[]) {
       part.forEach(section => {
          section.questions.forEach(input => {
             resultArr.push({
-               name: input.title,
+               serverID: input.serverID,
+               title: input.title,
                count: 0,
                five: 0,
                three: 0,
@@ -31,7 +33,7 @@ function staticEvaluationAvg(usersData: OrgMemberData[]) {
 
       if (formData) {
          Object.entries(formData).forEach(([key, inputData]) => {
-            const foundedKey = resultArr.findIndex(obj => obj.name === key);
+            const foundedKey = resultArr.findIndex(obj => obj.serverID === key);
             const value = inputData?.value;
 
             if (value) {
@@ -51,7 +53,7 @@ function staticEvaluationAvg(usersData: OrgMemberData[]) {
 
    return resultArr.map(obj => (
       {
-         name: `${obj.name} (${obj.count})`,
+         title: `${obj.title} (${obj.count})`,
          five: obj.count ? Number((obj.five / obj.count * 100).toFixed(2)) : 0,
          three: obj.count ? Number((obj.three / obj.count * 100).toFixed(2)) : 0,
          one: obj.count ? Number((obj.one / obj.count * 100).toFixed(2)) : 0,
