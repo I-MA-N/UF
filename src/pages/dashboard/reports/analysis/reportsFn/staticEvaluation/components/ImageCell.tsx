@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import SectionNames from "../../../../../../../types/SectionNames";
 import GImage from "../../../../../../../api/common/GImage";
 import { useEffect, useState } from "react";
-import ExtractedZipType from "../../../../../../../types/ExtractedZipType";
 import { extractZip } from "../../../../../../../utils/AIFuncs";
 import Loading from "../../../../../../common/Loading";
 
@@ -11,7 +10,7 @@ type ImageCellProps = {
 }
 
 function ImageCell({ sectionName }: ImageCellProps) {
-   const [files, setFiles] = useState<ExtractedZipType | null>(null);
+   const [imageBase64, setImageBase64] = useState<string | null | undefined>(undefined);
 
    const { formname, username } = useParams();
    const { mutate, data, isPending } = GImage(username, formname, sectionName);
@@ -23,28 +22,28 @@ function ImageCell({ sectionName }: ImageCellProps) {
    useEffect(() => {
       if (data?.result) {
          const extractFiles = async () => {
-            const files = await extractZip(data.result);
-            setFiles(files);
+            const imageBase64 = await extractZip(data.result);
+            setImageBase64(imageBase64);
          }
 
          extractFiles();
       }
+
+      setImageBase64(null);
    }, [data])
 
    return (
       <td rowSpan={50} className="p-1 w-[200px] lg:w-[400px]">
          {
-            isPending
+            (imageBase64 === undefined || isPending)
                ?
                <Loading />
                :
-               files
+               imageBase64
                   ?
                   <img
-                     src={files.image}
-                     width={files.imageSize.width}
-                     height={files.imageSize.height}
-                     className="mx-auto"
+                     src={imageBase64}
+                     className="max-h-[80vh] mx-auto"
                   />
                   :
                   '-'

@@ -19,7 +19,7 @@ function ReportsFirstLoad() {
    const { data: orgMembersData, isPending: orgMembersDataPending } = managerGFormData(formname);
    const { data: formNames, isPending: formNamesPending } = GFormNames(username);
 
-   if (orgMembersDataPending || formNamesPending) return <Loading />
+   if (orgMembersDataPending || formNamesPending) return <Loading fillScreen />
 
    if (typeof orgMembersData === "string") return (
       <Container>

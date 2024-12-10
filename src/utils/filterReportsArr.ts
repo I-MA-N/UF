@@ -1,5 +1,5 @@
-import REPORTS_ARR_SIMPLEUSER from "../pages/dashboard/reports/analysis/REPORTS_ARR";
-import REPORTS_ARR_MANAGER from "../pages/dashboard/manager/forms/reports/analysis/REPORTS_ARR";
+import REPORTS_ARR_SIMPLEUSER, { REPORTS_ARR_Type as REPORTS_ARR_SIMPLEUSER_Type } from "../pages/dashboard/reports/analysis/REPORTS_ARR";
+import REPORTS_ARR_MANAGER, { REPORTS_ARR_Type as REPORTS_ARR_MANAGER_Type } from "../pages/dashboard/manager/forms/reports/analysis/REPORTS_ARR";
 import { FormObj } from "../types/TestsTypes";
 
 function filterReportsArr(
@@ -8,8 +8,9 @@ function filterReportsArr(
    isManagerReport?: boolean
 ) {
    const formObj = formNames?.find(form => form.formName === formname);
+   
    if (formObj) {
-      let reportsArr = REPORTS_ARR_SIMPLEUSER;
+      let reportsArr: REPORTS_ARR_SIMPLEUSER_Type | REPORTS_ARR_MANAGER_Type = REPORTS_ARR_SIMPLEUSER;
       if (isManagerReport) reportsArr = REPORTS_ARR_MANAGER;
 
       const filteredArr = reportsArr.filter(report => {

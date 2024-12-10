@@ -1,4 +1,4 @@
-import PALETTES from "./paletteBtns/PALETTES";
+import PALETTES from "./utils/PALETTES";
 
 type PaletteBtnsProps = {
    selectedPalette: string[],
@@ -7,7 +7,7 @@ type PaletteBtnsProps = {
 
 function PaletteBtns({ selectedPalette, setSelectedPalette }: PaletteBtnsProps) {
    return (
-      <div className="absolute top-1/2 -translate-y-1/2 left-0 flex gap-2 lg:gap-4 items-center">
+      <div className="absolute top-1/2 -translate-y-1/2 left-0 flex gap-1 xs:gap-2 lg:gap-4 items-center">
          {
             PALETTES.map(palette => {
                const isSelected = palette.toString() === selectedPalette.toString();

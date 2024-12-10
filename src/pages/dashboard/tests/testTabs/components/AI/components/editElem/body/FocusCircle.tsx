@@ -1,6 +1,6 @@
 import { useMemo, useRef } from "react";
 import usePhotoStore from "../../../../../../store/photoStore";
-import { circleDown, circleMove, circleUp } from "./pointerEventFns";
+import { circleDown, circleMove, circleUp } from "./utils/pointerEventFns";
 
 type FocusCircleProps = {
    canvas: HTMLCanvasElement,
@@ -59,9 +59,7 @@ function FocusCircle({ canvas, selectedLandmark }: FocusCircleProps) {
                const offsetY = e.changedTouches[0].pageY - rect.top;
                circleMove(circleRef.current!, offsetX, offsetY, canvas, selectedLandmark);
             }}
-         >
-            {/* <div className="size-[10px] bg-secondary rounded-full" /> */}
-         </div>
+         />
 
          <div
             className="size-full bg-gray/50 absolute top-0 left-0 transition-all duration-500"

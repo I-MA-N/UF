@@ -14,7 +14,9 @@ function Footer({ selectedLandmark, setSelectedLandmark }: FooterProps) {
             setSelectedLandmark={setSelectedLandmark}
          />
 
-         <BottomBtns />
+         <BottomBtns
+            selectedLandmark={selectedLandmark}
+         />
       </div>
    );
 };

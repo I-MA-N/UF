@@ -1,26 +1,26 @@
 import { useMemo } from "react";
 
 type PrevLandmarksBtnProps = {
-   editableLandmarks: number[],
+   drawableLandmarks: number[],
    selectedLandmark: number | null,
    setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>,
    isDisabled: boolean
 }
 
-function PrevLandmarksBtn({ editableLandmarks, selectedLandmark, setSelectedLandmark, isDisabled }: PrevLandmarksBtnProps) {
+function PrevLandmarksBtn({ drawableLandmarks, selectedLandmark, setSelectedLandmark, isDisabled }: PrevLandmarksBtnProps) {
    const prevLandmark = useMemo(() => {
       if (selectedLandmark !== null) {
-         const currentIndex = editableLandmarks.indexOf(selectedLandmark);
+         const currentIndex = drawableLandmarks.indexOf(selectedLandmark);
 
          if (currentIndex > -1) {
-            const prevLandmark = editableLandmarks[currentIndex - 1];
+            const prevLandmark = drawableLandmarks[currentIndex - 1];
 
             if (prevLandmark === undefined) return null;
             return prevLandmark;
          }
       }
 
-      return editableLandmarks[editableLandmarks.length - 1];
+      return drawableLandmarks[drawableLandmarks.length - 1];
    }, [selectedLandmark])
 
    return (

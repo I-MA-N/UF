@@ -1,18 +1,16 @@
 import { PoseLandmarker } from "@mediapipe/tasks-vision";
 import usePhotoStore from "../../../../store/photoStore";
-import CameraLandmarks from "./CameraLandmarks";
 import EditElem from "./EditElem";
-import CameraSimple from "./CameraSimple";
+import CameraElem from "./CameraElem";
 import { useEffect } from "react";
 import useAIStore from "../../../../store/AIStore";
 import TipModal from "./camera/TipModal";
 
 type CameraFirstLoadProps = {
    model: PoseLandmarker,
-   isDynamicEvaluationData: boolean
 }
 
-function CameraFirstLoad({ model, isDynamicEvaluationData }: CameraFirstLoadProps) {
+function CameraFirstLoad({ model }: CameraFirstLoadProps) {
    const isTipShown = useAIStore(state => state.isTipShown);
    const { image, removePhoto } = usePhotoStore(state => ({ image: state.image, removePhoto: state.removePhoto }));
 
@@ -43,11 +41,7 @@ function CameraFirstLoad({ model, isDynamicEvaluationData }: CameraFirstLoadProp
                   ?
                   <EditElem />
                   :
-                  isDynamicEvaluationData
-                     ?
-                     <CameraLandmarks model={model} />
-                     :
-                     <CameraSimple model={model} />
+                  <CameraElem model={model} />
             }
          </div>
       </div>

@@ -10,7 +10,7 @@ function ProgramFirstLoad() {
    const { data, isError, isPending } = PProgram(program, username, formname);
    const navigate = useNavigate();
 
-   if (isPending) return <Loading />;
+   if (isPending) return <Loading fillScreen />;
 
    if (isError || !data ) {
       return <Container>

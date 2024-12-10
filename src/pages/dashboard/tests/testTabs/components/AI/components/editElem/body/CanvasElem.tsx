@@ -1,8 +1,9 @@
-import { drawOnCanvas, getEditableLandmarks } from "../../../../../../../../../utils/AIFuncs";
+import { filterLandmarks } from "../../../../../../../../../utils/AIFuncs";
 import { useEffect, useMemo, useRef } from "react";
 import usePhotoStore from "../../../../../../store/photoStore";
 import useAIStore from "../../../../../../store/AIStore";
 import FocusCircle from "./FocusCircle";
+import drawOnCanvas from "./utils/drawOnCanvas";
 
 type CanvasElemProps = {
    selectedLandmark: number | null,
@@ -11,34 +12,21 @@ type CanvasElemProps = {
 
 function CanvasElem({ selectedLandmark, selectedPalette }: CanvasElemProps) {
    const { landmarks, videoSize } = usePhotoStore(state => ({ landmarks: state.landmarks, videoSize: state.videoSize }));
-   const currentSection = useAIStore(store => store.currentSection);
+   const currentSection = useAIStore(store => store.currentSection!);
 
    const canvasRef = useRef<HTMLCanvasElement>(null);
 
-   const { isSide, editableLandmarks } = useMemo(() => {
-      if (currentSection) {
-         const isSide = currentSection.name.toLowerCase().includes("side");
-
-         const editableLandmarks = getEditableLandmarks(landmarks);
-         return {
-            isSide,
-            editableLandmarks
-         }
-      }
-
-      return {
-         isSide: undefined,
-         editableLandmarks: undefined
-      }
-   }, [currentSection])
+   const { needableLandmarks, drawableLandmarks } = useMemo(() => (
+      filterLandmarks(currentSection, landmarks)
+   ), [currentSection?.name])
 
    useEffect(() => {
       const canvas = canvasRef.current;
-
-      if (canvas && landmarks?.length && isSide !== undefined && editableLandmarks !== undefined) {
-         drawOnCanvas(canvas, selectedPalette, landmarks, editableLandmarks);
+      
+      if (canvas && landmarks?.length && drawableLandmarks.length > 0) {
+         drawOnCanvas(canvas, selectedPalette, landmarks, drawableLandmarks, needableLandmarks);
       }
-   }, [selectedPalette, JSON.stringify(landmarks), isSide, editableLandmarks])
+   }, [selectedPalette, JSON.stringify(landmarks)])
 
    return (
       <>

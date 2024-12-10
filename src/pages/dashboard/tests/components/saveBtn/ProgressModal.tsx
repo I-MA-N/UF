@@ -1,41 +1,71 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CircularProgressWithLabel from "./CircularProgressWithLabel";
-import useAIStore from "../../store/AIStore";
 import useFormDataStore from "../../store/formDataStore";
 import Modal from "../../../../common/Modal";
+import { Alert, Snackbar } from "@mui/material";
 
-function ProgressModal() {
-   const { progress, clearProgress, setMessage } = useFormDataStore(state => ({ progress: state.progress, clearProgress: state.clearProgress, setMessage: state.setMessage }));
-   const getFilesToSave = useAIStore(state => state.getFilesToSave);
+type ProgressModalProps = {
+   zipFilesToSaveLength: number
+}
+
+function ProgressModal({ zipFilesToSaveLength }: ProgressModalProps) {
+   const { progress, clearProgress } = useFormDataStore(state => ({ progress: state.progress, clearProgress: state.clearProgress }));
+
+   const [showSnackbar, setShowSnackbar] = useState(false);
 
    const percentage = useMemo(() => {
       if (progress !== null) {
-         const filesToSave = getFilesToSave();
-         if (filesToSave.length) {
-            const division = progress / (filesToSave.length + 1);
+         if (zipFilesToSaveLength) {
+            const division = progress / (zipFilesToSaveLength + 1);
             return division * 100;
          }
+
          return progress * 100;
       }
 
-      return 0;
-   }, [progress, getFilesToSave])
+      return null;
+   }, [progress])
 
    useEffect(() => {
-      if (percentage >= 100) {
+      if (percentage !== null && percentage >= 100) {
          setTimeout(() => {
             clearProgress();
-            setMessage(["داده ها با موفقیت ذخیره شد!", "✔"]);
+            setShowSnackbar(true);
          }, 300);
       }
    }, [percentage])
 
-   if (progress !== null) return (
-      <Modal>
-         <Modal.Body className="flex items-center justify-center" noBackground>
-            <CircularProgressWithLabel value={percentage} />
-         </Modal.Body>
-      </Modal>
+   return (
+      <>
+         {
+            percentage !== null &&
+            <Modal>
+               <Modal.Body className="flex items-center justify-center" noBackground>
+                  <CircularProgressWithLabel value={percentage} />
+               </Modal.Body>
+            </Modal>
+         }
+
+         <div className="container flex fixed left-1/2 bottom-16 -translate-x-1/2 z-50">
+            <Snackbar
+               open={showSnackbar}
+               autoHideDuration={3000}
+               onClose={() => setShowSnackbar(false)}
+               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+               className="!relative !bottom-0 !right-auto !left-auto rounded-xl overflow-hidden"
+            >
+               <Alert
+                  variant="filled"
+                  sx={{ color: "#E4F4FD", backgroundColor: "#4CB648" }}
+                  classes={{
+                     icon: "!m-0 !ml-2"
+                  }}
+               >
+                  ذخیره سازی داده ها با موفقیت انجام شد!
+               </Alert>
+            </Snackbar>
+         </div>
+      </>
    )
 };
 

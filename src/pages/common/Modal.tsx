@@ -1,12 +1,16 @@
 import { PropsWithChildren } from "react";
 
 type ModalProps = PropsWithChildren & {
+   onClick?: React.MouseEventHandler<HTMLDivElement>,
    className?: string
 }
 
-function Modal({ children, className }: ModalProps) {
+function Modal({ children, onClick, className }: ModalProps) {
    return (
-      <div className={`fixed top-0 left-0 size-full flex flex-col justify-center items-center bg-transparent backdrop-blur-md z-50 ${className || ""}`}>
+      <div
+         onClick={onClick}
+         className={`fixed top-0 left-0 size-full flex flex-col justify-center items-center bg-transparent backdrop-blur-md z-50 ${className || ""}`}
+      >
          <div className="min-w-72 xs:min-w-80">
             {children}
          </div>

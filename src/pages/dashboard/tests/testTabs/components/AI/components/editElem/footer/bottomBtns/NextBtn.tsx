@@ -1,15 +1,16 @@
 import { useMemo } from "react";
-import clickHandler from "./nextBtnClickHandler";
+import clickHandler from "./utils/nextBtnClickHandler";
 import NextBtnSvg from "./NextBtnSvg";
 import useAIStore from "../../../../../../../store/AIStore";
 import usePhotoStore from "../../../../../../../store/photoStore";
 
 function NextBtn() {
-   const { currentSection, activeTestData } = useAIStore(state => ({ currentSection: state.currentSection, activeTestData: state.activeTestData }));
+   const { currentSection, activeTestData, zipFiles } = useAIStore(state => ({ currentSection: state.currentSection, activeTestData: state.activeTestData, zipFiles: state.zipFiles }));
    const landmarks = usePhotoStore(state => state.landmarks);
 
+   const sectionName = useMemo(() => currentSection!.name, [currentSection]);
+
    const nextSection = useMemo(() => {
-      const sectionName = currentSection?.name;     
       let partIndex: number | undefined = undefined;
       let sectionIndex: number | undefined = undefined;
 
@@ -32,12 +33,13 @@ function NextBtn() {
       }
 
       return undefined;
-   }, [currentSection])
+   }, [sectionName])
 
    const shouldGoNext = useMemo(() => {
-      if (currentSection?.zipFile || !nextSection) return false;
+      const zipFile = zipFiles[sectionName];
+      if (zipFile || !nextSection) return false;
       return true;
-   }, [nextSection, currentSection?.zipFile]);
+   }, [sectionName, nextSection]);
 
    const isDisabled = useMemo(() => !landmarks?.length, [landmarks]);
 
@@ -45,7 +47,7 @@ function NextBtn() {
       <button
          type="button"
          className={`
-            h-full flex items-center gap-2 px-8 border rounded-full
+            h-full flex items-center gap-2 px-5 xs:px-8 border rounded-full
             ${
                (isDisabled) ? "bg-gray border-gray" : 
                shouldGoNext ? "bg-primary" : "bg-secondary border-secondary"

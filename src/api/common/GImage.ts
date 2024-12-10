@@ -7,7 +7,7 @@ function GImage(
    imgKey: string | undefined
 ) {
    const { mutate, data, isPending } = useMutation({
-      mutationKey: ['get: ai image', username, formname],
+      mutationKey: ['get: section image', username, formname, imgKey],
       mutationFn: async () => {
          const req = await axios.get(
             import.meta.env.VITE_ENDPOINT +

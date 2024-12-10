@@ -1,19 +1,24 @@
 import { CircularProgress } from "@mui/material";
 
 type LoadingProps = {
-   fullHeight?: boolean
+   fillScreen?: boolean,
+   withoutText?: boolean
 }
 
-function Loading({ fullHeight = true }: LoadingProps) {
+function Loading({ fillScreen, withoutText }: LoadingProps) {
    return (
-      <div className={`flex flex-col gap-6 items-center justify-center ${fullHeight ? "min-h-[calc(100vh-150px)]" : "mt-8"}`}>
+      <div className={`flex flex-col gap-6 items-center justify-center ${fillScreen ? "min-h-screen" : ""}`}>
          <CircularProgress
             sx={{
                color: "#4CB648"
             }}
             size={50}
          />
-         <span className="lg:text-lg">در حال بارگذاری</span>
+         
+         {
+            !withoutText &&
+            <span className="lg:text-lg">در حال بارگذاری</span>
+         }
       </div>
    );
 };

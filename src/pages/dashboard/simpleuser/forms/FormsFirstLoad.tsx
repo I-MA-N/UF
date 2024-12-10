@@ -12,7 +12,7 @@ function FormsFirstLoad() {
    const userData = useUserDataContext();
    const { data, isPending } = GFormNames(userData.username);
 
-   if (isPending) return <Loading />
+   if (isPending) return <Loading fillScreen />
 
    if (typeof data === "string") return <Container>
       <h1 className="mb-6 lg:text-lg text-center">{data}</h1>

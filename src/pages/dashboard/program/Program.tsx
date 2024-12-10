@@ -17,7 +17,7 @@ type ProgramProps = {
 function Program({ programData, username }: ProgramProps) {
    const { data, isError, isPending } = GUserData(username);
 
-   if (isPending) return <Loading />;
+   if (isPending) return <Loading fillScreen />;
 
    let textsCounter = 0;
    let imagesCounter = 0;

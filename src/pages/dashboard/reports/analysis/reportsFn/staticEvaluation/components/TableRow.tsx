@@ -34,7 +34,7 @@ function TableRow({ title, images, imgDirection, inputData }: TableRowProps) {
 
          {
             images.map((image, index) => (
-               <td key={index}>
+               <td key={index} className="p-1">
                   {
                      inputData?.value
                         ?
@@ -42,7 +42,7 @@ function TableRow({ title, images, imgDirection, inputData }: TableRowProps) {
                            <img
                               alt="report-img"
                               src={`/images/testsImages/${image}`}
-                              className={imgDirection === 'vertical' ? 'w-16 lg:w-20' : 'h-16 lg:h-16'}
+                              className={imgDirection === 'vertical' ? 'max-w-14 lg:max-w-16' : 'max-h-14 lg:max-h-16'}
                            />
 
                            {

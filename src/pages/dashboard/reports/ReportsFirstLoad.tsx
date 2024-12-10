@@ -7,6 +7,7 @@ import GFormData from "../../../api/common/form/GFormData";
 import Container from "../../common/Container";
 import GFormNames from "../../../api/common/form/GFormNames";
 import filterReportsArr from "../../../utils/filterReportsArr";
+import { REPORTS_ARR_Type } from "./analysis/REPORTS_ARR";
 
 function ReportsFirstLoad() {
    const { formname, username } = useParams();
@@ -15,9 +16,9 @@ function ReportsFirstLoad() {
    const { data: userData, isPending: userDataPending } = GUserData(username);
    const navigate = useNavigate();
 
-   if (userDataPending || formDataPending || formNamesPending) {
-      return <Loading />
-   }
+   if (userDataPending || formDataPending || formNamesPending) return (
+      <Loading fillScreen />
+   )
 
    if (typeof formData === "string") {
       return <Container>
@@ -34,7 +35,7 @@ function ReportsFirstLoad() {
    }
 
    if (formData && formNames && userData?.access === 'true') {
-      const filteredReports = filterReportsArr(formNames, formname);
+      const filteredReports = filterReportsArr(formNames, formname) as REPORTS_ARR_Type;
 
       if (filteredReports && filteredReports.length > 0) return (
          <Reports reportsArr={filteredReports} userData={userData} formData={formData} />

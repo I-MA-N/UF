@@ -1,13 +1,15 @@
 import { useState } from "react";
+import LANDMARKS_NAMES from "./LandmarksNames";
 
 type LandmarksMenuProps = {
-   editableLandmarks: number[]
+   drawableLandmarks: number[],
+   needableLandmarks: number[],
    selectedLandmark: number | null,
    setSelectedLandmark: React.Dispatch<React.SetStateAction<number | null>>,
    isDisabled: boolean,
 }
 
-function LandmarksMenu({ editableLandmarks, selectedLandmark, setSelectedLandmark, isDisabled }: LandmarksMenuProps) {
+function LandmarksMenu({ drawableLandmarks, needableLandmarks, selectedLandmark, setSelectedLandmark, isDisabled }: LandmarksMenuProps) {
    const [showMenu, setShowMenu] = useState(false);
 
    return (
@@ -15,7 +17,7 @@ function LandmarksMenu({ editableLandmarks, selectedLandmark, setSelectedLandmar
          <button
             disabled={isDisabled}
             type="button"
-            className={`min-w-32 lg:min-w-36 h-full flex items-center justify-center gap-1 lg:gap-2 rounded-[32px] ${isDisabled ? "bg-gray text-white" : "bg-white text-primary"}`}
+            className={`min-w-32 lg:min-w-36 px-4 h-full flex items-center justify-center gap-1 lg:gap-2 rounded-[32px] ${isDisabled ? "bg-gray text-white" : "bg-white text-primary"}`}
             onClick={() => setShowMenu(prevValue => !prevValue)}
          >
             <div className={`transition-transform duration-500 flex-shrink-0 ${showMenu ? "rotate-0" : 'rotate-180'}`}>
@@ -23,13 +25,17 @@ function LandmarksMenu({ editableLandmarks, selectedLandmark, setSelectedLandmar
                   <path d="M9.28564 0.714287L4.99993 5L0.714216 0.714286" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
                </svg>
             </div>
-            {selectedLandmark === null ? "انتخاب شماره" : `شماره ${selectedLandmark}`}
+            {
+               selectedLandmark === null ?
+                  "انتخاب شماره" :
+                  `شماره ${selectedLandmark}`
+            }
          </button>
 
          <div className={`editlandmarks-menu ${showMenu ? "opacity-100 z-10" : "opacity-0 -z-10"}`}>
             <button
                type="button"
-               className="py-0.5"
+               className="py-0.5 text-sm"
                onClick={() => {
                   setSelectedLandmark(null);
                   setShowMenu(false);
@@ -38,19 +44,23 @@ function LandmarksMenu({ editableLandmarks, selectedLandmark, setSelectedLandmar
                بدون انتخاب
             </button>
             {
-               editableLandmarks.map(number => (
-                  <button
-                     key={number}
-                     type="button"
-                     className="py-0.5"
-                     onClick={() => {
-                        setSelectedLandmark(number);
-                        setShowMenu(false);
-                     }}
-                  >
-                     {number}
-                  </button>
-               ))
+               drawableLandmarks.map(index => {
+                  const isNeedableLandmark = needableLandmarks.includes(index);
+
+                  return (
+                     <button
+                        key={index}
+                        type="button"
+                        className={`py-1.5 text-sm ${isNeedableLandmark ? "font-bold" : "font-Estedad-ExtraLight"}`}
+                        onClick={() => {
+                           setSelectedLandmark(index);
+                           setShowMenu(false);
+                        }}
+                     >
+                        {index} - {LANDMARKS_NAMES[index]}
+                     </button>
+                  )
+               })
             }
          </div>
       </div>
