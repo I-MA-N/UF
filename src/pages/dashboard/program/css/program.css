@@ -1,23 +1,23 @@
-.program-section {
-   @apply w-[210mm] mx-auto pt-32 lg:pt-36 pb-12 px-[33px] print:p-0;
+.print-area {
+   @apply w-[210mm] mx-auto print:p-3;
 }
 
-.program-section .table-header ::-moz-selection {
+.print-area .table-header ::-moz-selection {
    @apply bg-primary text-white;
 }
 
-.program-section .table-header ::selection {
+.print-area .table-header ::selection {
    @apply bg-primary text-white;
 }
 
-.program-section .table-header {
+.print-area .table-header {
    @apply bg-secondary text-white text-sm;
 }
-.program-section tbody {
+.print-area tbody {
    @apply text-xs;
 }
 
-.program-section img {
+.print-area img {
    -webkit-touch-callout: none;
    -webkit-user-select: none;
    -khtml-user-select: none;

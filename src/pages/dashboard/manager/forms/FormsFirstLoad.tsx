@@ -9,7 +9,7 @@ function FormsFirstLoad() {
    const { data, isError, isPending } = managerGFormNames();
    const navigate = useNavigate();
 
-   if (isPending) return <Loading />
+   if (isPending) return <Loading fillScreen />
 
    if (!isError && data) return <Forms formNames={data} />
 

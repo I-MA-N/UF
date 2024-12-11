@@ -22,15 +22,12 @@ function AITab() {
 
          if (model === undefined) return (
             <ModalElem>
-               <Loading fullHeight={false} />
+               <Loading />
             </ModalElem>
          )
 
          return (
-            <CameraFirstLoad
-               model={model}
-               isDynamicEvaluationData={"src" in activeTestData[0][0].questions[0]}
-            />
+            <CameraFirstLoad model={model} />
          )
       }
    }, [model, activeTestData, currentSection])
@@ -47,7 +44,7 @@ function AITab() {
                      {
                         part.map(section => (
                            <SectionCard
-                              key={`${section.name}_${section.zipFile?.slice(0, 30)}`}
+                              key={section.name}
                               section={section}
                            />
                         ))

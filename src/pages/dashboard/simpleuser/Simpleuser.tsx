@@ -13,7 +13,7 @@ function Simpleuser() {
    const userData = useUserDataContext();
    const { data, isError, isPending } = GFormNames(userData.username);
 
-   if (isPending) return <Loading />
+   if (isPending) return <Loading fillScreen />
 
    return (
       <Container>

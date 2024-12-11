@@ -50,7 +50,7 @@ function TableRow({ title, image, imgDirection, description, inputData }: TableR
                      <img
                         alt="report-img"
                         src={`images/testsImages/dynamicEvaluation/${image}`}
-                        className={imgDirection === 'vertical' ? 'w-24' : 'h-20'}
+                        className={imgDirection === 'vertical' ? 'max-w-[80px]' : 'max-h-[80px]'}
                      />
                      {
                         inputData?.value === "1" &&

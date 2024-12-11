@@ -7,7 +7,7 @@ type SampleImageProps = {
 }
 
 function SampleImage({ selectedLandmark }: SampleImageProps) {
-   const { isMovingLandmark, landmarks } = usePhotoStore(state => ({ isMovingLandmark: state.isMovingLandmark, landmarks: state.landmarks }));
+   const landmarks = usePhotoStore(state => state.landmarks);
    const currentSection = useAIStore(state => state.currentSection);
 
    const key = useMemo(() => {
@@ -29,13 +29,13 @@ function SampleImage({ selectedLandmark }: SampleImageProps) {
       return false;
    }, [key])
 
-   if (isMovingLandmark && selectedLandmark !== 38) return (
+   if (selectedLandmark !== 38) return (
       <img
          src={`/images/editImages/${key}/${selectedLandmark}.png`}
          style={{
             transform: isEven ? "rotateY(180deg)" : "none"
          }}
-         className="absolute z-20 top-0 left-0"
+         className="absolute z-20 top-0 left-0 hide-alt-text"
          width={80}
          height={80}
       />

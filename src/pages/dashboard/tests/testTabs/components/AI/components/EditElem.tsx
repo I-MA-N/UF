@@ -2,7 +2,7 @@ import { useState } from "react";
 import Header from "./editElem/Header";
 import Footer from "./editElem/Footer";
 import Body from "./editElem/Body";
-import PALETTES from "./editElem/header/paletteBtns/PALETTES";
+import PALETTES from "./editElem/header/utils/PALETTES";
 
 function EditElem() {
    const [selectedLandmark, setSelectedLandmark] = useState<number | null>(null);

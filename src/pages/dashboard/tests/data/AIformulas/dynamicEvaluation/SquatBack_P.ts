@@ -51,7 +51,7 @@ function SquatBack_P(landmarks: NormalizedLandmark[], userHeight?: number, editC
             let footRightS = 0;
             if (footRight < 75) footRightS = 1;
 
-            const footLeft = Math.abs(degreeTwoPoints(landmarks[29], landmarks[31]));
+            const footLeft = 180 - Math.abs(degreeTwoPoints(landmarks[29], landmarks[31]));
             let footLeftS = 0;
             if (footLeft < 75) footLeftS = 1;
 
@@ -66,7 +66,7 @@ function SquatBack_P(landmarks: NormalizedLandmark[], userHeight?: number, editC
             degreesDistances.push({
                 landmarksUsed: [31, 29],
                 degreesDistances: [footLeft, heelsCentimetersLeft],
-                values: [footLeft.toString(), heelsLeft.toString()]
+                values: [footLeftS.toString(), heelsLeft.toString()]
             })
         }
     }

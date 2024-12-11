@@ -23,7 +23,7 @@ function Tests({ testsArr }: TestsProps) {
    }, [])
 
    const clickHandler = useCallback((page: string) => {
-      updateTestsData(currentTestName!, page);
+      updateTestsData(page);
       setCurrentTestName(page);
    }, [currentTestName])
 

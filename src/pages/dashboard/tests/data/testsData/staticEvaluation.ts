@@ -132,7 +132,6 @@ const staticEvaluation = [
          ],
          photoFn: Front_P,
          cropFn: Front_C,
-         zipFile: undefined as string | null | undefined,
       },
       {
          name: "back" as SectionNames,
@@ -177,7 +176,6 @@ const staticEvaluation = [
          ],
          photoFn: Back_P,
          cropFn: Back_C,
-         zipFile: undefined as string | null | undefined,
       },
       {
          name: "side" as SectionNames,
@@ -276,7 +274,6 @@ const staticEvaluation = [
          ],
          photoFn: Side_P,
          cropFn: Side_C,
-         zipFile: undefined as string | null | undefined,
       },
    ]
 ]

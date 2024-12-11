@@ -17,7 +17,7 @@ function MembersFirstLoad() {
 
    const navigate = useNavigate();
 
-   if (isPending) return <Loading />
+   if (isPending) return <Loading fillScreen />
    
    if (data && !isError) {
       return <Members orgSelected={orgSelected} setOrgSelected={setOrgSelected} orgNames={orgNames} users={data} />

@@ -1,9 +1,19 @@
+import { useEffect, useRef } from "react";
 import Modal from "../../../../../../../common/Modal";
 import useAIStore from "../../../../../store/AIStore";
+import useFormDataStore from "../../../../../store/formDataStore";
 
 function HeightInputModal() {
-    const { userHeight, setUserHeight, setShowUserHeight } = useAIStore(state => ({ userHeight: state.userHeight, setUserHeight: state.setUserHeight, setShowUserHeight: state.setShowUserHeight }));
-    const removeCurrentSection = useAIStore(state => state.removeCurrentSection);
+    const data = useFormDataStore(state => state.data);
+    const { userHeight, setUserHeight, setShowUserHeight, removeCurrentSection } = useAIStore(state => ({ userHeight: state.userHeight, setUserHeight: state.setUserHeight, setShowUserHeight: state.setShowUserHeight, removeCurrentSection: state.removeCurrentSection }));
+    const inputRef = useRef<HTMLInputElement>(null);
+    
+    useEffect(() => {
+        inputRef.current?.select();
+
+        const heightData = data["وضعیت بدنی"]?.["قد"]?.value;
+        if (heightData) setUserHeight(Number(heightData));
+    }, []);
 
     return (
         <Modal>
@@ -18,10 +28,11 @@ function HeightInputModal() {
 
                 <div className="flex justify-center mb-4 mt-8">
                     <input
+                        ref={inputRef}
                         form="nothing"
                         className="bg-primary border rounded-3xl px-4 py-1 outline-none text-center placeholder:text-sm"
                         type="number"
-                        value={userHeight}
+                        value={userHeight || 0}
                         onChange={e => setUserHeight(Number(e.target.value))}
                         placeholder="قد به سانتی متر"
                     />

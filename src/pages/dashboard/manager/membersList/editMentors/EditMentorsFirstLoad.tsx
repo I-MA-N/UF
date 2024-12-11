@@ -6,7 +6,7 @@ import NoMentorsElem from "./components/NoMentorsElem";
 function EditMentorsFirstLoad() {
    const { data, isPending, isError } = managerGMentorsInfo();
 
-   if (isPending) return <Loading />
+   if (isPending) return <Loading fillScreen />
 
    if (data && !isError) {
       return <EditMentors mentors={data} />

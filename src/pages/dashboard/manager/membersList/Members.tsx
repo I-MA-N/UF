@@ -29,7 +29,7 @@ function Members({ mentorNames }: MembersProps) {
       setSelectedUsers(data);
    }, [data])
 
-   if (isPending) return <Loading />
+   if (isPending) return <Loading fillScreen />
 
    return (
       <Container>

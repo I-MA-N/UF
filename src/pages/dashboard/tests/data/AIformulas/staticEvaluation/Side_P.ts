@@ -13,7 +13,7 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas
       'پشت گرد': '5',
       'پشت صاف': '5',
       'کمر گود': '5',
-      'صاف کمر': '5',
+      'کمر صاف': '5',
    }
    const degrees: DegreeType[] = [];
    const distances: DistanceType[] = [];
@@ -50,7 +50,7 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas
    }
 
    if (editCanvasSize && userHeight) {
-      const centimeters = userHeight - 12;
+      const centimeters = userHeight;
       const pixels = (landmarks[39].y - landmarks[38].y) * editCanvasSize.height;
       const ratio = centimeters / pixels;
 
@@ -98,14 +98,14 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas
 
          if (lumbarLordosis >= 45 && lumbarLordosis <= 60) values["کمر گود"] = "3";
          if (lumbarLordosis > 60) values["کمر گود"] = "1";
-         if (lumbarLordosis <= 25 && lumbarLordosis >= 20) values["صاف کمر"] = "3";
-         if (lumbarLordosis < 20) values["صاف کمر"] = "1";
+         if (lumbarLordosis <= 25 && lumbarLordosis >= 20) values["کمر صاف"] = "3";
+         if (lumbarLordosis < 20) values["کمر صاف"] = "1";
 
          let lumbarLordosisValue = "5";
-         if (values["کمر گود"] === "1" || values["صاف کمر"] === "1") {
+         if (values["کمر گود"] === "1" || values["کمر صاف"] === "1") {
             lumbarLordosisValue = "1";
          }
-         if (values["کمر گود"] === "3" || values["صاف کمر"] === "3") {
+         if (values["کمر گود"] === "3" || values["کمر صاف"] === "3") {
             lumbarLordosisValue = "3";
          }
 

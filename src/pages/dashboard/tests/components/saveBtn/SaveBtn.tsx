@@ -1,21 +1,19 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import useFormDataStore from "../../store/formDataStore";
-import useAIStore from "../../store/AIStore";
-import { blurImage } from "../../../../../utils/AIFuncs";
 import PImage from "../../../../../api/common/PImage";
 import ProgressModal from "./ProgressModal";
 import { useParams } from "react-router-dom";
 import PFormData from "../../../../../api/common/form/PFormData";
 import HeaderSection from "../../../common/components/headerSection/HeaderSection";
+import getZipFilesToSave from "./utils/getZipFilesToSave";
+import updateZipFileContent from "./utils/updateZipFileContent";
 
 function SaveBtn() {
    const { formname, username } = useParams();
-
    const { mutateAsync: mutateFormData } = PFormData(username!, formname!);
    const { mutateAsync: mutateImage } = PImage(username!, formname!);
 
    const { progress, increaseProgress, setMessage } = useFormDataStore(state => ({ progress: state.progress, increaseProgress: state.increaseProgress, setMessage: state.setMessage }));
-   const getFilesToSave = useAIStore(state => state.getFilesToSave);
 
    const clickHandler = useCallback(() => {
       increaseProgress();
@@ -27,15 +25,23 @@ function SaveBtn() {
          .catch(() => setMessage(["ذخیره سازی داده ها با مشکل مواجه شد!", "مشکلی در ارتباط با سرور رخ داده است."]))
    }, [])
 
+   const zipFilesToSave = useMemo(() => {
+      if (progress !== null && progress > 0) {
+         return getZipFilesToSave();
+      }
+
+      return null;
+   }, [progress]);
+
    useEffect(() => {
-      const filesToSave = getFilesToSave();
-      if (progress !== null && progress > 0 && filesToSave.length) {
-         const file = filesToSave[progress - 1];
-         if (file) {
-            blurImage(file.value)
+      if (zipFilesToSave?.length && progress) {
+         const zipFile = zipFilesToSave[progress - 1];
+
+         if (zipFile?.value) {
+            updateZipFileContent(zipFile.value)
                .then(res => {
                   mutateImage({
-                     imgKey: file.name,
+                     imgKey: zipFile.key,
                      imgValue: res,
                   })
                      .then(res => {
@@ -47,7 +53,7 @@ function SaveBtn() {
                .catch(() => setMessage(["ذخیره سازی عکس ها با مشکل مواجه شد!", "لطفا دوباره امتحان کنید."]))
          }
       }
-   }, [progress, getFilesToSave])
+   }, [zipFilesToSave])
 
    return (
       <>
@@ -65,7 +71,7 @@ function SaveBtn() {
             clickHandler={clickHandler}
          />
 
-         <ProgressModal />
+         <ProgressModal zipFilesToSaveLength={zipFilesToSave?.length || 0} />
       </>
    );
 };

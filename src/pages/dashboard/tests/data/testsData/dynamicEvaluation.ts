@@ -19,7 +19,6 @@ import WalkingBack_C from "../AIformulas/dynamicEvaluation/WalkingBack_C";
 import WalkingBack_P from "../AIformulas/dynamicEvaluation/WalkingBack_P";
 import WalkingFront_C from "../AIformulas/dynamicEvaluation/WalkingFront_C";
 import WalkingFront_P from "../AIformulas/dynamicEvaluation/WalkingFront_P";
-import WalkingFront_V from "../AIformulas/dynamicEvaluation/WalkingFront_V";
 import WalkingSide_C from "../AIformulas/dynamicEvaluation/WalkingSide_C";
 import WalkingSide_P from "../AIformulas/dynamicEvaluation/WalkingSide_P";
 
@@ -63,9 +62,7 @@ const dynamicEvaluation = [
             },
          ],
          photoFn: SquatFront_P,
-         videoFn: WalkingFront_V,
          cropFn: SquatFront_C,
-         zipFile: undefined as string | null | undefined,
       },
       {
          name: 'squatBack' as SectionNames,
@@ -73,7 +70,7 @@ const dynamicEvaluation = [
          questions: [
             {
                number: 5,
-               serverID: 'اسکات خلفی انتقال نامتقارن',
+               serverID: 'اسکات خلفی انتقال نامتقارن ',
                title: 'انتقال نامتقارن',
                src: 'img-11.png',
                direction: 'vertical',
@@ -97,9 +94,7 @@ const dynamicEvaluation = [
             },
          ],
          photoFn: SquatBack_P,
-         videoFn: WalkingFront_V,
          cropFn: SquatBack_C,
-         zipFile: undefined as string | null | undefined,
       },
       {
          name: 'squatSide' as SectionNames,
@@ -139,9 +134,7 @@ const dynamicEvaluation = [
             },
          ],
          photoFn: SquatSide_P,
-         videoFn: WalkingFront_V,
          cropFn: SquatSide_C,
-         zipFile: undefined as string | null | undefined,
       },
    ],
    [
@@ -191,9 +184,7 @@ const dynamicEvaluation = [
             },
          ],
          photoFn: SquatOneFoot_P,
-         videoFn: WalkingFront_V,
          cropFn: SquatOneFoot_C,
-         zipFile: undefined as string | null | undefined,
       },
    ],
    [
@@ -243,9 +234,7 @@ const dynamicEvaluation = [
             },
          ],
          photoFn: SwimSide_P,
-         videoFn: WalkingFront_V,
          cropFn: SwimSide_C,
-         zipFile: undefined as string | null | undefined,
       },
    ],
    [
@@ -279,9 +268,7 @@ const dynamicEvaluation = [
             },
          ],
          photoFn: HandsOut_P,
-         videoFn: WalkingFront_V,
          cropFn: HandsOut_C,
-         zipFile: undefined as string | null | undefined,
       },
       {
          name: 'handsUp' as SectionNames,
@@ -313,9 +300,7 @@ const dynamicEvaluation = [
             },
          ],
          photoFn: HandsUp_P,
-         videoFn: WalkingFront_V,
          cropFn: HandsUp_C,
-         zipFile: undefined as string | null | undefined,
       },
       {
          name: 'handsRotate' as SectionNames,
@@ -347,7 +332,7 @@ const dynamicEvaluation = [
             },
             {
                number: 31,
-               serverID: 'چرخش خارجی دست ها فاصله از دیوار',
+               serverID: 'چرخش خارجی دست ها فاصله از دیوار ',
                title: 'چرخش خارجی دست ها فاصله از دیوار',
                src: 'img-25.png',
                direction: 'horizental',
@@ -355,9 +340,7 @@ const dynamicEvaluation = [
             },
          ],
          photoFn: HandsRotate_P,
-         videoFn: WalkingFront_V,
          cropFn: HandsRotate_C,
-         zipFile: undefined as string | null | undefined,
       },
    ],
    [
@@ -375,9 +358,7 @@ const dynamicEvaluation = [
             },
          ],
          photoFn: WalkingFront_P,
-         videoFn: WalkingFront_V,
          cropFn: WalkingFront_C,
-         zipFile: undefined as string | null | undefined,
       },
       {
          name: 'walkingBack' as SectionNames,
@@ -409,9 +390,7 @@ const dynamicEvaluation = [
             },
          ],
          photoFn: WalkingBack_P,
-         videoFn: WalkingFront_V,
          cropFn: WalkingBack_C,
-         zipFile: undefined as string | null | undefined,
       },
       {
          name: 'walkingSide' as SectionNames,
@@ -443,9 +422,7 @@ const dynamicEvaluation = [
             },
          ],
          photoFn: WalkingSide_P,
-         videoFn: WalkingFront_V,
          cropFn: WalkingSide_C,
-         zipFile: undefined as string | null | undefined,
       },
    ],
 ]

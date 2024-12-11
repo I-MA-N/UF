@@ -35,7 +35,7 @@ function Reports({ reportsArr, data }: ReportsProps) {
    if (currentReport && filteredData) return (
       <div className="px-4 sm:container pt-24 lg:pt-32 pb-16 lg:pb-24">
          <HeaderSection>
-            <HeaderSection.ExitBtn exitModalText="آیا از خروج مطمئنید؟" />
+            <HeaderSection.ExitBtn exitModalText="آیا از خروج اطمینان دارید؟" />
             <HeaderSection.Title text={currentReportName} />
             <GenderButton gender={gender} setGender={setGender} />
          </HeaderSection>

@@ -3,7 +3,8 @@ import usePhotoStore from "../../../../../../store/photoStore";
 import NextLandmarkBtn from "./editBtns/NextLandmarkBtn";
 import PrevLandmarksBtn from "./editBtns/PrevLandmarksBtn";
 import LandmarksMenu from "./editBtns/LandmarksMenu";
-import { getEditableLandmarks } from "../../../../../../../../../utils/AIFuncs";
+import { filterLandmarks } from "../../../../../../../../../utils/AIFuncs";
+import useAIStore from "../../../../../../store/AIStore";
 
 type SelectedLandmarkBtnsProps = {
    selectedLandmark: number | null,
@@ -11,28 +12,30 @@ type SelectedLandmarkBtnsProps = {
 }
 
 function EditBtns({ selectedLandmark, setSelectedLandmark }: SelectedLandmarkBtnsProps) {
+   const currentSection = useAIStore(state => state.currentSection!);
    const landmarks = usePhotoStore(state => state.landmarks);
 
-   const editableLandmarks = useMemo(() => getEditableLandmarks(landmarks), []);
+   const { needableLandmarks, drawableLandmarks } = useMemo(() => filterLandmarks(currentSection, landmarks), []);
 
-   if (editableLandmarks) return (
+   return (
       <div className="w-full h-12 lg:h-14 flex gap-3 lg:gap-4 justify-center">
          <PrevLandmarksBtn
-            editableLandmarks={editableLandmarks}
+            drawableLandmarks={drawableLandmarks}
             selectedLandmark={selectedLandmark}
             setSelectedLandmark={setSelectedLandmark}
             isDisabled={!landmarks?.length}
          />
 
          <LandmarksMenu
-            editableLandmarks={editableLandmarks}
+            drawableLandmarks={drawableLandmarks}
+            needableLandmarks={needableLandmarks}
             selectedLandmark={selectedLandmark}
             setSelectedLandmark={setSelectedLandmark}
             isDisabled={!landmarks?.length}
          />
 
          <NextLandmarkBtn
-            editableLandmarks={editableLandmarks}
+            drawableLandmarks={drawableLandmarks}
             selectedLandmark={selectedLandmark}
             setSelectedLandmark={setSelectedLandmark}
             isDisabled={!landmarks?.length}

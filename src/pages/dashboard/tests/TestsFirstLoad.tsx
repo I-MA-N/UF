@@ -20,7 +20,7 @@ function TestsFirstLoad() {
    const { data: formNames, isPending: formNamesPending } = GFormNames(username);
 
    const setModel = useModelStore(state => state.setModel);
-   const { resetData, resetSections } = useAIStore(state => ({ resetData: state.resetData, resetSections: state.resetSections }));
+   const { clearZipFiles, resetSections } = useAIStore(state => ({ clearZipFiles: state.clearZipFiles, resetSections: state.resetSections }));
    const resetPhotoStore = usePhotoStore(state => state.reset);
    const { setFormData, setMessage } = useFormDataStore(state => ({ setFormData: state.setFormData, setMessage: state.setMessage }));
 
@@ -28,7 +28,7 @@ function TestsFirstLoad() {
       setModel();
 
       return () => {
-         resetData();
+         clearZipFiles();
          resetSections();
          resetPhotoStore();
          setMessage(null);
@@ -39,8 +39,8 @@ function TestsFirstLoad() {
       if (formData && typeof formData !== "string") setFormData(formData);
    }, [formData])
 
-   if (formNamesPending && formDataPending) {
-      return <Loading />
+   if (formNamesPending || formDataPending) {
+      return <Loading fillScreen />
    }
 
    if (typeof formNames === "string") {
