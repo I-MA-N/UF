@@ -36,7 +36,7 @@ function AddMentor() {
                   registerOptions={{ required: true, validate: validateUsername }}
                   render={() => <span className="text-[10px] lg:text-xs text-yellow mr-5 mt-2">
                      {errors.username?.type === "required" && "پر کردن این فیلد الزامی است!"}
-                     {errors.username?.type === "validate" && 'باید فقط شامل حروف، اعداد یا "_" باشد!'}
+                     {errors.username?.type === "validate" && 'باید فقط شامل حروف انگلیسی، اعداد یا "_" باشد!'}
                   </span>}
                   defaultValue={mentorData.username}
                />

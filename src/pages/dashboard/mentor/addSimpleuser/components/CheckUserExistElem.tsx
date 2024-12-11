@@ -58,7 +58,7 @@ function CheckUserExistElem({ orgName, setUserStatus }: CheckUserExistElemProps)
          
          {
             <p className="text-center text-xs lg:text-sm text-yellow mt-3">
-               {errors.username?.type === "validate" && 'باید فقط شامل حروف، اعداد یا "_" باشد!'}
+               {errors.username?.type === "validate" && 'باید فقط شامل حروف انگلیسی، اعداد یا "_" باشد!'}
             </p>
          }
       </div>

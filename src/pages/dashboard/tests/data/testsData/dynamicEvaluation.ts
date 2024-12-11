@@ -70,7 +70,7 @@ const dynamicEvaluation = [
          questions: [
             {
                number: 5,
-               serverID: 'اسکات خلفی انتقال نامتقارن',
+               serverID: 'اسکات خلفی انتقال نامتقارن ',
                title: 'انتقال نامتقارن',
                src: 'img-11.png',
                direction: 'vertical',
@@ -332,7 +332,7 @@ const dynamicEvaluation = [
             },
             {
                number: 31,
-               serverID: 'چرخش خارجی دست ها فاصله از دیوار',
+               serverID: 'چرخش خارجی دست ها فاصله از دیوار ',
                title: 'چرخش خارجی دست ها فاصله از دیوار',
                src: 'img-25.png',
                direction: 'horizental',

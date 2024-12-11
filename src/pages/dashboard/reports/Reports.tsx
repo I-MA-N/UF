@@ -25,12 +25,12 @@ function Reports({ reportsArr, userData, formData }: ReportsProps) {
    if (currentReport) return (
       <div className="px-4 sm:container pt-24 lg:pt-32 pb-16 lg:pb-24">
          <HeaderSection>
-            <HeaderSection.ExitBtn exitModalText="آیا از خروج مطمئنید؟" />
+            <HeaderSection.ExitBtn exitModalText="آیا از خروج اطمینان دارید؟" />
             <HeaderSection.Title text={currentReportName} />
             <HeaderSection.ActionBtn hidden />
          </HeaderSection>
 
-         <section className="overflow-x-auto overflow-y-hidden text-xs/6 lg:text-base mt-16 lg:mt-20">
+         <section className="overflow-x-auto overflow-y-hidden text-xs/6 lg:text-base mt-14 lg:mt-16">
             <div className="min-w-[600px]">
                <div className="flex justify-center mb-6">
                   <span className="text-yellow text-sm lg:text-base border-b pb-1">

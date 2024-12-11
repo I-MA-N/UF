@@ -8,7 +8,7 @@ type TextsRowProps = {
 function TextsRow({ row, rowId }: TextsRowProps) {
    return (
       <tr>
-         <td>{rowId}</td>
+         <td className="w-[50px]">{rowId}</td>
          <td>{row.name}</td>
          <td>{row.repeat}</td>
          <td>{row.set}</td>

@@ -11,7 +11,7 @@ function ImagesRow({ row, rowId }: ImagesRowProps) {
 
    return (
       <tr>
-         <td>{rowId}</td>
+         <td className="w-[50px]">{rowId}</td>
          <td className='p-1'>
             <span className='inline-block mb-1'>{row.name}</span>
 
