@@ -25,8 +25,8 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas
       const earLandmark = isEven ? 8 : 7;
       let earC7 = Math.abs(degreeTwoPoints(landmarks[earLandmark], landmarks[33]));
       if (!isEven) earC7 = 180 - earC7;
-      if (earC7 <= 50 && earC7 >= 30) values["سر به جلو"] = "3";
-      if (earC7 < 30) values["سر به جلو"] = "1";
+      if (earC7 <= 70 && earC7 >= 50) values["سر به جلو"] = "3";
+      if (earC7 < 50) values["سر به جلو"] = "1";
 
       degrees.push({
          landmarksUsed: [earLandmark, 33],
