@@ -22,8 +22,8 @@ function CheckUserName({ orgName }: CheckUserNameProps) {
             {
                userStatus?.status &&
                <UserExistResult
-                  status={userStatus?.status}
-                  username={userStatus?.username}
+                  status={userStatus.status}
+                  username={userStatus.username}
                   orgName={orgName}
                />
             }

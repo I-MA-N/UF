@@ -1,7 +1,8 @@
 import { useLocation, useNavigate } from "react-router-dom"
-import Link from "../../../../common/Link";
-import mentorPAddSimpleuser from "../../../../../api/mentor/mentorPAddSimpleuser";
-import Btn from "../../../../common/Btn";
+import Link from "../../../../../common/Link";
+import mentorPAddSimpleuser from "../../../../../../api/mentor/mentorPAddSimpleuser";
+import Btn from "../../../../../common/Btn";
+import { useEffect } from "react";
 
 type Status3Props = {
    username: string,
@@ -10,30 +11,36 @@ type Status3Props = {
 }
 
 function Status3({ username, orgName, status }: Status3Props) {
-   const { mutateAsync, isError } = mentorPAddSimpleuser();
+   const { mutate, isPending, isError, isSuccess } = mentorPAddSimpleuser();
    const { pathname } = useLocation();
    const navigate = useNavigate();
 
    const clickHandler = () => {
-      mutateAsync({
+      mutate({
          email: 'test1234@example.com',
          password: 'examplePass1234',
          orgName,
          username,
-      }).then(res => res?.success && navigate(`${pathname}/${username}`))
+      })
    }
+
+   useEffect(() => {
+      if (isSuccess) navigate(`${pathname}/${username}`);
+   }, [isSuccess])
 
    return (
       <>
          <p className="text-xs lg:text-sm mx-auto text-center text-yellow w-64 mb-4">
             با رفتن به مرحله بعد ارزیابی این کاربر را انجام دهید.
          </p>
+
          {
             isError &&
             <p className="text-xs lg:text-sm text-center text-red min-h-4 my-4">
                مشکلی در ادامه ارزیابی به وجود آمده است!
             </p>
          }
+         
          {
             status === 'exist not in list' ?
                <Btn
@@ -48,6 +55,7 @@ function Status3({ username, orgName, status }: Status3Props) {
                   }
                   onClick={clickHandler}
                   className="mx-auto"
+                  isDisabled={isPending}
                /> :
                <Link
                   text="ارزیابی کاربر"

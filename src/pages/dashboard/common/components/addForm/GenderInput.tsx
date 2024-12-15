@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FieldErrors, FieldValues, Path, PathValue, UseFormRegister, UseFormSetValue } from "react-hook-form"
-import Btn from "../../../common/Btn";
+import Btn from "../../../../common/Btn";
 
 type GenderInputPropsType<T extends FieldValues> = {
    register: UseFormRegister<T>,

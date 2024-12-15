@@ -9,14 +9,14 @@ type FormsProps = {
 }
 
 function Forms({ formNames }: FormsProps) {
-   const userData = useUserDataContext();
-   const orgNames = splitArr(userData.orgNames);
+   const { orgNames } = useUserDataContext();
+   const orgName = splitArr(orgNames)[0];
 
    return (
       <Container withTitle={false} sectionClassName="w-64 xs:w-[300px] lg:w-80 mx-auto">
          <h2 className="text-center lg:text-lg font-Estedad-Black">فرم های گزارش</h2>
          <h3 className="text-sm lg:text-base font-Estedad-ExtraLight mt-4 mb-10">
-            سازمان: {orgNames[0]}
+            سازمان: {orgName}
          </h3>
 
          <div className="flex flex-col gap-8 items-center justify-center w-full">

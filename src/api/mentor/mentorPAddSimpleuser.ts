@@ -1,32 +1,31 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import getFormData from "../../utils/getFormData";
 import axios from "axios";
 import AddSimpleuserFormFields from "../../types/AddSimpleuserFormFields";
 
-type Variables = Omit<AddSimpleuserFormFields, "gender">
+type VariablesType = Pick<AddSimpleuserFormFields, "username" | "password" | "orgName" | "email">;
 
 type Response = {
    [k: string]: string
 }
 
 function mentorPAddSimpleuser() {
-   const queryClient = useQueryClient();
-
-   const { mutateAsync, isError, isPending } = useMutation({
+   const { mutate, isPending, isError, isSuccess } = useMutation({
       mutationKey: ['mentorP: add simpleuser'],
-      mutationFn: async (data: Variables) => {
-         const formData = getFormData(data)
-         const req = await axios.post(import.meta.env.VITE_ENDPOINT + '/mentor-add-simpleuser/', formData)
+      mutationFn: async (data: VariablesType) => {
+         const formData = getFormData(data);
+         const req = await axios.post(import.meta.env.VITE_ENDPOINT + '/mentor-add-simpleuser/', formData);
+
          return req.data as Response
       },
-      onSuccess: (data, variables) => {
-         queryClient.invalidateQueries({
-            queryKey: ["mentorG: users data", variables.orgName]
-         })
+      onSuccess: (data) => {
+         if (data?.error) {
+            throw new Error();
+         }
       }
    })
 
-   return { mutateAsync, isError, isPending }
+   return { mutate, isPending, isError, isSuccess }
 }
 
 export default mentorPAddSimpleuser
