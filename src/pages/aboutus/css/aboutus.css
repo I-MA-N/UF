@@ -1,0 +1,40 @@
+.div-shown {
+   animation: div-shown-anim forwards;
+}
+
+.div-hidden {
+   height: var(--height);
+   animation: div-hidden-anim forwards;
+}
+
+@keyframes div-shown-anim {
+   0% { height: 0; }
+   100% { height: var(--height); }
+}
+@keyframes div-hidden-anim {
+   0% { height: var(--height); }
+   100% { height: 0; }
+}
+
+/* Card image */
+.image-container {
+   @apply flex-shrink-0 rounded-full size-[72px] lg:size-24 outline-[3px] outline outline-white border-white overflow-hidden
+   relative hover:size-[60px] lg:hover:size-[68px] hover:outline-primary hover:border transition-all cursor-pointer;
+}
+.image-container:hover div {
+   height: 100%;
+}
+
+.blockquote {
+   @apply bg-primary text-gray border-r-[3px] lg:border-r-4 border-gray mr-4 mt-4;
+   quotes: "\201C""\201D""\2018""\2019";
+}
+.blockquote:before {
+   @apply text-white text-xl lg:text-2xl pr-4;
+   content: open-quote;
+   vertical-align: -0.4em;
+   line-height: 0;
+}
+.blockquote p {
+   @apply italic text-xs lg:text-sm text-justify pr-2;
+}
