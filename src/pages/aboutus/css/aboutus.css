@@ -19,7 +19,7 @@
 /* Card image */
 .image-container {
    @apply flex-shrink-0 rounded-full size-[72px] lg:size-24 outline-[3px] outline outline-white border-white overflow-hidden
-   relative hover:size-[60px] lg:hover:size-[68px] hover:outline-primary hover:border transition-all cursor-pointer;
+   relative hover:size-[68px] lg:hover:size-[92px] hover:outline-primary hover:border transition-all cursor-pointer;
 }
 .image-container:hover div {
    height: 100%;
