@@ -1,7 +1,7 @@
 import { UserExistRes } from "../../../../../api/mentor/mentorPUserExist";
-import Status1 from "./Status1";
-import Status2 from "./Status2";
-import Status3 from "./Status3";
+import Status1 from "./statuses/Status1";
+import Status2 from "./statuses/Status2";
+import Status3 from "./statuses/Status3";
 
 // 3 States to show, depends on user exist response,
 // State 1: 'belongs another org' | 'not simpleuser' -> show only message,

@@ -119,10 +119,10 @@ function ChangeDataModal({ setChangeModal }: ChangeDataModalProps) {
                               dir="ltr"
                               defaultValue={userData.phone}
                               className="bg-transparent outline-none border-b border-b-white/50 my-1 w-full"
-                              {...register('phone', { pattern: /^.{10}$/ })}
+                              {...register('phone', { pattern: /^09\d{9}$/ })}
                            />
                            <span className="text-[10px] lg:text-xs text-red inline-block">
-                              {errors.phone?.type === "pattern" && "شماره موبایل باید 10 کاراکتر باشد!"}
+                              {errors.phone?.type === "pattern" && "شماره موبایل باید با صفر شروع، بدون اسپیس و 11 عدد باشد."}
                            </span>
                         </>
                      }
