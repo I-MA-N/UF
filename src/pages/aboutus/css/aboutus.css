@@ -25,6 +25,7 @@
    height: 100%;
 }
 
+/* Last text blockquote */
 .blockquote {
    @apply bg-primary text-gray border-r-[3px] lg:border-r-4 border-gray mr-4 mt-4;
    quotes: "\201C""\201D""\2018""\2019";
