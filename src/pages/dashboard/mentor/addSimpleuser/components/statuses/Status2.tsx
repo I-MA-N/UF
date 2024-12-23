@@ -44,7 +44,6 @@ function Status2({ username, orgName }: Status2Props) {
             for: username,
             firstname: data.firstname,
             lastname: data.lastname,
-            age: data.age,
             gender: data.gender,
             phone: data.phone,
          })

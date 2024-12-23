@@ -34,7 +34,7 @@ function ReportsFirstLoad() {
       </Container>
    }
 
-   if (formData && formNames && userData?.access === 'true') {
+   if (formData && formNames && userData) {
       const filteredReports = filterReportsArr(formNames, formname) as REPORTS_ARR_Type;
 
       if (filteredReports && filteredReports.length > 0) return (

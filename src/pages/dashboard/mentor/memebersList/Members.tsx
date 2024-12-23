@@ -6,7 +6,7 @@ import Btn from "../../../common/Btn";
 import ListElement from "./components/MembersListElem";
 import { UserData2 } from "../../../../types/UserData";
 import OrgModal from "./components/modals/OrgModal";
-import UserModal from "./components/modals/UserModal";
+import UserModalFirstLoad from "./components/modals/UserModalFirstLoad";
 import { Link as RouterLink } from "react-router-dom";
 
 type MembersProps = {
@@ -96,7 +96,7 @@ function Members({ orgSelected, setOrgSelected, orgNames, users }: MembersProps)
          }
          {
             username &&
-            <UserModal username={username} setUsername={setUsername} orgSelected={orgSelected} />
+            <UserModalFirstLoad username={username} setUsername={setUsername} orgSelected={orgSelected} />
          }
       </Container>
    )

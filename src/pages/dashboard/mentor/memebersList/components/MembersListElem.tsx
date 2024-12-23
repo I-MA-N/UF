@@ -14,6 +14,7 @@ function MembersListElem({ selectedUsers, setUsername }: MembersListElemProps) {
             user={user}
             setState={setUsername}
             setStateValue={user.username}
+            isSimpleuser
          />
       ))
    )

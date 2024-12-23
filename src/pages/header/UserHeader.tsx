@@ -5,13 +5,14 @@ import UserDataProvider from "../authentication/UserDataProvider";
 import { useEffect, useMemo, useState } from "react";
 import LogoutBtn from "./components/LogoutBtn";
 import LogoutModal from "./components/LogoutModal";
+import Loading from "../common/Loading";
 
 type SetStyleFuncProps = {
    isActive: boolean
 }
 
 function UserHeader() {
-   const { data } = GUserData();
+   const { data, isPending } = GUserData();
    const { pathname } = useLocation();
    const isFixedHeader = useMemo(() => {
       const secondParam = pathname.split('/')[2];
@@ -35,6 +36,8 @@ function UserHeader() {
          navigate(`/${data?.role}/dashboard`)
       }
    }, [pathname, data, navigate])
+
+   if (isPending) return <Loading fillScreen />
 
    return (
       <>

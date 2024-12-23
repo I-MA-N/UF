@@ -5,7 +5,6 @@ import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 function Front_P(landmarks: NormalizedLandmark[]) {
    const values = {
       'کج گردنی یا چرخش گردن': '5',
-      'شانه نابرابر': '5',
       'انحراف جانبی لگن': '5',
       'زانو پرانتزی': '5',
       'زانو ضربدری': '5',
@@ -23,18 +22,6 @@ function Front_P(landmarks: NormalizedLandmark[]) {
          landmarksUsed: [7, 8],
          degree: ears,
          value: values["کج گردنی یا چرخش گردن"]
-      })
-   }
-
-   {
-      const shoulders = Math.abs(degreeTwoPoints(landmarks[11], landmarks[12]));
-      if (shoulders >= 2.5) values["شانه نابرابر"] = "3";
-      if (shoulders >= 7.5) values["شانه نابرابر"] = "1";
-
-      degrees.push({
-         landmarksUsed: [11, 12],
-         degree: shoulders,
-         value: values["شانه نابرابر"]
       })
    }
 

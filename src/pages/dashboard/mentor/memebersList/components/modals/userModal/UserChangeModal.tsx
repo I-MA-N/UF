@@ -4,34 +4,28 @@ import PUserData from '../../../../../../../api/common/PUserData';
 import ModalItem from '../../../../../../common/ModalItem';
 import Btn from '../../../../../../common/Btn';
 import Modal from '../../../../../../common/Modal';
-import { useEffect, useState } from "react";
 
 type UserChangeModalProps = {
    userData: UserData,
-   setUsername: React.Dispatch<React.SetStateAction<string | null>>
+   setShowChangeModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
+function UserChangeModal({ userData, setShowChangeModal }: UserChangeModalProps) {
    const {
       register,
       handleSubmit,
       formState: { errors }
    } = useForm();
    const { mutate, isError, isSuccess, isPending } = PUserData();
-   const [showModal, setShowModal] = useState(true);
 
    const submitHandler = (data: any) => {
-      mutate({ ...data, for: userData?.username });
+      mutate({ ...data, for: userData.username });
    }
-
-   useEffect(() => {
-      if (!showModal) setUsername(null);
-   }, [showModal])
 
    return (
       <Modal>
          <Modal.Header>
-            <Modal.CloseBtn setShowModal={setShowModal} />
+            <Modal.CloseBtn setShowModal={setShowChangeModal} />
             <Modal.Title text='ویرایش کاربر' />
          </Modal.Header>
          <Modal.Body className='!p-0'>
@@ -43,8 +37,8 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                   <img src="/images/profile-img.png" alt="profile-image" className='lg:hidden' />
                   <img src="/images/profile-img-desktop.png" alt="profile-image" className='hidden lg:block' />
                   <div>
-                     <p className="text-sm lg:text-lg">{userData?.username}</p>
-                     <p className="font-Estedad-ExtraLight text-xs lg:text-base">{userData?.email}</p>
+                     <p className="text-sm lg:text-lg">{userData.username}</p>
+                     <p className="font-Estedad-ExtraLight text-xs lg:text-base">{userData.email}</p>
                   </div>
                </div>
 
@@ -60,7 +54,7 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                         <input
                            type="text"
                            id="firstname"
-                           defaultValue={userData?.firstname}
+                           defaultValue={userData.firstname}
                            className="bg-transparent outline-none border-b border-b-white/50 my-1 w-full"
                            {...register('firstname')}
                         />
@@ -77,7 +71,7 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                         <input
                            type="text"
                            id="lastname"
-                           defaultValue={userData?.lastname}
+                           defaultValue={userData.lastname}
                            className="bg-transparent outline-none border-b border-b-white/50 my-1 w-full"
                            {...register('lastname')}
                         />
@@ -97,7 +91,7 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                               type="text"
                               id="email"
                               dir="ltr"
-                              defaultValue={userData?.email}
+                              defaultValue={userData.email}
                               className="bg-transparent outline-none border-b border-b-white/50 my-1 w-full"
                               {...register('email', { required: true, pattern: /\w+[@]\w+[.]\w+/ })}
                            />
@@ -121,7 +115,7 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                               type="number"
                               id="phone"
                               dir="ltr"
-                              defaultValue={userData?.phone}
+                              defaultValue={userData.phone}
                               className="bg-transparent outline-none border-b border-b-white/50 my-1 w-full"
                               {...register('phone', { pattern: /^09\d{9}$/ })}
                            />
@@ -129,23 +123,6 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                               {errors.phone?.type === "pattern" && "شماره موبایل باید با صفر شروع، بدون اسپیس و 11 عدد باشد."}
                            </span>
                         </>
-                     }
-                  />
-                  <ModalItem
-                     icon={<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="none" className="flex-shrink-0 w-4.5 lg:w-6">
-                        <path d="M13.2445 3.50157L12.7313 3.69922C12.8112 3.90663 13.008 4.04559 13.2302 4.05139L13.2445 3.50157ZM14.9925 10.6537L14.7601 10.1553C14.5634 10.2469 14.4391 10.4456 14.4425 10.6625L14.9925 10.6537ZM14.3145 16.501L14.7091 16.8841H14.7091L14.3145 16.501ZM3.68554 16.501L4.08015 16.1179L3.68554 16.501ZM3.00754 10.6537L3.55747 10.6625C3.56093 10.4456 3.43656 10.2469 3.23994 10.1553L3.00754 10.6537ZM4.75545 3.50157L4.7698 4.05139C4.99198 4.04559 5.18884 3.90663 5.26871 3.69922L4.75545 3.50157ZM13.7578 3.30393C13.053 1.47358 11.1709 0.2 9 0.2V1.3C10.7491 1.3 12.2016 2.32365 12.7313 3.69922L13.7578 3.30393ZM17.8 7.28127C17.8 4.88825 15.7347 3.01635 13.2589 2.95176L13.2302 4.05139C15.2001 4.10278 16.7 5.57093 16.7 7.28127H17.8ZM15.2249 11.1522C16.7324 10.4494 17.8 8.99438 17.8 7.28127H16.7C16.7 8.51253 15.9319 9.6089 14.7601 10.1553L15.2249 11.1522ZM15.55 11.7585C15.55 11.3609 15.5479 10.9902 15.5424 10.645L14.4425 10.6625C14.4479 11 14.45 11.3644 14.45 11.7585H15.55ZM14.7091 16.8841C15.1819 16.3971 15.3712 15.7251 15.4609 14.9255C15.5508 14.1233 15.55 13.0776 15.55 11.7585H14.45C14.45 13.1041 14.4492 14.0766 14.3677 14.8029C14.286 15.5319 14.1326 15.8987 13.9199 16.1179L14.7091 16.8841ZM9 17.8C10.5307 17.8 11.7139 17.8008 12.6028 17.7031C13.486 17.606 14.2068 17.4014 14.7091 16.8841L13.9199 16.1179C13.6949 16.3496 13.3027 16.5195 12.4826 16.6097C11.6683 16.6992 10.5578 16.7 9 16.7V17.8ZM3.29094 16.8841C3.79321 17.4014 4.51403 17.606 5.39718 17.7031C6.28612 17.8008 7.46931 17.8 9 17.8V16.7C7.44216 16.7 6.33174 16.6992 5.51739 16.6097C4.69726 16.5195 4.30511 16.3496 4.08015 16.1179L3.29094 16.8841ZM2.45 11.7585C2.45 13.0776 2.44918 14.1233 2.53912 14.9255C2.62877 15.7251 2.81813 16.3971 3.29094 16.8841L4.08015 16.1179C3.86742 15.8987 3.714 15.5319 3.63227 14.8029C3.55082 14.0766 3.55 13.1041 3.55 11.7585H2.45ZM2.45761 10.645C2.45211 10.9902 2.45 11.3609 2.45 11.7585H3.55C3.55 11.3644 3.5521 11 3.55747 10.6625L2.45761 10.645ZM3.23994 10.1553C2.06807 9.6089 1.3 8.51253 1.3 7.28127H0.2C0.2 8.99438 1.26756 10.4494 2.77514 11.1522L3.23994 10.1553ZM1.3 7.28127C1.3 5.57093 2.79987 4.10278 4.7698 4.05139L4.74111 2.95176C2.26527 3.01635 0.2 4.88825 0.2 7.28127H1.3ZM9 0.2C6.82915 0.2 4.94703 1.47358 4.24219 3.30393L5.26871 3.69922C5.79842 2.32365 7.25091 1.3 9 1.3V0.2Z" fill="currentColor" />
-                        <path d="M14.8847 13.5L3.06787 13.5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="square" strokeLinejoin="round" />
-                     </svg>}
-                     text="سن:"
-                     elem={
-                        <input
-                           type="number"
-                           id="age"
-                           dir="ltr"
-                           defaultValue={userData?.age}
-                           className="bg-transparent outline-none border-b border-b-white/50 my-1 w-full"
-                           {...register('age')}
-                        />
                      }
                   />
                   <ModalItem
@@ -160,7 +137,7 @@ function UserChangeModal({ userData, setUsername }: UserChangeModalProps) {
                      elem={
                         <select
                            className="bg-transparent w-full border-b border-white/50 mt-1 outline-none"
-                           defaultValue={userData?.gender || "male"}
+                           defaultValue={userData.gender || "male"}
                            {...register('gender')}
                         >
                            <option value="male" className="text-primary">آقا</option>

@@ -4,10 +4,23 @@ import DegreeType from "../../../../../../types/DegreeType";
 
 function Back_P(landmarks: NormalizedLandmark[]) {
    const values = {
+      'شانه نابرابر': '5',
       'چرخش مچ پا به خارج': '5',
       'چرخش مچ پا به داخل': '5',
    }
    const degrees: DegreeType[] = [];
+
+   {
+      const shoulders = Math.abs(degreeTwoPoints(landmarks[11], landmarks[12]));
+      if (shoulders <= 177.5) values["شانه نابرابر"] = "3";
+      if (shoulders <= 172.5) values["شانه نابرابر"] = "1";
+
+      degrees.push({
+         landmarksUsed: [11, 12],
+         degree: shoulders,
+         value: values["شانه نابرابر"]
+      })
+   }
 
    {
       const ankleRight = Math.abs(degreeTwoPoints(landmarks[28], landmarks[30])) - 90;

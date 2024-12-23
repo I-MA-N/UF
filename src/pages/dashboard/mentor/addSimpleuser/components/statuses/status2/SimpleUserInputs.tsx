@@ -70,14 +70,6 @@ function SimpleUserInputs({ register, errors, setValue }: SimpleUserInputsProps)
 
             <Input
                direction="ltr"
-               name="age"
-               text="سن"
-               placeholder="به عدد"
-               register={register}
-               isNumberType={true}
-            />
-            <Input
-               direction="ltr"
                name="phone"
                text="شماره موبایل"
                placeholder="مثال: 09123456789"

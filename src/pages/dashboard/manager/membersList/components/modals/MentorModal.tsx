@@ -19,32 +19,30 @@ function MentorModal({ mentorSelected, setMentorSelected, setMentorModal, mentor
             <Modal.Title text="انتخاب مربی" />
          </Modal.Header>
          <Modal.Body className="!p-0 overflow-hidden">
-            <div className="w-[300px] lg:w-96 relative rounded-[32px]">
-               <TopElems
-                  items={mentorNames}
-                  selectedItem={mentorSelected}
-                  setFilteredItems={setFilteredMentors}
-                  inputPlaceholder="جستجوی نام مربی"
-               />
+            <TopElems
+               items={mentorNames}
+               selectedItem={mentorSelected}
+               setFilteredItems={setFilteredMentors}
+               inputPlaceholder="جستجوی نام مربی"
+            />
 
-               <div className={`flex flex-col items-center max-h-60 overflow-y-auto divide-y divide-white ${filteredMentors.length ? "py-0" : "py-4"}`}>
-                  {
-                     filteredMentors.length ?
-                        filteredMentors.map(orgName => (
-                           <button
-                              key={orgName}
-                              className="w-full py-3.5 hover:bg-secondary hover:text-white text-sm lg:text-base break-words last:rounded-b-[32px]"
-                              onClick={e => {
-                                 setMentorSelected(e.currentTarget.innerText);
-                                 setMentorModal(false);
-                              }}
-                           >
-                              {orgName}
-                           </button>
-                        )) :
-                        <span className="text-sm lg:text-base text-yellow">مربی مورد نظر یافت نشد.</span>
-                  }
-               </div>
+            <div className={`flex flex-col items-center max-h-60 overflow-y-auto divide-y divide-white ${filteredMentors.length ? "py-0" : "py-4"}`}>
+               {
+                  filteredMentors.length ?
+                     filteredMentors.map(orgName => (
+                        <button
+                           key={orgName}
+                           className="w-full py-3.5 hover:bg-secondary hover:text-white text-sm lg:text-base break-words last:rounded-b-[32px]"
+                           onClick={e => {
+                              setMentorSelected(e.currentTarget.innerText);
+                              setMentorModal(false);
+                           }}
+                        >
+                           {orgName}
+                        </button>
+                     )) :
+                     <span className="text-sm lg:text-base text-yellow">مربی مورد نظر یافت نشد.</span>
+               }
             </div>
          </Modal.Body>
       </Modal>

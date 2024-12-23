@@ -22,8 +22,8 @@ function TestsFirstLoad() {
    const setModel = useModelStore(state => state.setModel);
    const { clearZipFiles, resetSections } = useAIStore(state => ({ clearZipFiles: state.clearZipFiles, resetSections: state.resetSections }));
    const resetPhotoStore = usePhotoStore(state => state.reset);
-   const { setFormData, setMessage } = useFormDataStore(state => ({ setFormData: state.setFormData, setMessage: state.setMessage }));
-
+   const { setFormData, setMessage, clearFormData } = useFormDataStore(state => ({ setFormData: state.setFormData, setMessage: state.setMessage, clearFormData: state.clearFormData }));
+   
    useEffect(() => {
       setModel();
 
@@ -31,13 +31,15 @@ function TestsFirstLoad() {
          clearZipFiles();
          resetSections();
          resetPhotoStore();
+         clearFormData();
          setMessage(null);
       }
    }, [])
 
+   const json = JSON.stringify(formData);
    useEffect(() => {
-      if (formData && typeof formData !== "string") setFormData(formData);
-   }, [formData])
+      if (formData && typeof formData !== "string") setFormData(JSON.parse(json));
+   }, [json])
 
    if (formNamesPending || formDataPending) {
       return <Loading fillScreen />

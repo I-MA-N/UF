@@ -23,7 +23,7 @@ function PLogin() {
                 throw new Error('Denied')
             }
 
-            Cookies.set('refresh', data.refresh, { expires: 1 })
+            Cookies.set('ay4cz0p', data.refresh, { expires: 1 })
 
             navigate(`/${data.role}/dashboard`)
         },

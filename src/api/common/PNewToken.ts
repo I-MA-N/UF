@@ -8,7 +8,7 @@ function PNewToken() {
    const { mutateAsync } = useMutation({
       mutationKey: ['get: access token'],
       mutationFn: async () => {
-         const rTkn = Cookies.get('refresh');
+         const rTkn = Cookies.get('ay4cz0p');
 
          const req = await fetch(`${import.meta.env.VITE_ENDPOINT}/login/refresh/`, {
             method: "POST",
@@ -21,7 +21,7 @@ function PNewToken() {
       },
       onSettled: (data) => {
          if (!data?.access) {
-            Cookies.remove('refresh');
+            Cookies.remove('ay4cz0p');
             queryClient.clear();
          }
       }

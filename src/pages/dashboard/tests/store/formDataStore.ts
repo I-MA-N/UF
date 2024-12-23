@@ -13,6 +13,7 @@ interface FormDataActions {
    setFormData: (data: FormDataState["data"]) => void,
    setInputValue: (inputName: string, newValue: string, isLastValueByAI?: boolean) => void,
    setAIValues: (values: { [k: string]: string }) => void,
+   clearFormData: () => void,
    setMessage: (message: FormDataState["message"]) => void,
    increaseProgress: () => void,
    clearProgress: () => void
@@ -72,6 +73,12 @@ const useFormDataStore = create<FormDataState & FormDataActions>()((set, get) =>
             return { ...state };
          })
       }
+   },
+   clearFormData: () => {
+      set(state => ({
+         ...state,
+         data: {}
+      }))
    },
    setMessage: (message) => {
       set(state => ({
