@@ -10,7 +10,7 @@ type SectionBodyProps = {
 
 function SectionBody({ section }: SectionBodyProps) {
    const { data, currentTestName } = useFormDataStore(state => ({ data: state.data, currentTestName: state.currentTestName }));
-
+   
    return (
       <div className="flex gap-x-8 gap-y-4 lg:gap-y-8 items-center justify-center flex-wrap">
          {

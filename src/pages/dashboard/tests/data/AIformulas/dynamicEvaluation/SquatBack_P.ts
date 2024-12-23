@@ -5,7 +5,7 @@ import DegreeDistanceType from "../../../../../../types/DegreeDistanceType";
 
 function SquatBack_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvasSize?: { width: number, height: number }) {
     const values = {
-        'اسکات خلفی انتقال نامتقارن': '0',
+        'اسکات خلفی انتقال نامتقارن ': '0',
         'اسکات خلفی بلند شدن پاشنه': '0',
         'اسکات خلفی صاف شدن پا': '0',
     }
@@ -14,12 +14,12 @@ function SquatBack_P(landmarks: NormalizedLandmark[], userHeight?: number, editC
 
     {
         const asis = 180 - Math.abs(degreeTwoPoints(landmarks[23], landmarks[24]));
-        if (asis >= 2.5) values["اسکات خلفی انتقال نامتقارن"] = "1";
+        if (asis >= 2.5) values["اسکات خلفی انتقال نامتقارن "] = "1";
 
         degrees.push({
             landmarksUsed: [23, 24],
             degree: asis,
-            value: values["اسکات خلفی انتقال نامتقارن"]
+            value: values["اسکات خلفی انتقال نامتقارن "]
         })
     }
 

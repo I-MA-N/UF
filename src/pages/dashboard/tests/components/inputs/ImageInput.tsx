@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import useFormDataStore from "../../store/formDataStore";
 
 type ImageInputProps = {
@@ -64,4 +64,4 @@ function ImageInput({ number, serverID, title, image, direction, value, isLastVa
    )
 }
 
-export default ImageInput
+export default memo(ImageInput);

@@ -3,7 +3,6 @@ import Container from "../../common/Container";
 import Link from "../../common/Link";
 import Btn from "../../common/Btn";
 import ProfileModal from "../common/components/modals/ProfileModal";
-import ShowInfo from "../common/components/ShowInfo";
 import { useUserDataContext } from "../../authentication/UserDataProvider";
 import Loading from "../../common/Loading";
 import GFormNames from "../../../api/common/form/GFormNames";
@@ -19,9 +18,6 @@ function Simpleuser() {
       <Container>
          <div className="mb-6">
             <h2 className="mb-2 text-center lg:text-lg">{userData?.name || 'کاربر بدون نام!'}</h2>
-            <p className="font-Estedad-ExtraLight text-sm leading-7 lg:text-base lg:leading-9 text-center">
-               <ShowInfo age={userData?.age} phone={userData?.phone} />
-            </p>
             {
                isError &&
                <span className="text-xs lg:text-sm text-yellow">مشکلی در دریافت اطلاعات آخرین گزارش به وجود آمده است!</span>

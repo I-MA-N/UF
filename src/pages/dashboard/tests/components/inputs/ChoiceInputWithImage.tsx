@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import useFormDataStore from "../../store/formDataStore";
 
 type ChoiceInputWithImageProps = {
@@ -89,4 +89,4 @@ function ChoiceInputWithImage({ number, serverID, title, keys, values, images, d
    )
 }
 
-export default ChoiceInputWithImage;
+export default memo(ChoiceInputWithImage);

@@ -28,7 +28,17 @@ function Program({ programData, username }: ProgramProps) {
 
          <div className='overflow-x-auto mt-14 lg:mt-16 print:mt-0 px-px'>
             <section className="print-area">
-               <UserDataTable isError={isError} name={data?.name} age={data?.age} />
+               <UserDataTable
+                  isError={isError}
+                  name={data?.name}
+                  gender={
+                     data?.gender
+                        ?
+                        data.gender === "male" ? "مرد" : "زن"
+                        :
+                        undefined
+                  }
+               />
 
                {
                   programData.map((day, index) => (

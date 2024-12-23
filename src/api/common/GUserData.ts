@@ -10,9 +10,15 @@ function GUserData(username?: string) {
          const formData = getFormData({for: username});
          const req = await axios.post(import.meta.env.VITE_ENDPOINT + '/get-info/', username && formData);
 
-         return req.data as UserData
+         return req.data
       },
-
+      select: (data) => {
+         if (data?.access === 'true') {
+            return data as UserData
+         }
+         
+         throw new Error();
+      }
    })
 
    return { data, isError, isPending }

@@ -23,15 +23,6 @@ const staticEvaluation = [
             },
             {
                number: 2,
-               serverID: 'شانه نابرابر',
-               title: 'شانه نابرابر',
-               keys: [5, 3, 1],
-               values: ['طبیعی', 'خفیف', 'شدید'],
-               images: ['/staticEvaluation/2-5.png', '/staticEvaluation/2-3.png', '/staticEvaluation/2-1.png'],
-               direction: 'horizental'
-            },
-            {
-               number: 3,
                serverID: 'انحراف جانبی لگن',
                title: 'انحراف جانبی لگن',
                keys: [5, 3, 1],
@@ -40,7 +31,7 @@ const staticEvaluation = [
                direction: 'horizental'
             },
             {
-               number: 4,
+               number: 3,
                serverID: 'زانو پرانتزی',
                title: 'زانو پرانتزی',
                keys: [5, 3, 1],
@@ -49,7 +40,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 7,
+               number: 4,
                serverID: 'زانو ضربدری',
                title: 'زانو ضربدری',
                keys: [5, 3, 1],
@@ -58,7 +49,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 8,
+               number: 5,
                serverID: 'چرخش خارجی پا',
                title: 'چرخش خارجی پا',
                keys: [5, 3, 1],
@@ -67,7 +58,7 @@ const staticEvaluation = [
                direction: 'horizental'
             },
             {
-               number: 9,
+               number: 6,
                serverID: 'چرخش داخلی پا',
                title: 'چرخش داخلی پا',
                keys: [5, 3, 1],
@@ -76,7 +67,7 @@ const staticEvaluation = [
                direction: 'horizental'
             },
             {
-               number: 12,
+               number: 7,
                serverID: 'سینه فرو رفته',
                title: 'سینه فرو رفته',
                keys: [5, 3, 1],
@@ -85,7 +76,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 13,
+               number: 8,
                serverID: 'سینه کبوتری',
                title: 'سینه کبوتری',
                keys: [5, 3, 1],
@@ -94,7 +85,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 14,
+               number: 9,
                serverID: 'بدشکلی انگشتان دست',
                title: 'بدشکلی انگشتان دست',
                keys: [5, 3, 1],
@@ -103,7 +94,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 15,
+               number: 10,
                serverID: 'بدشکلی انگشتان پا',
                title: 'بدشکلی انگشتان پا',
                keys: [5, 3, 1],
@@ -112,7 +103,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 16,
+               number: 11,
                serverID: 'کف پای صاف',
                title: 'کف پای صاف',
                keys: [5, 3, 1],
@@ -121,7 +112,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 17,
+               number: 12,
                serverID: 'کف پای گود',
                title: 'کف پای گود',
                keys: [5, 3, 1],
@@ -138,7 +129,16 @@ const staticEvaluation = [
          nameFA: 'نمای خلفی',
          questions: [
             {
-               number: 18,
+               number: 13,
+               serverID: 'شانه نابرابر',
+               title: 'شانه نابرابر',
+               keys: [5, 3, 1],
+               values: ['طبیعی', 'خفیف', 'شدید'],
+               images: ['/staticEvaluation/2-5.png', '/staticEvaluation/2-3.png', '/staticEvaluation/2-1.png'],
+               direction: 'horizental'
+            },
+            {
+               number: 14,
                serverID: 'چرخش مچ پا به داخل',
                title: 'چرخش داخلی مچ پا',
                keys: [5, 3, 1],
@@ -147,7 +147,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 19,
+               number: 15,
                serverID: 'چرخش مچ پا به خارج',
                title: 'چرخش خارجی مچ پا',
                keys: [5, 3, 1],
@@ -156,7 +156,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 22,
+               number: 16,
                serverID: 'انحراف جانبی ستون فقرات',
                title: 'انحراف جانبی ستون فقرات',
                keys: [5, 3, 1],
@@ -165,7 +165,7 @@ const staticEvaluation = [
                direction: 'horizental'
             },
             {
-               number: 23,
+               number: 17,
                serverID: 'کتف بالدار',
                title: 'کتف بالدار',
                keys: [5, 3, 1],
@@ -182,7 +182,7 @@ const staticEvaluation = [
          nameFA: 'نمای جانبی',
          questions: [
             {
-               number: 24,
+               number: 18,
                serverID: 'سر به جلو',
                title: 'سر به جلو',
                keys: [5, 3, 1],
@@ -191,7 +191,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 25,
+               number: 19,
                serverID: 'شانه گرد',
                title: 'شانه گرد',
                keys: [5, 3, 1],
@@ -200,7 +200,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 26,
+               number: 20,
                serverID: 'پشت گرد',
                title: 'پشت گرد',
                keys: [5, 3, 1],
@@ -209,7 +209,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 27,
+               number: 21,
                serverID: 'پشت صاف',
                title: 'پشت صاف',
                keys: [5, 3, 1],
@@ -218,7 +218,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 28,
+               number: 22,
                serverID: 'کمر گود',
                title: 'کمر گود',
                keys: [5, 3, 1],
@@ -227,7 +227,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 29,
+               number: 23,
                serverID: 'کمر صاف',
                title: 'کمر صاف',
                keys: [5, 3, 1],
@@ -236,7 +236,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 30,
+               number: 24,
                serverID: 'زانوی عقب رفته',
                title: 'زانوی عقب رفته',
                keys: [5, 3, 1],
@@ -245,7 +245,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 31,
+               number: 25,
                serverID: 'زانوی خمیده',
                title: 'زانوی خمیده',
                keys: [5, 3, 1],
@@ -254,7 +254,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 32,
+               number: 26,
                serverID: 'پشت تابدار',
                title: 'پشت تابدار',
                keys: [5, 3, 1],
@@ -263,7 +263,7 @@ const staticEvaluation = [
                direction: 'vertical'
             },
             {
-               number: 33,
+               number: 27,
                serverID: 'برآمدگی شکم',
                title: 'شکم برآمده',
                keys: [5, 3, 1],
