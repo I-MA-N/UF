@@ -3,6 +3,7 @@ import SectionNames from "../../../../../types/SectionNames";
 import { dynamicEvaluationType } from "../../data/testsData/dynamicEvaluation";
 import { staticEvaluationType } from "../../data/testsData/staticEvaluation";
 import { DataSlice } from "./dataSlice";
+import SECTION_NAMES_NEED_USER_HEIGHT from "./sectionsNeedUserHeight";
 
 interface SectionsState {
    currentSection: staticEvaluationType[0][0] | dynamicEvaluationType[0][0] | undefined,
@@ -50,7 +51,9 @@ const createSectionsSlice: StateCreator<
          return {
             ...state,
             currentSection: foundedSection,
-            showUserHeight: foundedSection?.name === "side" || foundedSection?.name === "squatBack" || foundedSection?.name === "swimSide"
+            showUserHeight: foundedSection?.name ?
+               SECTION_NAMES_NEED_USER_HEIGHT.includes(foundedSection.name)
+               : false
          }
       })
    },

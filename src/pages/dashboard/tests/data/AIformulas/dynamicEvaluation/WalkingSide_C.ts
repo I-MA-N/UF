@@ -19,7 +19,7 @@ function WalkingSide_C(landmarks: NormalizedLandmark[], videoSize: { width: numb
    return {
       landmarksUsed: [leftLandmark, topLandmark, width1, height1],
       result: {
-         left: left - 50,
+         left: left - (isEven ? 50 : 0),
          top: top - 40,
          width: width + 90,
          height: height + 80

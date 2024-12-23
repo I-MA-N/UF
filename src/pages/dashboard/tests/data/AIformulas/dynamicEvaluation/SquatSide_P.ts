@@ -6,14 +6,14 @@ function SquatSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editC
     const values = {
         'اسکات جانبی خمیدگی به جلو': "0",
         'اسکات جانبی دست ها در جلو': "0",
-        // 'اسکات جانبی کمر صاف': "0",
-        // 'اسکات جانبی گود شدن کمر': "0",
+        'اسکات جانبی کمر صاف': "0",
+        'اسکات جانبی گود شدن کمر': "0",
     }
     const degrees: DegreeType[] = [];
 
     let isEven = true;
     if (landmarks[11].z < landmarks[12].z) isEven = false;
-    
+
     const asisLandmark = isEven ? 24 : 23;
     const shoulderLandmark = isEven ? 12 : 11;
 
@@ -54,15 +54,36 @@ function SquatSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editC
     }
 
     if (editCanvasSize && userHeight) {
-        const centimeters = userHeight - 12;
         const bottomLandmark = isEven ? 32 : 31;
+        const centimeters = userHeight - 12;
         const pixels = (landmarks[bottomLandmark].y - landmarks[0].y) * editCanvasSize.height;
         const ratio = centimeters / pixels;
 
         degrees.push({
-            landmarksUsed: [bottomLandmark, 0],
+            landmarksUsed: [32, 0],
             degree: null,
             value: null
+        })
+
+        const H = (Math.abs(landmarks[37].x - landmarks[34].x)) * editCanvasSize.width;
+        const HCentimeters = H * ratio;
+        const L = (landmarks[35].y - landmarks[34].y) * editCanvasSize.height;
+        const LCentimeters = L * ratio;
+        const lumbarLordosisRadians = 4 * Math.atan((2 * HCentimeters) / LCentimeters);
+        const lumbarLordosis = lumbarLordosisRadians * (180 / Math.PI);
+
+        if (lumbarLordosis >= 45) values["اسکات جانبی گود شدن کمر"] = "1";
+        if (lumbarLordosis <= 25) values["اسکات جانبی کمر صاف"] = "1";
+
+        let lumbarLordosisValue = "0";
+        if (values["اسکات جانبی گود شدن کمر"] === "1" || values["اسکات جانبی کمر صاف"] === "1") {
+            lumbarLordosisValue = "1";
+        }
+
+        degrees.push({
+            landmarksUsed: [34, 37, 35],
+            degree: lumbarLordosis,
+            value: lumbarLordosisValue
         })
     }
 
