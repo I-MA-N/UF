@@ -10,7 +10,10 @@ function Login() {
     const { mutate, error, isPending } = PLogin();
 
     function onSubmit(data: any) {
-        mutate(data)
+        mutate({
+            username: data.ufitusername,
+            password: data.password,
+        })
     }
 
     return (
@@ -23,14 +26,14 @@ function Login() {
                 <div className="flex flex-col gap-y-3.5 w-64 md:w-80">
                     <Input
                         direction="ltr"
-                        name="username"
+                        name="ufitusername"
                         text="نام کاربری"
                         placeholder="مثال: 1234567890"
                         register={register}
                         registerOptions={{ required: true }}
                         render={() => (
                             <span className="text-xs text-yellow mr-5 mt-2">
-                                {errors.username?.type === "required" && 'پر کردن این فیلد الزامی است!'}
+                                {errors.ufitusername?.type === "required" && 'پر کردن این فیلد الزامی است!'}
                             </span>
                         )}
                     />

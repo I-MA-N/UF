@@ -1,4 +1,4 @@
-import { testPatternTypes } from "./generateTestInputs";
+import { testPatternTypes } from "../components/NoAITests/utils/generateTestInputs";
 import activityRateData from "./testsData/activityRateData";
 import activityReadinessData from "./testsData/activityReadinessData";
 import bodyStatusData from "./testsData/bodyStatusData";

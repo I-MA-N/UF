@@ -2,20 +2,23 @@ import { useCallback, useEffect } from "react"
 import { TestObj } from "../../../types/TestsTypes";
 import HeaderSection from "../common/components/headerSection/HeaderSection";
 import testsData from "./data/testsData";
-import generateTestInputs from "./data/generateTestInputs";
-import MessageModal from "./components/MessageModal";
-import TestTabs from "./testTabs/TestTabs";
+import MessageModal from "./components/common/messageModal/MessageModal";
+import AITestsContainer from "./components/AITests/AITestsContainer";
 import useFormDataStore from "./store/formDataStore";
-import SaveBtn from "./components/saveBtn/SaveBtn";
+import SaveBtn from "./components/common/saveBtn/SaveBtn";
 import FooterSection from "../common/components/footerSection/FooterSection";
 import useAIStore from "./store/AIStore";
+import NoAITestsContainer from "./components/NoAITests/NoAITestsContainer";
+import { useShallow } from "zustand/react/shallow";
 
 type TestsProps = {
    testsArr: TestObj[],
 }
 
 function Tests({ testsArr }: TestsProps) {
-   const { data, currentTestName, setCurrentTestName } = useFormDataStore(state => ({ data: state.data, currentTestName: state.currentTestName, setCurrentTestName: state.setCurrentTestName }));
+   const { currentTestName, setCurrentTestName } = useFormDataStore(useShallow(
+      state => ({ currentTestName: state.currentTestName, setCurrentTestName: state.setCurrentTestName })
+   ));
    const updateTestsData = useAIStore(state => state.updateTestsData);
    
    useEffect(() => {
@@ -50,17 +53,9 @@ function Tests({ testsArr }: TestsProps) {
                {
                   (currentTestName === 'ناهنجاری ها' || currentTestName === 'ارزیابی پویا')
                      ?
-                     <TestTabs key={currentTestName} />
+                     <AITestsContainer key={currentTestName} />
                      :
-                     <div className={testsData[currentTestName as keyof typeof testsData].testClassName}>
-                        {
-                           generateTestInputs({
-                              formData: data?.[currentTestName],
-                              testPattern: testsData[currentTestName as keyof typeof testsData].testPattern,
-                              testData: testsData[currentTestName as keyof typeof testsData].testData,
-                           }).map((input: any) => input)
-                        }
-                     </div>
+                     <NoAITestsContainer />
                }
             </section>
 

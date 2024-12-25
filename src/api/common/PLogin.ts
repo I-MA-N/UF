@@ -4,15 +4,20 @@ import getFormData from "../../utils/getFormData";
 import Cookies from "js-cookie";
 import axios from "axios";
 
+type PLoginParamsType = {
+    username: string,
+    password: string
+}
+
 function PLogin() {
     const navigate = useNavigate();
 
     const { mutate, error, isPending } = useMutation({
         mutationKey: ['post: login'],
-        mutationFn: async (userData: any) => {
+        mutationFn: async (params: PLoginParamsType) => {
             const formData = getFormData({
-                ...userData,
-                username: userData.username.trim()
+                password: params.password,
+                username: params.username.trim()
             });
             const req = await axios.post(import.meta.env.VITE_ENDPOINT + `/login/`, formData)
 
