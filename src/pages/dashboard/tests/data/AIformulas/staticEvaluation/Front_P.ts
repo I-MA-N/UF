@@ -48,17 +48,17 @@ function Front_P(landmarks: NormalizedLandmark[]) {
 
       let kneeRightZ = 5;
       let kneeRightP = 5;
-      if (kneeRight >= 160 && kneeRight <= 173) kneeRightZ = 3;
-      if (kneeRight < 160) kneeRightZ = 1;
-      if (kneeRight >= 180 && kneeRight <= 190) kneeRightP = 3;
-      if (kneeRight > 190) kneeRightP = 1;
+      if (kneeRight >= 173 && kneeRight <= 178) kneeRightZ = 3;
+      if (kneeRight < 173) kneeRightZ = 1;
+      if (kneeRight >= 182 && kneeRight <= 187) kneeRightP = 3;
+      if (kneeRight > 187) kneeRightP = 1;
 
       let kneeLeftZ = 5;
       let kneeLeftP = 5;
-      if (kneeLeft >= 160 && kneeLeft <= 173) kneeLeftZ = 3;
-      if (kneeLeft < 160) kneeLeftZ = 1;
-      if (kneeLeft >= 180 && kneeLeft <= 190) kneeLeftP = 3;
-      if (kneeLeft > 190) kneeLeftP = 1;
+      if (kneeLeft >= 173 && kneeLeft <= 178) kneeLeftZ = 3;
+      if (kneeLeft < 173) kneeLeftZ = 1;
+      if (kneeLeft >= 182 && kneeLeft <= 187) kneeLeftP = 3;
+      if (kneeLeft > 187) kneeLeftP = 1;
 
       const kneeRightValue = Math.min(kneeRightZ, kneeRightP).toString();
       const kneeLeftValue = Math.min(kneeLeftZ, kneeLeftP).toString();
