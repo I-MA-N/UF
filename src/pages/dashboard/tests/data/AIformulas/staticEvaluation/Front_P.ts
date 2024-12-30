@@ -14,9 +14,10 @@ function Front_P(landmarks: NormalizedLandmark[]) {
    const degrees: DegreeType[] = [];
 
    {
-      const ears = Math.abs(degreeTwoPoints(landmarks[7], landmarks[8]));
-      if (ears >= 2.5) values["کج گردنی یا چرخش گردن"] = "3";
-      if (ears >= 7.5) values["کج گردنی یا چرخش گردن"] = "1";
+      let ears = -1 * degreeTwoPoints(landmarks[7], landmarks[8]);
+
+      if ((ears >= 2.5 && ears <= 5) || (ears <= -2.5 && ears >= -5)) values["کج گردنی یا چرخش گردن"] = "3";
+      if (ears >= 5 || ears <= -5) values["کج گردنی یا چرخش گردن"] = "1";
 
       degrees.push({
          landmarksUsed: [7, 8],
@@ -26,9 +27,10 @@ function Front_P(landmarks: NormalizedLandmark[]) {
    }
 
    {
-      const asis = Math.abs(degreeTwoPoints(landmarks[23], landmarks[24]));
-      if (asis >= 2.5) values["انحراف جانبی لگن"] = "3";
-      if (asis >= 7.5) values["انحراف جانبی لگن"] = "1";
+      const asis = -1 * degreeTwoPoints(landmarks[23], landmarks[24]);
+
+      if ((asis >= 2.5 && asis <= 5) || (asis <= -2.5 && asis >= -5)) values["انحراف جانبی لگن"] = "3";
+      if (asis >= 5 || asis <= -5) values["انحراف جانبی لگن"] = "1";
 
       degrees.push({
          landmarksUsed: [23, 24],
@@ -80,21 +82,28 @@ function Front_P(landmarks: NormalizedLandmark[]) {
    }
 
    {
-      const footRight = Math.abs(degreeTwoPoints(landmarks[30], landmarks[32]));
-      const footLeft = Math.abs(degreeTwoPoints(landmarks[29], landmarks[31])) - 90;
+      let footRight = Math.abs(degreeTwoPoints(landmarks[30], landmarks[32]));
+      let zaribRight = 1;
+      if (footRight > 90) { footRight = 180 - footRight; zaribRight = -1; }
+      footRight = zaribRight * (90 - footRight);
+
+      let footLeft = Math.abs(degreeTwoPoints(landmarks[29], landmarks[31]));
+      let zaribLeft = -1;
+      if (footLeft > 90) { footLeft = 180 - footLeft; zaribLeft = 1; }
+      footLeft = zaribLeft * (90 - footLeft);
 
       let footRightKh = 5;
       let footRightD = 5;
-      if (footRight < 75 && footRight >= 65) footRightKh = 3;
-      if (footRight < 65) footRightKh = 1;
-      if (footRight >= 95 && footRight <= 110) footRightD = 3;
-      if (footRight > 110) footRightD = 1;
+      if (footRight >= 15 && footRight <= 25) footRightKh = 3;
+      if (footRight > 25) footRightKh = 1;
+      if (footRight >= -10 && footRight <= 0) footRightD = 3;
+      if (footRight < -10) footRightD = 1;
 
       let footLeftKh = 5;
       let footLeftD = 5;
       if (footLeft >= 15 && footLeft <= 25) footLeftKh = 3;
       if (footLeft > 25) footLeftKh = 1;
-      if (footLeft >= -10 && footLeft <= 5) footLeftD = 3;
+      if (footLeft >= -10 && footLeft <= 0) footLeftD = 3;
       if (footLeft < -10) footLeftD = 1;
 
       const footRightValue = Math.min(footRightKh, footRightD).toString();

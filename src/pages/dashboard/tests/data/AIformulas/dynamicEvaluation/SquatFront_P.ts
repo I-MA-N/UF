@@ -22,13 +22,13 @@ function SquatFront_P(landmarks: NormalizedLandmark[]) {
 
         let kneeRightZ = 0;
         let kneeRightP = 0;
-        if (kneeRight < 170) kneeRightZ = 1;
-        if (kneeRight > 190) kneeRightP = 1;
+        if (kneeRight < 178) kneeRightZ = 1;
+        if (kneeRight > 182) kneeRightP = 1;
 
         let kneeLeftZ = 0;
         let kneeLeftP = 0;
-        if (kneeLeft < 170) kneeLeftZ = 1;
-        if (kneeLeft > 190) kneeLeftP = 1;
+        if (kneeLeft < 178) kneeLeftZ = 1;
+        if (kneeLeft > 182) kneeLeftP = 1;
 
         const kneeRightValue = Math.max(kneeRightZ, kneeRightP).toString();
         const kneeLeftValue = Math.max(kneeLeftZ, kneeLeftP).toString();
@@ -50,13 +50,20 @@ function SquatFront_P(landmarks: NormalizedLandmark[]) {
     }
 
     {
-        const footRight = Math.abs(degreeTwoPoints(landmarks[30], landmarks[32]));
-        const footLeft = Math.abs(degreeTwoPoints(landmarks[29], landmarks[31])) - 90;
+        let footRight = Math.abs(degreeTwoPoints(landmarks[30], landmarks[32]));
+        let zaribRight = 1;
+        if (footRight > 90) { footRight = 180 - footRight; zaribRight = -1; }
+        footRight = zaribRight * (90 - footRight);
+  
+        let footLeft = Math.abs(degreeTwoPoints(landmarks[29], landmarks[31]));
+        let zaribLeft = -1;
+        if (footLeft > 90) { footLeft = 180 - footLeft; zaribLeft = 1; }
+        footLeft = zaribLeft * (90 - footLeft);
 
         let footRightKh = 0;
         let footRightD = 0;
-        if (footRight < 75) footRightKh = 1;
-        if (footRight > 95) footRightD = 1;
+        if (footRight > 15) footRightKh = 1;
+        if (footRight < 0) footRightD = 1;
 
         let footLeftKh = 0;
         let footLeftD = 0;

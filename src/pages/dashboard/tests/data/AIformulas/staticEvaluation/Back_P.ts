@@ -11,9 +11,10 @@ function Back_P(landmarks: NormalizedLandmark[]) {
    const degrees: DegreeType[] = [];
 
    {
-      const shoulders = Math.abs(degreeTwoPoints(landmarks[11], landmarks[12]));
-      if (shoulders <= 177.5) values["شانه نابرابر"] = "3";
-      if (shoulders <= 172.5) values["شانه نابرابر"] = "1";
+      let shoulders = -1 * degreeTwoPoints(landmarks[12], landmarks[11]);
+      
+      if ((shoulders >= 2.5 && shoulders <= 5) || (shoulders <= -2.5 && shoulders >= -5)) values["شانه نابرابر"] = "3";
+      if (shoulders >= 5 || shoulders <= -5) values["شانه نابرابر"] = "1";
 
       degrees.push({
          landmarksUsed: [11, 12],
@@ -23,8 +24,15 @@ function Back_P(landmarks: NormalizedLandmark[]) {
    }
 
    {
-      const ankleRight = Math.abs(degreeTwoPoints(landmarks[28], landmarks[30])) - 90;
-      const ankleLeft = Math.abs(degreeTwoPoints(landmarks[27], landmarks[29]));
+      let ankleRight = Math.abs(degreeTwoPoints(landmarks[28], landmarks[30]));
+      let zaribRight = -1;
+      if (ankleRight > 90) { ankleRight = 180 - ankleRight; zaribRight = 1; }
+      ankleRight = zaribRight * (90 - ankleRight);
+
+      let ankleLeft = Math.abs(degreeTwoPoints(landmarks[27], landmarks[29]));
+      let zaribLeft = 1;
+      if (ankleLeft > 90) { ankleLeft = 180 - ankleLeft; zaribLeft = -1; }
+      ankleLeft = zaribLeft * (90 - ankleLeft);
 
       let ankleRightKh = 5;
       let ankleRightD = 5;
@@ -35,10 +43,10 @@ function Back_P(landmarks: NormalizedLandmark[]) {
 
       let ankleLeftKh = 5;
       let ankleLeftD = 5;
-      if (ankleLeft <= 87.5 && ankleLeft >= 82.5) ankleLeftKh = 3;
-      if (ankleLeft < 82.5) ankleLeftKh = 1;
-      if (ankleLeft >= 92.5 && ankleLeft <= 97.5) ankleLeftD = 3;
-      if (ankleLeft > 97.5) ankleLeftD = 1;
+      if (ankleLeft >= 2.5 && ankleLeft <= 7.5) ankleLeftKh = 3;
+      if (ankleLeft > 7.5) ankleLeftKh = 1;
+      if (ankleLeft >= -7.5 && ankleLeft <= -2.5) ankleLeftD = 3;
+      if (ankleLeft < -7.5) ankleLeftD = 1;
 
       const ankleRightValue = Math.min(ankleRightKh, ankleRightD).toString();
       const ankleLeftValue = Math.min(ankleLeftKh, ankleLeftD).toString();

@@ -25,8 +25,9 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas
       const earLandmark = isEven ? 8 : 7;
       let earC7 = Math.abs(degreeTwoPoints(landmarks[earLandmark], landmarks[33]));
       if (!isEven) earC7 = 180 - earC7;
-      if (earC7 <= 70 && earC7 >= 50) values["سر به جلو"] = "3";
-      if (earC7 < 50) values["سر به جلو"] = "1";
+
+      if (earC7 <= 50 && earC7 >= 30) values["سر به جلو"] = "3";
+      if (earC7 < 30) values["سر به جلو"] = "1";
 
       degrees.push({
          landmarksUsed: [earLandmark, 33],
@@ -37,8 +38,9 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas
 
    {
       const shoulderLandmark = isEven ? 12 : 11;
-      let shoulderC7 = degreeTwoPoints(landmarks[shoulderLandmark], landmarks[33]);
+      let shoulderC7 = Math.abs(degreeTwoPoints(landmarks[33], landmarks[shoulderLandmark]));
       if (!isEven) shoulderC7 = 180 - shoulderC7;
+
       if (shoulderC7 <= 50 && shoulderC7 >= 30) values["شانه گرد"] = "3";
       if (shoulderC7 < 30) values["شانه گرد"] = "1";
 

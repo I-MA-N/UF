@@ -26,6 +26,7 @@ function SquatSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editC
 
         const delta = Math.abs(asisShoulder - footKnee);
         if (delta > 15) values["اسکات جانبی خمیدگی به جلو"] = "1";
+
         degrees.push({
             landmarksUsed: [asisLandmark, shoulderLandmark],
             degree: asisShoulder,
@@ -41,9 +42,11 @@ function SquatSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editC
         const handLandmark = isEven ? 16 : 15;
         let arms = degreeTwoPoints(landmarks[shoulderLandmark], landmarks[handLandmark]);
         if (!isEven) arms = 180 - arms;
-        if (arms > 0) {
-            const deltaArms = (45 - 15) - (180 - arms);
-            if (deltaArms > 7.5) values["اسکات جانبی دست ها در جلو"] = "1";
+
+        if (arms < 0) {
+            values["اسکات جانبی دست ها در جلو"] = "1";
+        } else {
+            if (arms > 170) values["اسکات جانبی دست ها در جلو"] = "1";
         }
 
         degrees.push({

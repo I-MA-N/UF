@@ -1,3 +1,4 @@
+import usePhotoStore from "../../../../../store/photoStore";
 import BottomBtns from "./footer/BottomBtns";
 import EditBtns from "./footer/EditBtns";
 
@@ -7,13 +8,18 @@ type FooterProps = {
 }
 
 function Footer({ selectedLandmark, setSelectedLandmark }: FooterProps) {
+   const landmarks = usePhotoStore(state => state.landmarks);
+
    return (
       <div className="w-full space-y-2 flex-shrink-0 text-sm lg:text-base">
-         <EditBtns
-            selectedLandmark={selectedLandmark}
-            setSelectedLandmark={setSelectedLandmark}
-         />
-
+         {
+            landmarks?.length &&
+            <EditBtns
+               selectedLandmark={selectedLandmark}
+               setSelectedLandmark={setSelectedLandmark}
+            />
+         }
+         
          <BottomBtns
             selectedLandmark={selectedLandmark}
          />

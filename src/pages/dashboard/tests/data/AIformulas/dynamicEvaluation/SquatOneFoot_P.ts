@@ -13,9 +13,9 @@ function SquatOneFoot_P(landmarks: NormalizedLandmark[]) {
     const degrees: DegreeType[] = [];
 
     {
-        const shoulders = degreeTwoPoints(landmarks[11], landmarks[12]);
-        if (shoulders > 7.5) values["اسکات تک پا چرخش داخلی تنه"] = "1";
-        if (shoulders < -7.5) values["اسکات تک پا چرخش خارجی تنه"] = "1";
+        const shoulders = -1 * degreeTwoPoints(landmarks[11], landmarks[12]);
+        if (shoulders > 5) values["اسکات تک پا چرخش خارجی تنه"] = "1";
+        if (shoulders < -5) values["اسکات تک پا چرخش داخلی تنه"] = "1";
 
         const shouldersValue = Number(values["اسکات تک پا چرخش داخلی تنه"]) || Number(values["اسکات تک پا چرخش خارجی تنه"]);
         degrees.push({
@@ -26,11 +26,11 @@ function SquatOneFoot_P(landmarks: NormalizedLandmark[]) {
     }
 
     {
-        const asis = degreeTwoPoints(landmarks[23], landmarks[24]);
-        if (asis > 7.5) values["اسکات تک پا سقوط ران"] = "1";
-        if (asis < -7.5) values["اسکات تک پا بالا آمدن ران"] = "1";
+        const asis = -1 * degreeTwoPoints(landmarks[23], landmarks[24]);
+        if (asis > 5) values["اسکات تک پا بالا آمدن ران"] = "1";
+        if (asis < -5) values["اسکات تک پا سقوط ران"] = "1";
 
-        const asisValue = Number(values["اسکات تک پا چرخش داخلی تنه"]) || Number(values["اسکات تک پا چرخش خارجی تنه"]);
+        const asisValue = Number(values["اسکات تک پا بالا آمدن ران"]) || Number(values["اسکات تک پا سقوط ران"]);
         degrees.push({
             landmarksUsed: [23, 24],
             degree: asis,
@@ -53,7 +53,8 @@ function SquatOneFoot_P(landmarks: NormalizedLandmark[]) {
             kneeBottom = 180 - kneeBottom
         }
         const kneeSum = kneeTop + kneeBottom;
-        if (kneeSum <= 130) values["اسکات تک پا حرکت زانو به داخل"] = "1";
+
+        if (kneeSum <= 150) values["اسکات تک پا حرکت زانو به داخل"] = "1";
 
         degrees.push({
             landmarksUsed: [kneeTopLandmark1, kneeLandmark, kneeBottomLandmark2],

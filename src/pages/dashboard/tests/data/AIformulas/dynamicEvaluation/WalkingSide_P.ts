@@ -17,7 +17,8 @@ function WalkingSide_P(landmarks: NormalizedLandmark[], userHeight?: number, edi
         const earLandmark = isEven ? 8 : 7;
         let earC7 = Math.abs(degreeTwoPoints(landmarks[earLandmark], landmarks[33]));
         if (!isEven) earC7 = 180 - earC7;
-        if (earC7 <= 70) values["راه رفتن سر به جلو"] = "1";
+
+        if (earC7 <= 40) values["راه رفتن سر به جلو"] = "1";
 
         degrees.push({
             landmarksUsed: [earLandmark, 33],
@@ -28,8 +29,9 @@ function WalkingSide_P(landmarks: NormalizedLandmark[], userHeight?: number, edi
 
     {
         const shoulderLandmark = isEven ? 12 : 11;
-        let shoulderC7 = degreeTwoPoints(landmarks[shoulderLandmark], landmarks[33]);
+        let shoulderC7 = -1 * degreeTwoPoints(landmarks[33], landmarks[shoulderLandmark]);
         if (!isEven) shoulderC7 = 180 - shoulderC7;
+
         if (shoulderC7 <= 50) values["راه رفتن شانه ها گرد می شود"] = "1";
 
         degrees.push({

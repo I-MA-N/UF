@@ -23,11 +23,14 @@ function SwimSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editCa
     {
         const shoulderAsisLandmark = 180 - Math.abs(degreeTwoPoints(landmarks[shoulderLandmark], landmarks[asisLandmark]));
         const asisKneeLandmark = Math.abs(degreeTwoPoints(landmarks[asisLandmark], landmarks[kneeLandmark]));
-        const back = shoulderAsisLandmark + asisKneeLandmark;
-        if (back < 150) values["شنا صاف شدن کمر"] = "1";
-        if (back > 180) values["شنا گود شدن کمر"] = "1";
+        let back = shoulderAsisLandmark + asisKneeLandmark;
+        if (isEven) back = 360 - back;
+
+        if (back <= 155) values["شنا صاف شدن کمر"] = "1";
+        if (back >= 180) values["شنا گود شدن کمر"] = "1";
 
         const backValue = Number(values["شنا صاف شدن کمر"]) || Number(values["شنا گود شدن کمر"]);
+
         degrees.push({
             landmarksUsed: [shoulderLandmark, asisLandmark, kneeLandmark],
             degree: back,
@@ -52,6 +55,7 @@ function SwimSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editCa
             const endLandmark = isEven ? 33 : 11;
             const shoulderNeckPixels = (landmarks[startLandmark].x - landmarks[endLandmark].x) * editCanvasSize.width;
             const shoulderNeck = shoulderNeckPixels * ratio;
+            
             if (shoulderNeck > 0) values["شنا بالا آمدن شانه"] = "1";
 
             distances.push({
@@ -64,8 +68,14 @@ function SwimSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editCa
 
     {
         const earLandmark = isEven ? 8 : 7;
-        const shoulderEar = degreeTwoPoints(landmarks[shoulderLandmark], landmarks[earLandmark]);
-        if (shoulderEar < -20) values["شنا هایپراکستنشن گردن"] = "1";
+        let shoulderEar = -1 * degreeTwoPoints(landmarks[shoulderLandmark], landmarks[earLandmark]);
+
+        if (isEven) {
+            if (shoulderEar > 0) shoulderEar = 180 - shoulderEar;
+            else shoulderEar = -1 * (shoulderEar + 180)
+        }
+
+        if (shoulderEar > 20) values["شنا هایپراکستنشن گردن"] = "1";
 
         degrees.push({
             landmarksUsed: [shoulderLandmark, earLandmark],

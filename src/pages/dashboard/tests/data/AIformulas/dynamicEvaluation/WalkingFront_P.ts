@@ -14,14 +14,14 @@ function WalkingFront_P(landmarks: NormalizedLandmark[]) {
       const kneeRight = kneeTopRight + kneeBottomRight;
 
       let kneeRightValue = 0;
-      if (kneeRight <= 173) kneeRightValue = 1;
+      if (kneeRight < 178) kneeRightValue = 1;
 
       const kneeTopLeft = Math.abs(degreeTwoPoints(landmarks[23], landmarks[25]));
       const kneeBottomLeft = 180 - Math.abs(degreeTwoPoints(landmarks[25], landmarks[27]));
       const kneeLeft = kneeTopLeft + kneeBottomLeft;
 
       let kneeLeftValue = 0;
-      if (kneeLeft <= 173) kneeLeftValue = 1;
+      if (kneeLeft < 178) kneeLeftValue = 1;
 
       values["راه رفتن صاف شدن پاها و چرخش زانو به داخل"] = Math.max(kneeRightValue, kneeLeftValue).toString();
 
