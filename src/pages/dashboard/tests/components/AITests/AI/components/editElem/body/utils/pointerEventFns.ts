@@ -50,7 +50,7 @@ export const circleMove = (
       if (!isOutOfCanvasX && !isOutOfCanvasY) {
          setZoomElemImage(isFirstMove, imageWidth, imageHeight);
 
-         setLandmarksPositions(selectedLandmark, imageLeft, imageTop, zoomElem, circleElem);
+         setLandmarksPositions(imageLeft, imageTop, zoomElem, circleElem);
 
          updateStoreLandmarks(selectedLandmark, imageLeft, imageTop, imageWidth, imageHeight);
 
@@ -67,7 +67,7 @@ function setZoomElemImage(
    if (isFirstMove) {
       const imgElem = document.getElementById("editImage") as HTMLImageElement | null;
       const zoomElem = document.getElementById("zoomElem") as HTMLDivElement | null;
-   
+
       if (imgElem && zoomElem) {
          zoomElem.style.backgroundImage = `url(${imgElem.src})`;
          zoomElem.style.backgroundSize = `${imageWidth}px ${imageHeight}px`;
@@ -76,7 +76,6 @@ function setZoomElemImage(
 }
 
 function setLandmarksPositions(
-   selectedLandmark: number,
    imageLeft: number, imageTop: number,
    zoomElem: HTMLDivElement, circleElem: HTMLDivElement,
 ) {
@@ -86,28 +85,18 @@ function setLandmarksPositions(
 
    const zoomElemX = imageLeft - (zoomElem.clientWidth / 2);
    const zoomElemY = imageTop - (zoomElem.clientWidth / 2);
-   
-   if (selectedLandmark === 38) {
-      // Set 'x' position of 'zoomElem' only once when editing '38' landmark
-      if (isFirstMove) {
-         zoomElem.style.backgroundPositionX = `-${zoomElemX}px`;
-      }
-      zoomElem.style.backgroundPositionY = `-${zoomElemY}px`;
 
-      circleElem.style.top = `${circleTop}px`;
+   // If we move out of 'left' or 'top' edge of image, we should change values
+   if (zoomElemX < 0) {
+      zoomElem.style.backgroundPosition = `${-zoomElemX}px -${zoomElemY}px`;
+   } else if (zoomElemY < 0) {
+      zoomElem.style.backgroundPosition = `-${zoomElemX}px ${-zoomElemY}px`;
    } else {
-      // If we move out of 'left' or 'top' edge of image, we should change values
-      if (zoomElemX < 0) {
-         zoomElem.style.backgroundPosition = `${-zoomElemX}px -${zoomElemY}px`;
-      } else if (zoomElemY < 0) {
-         zoomElem.style.backgroundPosition = `-${zoomElemX}px ${-zoomElemY}px`;
-      } else {
-         zoomElem.style.backgroundPosition = `-${zoomElemX}px -${zoomElemY}px`;
-      }
-
-      circleElem.style.left = `${circleLeft}px`;
-      circleElem.style.top = `${circleTop}px`;
+      zoomElem.style.backgroundPosition = `-${zoomElemX}px -${zoomElemY}px`;
    }
+
+   circleElem.style.left = `${circleLeft}px`;
+   circleElem.style.top = `${circleTop}px`;
 }
 
 function updateStoreLandmarks(
@@ -117,15 +106,6 @@ function updateStoreLandmarks(
 ) {
    const { landmarks, setLandmarks } = usePhotoStore.getState();
 
-   // if (selectedLandmark === 38) {
-   //    landmarks[selectedLandmark].y = imageTop / imageHeight;
-   // } else {
-
-   
-   //    if (selectedLandmark === 39) {
-   //       landmarks[38].x = imageLeft / imageWidth;
-   //    }
-   // }
    landmarks[selectedLandmark].x = imageLeft / imageWidth;
    landmarks[selectedLandmark].y = imageTop / imageHeight;
 

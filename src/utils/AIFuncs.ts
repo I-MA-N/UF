@@ -55,23 +55,6 @@ export const addExtraLandmarks = (
          visibility: landmarks[11].visibility,
       }
    }
-
-   // const isSide = currentSection?.name === "side";
-   // if (isSide) {
-   //    landmarks[38] = {
-   //       x: isEven ? landmarks[28].x : landmarks[27].x,
-   //       y: (landmarks[3].y + landmarks[6].y) / 2 - 0.03,
-   //       z: isEven ? landmarks[28].z : landmarks[27].z,
-   //       visibility: isEven ? landmarks[28].visibility : landmarks[27].visibility,
-   //    }
-
-   //    landmarks[39] = {
-   //       x: isEven ? landmarks[28].x : landmarks[27].x,
-   //       y: isEven ? landmarks[30].y : landmarks[29].y,
-   //       z: isEven ? landmarks[28].z : landmarks[27].z,
-   //       visibility: isEven ? landmarks[28].visibility : landmarks[27].visibility,
-   //    }
-   // }
 }
 
 export const drawOnVideo = (

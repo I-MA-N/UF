@@ -22,14 +22,14 @@ function SampleImage({ selectedLandmark }: SampleImageProps) {
       if (key === "side") {
          let isEven = true;
          if (landmarks[11].z < landmarks[12].z) isEven = false;
-         
+
          return isEven;
       }
 
       return false;
    }, [key])
 
-   if (selectedLandmark !== 38) return (
+   return (
       <img
          src={`/images/editImages/${key}/${selectedLandmark}.png`}
          style={{

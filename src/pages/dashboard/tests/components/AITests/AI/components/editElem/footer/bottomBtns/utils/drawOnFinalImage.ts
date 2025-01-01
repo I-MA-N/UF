@@ -33,10 +33,7 @@ const drawOnFinalImage = (
             const endPixelY = landmarks[connector.end].y * canvas.height;
 
             ctx.strokeStyle = "#FFFFFF";
-            // if (connector.start === 38 && connector.end === 39) {
-            //    ctx.strokeStyle = "#FFFFFF";
-            // }
-
+            
             ctx.beginPath();
             ctx.moveTo(startPixelX, startPixelY);
             ctx.lineTo(endPixelX, endPixelY);

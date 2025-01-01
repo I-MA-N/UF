@@ -10,8 +10,6 @@ const CONNECTORS: { start: number, end: number }[] = [
 
    { start: 33, end: 34 },
    { start: 34, end: 35 },
-
-   // { start: 38, end: 39 },
 ];
 
 export default CONNECTORS;
