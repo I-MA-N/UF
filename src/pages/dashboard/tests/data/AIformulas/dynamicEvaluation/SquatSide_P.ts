@@ -63,7 +63,7 @@ function SquatSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editC
         const ratio = centimeters / pixels;
 
         degrees.push({
-            landmarksUsed: [32, 0],
+            landmarksUsed: [bottomLandmark, 0],
             degree: null,
             value: null
         })
@@ -75,8 +75,8 @@ function SquatSide_P(landmarks: NormalizedLandmark[], userHeight?: number, editC
         const lumbarLordosisRadians = 4 * Math.atan((2 * HCentimeters) / LCentimeters);
         const lumbarLordosis = lumbarLordosisRadians * (180 / Math.PI);
 
-        if (lumbarLordosis >= 45) values["اسکات جانبی گود شدن کمر"] = "1";
-        if (lumbarLordosis <= 25) values["اسکات جانبی کمر صاف"] = "1";
+        if (lumbarLordosis > 50) values["اسکات جانبی گود شدن کمر"] = "1";
+        if (lumbarLordosis < 30) values["اسکات جانبی کمر صاف"] = "1";
 
         let lumbarLordosisValue = "0";
         if (values["اسکات جانبی گود شدن کمر"] === "1" || values["اسکات جانبی کمر صاف"] === "1") {

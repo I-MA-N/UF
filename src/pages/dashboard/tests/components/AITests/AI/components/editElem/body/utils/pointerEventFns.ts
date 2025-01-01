@@ -117,16 +117,17 @@ function updateStoreLandmarks(
 ) {
    const { landmarks, setLandmarks } = usePhotoStore.getState();
 
-   if (selectedLandmark === 38) {
-      landmarks[selectedLandmark].y = imageTop / imageHeight;
-   } else {
-      landmarks[selectedLandmark].x = imageLeft / imageWidth;
-      landmarks[selectedLandmark].y = imageTop / imageHeight;
+   // if (selectedLandmark === 38) {
+   //    landmarks[selectedLandmark].y = imageTop / imageHeight;
+   // } else {
+
    
-      if (selectedLandmark === 39) {
-         landmarks[38].x = imageLeft / imageWidth;
-      }
-   }
+   //    if (selectedLandmark === 39) {
+   //       landmarks[38].x = imageLeft / imageWidth;
+   //    }
+   // }
+   landmarks[selectedLandmark].x = imageLeft / imageWidth;
+   landmarks[selectedLandmark].y = imageTop / imageHeight;
 
    setLandmarks(landmarks);
 }

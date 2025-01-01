@@ -36,17 +36,17 @@ function Back_P(landmarks: NormalizedLandmark[]) {
 
       let ankleRightKh = 5;
       let ankleRightD = 5;
-      if (ankleRight >= 2.5 && ankleRight <= 7.5) ankleRightKh = 3;
-      if (ankleRight > 7.5) ankleRightKh = 1;
-      if (ankleRight >= -7.5 && ankleRight <= -2.5) ankleRightD = 3;
-      if (ankleRight < -7.5) ankleRightD = 1;
+      if (ankleRight >= 3 && ankleRight <= 7) ankleRightKh = 3;
+      if (ankleRight > 7) ankleRightKh = 1;
+      if (ankleRight >= -7 && ankleRight <= -3) ankleRightD = 3;
+      if (ankleRight < -7) ankleRightD = 1;
 
       let ankleLeftKh = 5;
       let ankleLeftD = 5;
-      if (ankleLeft >= 2.5 && ankleLeft <= 7.5) ankleLeftKh = 3;
-      if (ankleLeft > 7.5) ankleLeftKh = 1;
-      if (ankleLeft >= -7.5 && ankleLeft <= -2.5) ankleLeftD = 3;
-      if (ankleLeft < -7.5) ankleLeftD = 1;
+      if (ankleLeft >= 3 && ankleLeft <= 7) ankleLeftKh = 3;
+      if (ankleLeft > 7) ankleLeftKh = 1;
+      if (ankleLeft >= -7 && ankleLeft <= -3) ankleLeftD = 3;
+      if (ankleLeft < -7) ankleLeftD = 1;
 
       const ankleRightValue = Math.min(ankleRightKh, ankleRightD).toString();
       const ankleLeftValue = Math.min(ankleLeftKh, ankleLeftD).toString();

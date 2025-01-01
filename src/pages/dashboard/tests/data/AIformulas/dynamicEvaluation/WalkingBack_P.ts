@@ -12,7 +12,7 @@ function WalkingBack_P(landmarks: NormalizedLandmark[]) {
     {
         const asis = -1 * degreeTwoPoints(landmarks[24], landmarks[23]);
 
-        if (asis >= 2.5 || asis <= -2.5) values["راه رفتن بالا آمدن ران"] = "1";
+        if (asis >= 3 || asis <= -3) values["راه رفتن بالا آمدن ران"] = "1";
 
         degrees.push({
             landmarksUsed: [23, 24],
@@ -33,10 +33,10 @@ function WalkingBack_P(landmarks: NormalizedLandmark[]) {
         footLeft = zaribLeft * (90 - footLeft);
         
         let footRightValue = 0;
-        if (footRight >= 15 || footRight < 0) footRightValue = 1;
+        if (footRight > 20 || footRight < 5) footRightValue = 1;
 
         let footLeftValue = 0;
-        if (footLeft >= 15 || footLeft < 0) footLeftValue = 1;
+        if (footLeft > 20 || footLeft < 5) footLeftValue = 1;
 
         values['راه رفتن صاف شدن و چرخش به خارج پاها'] = Math.max(footRightValue, footLeftValue).toString();
 

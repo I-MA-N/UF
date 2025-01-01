@@ -22,13 +22,13 @@ function SquatFront_P(landmarks: NormalizedLandmark[]) {
 
         let kneeRightZ = 0;
         let kneeRightP = 0;
-        if (kneeRight < 178) kneeRightZ = 1;
-        if (kneeRight > 182) kneeRightP = 1;
+        if (kneeRight < 176) kneeRightZ = 1;
+        if (kneeRight > 184) kneeRightP = 1;
 
         let kneeLeftZ = 0;
         let kneeLeftP = 0;
-        if (kneeLeft < 178) kneeLeftZ = 1;
-        if (kneeLeft > 182) kneeLeftP = 1;
+        if (kneeLeft < 176) kneeLeftZ = 1;
+        if (kneeLeft > 184) kneeLeftP = 1;
 
         const kneeRightValue = Math.max(kneeRightZ, kneeRightP).toString();
         const kneeLeftValue = Math.max(kneeLeftZ, kneeLeftP).toString();
@@ -62,13 +62,13 @@ function SquatFront_P(landmarks: NormalizedLandmark[]) {
 
         let footRightKh = 0;
         let footRightD = 0;
-        if (footRight > 15) footRightKh = 1;
-        if (footRight < 0) footRightD = 1;
+        if (footRight > 20) footRightKh = 1;
+        if (footRight < 5) footRightD = 1;
 
         let footLeftKh = 0;
         let footLeftD = 0;
-        if (footLeft > 15) footLeftKh = 1;
-        if (footLeft < 0) footLeftD = 1;
+        if (footLeft > 20) footLeftKh = 1;
+        if (footLeft < 5) footLeftD = 1;
 
         const footRightValue = Math.max(footRightKh, footRightD).toString();
         const footLeftValue = Math.max(footLeftKh, footLeftD).toString();

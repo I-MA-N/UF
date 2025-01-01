@@ -1,6 +1,5 @@
 import { NormalizedLandmark } from "@mediapipe/tasks-vision";
 import degreeTwoPoints from "../../../../../../utils/degreeTwoPoints";
-import DistanceType from "../../../../../../types/DistanceType";
 import DegreeType from "../../../../../../types/DegreeType";
 
 function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvasSize?: { width: number, height: number }) {
@@ -16,10 +15,13 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas
       'کمر صاف': '5',
    }
    const degrees: DegreeType[] = [];
-   const distances: DistanceType[] = [];
 
    let isEven = true;
    if (landmarks[11].z < landmarks[12].z) isEven = false;
+
+   const shoulderLandmark = isEven ? 12 : 11;
+   const hipLandmark = isEven ? 24 : 23;
+   const ankleLandmark = isEven ? 28 : 27;
 
    {
       const earLandmark = isEven ? 8 : 7;
@@ -37,7 +39,6 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas
    }
 
    {
-      const shoulderLandmark = isEven ? 12 : 11;
       let shoulderC7 = Math.abs(degreeTwoPoints(landmarks[33], landmarks[shoulderLandmark]));
       if (!isEven) shoulderC7 = 180 - shoulderC7;
 
@@ -52,12 +53,13 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas
    }
 
    if (editCanvasSize && userHeight) {
-      const centimeters = userHeight;
-      const pixels = (landmarks[39].y - landmarks[38].y) * editCanvasSize.height;
+      const bottomLandmark = isEven ? 32 : 31;
+      const centimeters = userHeight - 12;
+      const pixels = (landmarks[bottomLandmark].y - landmarks[0].y) * editCanvasSize.height;
       const ratio = centimeters / pixels;
 
       degrees.push({
-         landmarksUsed: [39, 38],
+         landmarksUsed: [bottomLandmark, 0],
          degree: null,
          value: null
       })
@@ -70,10 +72,10 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas
          const thoracicKyphosisRadians = 4 * Math.atan((2 * HCentimeters) / LCentimeters);
          const thoracicKyphosis = thoracicKyphosisRadians * (180 / Math.PI);
 
-         if (thoracicKyphosis >= 50 && thoracicKyphosis <= 65) values["پشت گرد"] = "3";
-         if (thoracicKyphosis > 65) values["پشت گرد"] = "1";
-         if (thoracicKyphosis <= 30 && thoracicKyphosis >= 20) values["پشت صاف"] = "3";
-         if (thoracicKyphosis < 20) values["پشت صاف"] = "1";
+         if (thoracicKyphosis >= 40 && thoracicKyphosis <= 55) values["پشت گرد"] = "3";
+         if (thoracicKyphosis > 55) values["پشت گرد"] = "1";
+         if (thoracicKyphosis <= 20 && thoracicKyphosis >= 10) values["پشت صاف"] = "3";
+         if (thoracicKyphosis < 10) values["پشت صاف"] = "1";
 
          let thoracicKyphosisValue = "5";
          if (values["پشت گرد"] === "1" || values["پشت صاف"] === "1") {
@@ -98,9 +100,9 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas
          const lumbarLordosisRadians = 4 * Math.atan((2 * HCentimeters) / LCentimeters);
          const lumbarLordosis = lumbarLordosisRadians * (180 / Math.PI);
 
-         if (lumbarLordosis >= 45 && lumbarLordosis <= 60) values["کمر گود"] = "3";
-         if (lumbarLordosis > 60) values["کمر گود"] = "1";
-         if (lumbarLordosis <= 25 && lumbarLordosis >= 20) values["کمر صاف"] = "3";
+         if (lumbarLordosis >= 50 && lumbarLordosis <= 65) values["کمر گود"] = "3";
+         if (lumbarLordosis > 65) values["کمر گود"] = "1";
+         if (lumbarLordosis <= 30 && lumbarLordosis >= 20) values["کمر صاف"] = "3";
          if (lumbarLordosis < 20) values["کمر صاف"] = "1";
 
          let lumbarLordosisValue = "5";
@@ -117,50 +119,52 @@ function Side_P(landmarks: NormalizedLandmark[], userHeight?: number, editCanvas
             value: lumbarLordosisValue
          })
       }
+   }
 
-      {
-         const swayBackLandmark = isEven ? 24 : 23;
-         const swayBackDistance = (landmarks[swayBackLandmark].x - landmarks[39].x) * editCanvasSize.width;
-         const swayBack = Math.abs(swayBackDistance * ratio);
-         if (swayBack >= 5) values["پشت تابدار"] = "3";
-         if (swayBack >= 7.5) values["پشت تابدار"] = "1";
+   {
+      const shoulderHip = degreeTwoPoints(landmarks[hipLandmark], landmarks[shoulderLandmark]);
+      const hipAnkle = degreeTwoPoints(landmarks[ankleLandmark], landmarks[hipLandmark]);
+      const swayBack = isEven ? (shoulderHip + (180 - hipAnkle)) : ((180 - shoulderHip) + hipAnkle);
 
-         distances.push({
-            landmarksUsed: [swayBackLandmark, 39],
-            distance: swayBack,
-            value: values["پشت تابدار"]
-         })
+      if (swayBack >= 140 && swayBack <= 160) values["پشت تابدار"] = "3";
+      if (swayBack < 140) values["پشت تابدار"] = "1";
+
+      degrees.push({
+         landmarksUsed: [shoulderLandmark, hipLandmark, ankleLandmark],
+         degree: swayBack,
+         value: values["پشت تابدار"]
+      })
+   }
+
+   {
+      const kneeLandmark = isEven ? 26 : 25;
+      const hipKnee = degreeTwoPoints(landmarks[kneeLandmark], landmarks[hipLandmark]);
+      const kneeAnkle = degreeTwoPoints(landmarks[ankleLandmark], landmarks[kneeLandmark]);
+      const knee = isEven ? (hipKnee + (180 - kneeAnkle)) : ((180 - hipKnee) + kneeAnkle);
+
+      if (knee >= 180 && knee <= 190) values["زانوی عقب رفته"] = "3";
+      if (knee > 190) values["زانوی عقب رفته"] = "1";
+      if (knee >= 160 && knee <= 170) values["زانوی خمیده"] = "3";
+      if (knee < 160) values["زانوی خمیده"] = "1";
+
+      let kneeValue = "5";
+      if (values["زانوی عقب رفته"] === "1" || values["زانوی خمیده"] === "1") {
+         kneeValue = "1";
+      }
+      if (values["زانوی عقب رفته"] === "3" || values["زانوی خمیده"] === "3") {
+         kneeValue = "3";
       }
 
-      {
-         const kneeLandmark = isEven ? 26 : 25;
-         const kneeDistance = (landmarks[kneeLandmark].x - landmarks[39].x) * editCanvasSize.width;
-         let knee = kneeDistance * ratio;
-         if (!isEven) knee = -knee;
-         if (knee <= -2) values["زانوی عقب رفته"] = "3";
-         if (knee <= -3) values["زانوی عقب رفته"] = "1";
-         if (knee >= 5) values["زانوی خمیده"] = "3";
-         if (knee >= 7.5) values["زانوی خمیده"] = "1";
-
-         let kneeValue = "5";
-         if (values["زانوی عقب رفته"] === "1" || values["زانوی خمیده"] === "1") {
-            kneeValue = "1";
-         }
-         if (values["زانوی عقب رفته"] === "3" || values["زانوی خمیده"] === "3") {
-            kneeValue = "3";
-         }
-         distances.push({
-            landmarksUsed: [kneeLandmark, 39],
-            distance: knee,
-            value: kneeValue
-         })
-      }
+      degrees.push({
+         landmarksUsed: [hipLandmark, kneeLandmark, ankleLandmark],
+         degree: knee,
+         value: kneeValue
+      })
    }
 
    return {
       values,
       degrees,
-      distances
    };
 }
 

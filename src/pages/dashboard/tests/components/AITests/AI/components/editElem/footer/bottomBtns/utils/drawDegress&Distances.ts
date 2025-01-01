@@ -52,15 +52,15 @@ export const drawDistance = (
    const secondLandmark = landmarks[distance.landmarksUsed[1]];
    const landmarksUsed: NormalizedLandmark[] = [
       firstLandmark,
-      distance.landmarksUsed[1] === 39
-         ?
-         {
-            x: secondLandmark.x,
-            y: firstLandmark.y,
-            z: firstLandmark.z,
-            visibility: firstLandmark.visibility,
-         }
-         :
+      // distance.landmarksUsed[1] === 39
+      //    ?
+      //    {
+      //       x: secondLandmark.x,
+      //       y: firstLandmark.y,
+      //       z: firstLandmark.z,
+      //       visibility: firstLandmark.visibility,
+      //    }
+      //    :
          secondLandmark
    ];
 

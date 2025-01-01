@@ -14,7 +14,7 @@ function SquatBack_P(landmarks: NormalizedLandmark[], userHeight?: number, editC
 
     {
         const asis = -1 * degreeTwoPoints(landmarks[24], landmarks[23]);
-        if (asis >= 2.5 || asis <= -2.5) values["اسکات خلفی انتقال نامتقارن "] = "1";
+        if (asis >= 3 || asis <= -3) values["اسکات خلفی انتقال نامتقارن "] = "1";
 
         degrees.push({
             landmarksUsed: [23, 24],
@@ -58,10 +58,10 @@ function SquatBack_P(landmarks: NormalizedLandmark[], userHeight?: number, editC
             ankleLeft = zaribLeft * (90 - ankleLeft);
 
             let ankleRightKh = 0;
-            if (ankleRight >= 2.5) ankleRightKh = 1;
+            if (ankleRight > 3) ankleRightKh = 1;
 
             let ankleLeftKh = 0;
-            if (ankleLeft >= 2.5) ankleLeftKh = 1;
+            if (ankleLeft > 3) ankleLeftKh = 1;
 
             values["اسکات خلفی صاف شدن پا"] = Math.max(ankleRightKh, ankleLeftKh).toString();
 

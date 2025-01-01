@@ -18,7 +18,7 @@ function WalkingSide_P(landmarks: NormalizedLandmark[], userHeight?: number, edi
         let earC7 = Math.abs(degreeTwoPoints(landmarks[earLandmark], landmarks[33]));
         if (!isEven) earC7 = 180 - earC7;
 
-        if (earC7 <= 40) values["راه رفتن سر به جلو"] = "1";
+        if (earC7 < 50) values["راه رفتن سر به جلو"] = "1";
 
         degrees.push({
             landmarksUsed: [earLandmark, 33],
@@ -32,7 +32,7 @@ function WalkingSide_P(landmarks: NormalizedLandmark[], userHeight?: number, edi
         let shoulderC7 = -1 * degreeTwoPoints(landmarks[33], landmarks[shoulderLandmark]);
         if (!isEven) shoulderC7 = 180 - shoulderC7;
 
-        if (shoulderC7 <= 50) values["راه رفتن شانه ها گرد می شود"] = "1";
+        if (shoulderC7 < 50) values["راه رفتن شانه ها گرد می شود"] = "1";
 
         degrees.push({
             landmarksUsed: [shoulderLandmark, 33],
@@ -48,7 +48,7 @@ function WalkingSide_P(landmarks: NormalizedLandmark[], userHeight?: number, edi
         const ratio = centimeters / pixels;
 
         degrees.push({
-            landmarksUsed: [32, 0],
+            landmarksUsed: [bottomLandmark, 0],
             degree: null,
             value: null
         })
@@ -60,7 +60,7 @@ function WalkingSide_P(landmarks: NormalizedLandmark[], userHeight?: number, edi
         const lumbarLordosisRadians = 4 * Math.atan((2 * HCentimeters) / LCentimeters);
         const lumbarLordosis = lumbarLordosisRadians * (180 / Math.PI);
 
-        if (lumbarLordosis >= 45) values["راه رفتن گود شدن کمر"] = "1";
+        if (lumbarLordosis > 50) values["راه رفتن گود شدن کمر"] = "1";
 
         degrees.push({
             landmarksUsed: [34, 37, 35],

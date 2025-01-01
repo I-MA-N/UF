@@ -16,8 +16,8 @@ function Front_P(landmarks: NormalizedLandmark[]) {
    {
       let ears = -1 * degreeTwoPoints(landmarks[7], landmarks[8]);
 
-      if ((ears >= 2.5 && ears <= 5) || (ears <= -2.5 && ears >= -5)) values["کج گردنی یا چرخش گردن"] = "3";
-      if (ears >= 5 || ears <= -5) values["کج گردنی یا چرخش گردن"] = "1";
+      if ((ears >= 3 && ears <= 7) || (ears <= -3 && ears >= -7)) values["کج گردنی یا چرخش گردن"] = "3";
+      if (ears >= 7 || ears <= -7) values["کج گردنی یا چرخش گردن"] = "1";
 
       degrees.push({
          landmarksUsed: [7, 8],
@@ -29,8 +29,8 @@ function Front_P(landmarks: NormalizedLandmark[]) {
    {
       const asis = -1 * degreeTwoPoints(landmarks[23], landmarks[24]);
 
-      if ((asis >= 2.5 && asis <= 5) || (asis <= -2.5 && asis >= -5)) values["انحراف جانبی لگن"] = "3";
-      if (asis >= 5 || asis <= -5) values["انحراف جانبی لگن"] = "1";
+      if ((asis >= 3 && asis <= 7) || (asis <= -3 && asis >= -7)) values["انحراف جانبی لگن"] = "3";
+      if (asis >= 7 || asis <= -7) values["انحراف جانبی لگن"] = "1";
 
       degrees.push({
          landmarksUsed: [23, 24],
@@ -50,17 +50,17 @@ function Front_P(landmarks: NormalizedLandmark[]) {
 
       let kneeRightZ = 5;
       let kneeRightP = 5;
-      if (kneeRight >= 173 && kneeRight <= 178) kneeRightZ = 3;
-      if (kneeRight < 173) kneeRightZ = 1;
-      if (kneeRight >= 182 && kneeRight <= 187) kneeRightP = 3;
-      if (kneeRight > 187) kneeRightP = 1;
+      if (kneeRight >= 170 && kneeRight <= 176) kneeRightZ = 3;
+      if (kneeRight < 170) kneeRightZ = 1;
+      if (kneeRight >= 184 && kneeRight <= 190) kneeRightP = 3;
+      if (kneeRight > 190) kneeRightP = 1;
 
       let kneeLeftZ = 5;
       let kneeLeftP = 5;
-      if (kneeLeft >= 173 && kneeLeft <= 178) kneeLeftZ = 3;
-      if (kneeLeft < 173) kneeLeftZ = 1;
-      if (kneeLeft >= 182 && kneeLeft <= 187) kneeLeftP = 3;
-      if (kneeLeft > 187) kneeLeftP = 1;
+      if (kneeLeft >= 170 && kneeLeft <= 176) kneeLeftZ = 3;
+      if (kneeLeft < 170) kneeLeftZ = 1;
+      if (kneeLeft >= 184 && kneeLeft <= 190) kneeLeftP = 3;
+      if (kneeLeft > 190) kneeLeftP = 1;
 
       const kneeRightValue = Math.min(kneeRightZ, kneeRightP).toString();
       const kneeLeftValue = Math.min(kneeLeftZ, kneeLeftP).toString();
@@ -94,17 +94,17 @@ function Front_P(landmarks: NormalizedLandmark[]) {
 
       let footRightKh = 5;
       let footRightD = 5;
-      if (footRight >= 15 && footRight <= 25) footRightKh = 3;
-      if (footRight > 25) footRightKh = 1;
-      if (footRight >= -10 && footRight <= 0) footRightD = 3;
-      if (footRight < -10) footRightD = 1;
+      if (footRight >= 20 && footRight <= 30) footRightKh = 3;
+      if (footRight > 30) footRightKh = 1;
+      if (footRight >= -5 && footRight <= 5) footRightD = 3;
+      if (footRight < -5) footRightD = 1;
 
       let footLeftKh = 5;
       let footLeftD = 5;
-      if (footLeft >= 15 && footLeft <= 25) footLeftKh = 3;
-      if (footLeft > 25) footLeftKh = 1;
-      if (footLeft >= -10 && footLeft <= 0) footLeftD = 3;
-      if (footLeft < -10) footLeftD = 1;
+      if (footLeft >= 20 && footLeft <= 30) footLeftKh = 3;
+      if (footLeft > 30) footLeftKh = 1;
+      if (footLeft >= -5 && footLeft <= 5) footLeftD = 3;
+      if (footLeft < -5) footLeftD = 1;
 
       const footRightValue = Math.min(footRightKh, footRightD).toString();
       const footLeftValue = Math.min(footLeftKh, footLeftD).toString();

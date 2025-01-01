@@ -50,9 +50,9 @@ const drawOnCanvas = (
             const endPixelY = landmarks[connector.end].y * canvas.height;
 
             ctx.strokeStyle = palette[1];
-            if (connector.start === 38 && connector.end === 39) {
-               ctx.strokeStyle = palette[0];
-            }
+            // if (connector.start === 38 && connector.end === 39) {
+            //    ctx.strokeStyle = palette[0];
+            // }
          
             ctx.beginPath();
             ctx.moveTo(startPixelX, startPixelY);
