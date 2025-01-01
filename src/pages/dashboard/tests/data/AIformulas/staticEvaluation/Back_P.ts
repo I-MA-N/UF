@@ -13,7 +13,7 @@ function Back_P(landmarks: NormalizedLandmark[]) {
    {
       let shoulders = -1 * degreeTwoPoints(landmarks[12], landmarks[11]);
       
-      if ((shoulders >= 2.5 && shoulders <= 5) || (shoulders <= -2.5 && shoulders >= -5)) values["شانه نابرابر"] = "3";
+      if ((shoulders >= 2 && shoulders <= 5) || (shoulders <= -2 && shoulders >= -5)) values["شانه نابرابر"] = "3";
       if (shoulders >= 5 || shoulders <= -5) values["شانه نابرابر"] = "1";
 
       degrees.push({

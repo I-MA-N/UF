@@ -14,8 +14,8 @@ function SquatOneFoot_P(landmarks: NormalizedLandmark[]) {
 
     {
         const shoulders = -1 * degreeTwoPoints(landmarks[11], landmarks[12]);
-        if (shoulders > 2.5) values["اسکات تک پا چرخش خارجی تنه"] = "1";
-        if (shoulders < -2.5) values["اسکات تک پا چرخش داخلی تنه"] = "1";
+        if (shoulders > 2) values["اسکات تک پا چرخش خارجی تنه"] = "1";
+        if (shoulders < -2) values["اسکات تک پا چرخش داخلی تنه"] = "1";
 
         const shouldersValue = Number(values["اسکات تک پا چرخش داخلی تنه"]) || Number(values["اسکات تک پا چرخش خارجی تنه"]);
         degrees.push({
