@@ -32,7 +32,7 @@ function ChangeDataModal({ setChangeModal }: ChangeDataModalProps) {
    return (
       <Modal>
          <Modal.Header>
-            <Modal.CloseBtn setShowModal={setChangeModal} />
+            <Modal.CloseBtn clickHandler={() => setChangeModal(false)} />
             <Modal.Title text="ویرایش اطلاعات" />
          </Modal.Header>
          <Modal.Body className='!p-0'>

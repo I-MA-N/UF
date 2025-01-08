@@ -11,7 +11,7 @@ function GenderModal({ gender, setGender, setShowModal }: GenderModalProps) {
    return (
       <Modal>
          <Modal.Header>
-            <Modal.CloseBtn setShowModal={setShowModal} />
+            <Modal.CloseBtn clickHandler={() => setShowModal(false)} />
             <Modal.Title text="انتخاب جنسیت" />
          </Modal.Header>
 

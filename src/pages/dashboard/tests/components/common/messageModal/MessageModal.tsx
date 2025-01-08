@@ -13,7 +13,7 @@ function MessageModal() {
    if (showModal && message) return (
       <Modal>
          <Modal.Header>
-            <Modal.CloseBtn setShowModal={setShowModal} />
+            <Modal.CloseBtn clickHandler={() => setShowModal(false)} />
             <Modal.Title text="توجه" />
          </Modal.Header>
 

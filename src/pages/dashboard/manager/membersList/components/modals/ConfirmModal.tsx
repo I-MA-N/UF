@@ -21,7 +21,7 @@ function ConfirmModal({ action, setAction, username }: ConfirmModalPropsType) {
    return (
       <Modal>
          <Modal.Header>
-            <Modal.CloseBtn setShowModal={setShowModal} />
+            <Modal.CloseBtn clickHandler={() => setShowModal} />
          </Modal.Header>
          <Modal.Body>
             <p className="text-center">

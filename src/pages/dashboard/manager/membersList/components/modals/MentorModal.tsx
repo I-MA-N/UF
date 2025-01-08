@@ -15,7 +15,7 @@ function MentorModal({ mentorSelected, setMentorSelected, setMentorModal, mentor
    return (
       <Modal>
          <Modal.Header>
-            <Modal.CloseBtn setShowModal={setMentorModal} />
+            <Modal.CloseBtn clickHandler={() => setMentorModal(false)} />
             <Modal.Title text="انتخاب مربی" />
          </Modal.Header>
          <Modal.Body className="!p-0 overflow-hidden">
@@ -32,7 +32,7 @@ function MentorModal({ mentorSelected, setMentorSelected, setMentorModal, mentor
                      filteredMentors.map(orgName => (
                         <button
                            key={orgName}
-                           className="w-full py-3.5 hover:bg-secondary hover:text-white text-sm lg:text-base break-words last:rounded-b-[32px]"
+                           className="w-full py-3.5 hover:bg-secondary hover:text-white text-sm lg:text-base break-words last:rounded-b-[32px] transition-all"
                            onClick={e => {
                               setMentorSelected(e.currentTarget.innerText);
                               setMentorModal(false);

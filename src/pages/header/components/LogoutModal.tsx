@@ -11,7 +11,7 @@ function LogoutModal({ setShowModal }: LogoutModalProps) {
    return (
       <Modal>
          <Modal.Header>
-            <Modal.CloseBtn setShowModal={setShowModal} />
+            <Modal.CloseBtn clickHandler={() => setShowModal(false)} />
          </Modal.Header>
          <Modal.Body className="text-sm lg:text-base">
             <p className="text-center mb-4 mx-auto max-w-48 xs:max-w-60 lg:max-w-80">آیا برای خروج از حساب کاربری خود مطمئن هستید؟</p>

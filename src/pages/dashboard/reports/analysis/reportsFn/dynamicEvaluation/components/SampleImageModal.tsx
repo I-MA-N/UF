@@ -27,7 +27,7 @@ function SampleImageModal({ sectionName, sectionNameFA }: SampleImageModalProps)
             showImage &&
             <Modal className="text-white">
                <Modal.Header>
-                  <Modal.CloseBtn setShowModal={setShowImage} />
+                  <Modal.CloseBtn clickHandler={() => setShowImage(false)} />
                   <Modal.Title text={sectionNameFA} />
                </Modal.Header>
                <Modal.Body className="flex items-center justify-center">

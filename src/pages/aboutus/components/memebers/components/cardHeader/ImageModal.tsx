@@ -10,7 +10,7 @@ function ImageModal({ name, imgAddress, setShowModal }: ImageModalProps) {
    return (
       <Modal>
          <Modal.Header>
-            <Modal.CloseBtn setShowModal={setShowModal} />
+            <Modal.CloseBtn clickHandler={() => setShowModal(false)} />
             <Modal.Title text={name} />
          </Modal.Header>
          <Modal.Body className="flex items-center justify-center">

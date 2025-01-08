@@ -25,7 +25,7 @@ function UserChangeModal({ userData, setShowChangeModal }: UserChangeModalProps)
    return (
       <Modal>
          <Modal.Header>
-            <Modal.CloseBtn setShowModal={setShowChangeModal} />
+            <Modal.CloseBtn clickHandler={() => setShowChangeModal(false)} />
             <Modal.Title text='ویرایش کاربر' />
          </Modal.Header>
          <Modal.Body className='!p-0'>

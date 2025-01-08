@@ -25,7 +25,7 @@ function ChangePassModal({ setPassModal }: ChangePassModalProps) {
    return (
       <Modal>
          <Modal.Header>
-            <Modal.CloseBtn setShowModal={setPassModal} />
+            <Modal.CloseBtn clickHandler={() => setPassModal(false)} />
          </Modal.Header>
          <Modal.Body className="!p-0">
             <form

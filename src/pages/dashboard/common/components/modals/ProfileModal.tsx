@@ -27,7 +27,7 @@ function ProfileModal({ setProfileModal, isManager }: ProfileModalProps) {
       <>
          <Modal>
             <Modal.Header>
-               <Modal.CloseBtn setShowModal={setProfileModal} />
+               <Modal.CloseBtn clickHandler={() => setProfileModal(false)} />
                <Modal.Title text='پروفایل من' />
             </Modal.Header>
             <Modal.Body className='!p-0'>

@@ -28,7 +28,7 @@ function DeleteMentorModal({ deleteUsername, setDeleteUsername, setMentorData }:
    return (
       <Modal>
          <Modal.Header>
-            <Modal.CloseBtn setShowModal={setDeleteUsername} />
+            <Modal.CloseBtn clickHandler={() => setDeleteUsername(null)} />
          </Modal.Header>
          <Modal.Body>
             {

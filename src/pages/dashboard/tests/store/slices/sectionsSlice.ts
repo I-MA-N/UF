@@ -4,13 +4,13 @@ import { dynamicEvaluationType } from "../../data/testsData/dynamicEvaluation";
 import { staticEvaluationType } from "../../data/testsData/staticEvaluation";
 import { DataSlice } from "./dataSlice";
 import SECTION_NAMES_NEED_USER_HEIGHT from "./sectionsNeedUserHeight";
+import useBooleansStore from "../booleansStore";
 
 interface SectionsState {
    currentSection: staticEvaluationType[0][0] | dynamicEvaluationType[0][0] | undefined,
    nameFromManualTab: SectionNames | undefined,
    isTipShown: boolean,
    userHeight: number | undefined,
-   showUserHeight: boolean
 }
 
 interface SectionsActions {
@@ -20,7 +20,6 @@ interface SectionsActions {
    removeNameFromAITab: () => void,
    toggleIsTipShown: () => void,
    setUserHeight: (height: number) => void,
-   setShowUserHeight: (showUserHeight: boolean) => void,
    resetSections: () => void,
 }
 
@@ -31,7 +30,6 @@ const initialState: SectionsState = {
    nameFromManualTab: undefined,
    isTipShown: false,
    userHeight: undefined,
-   showUserHeight: true
 }
 
 const createSectionsSlice: StateCreator<
@@ -47,13 +45,14 @@ const createSectionsSlice: StateCreator<
             part.find(section => section.name === name)
          ));
          const foundedSection = foundedSections?.find(section => section !== undefined);
+         
+         const setIsInputHeightNeeded = useBooleansStore.getState().setIsInputHeightNeeded;
+         const isSectionIncludes = foundedSection?.name ? SECTION_NAMES_NEED_USER_HEIGHT.includes(foundedSection.name) : false;
+         setIsInputHeightNeeded(isSectionIncludes);
 
          return {
             ...state,
             currentSection: foundedSection,
-            showUserHeight: foundedSection?.name ?
-               SECTION_NAMES_NEED_USER_HEIGHT.includes(foundedSection.name)
-               : false
          }
       })
    },
@@ -85,12 +84,6 @@ const createSectionsSlice: StateCreator<
       set(state => ({
          ...state,
          userHeight: height
-      }))
-   },
-   setShowUserHeight: (showUserHeight) => {
-      set(state => ({
-         ...state,
-         showUserHeight
       }))
    },
    resetSections: () => {

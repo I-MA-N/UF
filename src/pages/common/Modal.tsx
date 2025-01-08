@@ -27,15 +27,15 @@ Modal.Header = function Header({ children }: PropsWithChildren) {
 }
 
 type CloseBtnProps = {
-   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
+   clickHandler: () => void
 }
 
-Modal.CloseBtn = function CloseBtn({ setShowModal }: CloseBtnProps) {
+Modal.CloseBtn = function CloseBtn({ clickHandler }: CloseBtnProps) {
    return (
       <button
          type="button"
          className="size-11 lg:size-14 flex items-center justify-center bg-primary absolute right-0 top-1/2 -translate-y-1/2 text-yellow border lg:border-2 border-yellow rounded-full"
-         onClick={() => setShowModal(false)}
+         onClick={clickHandler}
       >
          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" className="size-4 lg:size-5">
             <path d="M13 3L8 8M8 8L3 13M8 8L13 13M8 8L3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

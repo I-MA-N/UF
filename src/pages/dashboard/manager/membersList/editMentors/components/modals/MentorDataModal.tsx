@@ -17,7 +17,7 @@ function MentorDataModal({ mentorData, setMentorData }: MentorDataModalPropsType
       <>
          <Modal>
             <Modal.Header>
-               <Modal.CloseBtn setShowModal={setMentorData} />
+               <Modal.CloseBtn clickHandler={() => setMentorData(null)} />
                <Modal.Title text="پروفایل مربی" />
             </Modal.Header>
             <Modal.Body className="!p-0">

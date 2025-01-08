@@ -15,7 +15,7 @@ function OrgModal({ orgSelected, setOrgSelected, setOrgModal, orgNames }: OrgMod
    return (
       <Modal>
          <Modal.Header>
-            <Modal.CloseBtn setShowModal={setOrgModal} />
+            <Modal.CloseBtn clickHandler={() => setOrgModal(false)} />
             <Modal.Title text="انتخاب سازمان" />
          </Modal.Header>
          <Modal.Body className="!p-0 overflow-hidden">
@@ -32,7 +32,7 @@ function OrgModal({ orgSelected, setOrgSelected, setOrgModal, orgNames }: OrgMod
                      filteredOrgs.map(orgName => (
                         <button
                            key={orgName}
-                           className="w-full py-3.5 hover:bg-secondary hover:text-white text-sm lg:text-base break-words last:rounded-b-[32px]"
+                           className="w-full py-3.5 hover:bg-secondary hover:text-white text-sm lg:text-base break-words last:rounded-b-[32px] transition-all"
                            onClick={e => {
                               setOrgSelected(e.currentTarget.innerText);
                               setOrgModal(false);

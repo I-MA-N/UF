@@ -31,7 +31,7 @@ function UserModal({ userData, setUserData, mentorSelected }: UserModalPropsType
       <>
          <Modal>
             <Modal.Header>
-               <Modal.CloseBtn setShowModal={setUserData} />
+               <Modal.CloseBtn clickHandler={() => setUserData(null)} />
                <Modal.Title text="پروفایل کاربر" />
             </Modal.Header>
             <Modal.Body className="!p-0">

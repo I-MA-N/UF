@@ -12,7 +12,7 @@ function ExitModal({ setShowExitModal, exitModalText }: ExitModalProps) {
    return (
       <Modal>
          <Modal.Header>
-            <Modal.CloseBtn setShowModal={setShowExitModal} />
+            <Modal.CloseBtn clickHandler={() => setShowExitModal(false)} />
          </Modal.Header>
          <Modal.Body className="text-sm lg:text-base">
             <p className="text-center mb-4 mx-auto max-w-48 xs:max-w-60 sm:max-w-80 lg:max-w-96">
